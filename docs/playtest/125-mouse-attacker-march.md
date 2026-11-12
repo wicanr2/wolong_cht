@@ -21,7 +21,17 @@
 
 ## 2026-11-12：曹操對呂布的正常路徑比較
 
-目前程式為`wlgame-cao-swap-r1`，依[spec62](../spec/62-swapped-unit-skips-its-turn.md)修正坡地換位的StepZ交換與重畫旗標時機。
+目前程式為`wlgame-battle-notice-r2`，接通使用者選定的三秒提示與按需戰報，契約見[spec89續片](../spec/89-siege-damage-report-toggle.md)。
+[正常滑鼠收據](../../workplace/scratch/ui-windows-20261104/battle-notice-remake-gui.json)通過109個功能／同步檢查點、20圖，
+包含重複同步，不當作獨立功能。兩次自然遭遇涵蓋提示自行消失、停手日期前進、工具列重開、
+原版／HD明細、四種關閉方式、讀檔失效及點提示無地圖穿透；兩種存檔SHA未被介面重寫。
+首場仍是夏侯淵攻、呂布守椎陽，不宣稱已跑到夏侯淵守許昌。
+前輪圖示驗收有視野缺口，已補正常定位後的可見軍團及原版局部像素，見[playtest50補驗](50-corps-on-map.md)。
+[實際畫面](../../workplace/scratch/ui-windows-20261104/battle-notice-game-review.html)與
+[來源收據](../../workplace/scratch/ui-windows-20261104/battle-notice-integration.json)留本機。
+本片只改介面，未提升前115拍以外的戰術規則或完整結果聲明。
+
+前輪程式為`wlgame-cao-swap-r1`，依[spec62](../spec/62-swapped-unit-skips-its-turn.md)修正坡地換位的StepZ交換與重畫旗標時機。
 原版117共同快照重現，467次換位前後記錄符合規則；正式來源前115個可比邊界，96槽27欄位、RNG與腳本狀態吻合。
 [正常滑鼠收據](../../workplace/scratch/ui-windows-20261104/cao-swap-remake-gui.json)66個功能／同步檢查點、15圖通過，
 含曹操對呂布開局、編成、停手行軍、途中存讀檔、自然入戰、改線、突擊與正常主動退卻返回。

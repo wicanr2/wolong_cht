@@ -554,7 +554,7 @@ func (g *game) reportCorps(ev state.Event) {
 		if !mine {
 			continue
 		}
-		g.lastEvent = battleLine(g, e)
+		g.recordBattleReport(e)
 	}
 }
 

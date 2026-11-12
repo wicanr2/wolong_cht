@@ -75,7 +75,7 @@ func (g *game) corpsAtTile(col, row int) []int {
 
 // mapClickBusy 回答「現在有沒有別的東西在吃輸入」。
 func (g *game) mapClickBusy() bool {
-	return g.list != nil || g.adviseActive() || g.form.active ||
+	return g.battleReportOpen() || g.list != nil || g.adviseActive() || g.form.active ||
 		g.marchMode.active || g.finance.active || g.saveUI.active ||
 		g.messageActive() || g.mapPickActive() || g.mapChoice.active ||
 		g.cityInfo.active || g.corpsInfo.active || g.popupMenuActive()

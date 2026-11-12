@@ -133,6 +133,8 @@ func TestHDDesktopSingleRowAllLanguages(t *testing.T) {
 				labels = desktopZoomLabels[lang][:1]
 			} else if a == desktopZoomIn {
 				labels = desktopZoomLabels[lang][2:]
+			} else if a == desktopReport {
+				labels = []string{battleReportLabels[lang]["button"]}
 			} else {
 				labels = []string{desktopLabels[lang][int(a)-1]}
 			}

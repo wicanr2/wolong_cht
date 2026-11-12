@@ -2081,15 +2081,15 @@
     {
       "file": "docs/playtest/50-corps-on-map.md",
       "item": "「軍團在路上」對原版",
-      "status": "要新的原版擷取：編成 → 行軍指示 → 等幾天。滑鼠腳本點得到行軍那一列之後才做得起來（[`40`](40-tactical-parity.md) §1.2）",
+      "status": "2026-11-12已用dosgolem正常編成／行軍重生可見畫面，曹操朝X增加圖塊及呂布靜止圖塊局部吻合，詳見下方補驗；不宣稱全路線或整場狀態一致",
       "section": "6. 未解",
       "domain": "驗收",
       "verdict": "靜態",
       "occurrence": 0,
-      "id": "oq-f7f1cf7d87c9e39593ca",
+      "id": "oq-556eb84d98d91a11c932",
       "classification": "merge-target",
       "github_issue": 12,
-      "reason": "畫面對拍 gate、群組覆蓋或 32 組門檻，併入 Issue #12。"
+      "reason": "dosgolem已補正常行軍的局部圖塊證據；完整畫面與其他狀態仍沿Issue #12，不由本片關閉。"
     },
     {
       "file": "docs/playtest/51-siege-deadlock.md",
@@ -13300,15 +13300,15 @@
     {
       "file": "docs/spec/275-hd-toolbar-portraits-and-tools.md",
       "item": "新入口分組及窄視窗安排",
-      "status": "已選單排與28／6自動收起；正式工具列十一個實體鈕 / 不阻塞已確認操作；AI與編輯器入口待各自接線",
+      "status": "已選單排與28／6自動收起；依[spec89](89-siege-damage-report-toggle.md)加入戰報後為十二個實體鈕 / 不阻塞已確認操作；AI與編輯器入口待各自接線",
       "section": "未解",
       "domain": "其他",
       "verdict": "靜態",
       "occurrence": 0,
-      "id": "oq-ce759f08b99baa57e78c",
+      "id": "oq-029225353b0090ec3650",
       "classification": "evidence-only",
       "github_issue": null,
-      "reason": "使用者已選28／6自動收起並維持單排；正式十一鈕限定GUI抽驗通過，AI及編輯器仍待接線。"
+      "reason": "使用者已選單排及28／6自動收起；spec89加入戰報後十二鈕限定GUI抽驗通過，AI與編輯器仍待接線。"
     },
     {
       "file": "docs/spec/275-hd-toolbar-portraits-and-tools.md",
@@ -14262,15 +14262,15 @@
     {
       "file": "docs/spec/74-corps-on-world-map.md",
       "item": "那 110 張圖在 MCH 裡的實際外觀",
-      "status": "算式定案，但**沒有逐張看過** 22 勢力 × 5 方向長什麼樣。已看過的：勢力 0 的靜止與行進（[`../playtest/50`](../playtest/50-corps-on-map.md)）",
+      "status": "算式定案，未逐張檢視全部110張。2026-11-12補驗勢力0的靜止／朝X增加與勢力13靜止，局部形狀及顏色吻合；完整圖庫仍未驗，見[playtest50](../playtest/50-corps-on-map.md)補驗",
       "section": "6. 未解",
       "domain": "其他",
       "verdict": "靜態",
       "occurrence": 0,
-      "id": "oq-22073304ec5e8a837a2e",
+      "id": "oq-282bf959abe6b98a6055",
       "classification": "evidence-only",
       "github_issue": null,
-      "reason": "目前列只保留原版證據邊界，未命中現行玩家路徑、規則或交付 Issue；若影響範圍改變，先建立新 Issue 再調整分類。"
+      "reason": "已補曹操靜止／朝X增加與呂布靜止三類局部外觀；完整110張仍為證據邊界，不建立新玩家工作。"
     },
     {
       "file": "docs/spec/74-corps-on-world-map.md",

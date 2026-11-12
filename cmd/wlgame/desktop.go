@@ -7,6 +7,7 @@ import (
 	"image/color"
 	"log"
 	"os"
+	"time"
 
 	"github.com/hajimehoshi/ebiten/v2"
 	"github.com/hajimehoshi/ebiten/v2/vector"
@@ -80,10 +81,11 @@ const (
 	desktopZoomOut
 	desktopZoomReset
 	desktopZoomIn
+	desktopReport
 )
 
-var desktopActions = []desktopAction{desktopLanguage, desktopDisplay, desktopZoomOut, desktopZoomReset, desktopZoomIn, desktopSettings, desktopSave, desktopLoad, desktopBack, desktopConfirm, desktopQuit}
-var desktopWidths = []int{72, 72, 24, 44, 24, 72, 48, 48, 48, 64, 48}
+var desktopActions = []desktopAction{desktopLanguage, desktopDisplay, desktopZoomOut, desktopZoomReset, desktopZoomIn, desktopSettings, desktopReport, desktopSave, desktopLoad, desktopBack, desktopConfirm, desktopQuit}
+var desktopWidths = []int{48, 72, 24, 44, 24, 48, 56, 48, 48, 48, 64, 48}
 var desktopDisplayLabels = func() map[string][]string {
 	b, err := translations.Files.ReadFile("desktop-display.json")
 	var m map[string][]string
@@ -102,7 +104,7 @@ var desktopDisplayLabels = func() map[string][]string {
 }()
 
 func desktopButton(a desktopAction) image.Rectangle {
-	x := 18
+	x := 12
 	for i, action := range desktopActions {
 		if a == action {
 			return image.Rect(x, 2, x+desktopWidths[i], desktopBarHeight-2)
@@ -186,6 +188,8 @@ func (g *game) desktopEnabled(a desktopAction) bool {
 		return g.strategyZoomReady() && g.mapZoomPercent() < 200
 	case desktopSettings, desktopSave, desktopLoad:
 		return g.desktopHostReady()
+	case desktopReport:
+		return g.hasBattleReport() && g.desktopHostReady() && !g.hudOpen(hudSystem) && !g.factionPicker
 	case desktopBack:
 		return g.quitting || g.quitMenu.active || g.naming != nil ||
 			g.launcher != nil && g.launcher.phase != launcherTitle ||
@@ -293,6 +297,8 @@ func (s *desktopGame) Update() error {
 		}
 	case desktopSettings:
 		g.hudSet(hudSystem, !g.hudOpen(hudSystem))
+	case desktopReport:
+		g.openBattleReport()
 	case desktopDisplay:
 		g.hdDisplay = !g.hdDisplay
 		g.saveDesktopPreferences()
@@ -357,11 +363,20 @@ func (s *desktopGame) writeTrace() {
 	for _, row := range []struct {
 		key    string
 		action desktopAction
-	}{{"zoomOut", desktopZoomOut}, {"zoomReset", desktopZoomReset}, {"zoomIn", desktopZoomIn}, {"display", desktopDisplay}, {"language", desktopLanguage}, {"settings", desktopSettings}, {"save", desktopSave}, {"load", desktopLoad}, {"back", desktopBack}, {"confirm", desktopConfirm}, {"quit", desktopQuit}} {
+	}{{"zoomOut", desktopZoomOut}, {"zoomReset", desktopZoomReset}, {"zoomIn", desktopZoomIn}, {"display", desktopDisplay}, {"language", desktopLanguage}, {"settings", desktopSettings}, {"report", desktopReport}, {"save", desktopSave}, {"load", desktopLoad}, {"back", desktopBack}, {"confirm", desktopConfirm}, {"quit", desktopQuit}} {
 		r := desktopButton(row.action)
 		buttons[row.key] = [4]int{r.Min.X, r.Min.Y, r.Max.X, r.Max.Y}
 	}
 	v["toolbar"] = buttons
+	if g.hasBattleReport() {
+		r := g.battleReport.latest
+		v["battleReport"] = map[string]any{
+			"open": g.battleReportOpen(), "toastVisible": g.battleReport.drawn && g.battleToastVisibleAt(time.Now()),
+			"summary": g.battleReportSummary(), "before": r.before, "after": r.after, "playerSide": r.playerSide,
+			"names": [2]string{r.name(0), r.name(1)}, "defenderWins": r.defenderWins,
+			"toastRect": g.battleToastRect(), "closeRect": battleReportCloseRect,
+		}
+	}
 	v["cityInfoCity"] = g.cityInfo.city
 	if g.list != nil {
 		v["listPhase"], v["listCursor"], v["listPick"] = int(g.list.Phase()), g.list.Cursor, g.listPick != nil
@@ -508,6 +523,8 @@ func (s *desktopGame) Draw(dst *ebiten.Image) {
 				label = desktopDisplayLabels[desktopLocale()][index]
 			} else if a >= desktopZoomOut && a <= desktopZoomIn {
 				label = s.g.desktopZoomLabel(a)
+			} else if a == desktopReport {
+				label = battleReportText("button")
 			} else {
 				label = labels[int(a)-1]
 			}

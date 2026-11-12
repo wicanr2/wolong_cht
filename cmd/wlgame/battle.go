@@ -167,7 +167,7 @@ func (g *game) updateBattle() {
 		inpututil.IsMouseButtonJustPressed(ebiten.MouseButtonMiddle)
 	if g.battleResult.ready(b, g.battleResultSeconds, time.Now(), g.confirmed() || clicked) {
 		if ev := g.world.ResolvePending(g.rng); ev != nil {
-			g.setEvent(battleLine(g, *ev))
+			g.recordBattleReport(*ev)
 		}
 		g.view = nil
 		g.battleResult = battleResultTimer{}

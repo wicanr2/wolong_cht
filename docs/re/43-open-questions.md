@@ -557,7 +557,7 @@
 | [`playtest/49-parity-retest-20260827.md`](../playtest/49-parity-retest-20260827.md) | 原版側沒有重跑 | 這一輪用的是 08-16／17／24 的存檔擷取 / 要重跑得先建 `wolong-dosboxx`（`docker/dosboxx/Dockerfile`） | 靜態 | merge-target | [#25](https://github.com/wicanr2/wolong_cht/issues/25) |
 | [`playtest/50-corps-on-map.md`](../playtest/50-corps-on-map.md) | 首都疊圖為什麼不畫 | 行為定案，機制未讀（§4） | 靜態 | evidence-only | — |
 | [`playtest/50-corps-on-map.md`](../playtest/50-corps-on-map.md) | 別的疊圖組合 | 只驗過「首都 ＋ 軍團」。災害物件 ＋ 軍團、非首都據點 ＋ 軍團都沒有樣本 | 靜態 | merge-target | [#23](https://github.com/wicanr2/wolong_cht/issues/23) |
-| [`playtest/50-corps-on-map.md`](../playtest/50-corps-on-map.md) | 「軍團在路上」對原版 | 要新的原版擷取：編成 → 行軍指示 → 等幾天。滑鼠腳本點得到行軍那一列之後才做得起來（`40` §1.2） | 靜態 | merge-target | [#12](https://github.com/wicanr2/wolong_cht/issues/12) |
+| [`playtest/50-corps-on-map.md`](../playtest/50-corps-on-map.md) | 「軍團在路上」對原版 | 2026-11-12已用dosgolem正常編成／行軍重生可見畫面，曹操朝X增加圖塊及呂布靜止圖塊局部吻合，詳見下方補驗；不宣稱全路線或整場狀態一致 | 靜態 | merge-target | [#12](https://github.com/wicanr2/wolong_cht/issues/12) |
 | [`playtest/51-siege-deadlock.md`](../playtest/51-siege-deadlock.md) | 三個讀數仍對不上同一幀 | §2。兩軍會打了，但這條 fixture 的守方是**玩家側而玩家沒下令**，所以站著挨打——攻方只折損 1 點。⚠ **不是委任**：委任那條路走 `combat.Resolve` 抽象判定，根本不開戰場，而 e10 是戰場畫面 | 靜態 | merge-target | [#12](https://github.com/wicanr2/wolong_cht/issues/12) |
 | [`playtest/51-siege-deadlock.md`](../playtest/51-siege-deadlock.md) | 原版擺兵寫的是哪一個表 | `spec/95` 是靠內部一致性定的，不是照抄。原版 `[si+0Ah]` 的來源沒讀出來 | 靜態 | merge-target | [#16](https://github.com/wicanr2/wolong_cht/issues/16) |
 | [`playtest/51-siege-deadlock.md`](../playtest/51-siege-deadlock.md) | 攻方大將體力歸零 | `drainSiegeGeneral` 扣到 0，而戰鬥傷害最低留 1（`../re/11` §5.16）。攻城計時器要不要也留 1，沒讀出來 | 靜態 | evidence-only | — |
@@ -1120,7 +1120,7 @@
 | [`spec/274-original-list-scrollbar-drag.md`](../spec/274-original-list-scrollbar-drag.md) | HD素材、比例與外觀選擇 | 未決 / 否，原版修正後另行共同規劃 | 靜態 | history | — |
 | [`spec/275-hd-toolbar-portraits-and-tools.md`](../spec/275-hd-toolbar-portraits-and-tools.md) | 概念頁允許即時切換；正式遊戲的開關時機仍未定案。 | （散句） | 靜態 | history | — |
 | [`spec/275-hd-toolbar-portraits-and-tools.md`](../spec/275-hd-toolbar-portraits-and-tools.md) | AI切換時機及移動／架梯接線 | 待設計／證據審查；曲線已選雙方1–2倍 / 是，先查現有計時與做prototype | 靜態 | evidence-only | — |
-| [`spec/275-hd-toolbar-portraits-and-tools.md`](../spec/275-hd-toolbar-portraits-and-tools.md) | 新入口分組及窄視窗安排 | 已選單排與28／6自動收起；正式工具列十一個實體鈕 / 不阻塞已確認操作；AI與編輯器入口待各自接線 | 靜態 | evidence-only | — |
+| [`spec/275-hd-toolbar-portraits-and-tools.md`](../spec/275-hd-toolbar-portraits-and-tools.md) | 新入口分組及窄視窗安排 | 已選單排與28／6自動收起；依spec89加入戰報後為十二個實體鈕 / 不阻塞已確認操作；AI與編輯器入口待各自接線 | 靜態 | evidence-only | — |
 | [`spec/275-hd-toolbar-portraits-and-tools.md`](../spec/275-hd-toolbar-portraits-and-tools.md) | HD正式素材產製與接線 | 五城十張已同意，其中五組景觀已接情報窗；35區／22接縫、146頭像及色盤0橫幅已接，未新增逐張接受聲明 / 已接範圍限定抽驗通過；其餘十頁景觀、其他色盤／場景、局部美術及其餘正常視窗待完成 | 靜態 | evidence-only | — |
 | [`spec/275-hd-toolbar-portraits-and-tools.md`](../spec/275-hd-toolbar-portraits-and-tools.md) | HD世界鏡頭與固定介面 | 正式地圖已接50%～200%，色盤0可用HD全圖；視野、焦點、邊界與命中抽驗通過，介面固定 / 不阻塞已接範圍；其他季節與液晶HD仍沿原圖 | 靜態 | evidence-only | — |
 | [`spec/275-hd-toolbar-portraits-and-tools.md`](../spec/275-hd-toolbar-portraits-and-tools.md) | 編輯套用時機、取消及存檔衍生欄位 | 待設計／證據審查 / 是，先做單人垂直鏈草稿 | 靜態 | evidence-only | — |
@@ -1195,7 +1195,7 @@
 | [`spec/72-bundled-game-data.md`](../spec/72-bundled-game-data.md) | APK 內嵌後的實機驗收 | ⛔ 沒有裝置。模擬器驗到了解包與指紋，驗不到真實儲存空間與 DPI | 靜態 | merge-target | [#21](https://github.com/wicanr2/wolong_cht/issues/21) |
 | [`spec/72-bundled-game-data.md`](../spec/72-bundled-game-data.md) | 25 MB 的 APK 在低容量裝置上 | 解包後 app 私有目錄再佔約 4.8 MB，總共約 30 MB。**沒有量過安裝失敗的門檻** | 靜態 | evidence-only | — |
 | [`spec/73-right-click-cancel.md`](../spec/73-right-click-cancel.md) | 原版右鍵是否也關常駐視窗 | 沒量過。常駐視窗不走模態等待常式，推測不關，但**沒有實機證據** | 靜態 | evidence-only | — |
-| [`spec/74-corps-on-world-map.md`](../spec/74-corps-on-world-map.md) | 那 110 張圖在 MCH 裡的實際外觀 | 算式定案，但**沒有逐張看過** 22 勢力 × 5 方向長什麼樣。已看過的：勢力 0 的靜止與行進（`../playtest/50`） | 靜態 | evidence-only | — |
+| [`spec/74-corps-on-world-map.md`](../spec/74-corps-on-world-map.md) | 那 110 張圖在 MCH 裡的實際外觀 | 算式定案，未逐張檢視全部110張。2026-11-12補驗勢力0的靜止／朝X增加與勢力13靜止，局部形狀及顏色吻合；完整圖庫仍未驗，見playtest50補驗 | 靜態 | evidence-only | — |
 | [`spec/74-corps-on-world-map.md`](../spec/74-corps-on-world-map.md) | 每格 4 層上限 | 刻意沒做（§4） | 靜態 | evidence-only | — |
 | [`spec/74-corps-on-world-map.md`](../spec/74-corps-on-world-map.md) | 首都疊圖為什麼不畫 | **機制讀出來了**（2026-09-02）：`sub_1D4C7` 是「往一格推一個疊圖」，**一格最多 4 個**——`bl = [si+1]`（目前疊圖數）`cmp bl, 4 / jnb` 就整個跳過，而且 `[si]` 的 **bit 4 設起來的格子完全不接受疊圖**。顯示清單一格 8 B：`+0` … | 靜態 | evidence-only | — |
 | [`spec/74-corps-on-world-map.md`](../spec/74-corps-on-world-map.md) | 別的疊圖組合 | 只驗過「首都 ＋ 軍團」。**災害物件 ＋ 軍團**、**非首都據點 ＋ 軍團**都沒有樣本 | 靜態 | merge-target | [#23](https://github.com/wicanr2/wolong_cht/issues/23) |

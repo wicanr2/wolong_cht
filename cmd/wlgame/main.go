@@ -220,6 +220,7 @@ type game struct {
 	damageReport        bool
 	battleResultSeconds int
 	battleResult        battleResultTimer
+	battleReport        battleReportState
 	preferencesPath     string // 桌面偏好獨立保存；驗收入口留空。
 
 	// cmdMenu 是指令列的彈出選單（軍團／據點／人事，docs/spec/126）。
@@ -981,6 +982,9 @@ func (g *game) updateWithPointer(pushX, pushY int) error {
 		return nil
 	}
 	g.frame++
+	if g.battleReport.world != nil && g.battleReport.world != g.world {
+		g.battleReport = battleReportState{}
+	}
 	if !g.listScrollOwnsInput() {
 		g.listDrag = listScrollDrag{}
 	}
@@ -1096,6 +1100,13 @@ func (g *game) updateWithPointer(pushX, pushY int) error {
 	}
 	if g.world.HasIncompleteTick() {
 		g.processWorldEvent(g.world.ResumeTick(g.rng))
+		return nil
+	}
+	if g.battleReportOpen() {
+		g.updateBattleReport()
+		return nil
+	}
+	if g.updateBattleToast() {
 		return nil
 	}
 
@@ -1430,6 +1441,7 @@ func (g *game) Draw(screen *ebiten.Image) {
 		g.chrome.Window(screen, x, screenH-40, w, 32, chrome.Blank)
 		g.td.Draw(screen, g.lastEvent, x+2*chrome.Tile, screenH-32, chrome.Paper)
 	}
+	g.drawBattleToast(screen)
 	if !g.td.Available() {
 		g.td.Draw(screen, "（未載入字型）", 8, screenH-20,
 			color.RGBA{240, 140, 140, 255})
@@ -1465,6 +1477,7 @@ func (g *game) Draw(screen *ebiten.Image) {
 	if choice := g.world.PendingFunding(); choice != nil {
 		g.drawFunding(screen, choice)
 	}
+	g.drawBattleReport(screen)
 	if g.messageActive() {
 		g.drawMessage(screen)
 	}
