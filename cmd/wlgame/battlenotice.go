@@ -27,7 +27,7 @@ var battleReportLabels = func() map[string]map[string]string {
 		panic(err)
 	}
 	for _, lang := range []string{"zh-hant", "zh-hans", "ja", "en"} {
-		for _, key := range []string{"button", "view", "close", "title", "attacker", "defender", "commander", "before", "after", "result", "attackerWins", "defenderWins", "garrison", "yourSide", "same", "changed", "general"} {
+		for _, key := range []string{"button", "setting", "view", "close", "title", "attacker", "defender", "commander", "before", "after", "result", "attackerWins", "defenderWins", "garrison", "yourSide", "same", "changed", "general"} {
 			if labels[lang][key] == "" {
 				panic("incomplete battle report labels: " + lang + "/" + key)
 			}
@@ -86,7 +86,7 @@ func (g *game) recordBattleReport(e state.CorpsEvent) {
 			r.playerSide = 1
 		}
 	}
-	g.battleReport = battleReportState{world: g.world, latest: r}
+	g.battleReport = battleReportState{world: g.world, latest: r, dismissed: !g.battleNotices}
 }
 
 func (r *battleReportSnapshot) name(side int) string {
@@ -119,7 +119,7 @@ func (g *game) openBattleReport() {
 }
 
 func (g *game) battleToastVisibleAt(now time.Time) bool {
-	return g.hasBattleReport() && g.battleReport.pendingAt(now) && g.desktopHostReady() &&
+	return g.battleNotices && g.hasBattleReport() && g.battleReport.pendingAt(now) && g.desktopHostReady() &&
 		!g.hudOpen(hudSystem) && !g.factionPicker && !(g.lastEvent != "" && g.frame-g.lastEventAt < eventLineFrames)
 }
 

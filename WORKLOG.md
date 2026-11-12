@@ -1420,3 +1420,11 @@
 - 第一回GUI因容器工作目錄錯誤讀不到translations/corrections.json，分類為驗證環境錯誤；修正工作目錄後用同一image重跑。先前單元／首輪GUI與不完整HD截圖保存在battle-notice-before-text-capture-gate.tar.gz。新增十圖[本機實際畫面頁](workplace/scratch/ui-windows-20261104/battle-notice-game-review.html)，四項離線抽驗通過390／1280寬、十圖載入、無JS錯誤／外部請求；[來源收據](workplace/scratch/ui-windows-20261104/battle-notice-integration.json)含十檔來源覆蓋包、binary、工具與原版身分。HTML、原圖、原始狀態與binary皆留本機，不作Release。驗收範圍沿[spec89](docs/spec/89-siege-damage-report-toggle.md)，前115拍以外、高平面、投射物、架梯與完整戰況維持既有Issues限制。
 
 - 收尾檢查通過：十檔受測來源及覆蓋包、100份證據、109點GUI／20圖、七項軍團局部像素與原版／seed身分一致；來源UID/GID1000:1000，root-owned與誤建.md目錄皆0。嚴格未解索引1145列、三筆分流回填、582份文件／135條斷言、過期斷言與資產deny-list通過。第一次索引在本機頁尚未產生時拒絕連結；頁面完成後乾淨重跑，未將此驗證順序問題列為產品缺陷。[收尾核對](workplace/scratch/ui-windows-20261104/battle-notice-final-checks.json)保存雜湊與範圍。本輪容器均已結束移除，沒有臥龍傳殘留容器；未重建或清理其他專案image。依使用者既有指示提交並推送，提交與遠端核對保存於[本機推送收據](workplace/scratch/ui-windows-20261104/repo-battle-notice-update-20261112.json)。
+
+## 2026-11-13：戰報預設安靜與省略右鍵教學
+
+- 使用者指定「以滑鼠右鍵恢復」提示不必要，另指定戰報改成選項、預設不打開，避免多處交戰頻繁打斷。命中復古remake與規格閘門路由，沿用逆向重製技能及既有spec。查明右鍵教學為原版TALK #4，勢力選擇及軍團情報各有一個入口；依新裁定省略顯示，保留原文、索引、右鍵返回及其他任務提示，明列remake差異。
+- spec89／266先列READY再實作。系統末尾加入「戰報提示」第十列，預設關閉，原九列座標不動，視窗底部仍在640×400內。關閉時只保留最近一場供工具列手動看；啟用後只提示下一場，停用或重開不補播舊戰報。沿既有獨立偏好新增相容布林欄位，舊偏好缺欄位仍為關；不改遊戲存檔或戰鬥規則。
+- 受影響桌面冷測與vet通過。r1正常曹操對呂布流程118個功能／同步檢查點、19圖通過，驗到自然戰鬥返回四秒無提示、日期繼續前進、手動戰報、切換不補播、開關兩種重啟記憶，兩種遊戲存檔SHA不變。r2另補軍團情報同一句教學的省略，最終程式再跑44個功能／同步檢查點、三圖，正常勢力選擇、編成後軍團情報及右鍵返回均目視通過。數字包含重複工具列同步，不作獨立功能數。短驗收腳本首次漏開原版指令列，分類為驗證腳本問題；補正常展開操作後，以同一image、binary乾淨重跑通過，原log保留。r2未再重跑整場戰鬥；啟用後新結果提示由本輪模型回歸及前片顯示收據支持，不冒稱新的正常戰鬥GUI驗收。
+- [本輪來源收據](workplace/scratch/ui-windows-20261104/quiet-notice-integration-20261113.json)核對13檔來源、覆蓋包、兩個binary及22圖；來源UID/GID1000:1000，root-owned與誤建.md目錄皆0。截圖、binary與原版素材只留本機。當輪行為與限制見[spec89](docs/spec/89-siege-damage-report-toggle.md)及[spec266](docs/spec/266-mouse-only-desktop-toolbar.md)。
+- 收尾文件檢查通過：582份文件／135條斷言、嚴格未解索引與分流1145列、過期斷言及原版資產deny-list均通過。受測13檔來源與兩個binary仍一致。本輪容器已結束移除，沒有臥龍傳殘留容器；未重建工具image或清理其他專案資源。依既有指示提交推送，提交及遠端核對見[本機推送收據](workplace/scratch/ui-windows-20261104/repo-quiet-notice-update-20261113.json)。

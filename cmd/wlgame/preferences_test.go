@@ -44,6 +44,32 @@ func TestDesktopPreferencesFileLifecycle(t *testing.T) {
 	}
 }
 
+func TestBattleNoticesPreferencesDefaultAndPlayerChoice(t *testing.T) {
+	path := filepath.Join(t.TempDir(), "preferences.json")
+	if err := os.WriteFile(path, []byte(`{"version":1,"language":"zh-hant"}`), 0600); err != nil {
+		t.Fatal(err)
+	}
+	p, err := readDesktopPreferences(path, desktopPreferences{BattleNotices: true})
+	if err != nil || p.BattleNotices {
+		t.Fatal("舊偏好不得啟用新增戰報提示", err)
+	}
+	g := &game{preferencesPath: path}
+	g.dispatchSystemRow(sysRowBattleNotices, true)
+	p, err = readDesktopPreferences(path, desktopPreferences{})
+	if err != nil || !p.BattleNotices {
+		t.Fatal("玩家開啟後未保存", err)
+	}
+	restored := &game{}
+	if err := restored.applyDesktopPreferences(p, map[string]bool{"lang": true}); err != nil || !restored.battleNotices {
+		t.Fatal("重啟未套用戰報偏好", err)
+	}
+	g.dispatchSystemRow(sysRowBattleNotices, true)
+	p, err = readDesktopPreferences(path, desktopPreferences{BattleNotices: true})
+	if err != nil || p.BattleNotices {
+		t.Fatal("關閉後重啟又開啟", err)
+	}
+}
+
 func TestDesktopPreferencesReplaceFailurePreservesTarget(t *testing.T) {
 	path := filepath.Join(t.TempDir(), "preferences.json")
 	if err := os.Mkdir(path, 0700); err != nil {

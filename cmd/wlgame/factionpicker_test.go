@@ -167,19 +167,34 @@ func TestPickerInkSelectedBeatsOwn(t *testing.T) {
 	}
 }
 
-// 勢力選擇視窗掛狀態列 #4「以滑鼠的右鍵回復。」，關掉要清乾淨
-// （原版 `sub_15AD1`，docs/spec/140 §1.1）。
+// 原版TALK #4保存，但依使用者裁定省略操作教學（spec266，2026-11-13）。
 func TestFactionPickerStatusTalk(t *testing.T) {
 	if factionPickerTalk != 4 {
 		t.Fatalf("狀態列索引 ＝ %d，原版是 4", factionPickerTalk)
 	}
 	g := newTalkTestGame(t)
+	if lines, ok := g.talkLines(factionPickerTalk, nil); !ok || len(lines) == 0 {
+		t.Fatal("省略顯示不應刪除原版文字")
+	}
+	g.setStatusTalk(formStatusTalk, nil)
 	g.openMinimapFactionPicker()
-	if !g.factionPicker || !g.statusBoxActive() {
-		t.Fatal("開了視窗卻沒掛狀態列")
+	if !g.factionPicker || g.statusBoxActive() {
+		t.Fatal("勢力選擇不應顯示操作教學或殘留舊提示")
 	}
 	g.closeFactionPicker()
 	if g.factionPicker || g.statusBoxActive() {
 		t.Error("關掉之後狀態列還掛著")
+	}
+	g.world = &state.World{}
+	g.world.Corps[0].Alive = true
+	g.setStatusTalk(formStatusTalk, nil)
+	g.openCorpsInfo(0)
+	if !g.corpsInfo.active || g.statusBoxActive() {
+		t.Fatal("軍團情報仍掛右鍵教學或殘留舊提示")
+	}
+	g.pointerAction = desktopBack
+	g.updateCorpsInfo()
+	if g.corpsInfo.active {
+		t.Fatal("軍團情報返回失效")
 	}
 }

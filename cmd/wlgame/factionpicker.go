@@ -114,7 +114,7 @@ func (g *game) pickerSelectable(n int) bool {
 	return g.world.Factions[n].Alive && n != g.world.Player
 }
 
-// factionPickerTalk 是這個視窗掛的狀態列：#4「以滑鼠的右鍵回復。」
+// factionPickerTalk 保留原版狀態列索引：#4「以滑鼠的右鍵回復。」
 // 原版 `sub_15AD1` 在進 `sub_15AFC` 之前 `mov cx, 4 / call sub_18853`
 // （docs/re/31 §1.3、docs/spec/140 §1.1）。
 const factionPickerTalk = 4
@@ -123,7 +123,8 @@ const factionPickerTalk = 4
 // ⚠ 名字與 `openFactionPicker`（清單家族那一支）不同，別搞混。
 func (g *game) openMinimapFactionPicker() {
 	g.factionPicker = true
-	g.setStatusTalk(factionPickerTalk, nil)
+	// 使用者指定省略操作教學，保留原文與右鍵返回（spec266，2026-11-13）。
+	g.clearStatusTalk()
 }
 
 // closeFactionPicker 關掉，順手清狀態列（原版離開 `sub_15AFC` 之後

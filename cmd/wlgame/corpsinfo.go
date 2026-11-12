@@ -57,11 +57,11 @@ const (
 	corpsSlotDigits = 4
 )
 
-// corpsInfoTalk 是軍團情報面板的狀態列（`sub_17F90` 的 `sub_18853(cx = 4)`，
+// corpsInfoTalk 保留原版軍團情報的狀態列索引（`sub_17F90` 的 `sub_18853(cx = 4)`，
 // docs/spec/140 §1.1）。
 const corpsInfoTalk = 4
 
-// openCorpsInfo 開軍團情報面板並掛狀態列 #4。
+// openCorpsInfo 開軍團情報面板；依使用者裁定省略狀態列 #4（spec266）。
 //
 // ⭐ **#4 只在「別人的軍團」時掛**（原版 `sub_17F90`）：面板兩種情況都畫，
 // 但玩家自己的軍團接著走行軍指示（`sub_17FDB`，狀態列換成 #3），
@@ -70,7 +70,7 @@ func (g *game) openCorpsInfo(corps int) {
 	if !g.showCorpsPanel(corps) {
 		return
 	}
-	g.setStatusTalk(corpsInfoTalk, nil)
+	g.clearStatusTalk()
 }
 
 // showCorpsPanel 只把面板叫出來，不碰狀態列——行軍指示那條路要用它，

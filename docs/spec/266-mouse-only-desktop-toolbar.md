@@ -49,7 +49,7 @@
 
 - 移除據點與軍團情報窗外的額外提示框，以及進言結果的「右鍵關閉」提示。
 - 刪除無用的提示座標、共用列舉及四語字串，同步其餘提示的索引。
-- 原版TALK #4「以滑鼠的右鍵回復。」保留；不變更右鍵分派、返回、對白推進、存檔或遊戲規則。
+- 當時保留原版TALK #4「以滑鼠的右鍵回復。」；2026-11-13依使用者新裁定不再顯示，見下方增補。
 - 驗收採既有桌面、情報窗、進言與取消冷測，正常滑鼠抽驗情報窗關閉及進言返回；本機截圖不作整款原版parity聲明。
 
 本段先列READY再實作。[冷測、vet及建置](../../workplace/scratch/ui-windows-20261104/no-close-hint-tests.log)通過。
@@ -128,6 +128,20 @@
 [頁面抽驗](../../workplace/scratch/ui-windows-20261104/cao-lubu-review-qa.json)驗證離線切換。
 [接線收據](../../workplace/scratch/ui-windows-20261104/cao-lubu-integration.json)固定50檔來源覆蓋包、受測程式及工具身分。
 [收尾核對](../../workplace/scratch/ui-windows-20261104/cao-lubu-final-checks.json)核對來源、原版重播、頁面、素材與擁有權。
+
+## 2026-11-13：省略右鍵操作提示（CONFORMED，限本片）
+
+使用者指出「以滑鼠右鍵恢復」訊息不必要。已核對為原版TALK #4，
+由`openMinimapFactionPicker`與`openCorpsInfo`掛左下角狀態框，原版證據在[re31](../re/31-faction-picker-screen.md) §1.3與[spec140](140-status-message-box.md)接線表。
+本裁定取代先前「保留TALK #4顯示」的選擇，明列為使用者指定的remake差異。
+勢力選擇與軍團情報開啟時清除舊狀態框，不顯示右鍵操作教學；保留TALK原文、資料索引、選擇規則與右鍵返回。
+其他指令的任務提示不受此裁定影響。驗收調整既有狀態框測試，正常滑鼠抽驗兩個入口與右鍵關閉。
+
+先列READY再實作。[受影響冷測與vet](../../workplace/scratch/ui-windows-20261104/quiet-notice-tests-r2-20261113.log)通過。
+最終`wlgame-quiet-notice-r2`的[正常滑鼠抽驗](../../workplace/scratch/ui-windows-20261104/quiet-controls-gui-20261113.json)
+通過44個功能／同步檢查點、三張實際截圖，包含重複工具列同步，不當作獨立功能數。
+正常勢力選擇、編成後軍團情報與兩處右鍵返回已目視確認，左下角沒有教學框；其他任務提示沿原流程。
+來源、受測程式與收據身分見[本輪收據](../../workplace/scratch/ui-windows-20261104/quiet-notice-integration-20261113.json)。
 
 ## 驗收
 

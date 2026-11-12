@@ -17,7 +17,7 @@ import (
 )
 
 func TestBattleNoticeVisibleClockAndReopen(t *testing.T) {
-	g := &game{world: &state.World{}}
+	g := &game{world: &state.World{}, battleNotices: true}
 	g.recordBattleReport(state.CorpsEvent{Corps: 0, Enemy: 1, Battle: &combat.Result{}})
 	now := time.Unix(100, 0)
 	if !g.battleReport.pendingAt(now.Add(time.Hour)) {
@@ -53,6 +53,51 @@ func TestBattleNoticeVisibleClockAndReopen(t *testing.T) {
 	g.world = &state.World{}
 	if g.hasBattleReport() || g.battleReportOpen() || g.desktopEnabled(desktopReport) {
 		t.Fatal("新世界沿用舊戰報")
+	}
+}
+
+func TestBattleNoticesDefaultOffAndOnlyNewResultsNotify(t *testing.T) {
+	g := &game{world: &state.World{}}
+	e := state.CorpsEvent{Corps: 0, Enemy: 1, Battle: &combat.Result{}}
+	for i := 0; i < 3; i++ {
+		e.BattleAfter[0] = 600 - i
+		g.recordBattleReport(e)
+		if g.battleNotices || g.battleToastVisibleAt(time.Now()) || g.battleReportOpen() || g.mapClickBusy() {
+			t.Fatal("預設或連續戰報打擾地圖")
+		}
+	}
+	if !g.hasBattleReport() || g.battleReport.latest.after[0] != 598 || !g.desktopEnabled(desktopReport) {
+		t.Fatal("關閉自動提示後無法手動查看最近一場")
+	}
+	g.openBattleReport()
+	if !g.battleReportOpen() {
+		t.Fatal("手動明細未開啟")
+	}
+	g.pointerAction = desktopBack
+	g.updateBattleReport()
+	g.dispatchSystemRow(sysRowBattleNotices, true)
+	if !g.battleNotices || g.battleToastVisibleAt(time.Now()) {
+		t.Fatal("啟用時補播舊戰報")
+	}
+	g.recordBattleReport(e)
+	if !g.battleToastVisibleAt(time.Now()) {
+		t.Fatal("啟用後的新戰鬥未提示")
+	}
+	g.dispatchSystemRow(sysRowBattleNotices, false)
+	if g.battleNotices || g.battleToastVisibleAt(time.Now()) {
+		t.Fatal("停用後仍顯示提示")
+	}
+	g.dispatchSystemRow(sysRowBattleNotices, true)
+	if g.battleToastVisibleAt(time.Now()) {
+		t.Fatal("重開選項後補播已取消的提示")
+	}
+	if sysRowBattleNotices != 9 || sysWinY+sysWinH > screenH {
+		t.Fatal("選項改動既有列或超出畫布")
+	}
+	for lang, labels := range battleReportLabels {
+		if textdraw.StringWidth(labels["setting"]) > sysValueX-sysLabelX-8 {
+			t.Fatalf("%s 戰報選項標籤溢出", lang)
+		}
 	}
 }
 
@@ -133,7 +178,7 @@ func TestQuickBattleReportSnapshotAndInputPriority(t *testing.T) {
 	w := &state.World{Player: 0}
 	w.Generals[1].Name, w.Generals[2].Name = "ATTACKER", "DEFENDER"
 	w.Corps[1].Faction, w.Corps[2].Faction = 13, 0
-	g := &game{world: w, lastEvent: "existing event"}
+	g := &game{world: w, lastEvent: "existing event", battleNotices: true}
 	e := state.CorpsEvent{Corps: 1, Enemy: 2, GovernorReturned: -1, Captured: -1,
 		Battle: &combat.Result{DefenderWins: true}, BattleBefore: [2]int{600, 500}, BattleAfter: [2]int{300, 450}}
 	g.reportCorps(state.Event{Corps: []state.CorpsEvent{e}})

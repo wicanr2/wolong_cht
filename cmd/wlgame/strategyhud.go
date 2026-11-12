@@ -526,10 +526,10 @@ func (g *game) drawNaturalStrategyHUD(screen *ebiten.Image) {
 const (
 	sysWinX, sysWinY = 208, 112
 	// ⚠ **原版是 192（六列）。** remake 多了「主君編成」（docs/spec/76）
-	// 與「損害報告」、「戰後結果」（docs/spec/89），視窗因此加高三個列距。
+	// 與「損害報告」、「戰後結果」、「戰報提示」（docs/spec/89），加高四個列距。
 	// 代價寫在 docs/playtest/39：系統選單開著時不再與原版逐像素相同，
 	// 比的是**原版 192 高的那一半**。
-	sysWinW, sysWinH = 208, 192 + 3*sysRowStep
+	sysWinW, sysWinH = 208, 192 + 4*sysRowStep
 
 	sysTitleX, sysTitleY = 228, 124
 	sysRuleX, sysRuleY   = 216, 142
@@ -543,14 +543,14 @@ const (
 	sysValueW, sysValueH       = 48, 16
 	sysRowStep                 = 24
 	// ⚠ 原版六列；第 7 列是「主君編成」（docs/spec/76）、
-	// 第 8 列是「損害報告」、第 9 列是「戰後結果」（docs/spec/89），都是 remake 選項。
-	sysRows = 9
+	// 第8至10列為損害報告、戰後結果、戰報提示（docs/spec/89），都是remake選項。
+	sysRows = 10
 )
 
 // sysMenuLabels 是六列的標籤，取自顯示清單場景 2 的字串。
 var sysMenuLabels = [sysRows]string{
 	"資料儲存", "畫面模式", "音　　效", "戰略速度", "戰術速度", "遊戲結束",
-	"主君編成", "損害報告", "戰後結果"}
+	"主君編成", "損害報告", "戰後結果", ""} // 第十列由戰報語系資料提供。
 
 // 系統選單六列的索引。原版的六個 handler 沒讀（docs/re/55 §4），
 // 所以**哪一列做什麼是 remake 自己接的**，照標籤的字面意思。
@@ -573,6 +573,7 @@ const (
 	// 所以預設關著。
 	sysRowDamageReport
 	sysRowBattleResult
+	sysRowBattleNotices
 )
 
 // videoModeLabels 是「畫面模式」那一列的兩個選項（原版字串表 `ds:6002h`）。
@@ -653,6 +654,10 @@ func (g *game) dispatchSystemRow(row int, left bool) {
 		g.saveDesktopPreferences()
 	case sysRowDamageReport:
 		g.damageReport = !g.damageReport
+		g.saveDesktopPreferences()
+	case sysRowBattleNotices:
+		g.battleNotices = !g.battleNotices
+		g.battleReport.dismissed = true // 切換時不補播上一場。
 		g.saveDesktopPreferences()
 	case sysRowVideo:
 		// ⚠ 左右鍵都是 toggle：只有兩個值（docs/spec/152）。
@@ -805,12 +810,16 @@ func (g *game) drawSystemWindow(dst *ebiten.Image) {
 	values := [sysRows]string{"ＯＫ", videoModeLabels[videoModeIndex(g.videoLCD)], g.soundValue(),
 		speed.Labels[clamp(g.speed, 0, speed.Levels-1)],
 		speed.Labels[clamp(g.tacticalSpeed, 0, speed.Levels-1)],
-		"ＯＫ", lordCorpsValue(g.lordCorps), damageReportValue(g.damageReport), battleResultValue(g.battleResultSeconds)}
+		"ＯＫ", lordCorpsValue(g.lordCorps), damageReportValue(g.damageReport), battleResultValue(g.battleResultSeconds), damageReportValue(g.battleNotices)}
 	for k := 0; k < sysRows; k++ {
 		dy := k * sysRowStep
 		vector.DrawFilledRect(dst, sysLabelBoxX, float32(sysLabelBoxY+dy),
 			sysLabelBoxW, sysLabelBoxH, color.Black, false)
-		g.td.Draw(dst, sysMenuLabels[k], sysLabelX, sysLabelY+dy, labelInk)
+		label := sysMenuLabels[k]
+		if k == sysRowBattleNotices {
+			label = battleReportText("setting")
+		}
+		g.td.Draw(dst, label, sysLabelX, sysLabelY+dy, labelInk)
 
 		// 值格只有兩圈框；底色由值自己帶（原版的「 ＯＫ 」是黑字綠底）。
 		g.dlValueBox(dst, sysValueX, sysValueY+dy, sysValueW, sysValueH)

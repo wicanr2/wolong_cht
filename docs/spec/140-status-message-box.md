@@ -136,11 +136,15 @@ call sub_13830          ; 說服場景
 | 編成第二層 | `formOrderTalk` ＝ #1，選完武將那一刻換上去（`sub_16C92`）|
 | 行軍目標 | `marchTargetTalk` ＝ #3，`pickDestination` 掛（`sub_17FDB`）|
 | 軍團情報 | `corpsInfoTalk` ＝ #4，`openCorpsInfo` 掛（`sub_17F90` 的 `loc_17FBC`）。**自己的軍團走 `showCorpsPanel` 不掛 #4**（[`149`](149-march-target-map-picker.md) §1.3）|
-| 勢力選擇視窗 | `factionPickerTalk` ＝ #4「以滑鼠的右鍵回復。」，`openFactionPicker`／`closeFactionPicker` 成對（`sub_15AD1` 進 `sub_15AFC` 之前掛、離開後清；[`../re/31`](../re/31-faction-picker-screen.md) §1.3）|
-| 差異 | **27 個帶索引的呼叫點全部接上了。**〔#10 除外——原版一個呼叫點都沒有，是死文字（§1.1）〕|
+| 勢力選擇視窗 | 原版`factionPickerTalk` ＝ #4「以滑鼠的右鍵回復。」，`sub_15AD1`進`sub_15AFC`之前掛、離開後清（[re31](../re/31-faction-picker-screen.md) §1.3）；remake的`openMinimapFactionPicker`依下方新裁定省略 |
+| 差異 | 原版27個帶索引的呼叫點已追蹤；2026-11-13依使用者指定省略兩處TALK #4教學顯示，其餘接線保留。#10原版沒有呼叫點，是死文字（§1.1）|
 | 差異 | 名字的換色與定寬補白目前只在這個框成立。**一般訊息框（`drawMessage`）還是整段畫成白的、名字也還是裁掉補白**——同樣是既有差異 |
 
 ## 4. 驗證
+
+2026-11-13使用者指定省略TALK #4右鍵操作教學。remake的勢力選擇與軍團情報不再顯示該狀態框，
+原文與索引保存，右鍵返回及其他任務提示保留；本項為[spec266](266-mouse-only-desktop-toolbar.md)的使用者指定差異，
+上表的原版呼叫證據不因此改寫。
 
 | 方式 | 證據 |
 |---|---|

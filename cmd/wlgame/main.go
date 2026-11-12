@@ -221,6 +221,7 @@ type game struct {
 	battleResultSeconds int
 	battleResult        battleResultTimer
 	battleReport        battleReportState
+	battleNotices       bool   // 自動短提示預設關閉；最近戰報仍可手動查閱。
 	preferencesPath     string // 桌面偏好獨立保存；驗收入口留空。
 
 	// cmdMenu 是指令列的彈出選單（軍團／據點／人事，docs/spec/126）。
@@ -1974,7 +1975,7 @@ func main() {
 	openMarchList := flag.Bool("open-march-pick", false, "截圖前編一支軍團並停在行軍目標的**地圖選點**（驗收用，docs/spec/149）")
 	pickTile := flag.String("pick-tile", "", "配地圖選點：把游標釘在格 `X,Y`（對拍用；headless 的指標位置不可控）")
 	mapClick := flag.String("map-click", "", "截圖前在大地圖上點格 `X,Y`；加 `:第幾列` 再選走那一格上的第 N 支軍團（對拍用，docs/spec/151）")
-	openPicker := flag.Bool("open-faction-picker", false, "截圖前開縮小地圖圖例的 22 勢力選擇視窗（熱區 0x17，對拍用；狀態列 #4）")
+	openPicker := flag.Bool("open-faction-picker", false, "截圖前開縮小地圖圖例的 22 勢力選擇視窗（熱區 0x17，對拍用）")
 	openSave := flag.String("open-save", "", "截圖前開四槽視窗：`write` 儲存／`read` 讀取（對拍用，docs/spec/25）")
 	videoLCD := flag.Bool("video-lcd", false, "畫面模式切成「液晶」（GAMEPAL bank 4–7，docs/spec/152）")
 	quitMenu := flag.Bool("quit-menu", false, "截圖前走系統選單第 6 列「遊戲結束」，跳出兩項確認（對拍用，docs/spec/153）")
