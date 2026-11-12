@@ -10,6 +10,53 @@
   本輪欄位解碼與來源雜湊在 `workplace/six-fixes-20260908/movement-first-ticks.json`。
   這是既有原版追蹤的重讀，不是新跑原版。
 
+## 2026-11-12：鎖敵距離與隊長就位命令（CONFORMED，限本片）
+
+本節只准修正以下兩個已證實接縫。整份規格的完整排程仍為READY，
+不以本片關閉Issues #13或#16。輸入KI.EXE雜湊同上；IDA Pro9.4、位址為IDA DOS/V linear。
+一次性資料庫SHA-256為`64dde76e1f5a52645760f5596a3ad51292ec5c0cb4b5771b226f28ddfb09f66c`。
+[原指令／bytes／xref](../../workplace/scratch/ui-windows-20261104/movement-20261112/ida-probe.json)
+由[匯出工具](../../tools/ida_tactical_targeting.py)經`tools/ida.sh probe`取得，原資料唯讀、未改名。
+
+| 原始定位 | 已證實契約 |
+|---|---|
+| `0001A886 sub ah,[bx+8]`、`1A889 jnb 1A88F`、`1A88B neg ah`、`1A88D add al,ah` | 候選Y大於自身Y時，先把絕對Y差加進AL一次 |
+| `0001A8A7 add al,40h`、`1A8A9 add al,ah`、`1A8AD jnb 1A8B3` | 保留原平面懲罰，再加Y差；候選Y較大時共加兩次，分數嚴格變小才換目標，等距保留先掃的候選 |
+| `0001A7E7`表索引7的word為`AA2C`；`0001A82D`表索引7的word為`A82C` | 隊長命令7走`sub_1AA2C`；隊員命令7走`0001A82C retn`，兩者不可合併 |
+| `0001AA46–1AA6C`、`1AA6F–1AA79` | 每次依目前陣形線重算GoalXY；已在指定XY時補餘力至128。就位的隊長不是永久不更新的空命令 |
+
+距離的實作為`|dx|+|dy|`，候選Y較大再加`|dy|`，加既有平面懲罰後按byte取值。
+正式戰場座標範圍內，距離與懲罰合計不超過255。保留原版掃描與嚴格小於的等距契約，
+不改沒有存活候選時的既有處理，也不改攻擊碰撞的另一個距離判斷。
+`Holding`只對每隊隊長重新執行既有陣形處理；隊員維持空分派，命令仍為7。
+
+動態來源沿上輪正常第一劇本曹操對呂布的96筆原記錄與258-byte RNG，dosgolem
+`f79eab6db8c64a524a06535e53e5d32b0bbcf7c8`。原版在首次RND前固定seed1，無軍團或戰場注入。
+局部Go探針使用同一擺位前RNG與主迴圈入口RNG，按相同命令後／移動前邊界比較，
+前40拍均在腳本／玩家命令開始前；不搜尋拍點偏移或重擲。
+[原錯版](../../workplace/scratch/ui-windows-20261104/cao-movement-before-comparison.json)
+第一拍有6個鎖定目標不同，第5拍起另有就位隊長的餘力差異。
+[可丟棄候選版](../../workplace/scratch/ui-windows-20261104/cao-movement-candidate-comparison.json)
+前3拍96槽的抽驗欄位全等，第4拍仍有槽29的StepX不同。
+該後續繞路差異保持開啟，不以本節修改尋路演算法。
+
+實作驗收：補Y方向與等距選擇測試；隊長就位維持餘力及陣形線改變後更新目標，
+隊員命令7仍為空分派。冷測戰術、世界、桌面及手機，舊錯版須被負對照拒絕；
+再以正常滑鼠從曹操開局走到入戰、調陣形線、下令與戰後返回。
+存檔格式不變，兩端UI共用同一戰術規則。
+
+實作已通過上述範圍。正式規則的[前40拍比較](../../workplace/scratch/ui-windows-20261104/cao-movement-after-comparison.json)
+顯示前3拍、每拍96槽的27個欄位全等，40個RNG狀態皆相同；完整欄位名保存在收據。
+第4拍仍是槽29的StepX，原版2、Go5，不宣稱後續走位已一致。
+[四套件冷測／vet／建置](../../workplace/scratch/ui-windows-20261104/cao-move-tests.log)及
+[舊錯版負對照](../../workplace/scratch/ui-windows-20261104/cao-move-negative.log)通過。
+正常滑鼠66個功能／同步檢查點、15圖通過，包含首頁曹操開局、宣戰、編成、停手行軍、
+存讀檔、自然入戰、改陣形線、突擊及主動退卻返回；不是完整攻城勝負對拍。
+隊長原目標(3,32)，改中央線後目標(26,32)；滑鼠固定時X由3前進至4、5、6，再改回原線。
+桌面只在既有opt-in trace新增隊長位置、目標及餘力，不加玩家通知或存檔欄位。
+輸入雜湊、來源覆蓋包、正式binary與測試工具見[本輪收據](../../workplace/scratch/ui-windows-20261104/cao-move-integration.json)，
+正常流程畫面見[本機對照頁](../../workplace/scratch/ui-windows-20261104/cao-move-game-review.html)。
+
 ## 已證實的流程
 
 | 原始定位／指令 | 附加語意與等級 | 證據 |

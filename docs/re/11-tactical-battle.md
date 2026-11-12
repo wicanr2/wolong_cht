@@ -938,6 +938,12 @@ sub dl, [si+6] / jnb .1 / neg dl
 
 ### 5.8c 鎖定最近的敵人：`sub_1A85B`
 
+2026-11-12訂正：舊摘要省略`0001A88D`，將距離稱為曼哈頓距離並不完整。
+原版在候選Y較大時多加一次Y差。IDA Pro9.4重新匯出的原指令、bytes、資料庫與輸入雜湊
+見[spec159本片](../spec/159-tactical-command-movement-order.md)；正常曹操開局的同一入戰狀態
+第一拍有6個鎖定目標不同，補回分支後前三拍96槽的27個抽驗欄位全等。
+這是距離分支訂正，不能取代第4拍起的繞路點對拍。
+
 每個兵每幀都跑一次：
 
 ```asm
@@ -947,9 +953,14 @@ mov al, [si+6] / mov ah, [si+8] / mov dl, [si+1Eh]
 mov cx, 0FF30h                    ; ch ＝ 目前最小距離、cl ＝ 48 次
 .loop:
   cmp byte ptr [bx], 80h / jb .next
-  al = |X − [bx+6]| ; ah = |Y − [bx+8]|
+  al = |X − [bx+6]|
+  sub ah, [bx+8]                  ; 0001A886
+  jnb loc_1A88F                   ; 候選Y不大於自身Y，跳過額外加法
+  neg ah
+  add al, ah                      ; 0001A88D：候選Y較大才多加一次
+loc_1A88F:
   … 依 +0x1E 的高低給 +0x40 的距離懲罰 …
-  add al, ah                      ; 曼哈頓距離
+  add al, ah                      ; 0001A8A9：兩條分支都加絕對Y差
   cmp al, ch / jnb .next
   mov ch, al / mov di, bx         ; 記下最近的
 .next: add bx, 20h / dec cl / jnz .loop
@@ -957,7 +968,8 @@ cmp [si+1Ch], di / jz .same
 or byte ptr [si], 8 / mov [si+1Ch], di    ; ★ 換目標時設 bit 3
 ```
 
-`+0x1C` ＝ **目前鎖定的敵人**（記錄位址），用**曼哈頓距離**挑最近的。
+`+0x1C` ＝ **目前鎖定的敵人**（記錄位址），以`|dx|+|dy|`加上述Y方向分支挑選。
+等距保留先掃到的候選；距離算式與平面懲罰均用byte加法。
 `+0x1E` 是 Z 平面位址的高位；`sub_1B240` 會把它複製到 `+0x1F`，再由
 `or bh, [si+1F]` 組進格索引（IDA `seg000:1A85B`、`1B240`，§5.16）。
 `sub_1B4EA` 初始化為 `0`，`sub_1B0D3` 上移時寫 `0x10`，`sub_1B116` 回到地面時清回

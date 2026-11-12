@@ -404,8 +404,11 @@ func (s *desktopGame) writeTrace() {
 				"opening": b.OpeningActive(), "talk": g.battleTalkSession.queue.active(),
 				"selected": b.Sides[side].Selected, "formation": b.Sides[side].Formation,
 				"line": b.Sides[side].Line, "standing": int(b.Sides[side].Standing),
-				"leaderOrder": [2]int{int(b.Sides[side].Soldiers[0].Cmd), int(b.Sides[side].Soldiers[0].Next)},
-				"fastForward": g.battleFastForward,
+				"leaderOrder":    [2]int{int(b.Sides[side].Soldiers[0].Cmd), int(b.Sides[side].Soldiers[0].Next)},
+				"leaderPosition": [3]int{b.Sides[side].Soldiers[0].X, b.Sides[side].Soldiers[0].Y, b.Sides[side].Soldiers[0].Z},
+				"leaderGoal":     [3]int{b.Sides[side].Soldiers[0].GoalX, b.Sides[side].Soldiers[0].GoalY, b.Sides[side].Soldiers[0].GoalZ},
+				"leaderStamina":  b.Sides[side].Soldiers[0].Stamina,
+				"fastForward":    g.battleFastForward,
 			}
 		}
 		c := g.world.Clock

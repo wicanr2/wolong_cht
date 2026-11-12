@@ -193,12 +193,23 @@ GPU最多兩頁快取，其他季節、液晶、未選頁與讀圖失敗沿原�
 以同一原版擺位前RNG核對，96槽的9項初始化欄位及首次移動的6項欄位全部相同；
 自然開局的完整RNG仍不同，不由此推論整場戰術一致。兩次原版唯讀觀測的230個共同快照全等。
 四個受影響套件冷測／vet、舊錯版負對照，以及正式程式正常滑鼠61個功能／同步檢查點通過。
-目前程式`wlgame-cao-delay-r1`，來源與測試在[本輪收據](workplace/scratch/ui-windows-20261104/cao-delay-integration.json)，
+該輪程式`wlgame-cao-delay-r1`，來源與測試在[該輪收據](workplace/scratch/ui-windows-20261104/cao-delay-integration.json)，
 [本機畫面](workplace/scratch/ui-windows-20261104/cao-delay-game-review.html)僅供正常流程檢視。
 下一步仍沿Issues #13／#16／#24固定入戰與命令相位後追中繼目標、投射物、架梯及結算；不直接調速度。
 
+目前已完成[spec159本片](docs/spec/159-tactical-command-movement-order.md)的鎖敵Y方向與隊長就位修正。
+原版候選Y較大時多加一次Y差；隊長命令7仍追隨陣形線並在原位補餘力，隊員則維持空分派。
+同一入戰狀態的前3拍、每拍96槽27欄位全等，40個RNG狀態相同。
+四套件冷測／vet及舊錯版負對照通過；正式程式正常滑鼠66個功能／同步檢查點通過，
+含中央線改目標(3,32)至(26,32)、停手前進、改回、突擊與正常退卻返回。
+目前binary為`wlgame-cao-move-r1`，[接線收據](workplace/scratch/ui-windows-20261104/cao-move-integration.json)
+與[本機畫面](workplace/scratch/ui-windows-20261104/cao-move-game-review.html)保存來源、測試與限制。
+下一個分歧已定位第4拍槽29的繞路中繼X：原版2、Go5。應取得該筆尋路的輸入／輸出再修正，
+不猜補中繼點或用調速度掩蓋。完整攻城勝負、投射物及架梯仍沿Issues #13／#16／#24。
+
 | 日期／目前程式 | 最近驗證 | 狀態 | 交付物 |
 |---|---|---|---|
+| 2026-11-12；鎖敵與隊長就位修正 | 前3拍96槽27欄位與40個RNG狀態吻合；四套件冷測／vet、負對照、正常GUI66個檢查點通過 | 改陣形線後就位隊長會移動；第4拍繞路中繼點仍有差異 | [spec159](docs/spec/159-tactical-command-movement-order.md)、[收據](workplace/scratch/ui-windows-20261104/cao-move-integration.json)、[本機畫面](workplace/scratch/ui-windows-20261104/cao-move-game-review.html) |
 | 2026-11-12；開場移動倒數訂正 | 96槽初始化及首次移動欄位吻合；原版230共同快照、四套件冷測／vet、負對照、正常GUI61個檢查點通過 | 移除誤套城牆物件的一拍硬直；完整戰術差異仍沿Issues #13／#16／#24 | [spec200](docs/spec/200-opening-move-delay.md)、[來源收據](workplace/scratch/ui-windows-20261104/cao-delay-integration.json)、[本機畫面](workplace/scratch/ui-windows-20261104/cao-delay-game-review.html) |
 | 2026-11-12；通知清理與曹操對呂布 | 冷測、vet、右鍵負對照及正常GUI60個功能／同步檢查點通過；原版134步／33圖重現 | 右鍵漏接已修，停手行軍與入戰角色／日期／據點吻合；戰術後段時序仍有差異 | [比較頁](workplace/scratch/ui-windows-20261104/cao-lubu-game-review.html)、[矩陣](workplace/scratch/ui-windows-20261104/cao-lubu-comparison.json)、[收據](workplace/scratch/ui-windows-20261104/cao-lubu-integration.json) |
 | 2026-11-12；移除重複成功通知 | 正常GUI50個功能／同步檢查點、受影響冷測、vet及建置通過 | 編成保留原版對白，編成／存檔／讀檔成功不另開小窗，失敗處理保留 | [實際畫面](workplace/scratch/ui-windows-20261104/quiet-success-game-review.html)、[接線收據](workplace/scratch/ui-windows-20261104/quiet-success-integration.json) |
@@ -1016,6 +1027,13 @@ DOSBox-X 那條路**不刪**：它是這一條的正對照，而且 PC-98 版只
 ---
 
 ## 6. 已被推翻的斷言
+
+### 2026-11-12：鎖敵距離與就位隊長
+
+| 舊斷言 | 原始定位與推翻原因 | 證據 |
+|---|---|---|
+| re/11將`sub_1A85B`完整距離稱為曼哈頓距離 | `1A889 jnb 1A88F`只在無借位時跳過`1A88D add al,ah`，有借位分支在`1A8A9`前多加一次Y差；正常入戰第一拍6個目標差異已以此消除 | [spec159](docs/spec/159-tactical-command-movement-order.md) |
+| Go將就位命令7一律視為原地不更新 | 隊長表`1A7E7[7]`指向`1AA2C`，仍重算目標及補餘力；隊員表`1A82D[7]`才指向`1A82C retn`。正常點中央線後隊長會朝新位置前進 | [來源與GUI收據](workplace/scratch/ui-windows-20261104/cao-move-integration.json) |
 
 ### 2026-11-12：兵士的開場移動倒數
 

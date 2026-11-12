@@ -1344,3 +1344,17 @@
 - [接線收據](workplace/scratch/ui-windows-20261104/cao-delay-integration.json)保存來源覆蓋包、正式binary、原版工具、快照、測試與SHA；[本機對照頁](workplace/scratch/ui-windows-20261104/cao-delay-game-review.html)五圖離線載入，[390寬頁面抽驗](workplace/scratch/ui-windows-20261104/cao-delay-review-qa.json)通過，JS錯誤及外部請求0。截圖屬不同自然入戰狀態的流程檢視，沒有原版／remake同拍畫面聲明。
 - 完整入戰RNG與命令相位、投射物、架梯及後段結算仍沿Issues #13／#16／#24；未關閉遠端Issue，未作Release。原版素材、HTML、快照、存檔及二進位繼續留本機。
 - [收尾核對](workplace/scratch/ui-windows-20261104/cao-delay-final-checks.json)通過；582份文件／135條斷言、1144列分流與嚴格生成輸出一致。來源覆蓋包、正式binary、固定seed、觀測工具、快照及瀏覽器收據雜湊相符，新證據連結存在，工作區root-owned與.md目錄皆0。容器已結束刪除，未動其他專案資源。沿使用者先前提交與推送指示更新repo，實際提交與遠端核對寫入[本機推送收據](workplace/scratch/ui-windows-20261104/repo-delay-update-20261112.json)。
+
+### 2026-11-12：鎖敵Y方向與隊長就位修正
+
+- 使用者續行戰術操作比較。從CONTEXT、GitHub Issues #13／#16與戰術對拍路由接手，沿reverse-engineer-retro-game-remake及IDA技能；目前base為6fb853e。原版輸入沿用上輪正常曹操對呂布、seed1的完整記錄，檔案SHA未變，沒有新跑一輪原版的聲明。
+- 局部Go探針以同一擺位前RNG初始化96槽，再以同一主迴圈入口RNG重播，對齊命令後、移動前的原版1ADC8邊界，不搜尋拍點偏移。原錯版第一拍有6個Target不同；第5拍起另見就位隊長的餘力下降。正式遊戲沒有接入探針或移植戰鬥快照。
+- 新IDA輸出放在既有工作區內的movement-20261112子目錄，因包裝器固定產生ida-probe.json與input.exe.i64，必須避免覆寫上一輪已雜湊的證據。`tools/ida.sh probe dosv tools/ida_tactical_targeting.py`沿用既有非root image，輸入KI.EXE SHA為fffeba985231cda4d636e93d10f598470b1f691d00275e4aa38e285893d43868，IDA Pro9.4、739函式、UID/GID1000。資料庫SHA為64dde76e1f5a52645760f5596a3ad51292ec5c0cb4b5771b226f28ddfb09f66c，未改名或修改正式資料庫。
+- [原指令與bytes](workplace/scratch/ui-windows-20261104/movement-20261112/ida-probe.json)顯示1A889有借位時會先經1A88D加Y差，再於1A8A9加一次。原版候選Y較大時距離為`|dx|+2|dy|`，另一方向為`|dx|+|dy|`；保留平面懲罰與等距先掃。舊re/11摘要省略第一道加法，已訂正，同時保留CONTEXT勘誤。守陣接敵與攻擊碰撞的其他距離判斷未合併或更改。
+- 隊長表1A7E7索引7指向1AA2C，隊員表1A82D索引7指向1A82C的retn。隊長就位後仍重算陣形目標，抵達時補餘力；Go原先將兩者都當空操作。依spec159補READY並先跑[可丟棄候選](workplace/scratch/ui-windows-20261104/cao-movement-candidate-comparison.json)，確認前3拍96槽吻合後才修改正式規則。
+- [正式規則40拍比較](workplace/scratch/ui-windows-20261104/cao-movement-after-comparison.json)核對27個欄位，前三拍每拍96槽全等，40個完整RNG狀態相同。第4拍仍有槽29的StepX原版2／Go5；其後更多走位差異保留，未猜補中繼點、改尋路預算或調速度。
+- [冷測、vet及建置](workplace/scratch/ui-windows-20261104/cao-move-tests.log)通過戰術、世界、桌面及手機四套件。新增Y方向／等距選擇、六隊隊長跨雙側的就位餘力與陣形線移動、隊員命令7空分派測試；[舊錯版負對照](workplace/scratch/ui-windows-20261104/cao-move-negative.log)分別被鎖敵與就位測試拒絕。桌面既有opt-in trace新增隊長位置、目標及餘力，沒有玩家通知或存檔格式變更。
+- 正式binary wlgame-cao-move-r1的SHA為c3f8a7ff3e797bd05bb0c5978c3d10a4d574a3fa71716d83f7b95e647b26b68c。[正常滑鼠](workplace/scratch/ui-windows-20261104/cao-move-remake-gui.json)通過66個功能／同步檢查點、15圖：首頁曹操、宣戰、編夏侯淵、下令徐州、停手行軍與途中存讀檔，自然遇呂布後改中央線。就位隊長目標由(3,32)成(26,32)，指標固定(300,180)時X由3至4、5、6；正常改回、突擊、240拍後點退卻並返回戰略。本片驗主動退卻分支，不聲稱完整突擊勝負與原版相同。
+- [本機對照頁](workplace/scratch/ui-windows-20261104/cao-move-game-review.html)四張正式畫面與[斷網抽驗](workplace/scratch/ui-windows-20261104/cao-move-review-qa.json)通過，390寬無溢出，JS錯誤及外部請求皆0。[接線收據](workplace/scratch/ui-windows-20261104/cao-move-integration.json)固定5檔來源覆蓋包、binary、原版快照、探針、測試與頁面雜湊。
+- spec159只有本片兩項標CONFORMED，整體排程仍READY，Issues #13／#16／#24保留。下一個最小查證點是第4拍槽29的尋路輸入及中繼點輸出，完整投射物、架梯及結算未代證。原版、HTML、截圖、快照及binary留本機，不作Release。
+- [收尾核對](workplace/scratch/ui-windows-20261104/cao-move-final-checks.json)通過：5檔來源、覆蓋包、binary、原版快照及頁面雜湊一致，1144列分流與嚴格輸出未變，582份文件／135條斷言索引通過，新證據連結存在。工作區root-owned與.md目錄皆0，來源UID/GID1000:1000。本輪有界容器皆結束刪除，其他專案資源未動。沿先前指示提交與推送，實際Git提交及遠端核對保存於[本機推送收據](workplace/scratch/ui-windows-20261104/repo-move-update-20261112.json)。

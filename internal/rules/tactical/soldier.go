@@ -3,7 +3,7 @@ package tactical
 // 一個兵一幀做的事：鎖敵 → 套用新命令 → 依命令決定目標 → 移動 → 疲勞。
 // 順序照原版 `sub_1ADC8` 的迴圈（先 `sub_1A85B` 鎖敵，再跑命令）。
 
-// lockOnNearest 重現 `sub_1A85B`：掃對方那 48 個，用**曼哈頓距離**挑最近的。
+// lockOnNearest 重現 sub_1A85B 的48槽掃描（spec/159）。
 //
 // 說明書 11.4「中央突破」之所以有效——用窄陣形讓幾個兵鑽過敵陣直取主將——
 // 就是因為**鎖敵只看距離，不看陣線**。
@@ -17,11 +17,16 @@ func (b *Battle) lockOnNearest(side, k int) {
 			continue
 		}
 		d := abs(me.X-e.X) + abs(me.Y-e.Y)
+		// 1A889 的無借位出口跳過1A88D；候選Y較大時才多加一次Y差。
+		if me.Y < e.Y {
+			d += e.Y - me.Y
+		}
 		// `sub_1A85B` 先比較雙方 +0x1E，再依攻擊者兵種與候選的
 		// +0x00 bit 1 決定是否加 0x40；不是單純比較 Z 高低。
 		if targetPlanePenalty(me, e) {
 			d += Width
 		}
+		d &= 0xFF // 原版AL加法；正常戰場範圍內不會溢位。
 		if d < bestD {
 			best, bestD = i, d
 		}
@@ -78,7 +83,10 @@ func (b *Battle) updateSoldierCommand(side, k int) {
 	case Retreat:
 		b.doRetreat(side, k)
 	case Holding:
-		// 已就位，原地待命。
+		// 隊長命令7仍走1AA2C，重算陣形並在原位補餘力；隊員分派為retn。
+		if k%PerSquad == 0 {
+			b.doFormation(side, k)
+		}
 	case Duel:
 		// 命令 8：分派是 nullsub（`funcs_1A7E1[8]`）——目標座標由
 		// 單挑狀態機寫，移動與接觸命中照走下面的共通路徑

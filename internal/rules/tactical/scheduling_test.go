@@ -2,6 +2,75 @@ package tactical
 
 import "testing"
 
+func TestLockOnUsesOriginalYDirectionAndScanOrder(t *testing.T) {
+	tests := []struct {
+		name     string
+		meX, meY int
+		foes     [2][2]int
+		want     int
+	}{
+		{"larger Y adds distance twice", 1, 28, [2][2]int{{62, 29}, {62, 27}}, 1},
+		{"weighted tie retains earlier slot", 62, 37, [2][2]int{{1, 35}, {1, 38}}, 0},
+		{"X and Y both affect selection", 10, 20, [2][2]int{{12, 19}, {10, 22}}, 0},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			for side := 0; side < 2; side++ {
+				b := NewBattle(flatField(), SyntheticFormations(), nil, 0)
+				b.Sides[side].Soldiers[0] = Soldier{Alive: true, Kind: Infantry, X: tt.meX, Y: tt.meY}
+				for i, xy := range tt.foes {
+					b.Sides[1-side].Soldiers[i] = Soldier{Alive: true, X: xy[0], Y: xy[1]}
+				}
+				b.lockOnNearest(side, 0)
+				if got := b.Sides[side].Soldiers[0].Target; got != tt.want {
+					t.Fatalf("側%d鎖定槽%d，原版應選槽%d", side, got, tt.want)
+				}
+			}
+		})
+	}
+}
+
+func TestHoldingLeaderKeepsStaminaAndTracksFormationLine(t *testing.T) {
+	for _, side := range []int{AttackerSide, DefenderSide} {
+		for k := 0; k < SoldiersOnFoot; k += PerSquad {
+			b := NewBattle(flatField(), SyntheticFormations(), nil, 0)
+			s := &b.Sides[side].Soldiers[k]
+			*s = Soldier{Alive: true, Kind: Infantry, Cmd: Holding, Next: Holding, Stamina: 37, Target: -1}
+			b.Place()
+			b.updateSoldierCommand(side, k)
+			if s.Stamina != StaminaFull || s.Cmd != Holding || s.Next != Holding {
+				t.Fatalf("側%d隊長%d就位後應保持命令並補餘力：%+v", side, k, *s)
+			}
+			x := s.GoalX
+			if side == AttackerSide {
+				b.Sides[side].Line += 5
+			} else {
+				b.Sides[side].Line -= 5
+			}
+			b.updateSoldierCommand(side, k)
+			if s.GoalX == x {
+				t.Fatalf("側%d隊長%d未追隨新的陣形線", side, k)
+			}
+			start := s.X
+			b.updateSoldierMovement(side, k)
+			b.updateSoldierMovement(side, k)
+			if s.X == start {
+				t.Fatalf("側%d隊長%d未走向新的陣形位置", side, k)
+			}
+		}
+	}
+}
+
+func TestHoldingFollowerKeepsOriginalEmptyDispatch(t *testing.T) {
+	b := NewBattle(flatField(), SyntheticFormations(), nil, 0)
+	s := &b.Sides[0].Soldiers[1]
+	*s = Soldier{Alive: true, Kind: Infantry, Cmd: Holding, Next: Holding, Stamina: 37, GoalX: 22, GoalY: 23}
+	b.updateSoldierCommand(0, 1)
+	if s.Stamina != 37 || s.GoalX != 22 || s.GoalY != 23 {
+		t.Fatalf("隊員命令7應保持原版空分派：%+v", *s)
+	}
+}
+
 func TestOriginalFirstStepSelectsGoalBeforeMoving(t *testing.T) {
 	b := NewBattle(flatField(), SyntheticFormations(), &fixedRand{seq: []int{1}}, 0)
 	s := &b.Sides[0].Soldiers[0]
