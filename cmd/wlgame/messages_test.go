@@ -32,6 +32,36 @@ func TestMessagePagePreservesTalkHardBoundaries(t *testing.T) {
 	}
 }
 
+func TestMessageRightClickAdvancesOnePageBeforeContinuation(t *testing.T) {
+	pressed := false
+	continued := 0
+	g := &game{cancelFn: func() bool { return pressed }}
+	g.messages = []messageDialog{{
+		lines: []string{"甲", "乙", "丙", "丁", "末頁"},
+		then: func() {
+			continued++
+			g.messages = append(g.messages, messageDialog{lines: []string{"下一則"}})
+		},
+	}}
+	g.updateMessageOnly()
+	if g.messages[0].page != 0 || continued != 0 {
+		t.Fatal("沒有輸入不應推進對白")
+	}
+	pressed = true
+	g.updateMessageOnly()
+	if len(g.messages) != 1 || g.messages[0].page != 1 || continued != 0 {
+		t.Fatal("右鍵應只翻一頁，不能提前執行續行")
+	}
+	g.idleGate.acc = idleResumeUnits
+	g.updateMessageOnly()
+	if continued != 1 || len(g.messages) != 1 || g.messages[0].lines[0] != "下一則" {
+		t.Fatal("末頁右鍵應只完成目前訊息，保留續行加入的下一則")
+	}
+	if g.idleGate.acc != 0 {
+		t.Fatal("關閉訊息後應保留原有停手等待")
+	}
+}
+
 func TestTalkLinesDropsOnlyStructuralTrailingBlank(t *testing.T) {
 	lib, err := library.Load("../../workplace/orig/dosv")
 	if err != nil {

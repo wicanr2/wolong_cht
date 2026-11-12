@@ -56,7 +56,7 @@
 
 | 主題 | 規格 | 狀態 |
 |---|---|---|
-| HD城池地圖重繪、工具列、頭像、AI輔助與武將編輯 | [275](275-hd-toolbar-portraits-and-tools.md) | DRAFT；五城十張已同意，全圖三十五區192據點及屋頂細修；81張頭像小樣，局部美術與正式接線待完成 |
+| HD城池地圖重繪、工具列、頭像、AI輔助與武將編輯 | [275](275-hd-toolbar-portraits-and-tools.md) | 整體DRAFT；頭像／偏好、縮放、色盤0地景／橫幅／五組景觀及自動工具列限定抽驗通過；其餘HD、美術、AI及編輯器待完成 |
 | 清單捲軸按住預覽、放開提交 | [274](274-original-list-scrollbar-drag.md) | CONFORMED；正常滑鼠與像素抽驗通過 |
 | 據點整備一拍之內的處理順序 | [`163-city-tick-order.md`](163-city-tick-order.md) | CONFORMED；已重排，逐子刻不一致 910 → 863 |
 | 求援的三道閘（立刻求援的條件、求援記錄、冷卻寫入） | [`164-relief-request-gates.md`](164-relief-request-gates.md) | CONFORMED |

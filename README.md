@@ -31,8 +31,19 @@ Android 不在這次桌面修正版範圍。
 [HD規劃](docs/spec/275-hd-toolbar-portraits-and-tools.md)包含工具列模式切換、HD頭像、
 可選戰術AI加成與武將能力編輯，目前仍在設計階段。現行程式與證據以[CONTEXT](CONTEXT.md)為準。
 HD美術方向已確認，以原版造型、視角、配置與強化原色為基準，樣本見[本機原版與HD重繪對照](workplace/hd-redraw-local-20261104/faithful/index.html)，直接雙擊HTML即可離線開啟。
-另有[大地圖HD本機預覽](workplace/hd-redraw-local-20261104/faithful/world/index.html)，三十五區試繪已覆蓋原版全圖，可切換區域、縮放與平移；局部美術與正式引擎接線仍待完成。
-頭像已有[原版與HD本機對照](workplace/hd-redraw-local-20261104/faithful/portraits/index.html)，可檢視81張原圖參考重繪小樣，支援並排、拉桿、縮放與拖曳，尚未定稿或接入遊戲。
+另有[大地圖HD本機預覽](workplace/hd-redraw-local-20261104/faithful/world/index.html)，三十五區試繪已覆蓋原版全圖，可切換區域、縮放與平移；局部美術仍待修整，正式遊戲已接範圍見下方。
+頭像已有[原版與HD本機對照](workplace/hd-redraw-local-20261104/faithful/portraits/index.html)，可檢視146張原圖參考重繪小樣。已接入可選桌面頭像模式，首次原版、切換後記住選擇，缺圖回原圖；正常新遊戲與勢力情報窗抽驗通過，尚未逐張取得美術接受。
+從專案根目錄啟動時，可加`-hd-portraits workplace/hd-redraw-local-20261104/faithful/portraits`載入本機選稿；[頭像實際遊戲截圖](workplace/scratch/ui-windows-20261104/hd-head-game-review.html)可直接離線開啟。
+戰略地圖已支援50%～200%、每次25%，可用單排工具列或滾輪縮放，視窗與頭像維持原尺寸。加`-hd-world workplace/hd-redraw-local-20261104/faithful/world`可載入既有35區與22接縫選稿，沿同一原版／HD按鈕切換；[HD實際遊戲截圖](workplace/scratch/ui-windows-20261104/hd-world-game-review.html)含三倍率點城、模式切換與正常讀檔抽驗。其他季節／液晶模式沿原圖，局部美術、其他HD場景、AI與編輯器仍待完成。
+另保留[完整工具列操作稿](workplace/scratch/ui-windows-20261104/hd-toolbar-expanded-r1.html)，其中AI與武將編輯仍為示範。
+
+工具列已縮為28高，靠上緣顯示、離開收起，只留6高把手。原版模式也可縮小地圖與使用小地圖。
+加`-hd-banner workplace/hd-redraw-local-20261104/faithful`可載入原圖參考HD龍紋橫幅，日期保持即時更新；
+[橫幅與工具列實際畫面](workplace/scratch/ui-windows-20261104/banner-toolbar-game-review.html)可直接離線開啟。
+
+加`-hd-locations workplace/hd-redraw-local-20261104/faithful`可把已同意的五組城池景觀接到情報窗。
+沿原版頁碼取圖，保留96×96位置與尺寸；未選頁、其他季節及液晶沿原圖。
+[景觀實際遊戲畫面](workplace/scratch/ui-windows-20261104/hd-location-game-review.html)包含五城、共用頁碼與原圖回退抽驗。
 
 比對式反編譯的來源與證據也保存在本 repo：
 

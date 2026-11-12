@@ -47,6 +47,11 @@ func (g *game) mapPickTileAt(x, y int) (col, row int, ok bool) {
 	if x < 0 || x >= strategyMapW || y < strategyMapY || y >= screenH {
 		return 0, 0, false
 	}
+	if g.mapZoomPercent() != 100 {
+		ox, oy := g.mapOrigin()
+		z := g.mapZoomScale()
+		return int((ox + float64(x)/z) / world.TileSize), int((oy + float64(y-strategyMapY)/z) / world.TileSize), true
+	}
 	return g.camX + x/world.TileSize,
 		g.camY + (y-strategyMapY)/world.TileSize, true
 }
@@ -166,6 +171,9 @@ func (g *game) mapPickCursorTile() (col, row int, ok bool) {
 // drawMapPickCursor 把游標畫在**游標所在那一格的左上角**——
 // 原版是格對齊的，不跟著像素走（docs/spec/149 §1.1）。
 func (g *game) drawMapPickCursor(screen *ebiten.Image) {
+	if g.mapZoomPercent() != 100 && !g.worldZoom.drawing {
+		return
+	}
 	if !g.mapPickActive() && !g.desktopMapCursorVisible() {
 		return
 	}

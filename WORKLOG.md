@@ -1150,3 +1150,183 @@
 - README現況同步261份規格、255 CONFORMED／4 READY／2 DRAFT；未解主表1144列與6筆平台層分開計。過期斷言掃描已通過。幽靈引用204筆主要是既有本機歷史路徑；lessons render --check與silent-fixture-drop防線檢查在原HEAD也失敗，保留既有問題，不以改checker或放寬規則通過。
 - 原版EXE／資料、HD原圖及重繪PNG、離線HTML、workplace與dist-all均不入提交。deny-list掃描1868個追蹤檔，逐內容比對120個原版雜湊，未命中原版資產。提交前會再次核對暫存區、檔案型態、git diff --check、擁有權及容器清理；不建Release、移動tag、部署網站或force push。
 - 本機收據為[提交檢查與遠端核對](workplace/weekly-push-20261106-checks.json)，保存檢查輸出、原HEAD比較與收尾的git_delivery。獨立檢查彙整器最初因既有Python的tarfile不支援filter參數中止，改用同容器的tar讀取可信git archive後完成；這是驗證腳本環境差異，不是產品失敗。依本輪授權建立「保存本週進度：原版滑鼠操作、行軍存讀檔與HD規劃」提交並正常推送origin/main，實際新SHA及遠端一致結果記於收據及回覆。
+
+## 2026-11-11：新增12張原版參考頭像，93張對照與眼部／頭盔細修
+
+- 使用者「繼續囉」接續既定原圖參考HD方向。核對CONTEXT、81張選稿、復古重製路由、remake／imagegen技能、抽驗交接及README／文件職責。主機gh auth及遠端open Issues讀取成功，未寫入Issue或委派代理。起始main與origin/main同為14c7700818071e3710d921e6223daaf1858cb348，工作樹乾淨。先保存81張頁、程式、metadata、收據、抽樣畫面及81張選稿，共109個檔案雜湊，入口eightyone-r1-snapshot.json。
+- batch-9-plan.json選凌統、文聘、廖化、周倉、蔣欽、陳武、朱桓、曹休、曹純、夏侯霸、孟達與張任。沿用extract-portraits.go與既有Go映像，以唯讀原資料、唯讀wl-gomod及容器/tmp快取取12張64×64原圖，只寫既有頭像目錄。朱桓／曹休／夏侯霸來自劇本索引1，其餘九張來自索引0，名字、武將ID與頁碼連同劇本核對，保存originals-batch-9.json。確認匯出exit 0後才產生最近鄰參考及提示詞。
+- 內建imagegen依各自原圖重畫12張1254×1254首稿。文聘第2稿修正重複眼睛與面頰孤立色點，陳武第2稿移除新增大符號／額前菱形／棋盤衣紋，凌統第2稿收斂過度張口並移除下巴細綠線，曹純第2稿將鳥形細節改成小型抽象帽前亮面，張任第2稿將金色碎片融成連續淡金亮面。五張選第2稿，其餘七張選第1稿；原有藍色、綠布及淡金色區保留。曹純原圖下唇35,40有RGB(211,0,0)單一紅點，選稿保留，樣本記於batch-9.json，意義未知。全部17次輸出逐byte複製且未後製，累計117次、93張選稿，提示詞入口generation-set.json。兩張新增總覽僅作檢視縮圖。
+- 本機頁擴充93位、預設凌統，沿用既有載入方式、固定工具列、四種比較模式與同步縮放／拖曳／重設及HD 1:1。相同2GB／1 CPU、30秒導覽及90秒外層完成七項斷網抽驗，含186張內嵌PNG bytes／尺寸、來源劇本／武將／頁碼、93位切換、六種新增畫面、滑鼠操作、93列來源視窗開頭／捲動／關閉／重開、單檔搬移後重開及390×844兩倍像素密度。三次載入約9.7、7.2、5.4秒，各186個暫存網址全釋放、來源區塊全移除，JS錯誤0、外部請求0。原圖、17次原生輸出、兩張總覽、文聘並排、曹純窄視窗細節與捲動後來源表已目視。
+- verify.py核對93張原圖、117次原生bytes、四劇本名單及來源劇本、原始資源／解析器SHA、趙雲／鄧艾／王平既有像素證據、曹純紅點、81張及更早快照、載入歷史收據與重建一致。既有81張選稿、十張已同意城池PNG／城池頁及全圖頁未變。HTML 303,867,988 bytes，SHA b3caa5a2ae8f7c10c54844890c5f99f52d197877fd53999a458636832c0ac075，收據qa-result.json及verification.json。正式引擎與全圖未改，不擴跑其測試；93張仍是150頁中的小樣，未宣稱逐張接受或正式接線完成。
+- 更新README、CONTEXT唯一狀態表、spec275及索引，81張技術敘述改連歷史頁與對應收據。本輪不commit、push、發行、部署網站、建新映像或交付根目錄。Docker工作均有界、1000:1000、斷網、來源唯讀且--rm；文件索引582份／135條斷言與嚴格未解分流1144列均通過，只刷新HD現況一列，保留1143列既有分類。107個頭像文件連結與109個81張快照雜湊核對通過，擁有權皆1000:1000，工作根root-owned檔案與.md目錄皆0，git diff --check通過；最終docker ps -a --filter name=wolong無執行中或停止容器。
+
+## 2026-11-11：新增12張原版參考頭像，105張對照與驗證工具分段處理
+
+- 使用者「ok 繼續囉」接續原圖參考HD方向。核對CONTEXT、93張現況、復古重製路由、remake／imagegen技能與文件職責，沿既有映像及工作目錄。主機gh auth與遠端open Issues讀取成功，未寫Issue或委派代理。HEAD維持14c7700818071e3710d921e6223daaf1858cb348，保留前輪八份未提交文件變更。先保存93張頁、程式、metadata、收據、抽樣畫面與93張選稿，共121個檔案雜湊，入口ninetythree-r1-snapshot.json。
+- batch-10-plan.json選曹叡、曹彰、關索、王雙、紀靈、凌操、孫桓、孫韶、劉封、蔡瑁、張紘與孫乾。沿原extract-portraits.go與Go映像，以唯讀原資料、唯讀wl-gomod及容器/tmp快取匯出12張64×64原圖；確認程序exit 0後才產生最近鄰參考。前四張來自劇本索引1，其餘八張索引0，名字／劇本／武將ID／頁碼與來源SHA保存originals-batch-10.json。曹彰為劇本1武將4、頁123，劇本0武將14的曹漳也用同頁，保留兩版原字，頁碼只計一次。
+- 內建imagegen依每張自己的原圖重畫12張1254×1254首稿。關索／王雙／凌操／孫桓／孫韶／劉封／蔡瑁／孫乾選第2稿，收斂帽前牌飾或過大的紅／金／綠細節，移除新增灰色圓點／白色鉚釘及棋盤衣紋，其餘四張選第1稿。孫桓金色紋樣的細部形狀與符號意義仍屬詮釋。蔡瑁原圖帽前14個RGB(81,146,65)綠色像素已逐點保存，第2稿縮小捲紋而保留綠色。全部20次輸出逐byte複製且未後製，累計137次、105張選稿；原生圖、未選稿、提示詞與兩張檢視總覽留本機，入口batch-10.json及generation-set.json。
+- 本機頁105位、預設曹叡，沿既有四種模式、固定工具列與同步縮放／拖曳／重設及HD 1:1。初次完整QA開頁出現Page crashed，先保存HTML／app／QA／錯誤於batch10-loading-before-snapshot.json。相同HTML單獨導覽約5.2秒通過；驗證程式改讓qa-assets.cjs的PNG讀檔子程序結束後才啟動瀏覽器，子程序RSS約1.09GB，瀏覽器啟動前父程序約79MB。相同2GB／1 CPU、30秒導覽及90秒外層完成原七項完整抽驗，沒有放寬斷言。原失敗未取得OOM計數，原因不作已證實OOM聲明。
+- 七項抽驗含210張內嵌PNG bytes／尺寸、來源劇本／武將／頁碼、105位切換、六種新增畫面、四種模式與滑鼠控制、105列來源視窗開頭／捲動／關閉／重開、單檔搬移及390×844兩倍像素密度。三次載入約5.1、6.5、15.2秒，各210個暫存網址全釋放，來源區塊全移除，JS錯誤0、外部請求0。原圖、20次原生輸出、兩張總覽、王雙正常並排、孫乾窄視窗細節與捲動後來源表已目視。
+- 完整性核對在內嵌重建時以137終止，保留當時build.py／verify.py後，將建頁的全部base64列表／合併字串／完整HTML同時保留，改為對齊區塊分段寫入暫存檔再原子替換。相同1GB／1 CPU、60秒的verify.py完整重跑exit 0，核對105張原圖、137次原生bytes、四劇本名單、來源與解析器SHA、既有色點及蔡瑁綠色樣本、123頁原字、93張及更早快照與重建一致。HTML保持342,877,215 bytes與SHA 0eb9fa5eddea1e9e871df3fe853fbc4f8a839bc96056d8b628f23db60959f690，與已通過瀏覽器抽驗及初版逐byte相同。既有93張選稿、十張已同意城池PNG／城池頁及全圖頁未變。工具前後、診斷及收據在batch10-browser-review.json；正式引擎與原生素材未改，不擴跑其測試。
+- 更新README、CONTEXT唯一狀態表、spec275及索引，93張技術敘述改連歷史頁與收據。105張仍為150頁中的小樣，未宣稱逐張接受或正式接線完成。本輪不commit、push、發行、部署網站、建立新映像或交付根目錄。Docker均有界、1000:1000、斷網、來源唯讀且--rm；文件索引582份／135條斷言與嚴格未解分流1144列通過，只刷新HD現況一列，保留1143列既有分類。121個頭像文件連結、121個93張快照雜湊與六個失敗頁／工具檔案核對通過，擁有權皆1000:1000，工作根root-owned檔案與.md目錄皆0，git diff --check通過。原生圖與HTML維持gitignore；最終docker ps -a --filter name=wolong無執行中或停止容器。
+
+## 2026-11-11：新增12張原版參考頭像，117張對照與逐張串流核對
+
+- 使用者「繼續囉」接續既定原圖參考HD方向。先核對CONTEXT、105張現況、復古重製路由、remake／imagegen技能、文件職責與驗證交接。主機gh auth及遠端open Issues讀取成功，未寫Issue或委派代理。沿用HEAD 14c7700818071e3710d921e6223daaf1858cb348與前輪八份未提交文件變更。先保存105張頁、程式、metadata、收據、抽樣畫面、105張選稿及前批失敗證據，共145個檔案雜湊，入口onehundredfive-r1-snapshot.json。
+- batch-11-plan.json選袁尚、袁譚、袁胤、王朗、李傕、郭汜、韓玄、金旋、嚴白虎、公孫越、黃祖與劉繇。沿既有extract-portraits.go、Go映像、唯讀原資料與wl-gomod及容器/tmp快取匯出12張64×64原圖，確認exit 0後才產生最近鄰參考。十二張皆來自劇本索引0，名字／劇本／武將ID／頁碼及來源SHA保存originals-batch-11.json；袁胤的ID確為0。
+- 內建imagegen依各自原圖重畫12張1254×1254首稿。袁譚／袁胤／李傕／郭汜／金旋／黃祖選第2稿：收斂側臉比例與完整白框、將口部孤立亮條融回髭線／唇部明暗、縮小藍色塊、移除凸起灰釘與規則側盔橫紋，以及移除肩部過大的黑色菱格。其餘六張選第1稿。黃祖禿額、原有髭線及色塊保留，細部材質與幾何仍屬詮釋。袁胤帽前18個RGB(130,162,97)綠色像素與郭汜13個深淺藍樣本保存batch-11.json，意義未知。全部18次原生PNG逐byte複製且未後製，累計155次、117張選稿，原圖／提示詞／未選稿及兩張檢視總覽留本機。
+- 117張單檔沿原有分段建頁、四種模式、固定工具列、同步縮放／拖曳／重設與HD 1:1，預設袁尚。第一次完整QA碰90秒外層逾時，停在搬移後重開；保留HTML、QA與錯誤於batch11-browser-before-snapshot.json。將PNG檢查改為逐張串流讀取，各桌面／獨立／窄視窗依序關閉再重開；第二次仍於窄視窗載入時逾時。第二次階段顯示18.5秒完成靜態核對、39.9秒初次ready、57.0秒完成全部117位切換、68.7秒完成獨立重開；該版工具／錯誤／階段紀錄保存batch11-browser-attempt2.json。
+- 兩次同類失敗後回查驗證路由，並查app.js確認選取會更新標題並同步重畫。將每次切換固定等100毫秒，改成等選項／標題實際更新，原標題斷言及全部117位切換保留。相同2GB／1 CPU、30秒導覽、90秒外層完成原七項完整斷網抽驗；沒有減少檢查項目。階段約51.9秒到達第七項，三次載入約6.8、11.1、14.1秒，各234個暫存網址全釋放，來源區塊全移除，JS錯誤0、外部請求0。未隔離每個修正的效果，也不宣稱原失敗的OOM機制已證實。
+- 七項包含234張內嵌PNG bytes／尺寸、來源劇本／武將／頁碼、117位切換、新批預設與六種畫面、四模式與滑鼠控制、117列來源視窗開頭／捲動／關閉／重開、單檔搬移重開後袁胤選取及390×844兩倍像素密度。原圖、18次原生輸出與兩張總覽已目視；正常頁面另看袁譚／李傕並排、黃祖窄視窗細節及捲動後來源表。
+- verify.py依原有1GB／1 CPU、60秒完整重跑exit 0，核對117張原圖、155次原生bytes、四劇本名單、原始資源／解析器SHA、既有像素證據、袁胤綠色與郭汜藍色、ID0、105張及更早快照、前兩次失敗頁／工具與重建一致。105張階段的QA與初版改以歷史快照核對，沒有拿新117張收據代稱105張。HTML保持380,383,085 bytes，SHA 3ad3a843bf5d368454b1c03e8218f001288d9edc7217284af7af44a57f01390b，與初次失敗頁逐byte相同。既有105張選稿、十張已同意城池PNG／城池頁及全圖頁未變。工具檢視入口batch11-browser-review.json，通用失敗輸出在雜湊核對封存後清除；歷史檔保留。
+- 更新README、CONTEXT唯一狀態表、spec275及索引，105張技術敘述改連歷史頁與收據。117張仍為150頁中的小樣，未宣稱逐張接受或正式接線完成；正式引擎與原生素材未因驗證工具調整而改動，不擴跑其測試。本輪不commit、push、發行、部署網站、建立新映像或交付根目錄。Docker均有界、1000:1000、斷網、來源唯讀且--rm；文件索引582份／135條斷言及嚴格未解分流1144列通過，只刷新HD現況一列，保留1143列既有分類。135個頭像文件連結、145個105張快照雜湊與八個逾時封存檔案核對通過，擁有權皆1000:1000，工作根root-owned檔案與.md目錄皆0，git diff --check通過。原生圖與HTML仍由gitignore排除；最終docker ps -a --filter name=wolong無執行中或停止容器。
+
+## 2026-11-11：原版參考HD頭像累計120張
+
+- 新增劉勳、孫瑜、劉琦，來源劇本索引0，武將ID／頁碼為8／96、21／60、28／78。內建imagegen四次原生輸出保存在本機，累計159次；劉勳第2稿修平新增寶石，保留原有綠色區塊。未選稿保留，PNG未後製。
+- [第十二批紀錄](workplace/hd-redraw-local-20261104/faithful/portraits/batch-12.json)保存完整提示詞、來源與選稿。[117張快照](workplace/hd-redraw-local-20261104/faithful/portraits/117-r1-snapshot.json)保留398項檔案雜湊，既有117張、城池及全圖頁未變。
+- 七項離線抽驗通過，120張切換、240張內嵌PNG、三張新增畫面、縮放／拖曳、單檔搬移與窄視窗來源操作均通過；JS錯誤及外部請求皆0。原2GB／1 CPU與時間限制沿用，app.js和build.py未變。
+- 完整性核對159次原生圖、120張原圖及來源映射、參考圖、快照與HTML重建一致。仍為DRAFT小樣，未接入引擎或取得逐張接受；未提交或推送原版素材、圖片與HTML。
+- 文件索引582份／135條斷言及嚴格未解分流1144列通過，保留1143列既有分類。規格109個頭像連結存在，工作根root-owned檔案與.md目錄皆0，頭像擁有權皆1000:1000。git diff --check通過，HTML與原生圖仍由gitignore排除，專案容器已清理。
+
+## 2026-11-11：原版參考HD頭像累計126張
+
+- 新增劉度、夏侯尚、牛金、吳蘭、張勳、張松，來源劇本索引0，名字、武將ID與頁碼逐張核對。內建imagegen原生輸出累計169次，PNG未後製，未選稿保留。選稿與細修依[第十三批紀錄](workplace/hd-redraw-local-20261104/faithful/portraits/batch-13.json)，完整提示詞與原生圖皆保存在本機。
+- [120張快照](workplace/hd-redraw-local-20261104/faithful/portraits/120-r1-snapshot.json)保存262項檔案雜湊。既有120張選稿、城池與全圖頁未變。
+- 七項離線抽驗通過，核對252張內嵌PNG及126張切換、六張新增畫面、滑鼠縮放／拖曳、來源視窗、單檔搬移與窄視窗操作；JS錯誤及外部請求皆0。資源、時間限制及app.js／build.py沿用前批。
+- 完整性核對全部169次原生圖、126張原圖、來源映射、參考圖與重建一致。仍為DRAFT小樣，未取得逐張接受或接入正式引擎，未部署網站、提交或推送素材。
+- 文件索引582份／135條斷言與嚴格未解分流1144列通過，保留1143列既有分類。規格123個頭像連結存在，工作根root-owned檔案與.md目錄皆0，頭像擁有權皆1000:1000。git diff --check通過，HTML與原生圖仍由gitignore排除，專案容器已清理。
+
+## 2026-11-11：原版參考HD頭像累計132張
+
+- 新增雷銅、李恢、冷苞、伍習、李暹、張衛，來源劇本索引0，名字、武將ID與頁碼逐張核對。內建imagegen原生輸出累計177次，PNG未後製，未選稿保留。選稿與細修依[第十四批紀錄](workplace/hd-redraw-local-20261104/faithful/portraits/batch-14.json)，完整提示詞與原生圖皆保存在本機。
+- [126張快照](workplace/hd-redraw-local-20261104/faithful/portraits/126-r1-snapshot.json)保存277項檔案雜湊。既有126張選稿、城池與全圖頁未變。
+- 七項離線抽驗通過，核對252張內嵌PNG及132張切換、六張新增畫面、滑鼠縮放／拖曳、來源視窗、單檔搬移與窄視窗操作；JS錯誤及外部請求皆0。資源、時間限制及app.js／build.py沿用前批。
+- 完整性核對全部177次原生圖、132張原圖、來源映射、參考圖與重建一致。仍為DRAFT小樣，未取得逐張接受或接入正式引擎，未部署網站、提交或推送素材。
+- 文件索引582份／135條斷言與嚴格未解分流1144列通過，保留1143列既有分類。規格137個頭像連結存在，工作根root-owned檔案與.md目錄皆0，頭像擁有權皆1000:1000。git diff --check通過，HTML與原生圖仍由gitignore排除，專案容器已清理。
+
+## 2026-11-11：原版參考HD頭像累計138張
+
+- 新增嚴圃、鞏志、笮融、張英、嚴輿、周昕，來源劇本索引0，名字、武將ID與頁碼逐張核對。內建imagegen原生輸出累計189次，PNG未後製，未選稿保留。選稿與細修依[第十五批紀錄](workplace/hd-redraw-local-20261104/faithful/portraits/batch-15.json)，完整提示詞與原生圖皆保存在本機。
+- [132張快照](workplace/hd-redraw-local-20261104/faithful/portraits/132-r1-snapshot.json)保存289項檔案雜湊。既有132張選稿、城池與全圖頁未變。
+- 七項離線抽驗通過，核對276張內嵌PNG及138張切換、六張新增畫面、滑鼠縮放／拖曳、來源視窗、單檔搬移與窄視窗操作；JS錯誤及外部請求皆0。資源、時間限制及app.js／build.py沿用前批。
+- 完整性核對全部189次原生圖、138張原圖、來源映射、參考圖與重建一致。仍為DRAFT小樣，未取得逐張接受或接入正式引擎，未部署網站、提交或推送素材。
+- 並排檢視後修正嚴輿張口判讀：原圖本就大張口，第2稿收得太小。第3稿保留張口，只收斂嘴部亮條；第一次候選的24項檔案雜湊與通過的技術收據另存，最終選稿重新通過七項抽驗與完整性核對。
+- 文件索引582份／135條斷言與嚴格未解分流1144列通過，保留1143列既有分類。規格155個頭像連結存在，工作根root-owned檔案與.md目錄皆0，頭像擁有權皆1000:1000。git diff --check通過，HTML與原生圖仍由gitignore排除，專案容器已清理。
+- 圖庫頁133保留劇本0的111嚴圃與劇本3的117閻圃兩個原始名稱，只計一張選稿。另依封存的[132張QA收據](workplace/hd-redraw-local-20261104/faithful/portraits/qa-result-132-r1.json)修正spec275第十四批文內的內嵌圖數：原寫252，實際為264；圖片與收據未改。此次文件數字直接由收據取值。
+
+## 2026-11-11：原版參考HD頭像累計146張
+
+- 新增李別、刑道榮、劉賢、武安國、劉磐、楊昂、趙廣、趙統，前六張來源劇本索引0，趙廣與趙統為索引1，名字、武將ID與頁碼逐張核對。內建imagegen原生輸出累計203次，PNG未後製，未選稿保留。選稿與細修依[第十六批紀錄](workplace/hd-redraw-local-20261104/faithful/portraits/batch-16.json)，完整提示詞與原生圖皆保存在本機。
+- [138張快照](workplace/hd-redraw-local-20261104/faithful/portraits/138-r1-snapshot.json)保存301項檔案雜湊。既有138張選稿、城池與全圖頁未變。
+- 七項離線抽驗通過，核對292張內嵌PNG及146張切換、八張新增畫面、滑鼠縮放／拖曳、來源視窗、單檔搬移與窄視窗操作；JS錯誤及外部請求皆0。資源、時間限制及app.js／build.py沿用前批。
+- 完整性核對全部203次原生圖、146張原圖、來源映射、參考圖與重建一致。仍為DRAFT小樣，未取得逐張接受或接入正式引擎，未部署網站、提交或推送素材。
+- 四劇本149個原始名稱共用146頁，這146頁均有小樣；圖庫145、147、148、149四頁未出現在現有名單，用途待確認。另依[132張封存選稿表](workplace/hd-redraw-local-20261104/faithful/portraits/selection-132-r1.json)與[138張封存選稿表](workplace/hd-redraw-local-20261104/faithful/portraits/selection-138-r1.json)回填前兩批文內來源包數14／15，原收據與圖片未改；本批數字直接取收據。
+- 前兩次完整抽驗碰到90秒外層逾時。靜態核對工具改用有界Buffer組行，並重新建立短ID，避免集合保留正規表示式擷取的大字串。相同512MB容器與256MB JavaScript heap探針通過，完成時RSS為84,631,552 bytes；完整七項抽驗在原90秒限制通過。HTML、app.js、主QA與原生PNG未改，失敗收據及舊工具保留於[本批工具檢視](workplace/hd-redraw-local-20261104/faithful/portraits/batch16-browser-review.json)，不將全部時間差歸因於單一因素。
+- 收尾核對通過：索引582份文件／135條斷言，triage共1144列，保留其餘1143列分類；spec275的236個本機連結可解析。既有138張快照與城池／全圖頁未變，檔案擁有權符合1000:1000，工作根root-owned檔案及誤建.md目錄皆0。git diff --check通過，專案Docker容器已清空。
+
+## 2026-11-11：擴充工具列本機操作比較稿
+
+- 依既定HD方向，補[單排／雙排比較稿](workplace/scratch/ui-windows-20261104/hd-toolbar-expanded-r1.html)，原版／HD及縮放維持常駐，加入AI與武將編輯，共11個功能入口、13個實體按鈕。依grilling先提供可撤回操作稿，建議分組雙排，尚未記為使用者選擇。版面選擇不包含編輯器正式套用時機、保存邊界或AI正式預設。
+- 使用既有中原原圖與HD、曹操原圖與HD選稿，沒有新增或改寫美術。編輯取既有實際資料，支援姓名文字輸入、滑鼠增減、委任類型、取消、套用示範及還原；僅保留頁面記憶體。AI開關僅改預覽狀態，戰鬥及存檔均未接線，正式遊戲未改。
+- 首次十項QA為綠，目視卻發現雙排仍在同列，原因為session的flex-basis覆蓋width。修正為100%基準，補群組座標及工具列高度驗證，重跑十項離線抽驗通過。修正前六份檔案雜湊保存在[版面修正紀錄](workplace/scratch/ui-windows-20261104/hd-toolbar-expanded-r1-row-fix.json)，舊綠收據不作分列證據。
+- [目前抽驗](workplace/scratch/ui-windows-20261104/hd-toolbar-expanded-r1-qa.json)涵蓋兩版面、1280／960及640寬兩倍像素密度、真實素材切換、滾輪／拖曳、編輯取消與還原、AI預覽、入口及快捷鍵停用、單檔搬移。七張截圖已保存，目視雙排、單排、編輯器與窄視窗；JS錯誤0、外部請求0。
+- [完整性收據](workplace/scratch/ui-windows-20261104/hd-toolbar-expanded-r1-verification.json)確認8份輸入、原始曹操資料、修正前快照、HTML重建一致，以及城池／大地圖／146張頭像頁雜湊未變。工具入口及來源已連入spec275；沒有新增Markdown檔案、提交、推送或部署網站。
+- 收尾：索引582份文件／135條斷言通過，spec275的246個本機連結可解析；triage仍1144列，strict未解文件與現況一致。兩個工作根root-owned及誤建.md目錄皆0，工具列工作檔UID/GID符合1000:1000。git diff --check通過，專案相關Docker容器已清空，比較稿與截圖仍受gitignore保護。
+
+## 2026-11-11：工具列採單排
+
+- 使用者明確指定「工具列要單排」。採用單排，原版／HD、縮放、AI及武將編輯維持同列；雙排僅保留歷史比較。[選擇紀錄](workplace/scratch/ui-windows-20261104/hd-toolbar-single-choice.json)保存原話與範圍，[選擇前快照](workplace/scratch/ui-windows-20261104/hd-toolbar-before-single-choice.json)保存十一份檔案與選定畫面，不覆寫原參考截圖。此選擇不擴張為編輯器與AI正式行為均已確認。
+- 本機確認稿已改為預設單排，重開仍為單排，窄視窗不換列。姓名輸入、編輯草稿、HD切換、滾輪／拖曳及AI狀態預覽沿用既有範圍，尚未接入正式遊戲。
+- 前兩次抽驗出現黑圖，[首次失敗](workplace/scratch/ui-windows-20261104/hd-toolbar-single-first-attempt.json)與[第二次失敗](workplace/scratch/ui-windows-20261104/hd-toolbar-single-second-attempt.json)均保留。第二次像素探針記錄地圖已載入、畫布context未失效，但鏡頭座標為NaN；獨立[診斷探針](workplace/scratch/ui-windows-20261104/hd-toolbar-single-probe.json)未重現，沒有將其當作修正通過。
+- 新增畫布零尺寸防護。[受控前後對照](workplace/scratch/ui-windows-20261104/hd-toolbar-single-size-control.json)以同一原圖隱藏畫布並呼叫paint，再還原，證明舊稿座標失效、新稿保留有限值。前兩次自然失敗沒有零尺寸軌跡，未將所有失敗原因宣稱為已證實。十項完整離線抽驗重跑通過，另核對每張截圖前地圖非空、預設單排、640寬不換列及重開；JS錯誤與外部請求皆0。
+- 收尾核對通過：HTML重建一致，城池／大地圖／146張頭像頁未變，選定截圖及十一份快照雜湊一致。索引582份文件／135條斷言、spec275的250個本機連結及1144列triage通過。失敗收據封存後移除過期入口檔，工作目錄UID/GID符合1000:1000，root-owned及誤建.md目錄皆0。git diff --check通過，專案Docker容器已清空，未提交、推送或部署。
+
+## 2026-11-11：HD頭像與顯示偏好首段接線
+
+- 使用者選「預設原版，記住之後的選擇」。在spec275先寫READY小節，完成素材、合成、偏好與限定正常路徑驗證後，該小節標為限定範圍CONFORMED；整體仍DRAFT。正式工具列由七項加頭像顯示切換，共八鈕單排，縮放、AI與編輯器其餘入口繼續待接線。
+- 新增唯讀HD選稿載入：沿selection.json及逐張metadata，不另建散布包格式；驗證實際150頁圖庫與146張選稿，包含頁碼0、重複／越界、檔名逃逸、SHA及PNG尺寸。每次解碼再核對原生bytes，GPU頭像快取最多八張，缺頁回原圖。
+- 八處Portrait呼叫收斂到drawPortrait。保序合成在每張原生頭像前貼入先前原版畫布，後畫的視窗、文字與游標可正常蓋住頭像；最後由Ebiten的FinalScreenDrawer繪出，避免先縮成64×64。原模式沿DefaultDrawFinalScreen，對拍與錄影仍走原版640×400；顯示偏好hd_display不寫入遊戲存檔。
+- 受影響冷測與vet通過。首次GPU測試在RunGame之前讀像素而失敗，改為獨立程序、實際Draw內核對後通過，舊log存hd-head-tests-before-runtime-probe.log。這是測試生命週期修正，非產品缺陷。
+- [正常滑鼠抽驗](workplace/scratch/ui-windows-20261104/hd-head-gui.json)共29項通過，從首頁走新遊戲君主卡、原版／HD切換、離開確認遮擋、勢力情報窗、正常存檔與重開；另驗未指定素材時保留偏好且回原圖。首輪錯把首頁當作已捕捉游標；次輪錯把君主卡的上一幀計數當成世界HUD證據。已保留兩份失敗與trace，補Draw階段識別，改用原版橫幅滑鼠開關真正打開情報窗後乾淨重跑，未注入狀態或使用direct-entry。
+- [實際遊戲對照頁](workplace/scratch/ui-windows-20261104/hd-head-game-review.html)內嵌七張實際截圖及兩張原尺寸裁圖，原版頭像裁圖10色、HD裁圖7394色，只作原生細節技術核對，不作美術接受或原版parity聲明。[接線收據](workplace/scratch/ui-windows-20261104/hd-head-integration.json)保存來源、測試、binary SHA；現行binary為wlgame-hd-head-r1，SHA-256 788f189159fd996d4b8caa1c22cec4bc8b5cec4d4d114fd63476375a4f63c104。
+- 正常GUI只抽君主卡與勢力情報窗。命名、編成、軍團及戰術對話的共用入口不代證完整正常流程；地圖HD、世界縮放、AI加成、編輯器及原生平台驗收仍未完成。素材與畫面留本機，未提交、推送、發行或部署。
+
+- 最終補查液晶設定：無HD液晶變體時沿用原圖並停用切換，保留HD偏好，切回彩色恢復。新29項GUI包含此往返，受影響冷測、獨立GPU核對與vet再次通過。舊偏好缺少hd_display時明確回false，語系套用失敗前不提前改HD偏好。
+- 最終首次GUI重跑曾因素材驗證尚未完成、內層state只等2秒而提前失敗；改由既有12秒wait統一等待啟動trace，沒有放寬外層限制或改遊戲。失敗與啟動log存hd-head-gui-before-startup-sync-fix.json及hd-head-game-before-startup-sync-fix.log。實際君主卡、確認視窗遮擋與勢力情報畫面已目視，七張遊戲截圖、29項GUI及四項離線對照頁抽驗通過。
+- 收尾核對通過：索引582份文件／135條斷言、spec275的265個本機連結、1144列未解分流及strict文件一致。接線收據核對18份來源、最終binary、七張截圖、測試與頁面雜湊；城池／世界／146張頭像畫廊未變。工作檔UID/GID符合1000:1000，root-owned及誤建.md目錄皆0；git diff --check通過，專案Docker容器已清空。引擎程式、測試與翻譯詞表留工作樹，素材／binary／存檔／HTML仍受gitignore保護，未提交或推送。
+
+## 2026-11-11：戰略地圖50%～200%縮放
+
+- 使用者選「50%～200%（建議）：兼顧視野與辨識」。沿已展示的預設100%、每次25%、工具列及滾輪、介面固定契約，先在spec275列READY，再接正式桌面。頭像首段十八檔來源另存[快照索引](workplace/scratch/ui-windows-20261104/world-zoom-baseline.json)，舊binary與收據保留。
+- 正式工具列加入三個縮放鈕，共十一個實體鈕單排。地圖、城池、軍團、雲層／災害與格游標共用鏡頭；橫幅、視窗與HD頭像固定。100%沿既有整格分支，回100%吸附最近整格，非100%累積小數捲動，小地圖框隨視野調整。倍率不進遊戲存檔，新遊戲與讀檔回100%。
+- [原資料探針](workplace/scratch/ui-windows-20261104/world-zoom-camera-probe.json)保存五種倍率與78次可見城池反算，僅為可丟棄原型。初版以Go與Canvas逐像素比對失敗；[取樣診斷](workplace/scratch/ui-windows-20261104/world-zoom-pixel-phase.json)確認縮小時整數邊界選擇不同，各自40／40符合來源，跨實作29／40相同，沒有把原型測試改稱精確渲染通過。
+- 正式受影響冷測通過，192城五倍率共960次座標檢查。首次測試誤要求100%無操作清掉殘值，已改回原版契約。GPU首次比較漏掉劇本雲層，75%一處黑像素來自原有cloud slot24；以原全圖獨立合成MCH雲層後，五倍率35處取樣及橫幅邊界通過。兩項均為測試基準問題，未據此改遊戲規則。vet及本機建置通過。
+- [31項正常滑鼠抽驗](workplace/scratch/ui-windows-20261104/world-zoom-gui.json)由首頁走新遊戲，通過50%／100%／200%點選同一座城82、城池與設定視窗停用縮放、游標焦點、小地圖定位、存檔未被縮放重寫及讀檔回100%，HD頭像與偏好保留。第一輪容器未設工作目錄而找不到translations/corrections.json，補-w /repo後相同容器乾淨重跑通過，分類為驗收環境問題。
+- [實際遊戲截圖頁](workplace/scratch/ui-windows-20261104/world-zoom-game-review.html)內嵌七張正常操作畫面，目視50%、200%與小地圖。四項斷網瀏覽器抽驗通過，包含單檔搬移、畫面切換及窄視窗，外部請求與JS錯誤皆0。[接線收據](workplace/scratch/ui-windows-20261104/world-zoom-integration.json)固定26份來源、binary、截圖與測試SHA；來源覆蓋包配合base_git_head可重建。
+- spec275第二段僅就原版地圖呈現及上述抽驗標CONFORMED。地圖HD、AI、編輯器及原生平台驗收仍待完成，既有城池／世界／146張頭像頁SHA未變。未提交、推送、發行或部署。
+- [收尾核對](workplace/scratch/ui-windows-20261104/world-zoom-final-checks.json)七項通過。索引仍582份文件／135條斷言，1144列分流與strict生成結果一致，git diff --check通過。來源UID/GID1000:1000，工作區root-owned與誤建.md目錄皆0，本輪Go、GUI、頁面與資料容器均已刪除，其他專案容器未動。GUI檔案雜湊抽查範圍為SAVE.DAT，原生執行狀態另經正常讀檔驗證，不擴大存檔聲明。
+
+## 2026-11-11：HD大地圖接入正式桌面
+
+- 使用者接續「ok go」，沿上一段已展示的HD大地圖接線。載入復古重製技能、規格閘門與既有spec275，先列第三段READY契約再實作。[接線前索引](workplace/scratch/ui-windows-20261104/hd-world-baseline.json)固定縮放版26檔來源覆蓋包與收據，前段binary未覆寫。主機gh驗證成功後唯讀核對open Issues，未寫入遠端。
+- `-hd-world`沿本機既有regions.json與逐項選稿JSON載入35區、22接縫；驗證矩形、ID、原生標記、PNG SHA與尺寸，按需解碼並限制GPU快取16張／128MiB。與頭像共用HD檔案驗證入口，沒有新增散布格式。原版／HD按鈕現在同時控制頭像與地景，首次原版及hd_display偏好沿用，單排十一鈕不變。
+- 地景依世界座標直接畫到原生合成面，接縫沿既有8世界像素透明度。即時標記沿原版markerTables共用分派；角旗／歸屬採差異框加一像素邊界，首都與軍團用MCH遮罩，災害／格游標後畫，固定UI最後覆蓋。原版100%分支與遊戲規則不改，季節／液晶無對應HD素材時沿原圖。
+- [資料／標記冷測](workplace/scratch/ui-windows-20261104/hd-world-core-tests.log)、[介面冷測](workplace/scratch/ui-windows-20261104/hd-world-ui-tests.log)、[獨立GPU抽驗](workplace/scratch/ui-windows-20261104/hd-world-gpu.log)及vet通過。57張實際選稿驗證通過；12種歸屬／首都／軍團狀態將透明標記疊回原地形後，逐byte等於既有RenderMarked。GPU保留原生條紋細節，後畫UI與單區缺圖回退正確，另驗非0季節色盤與液晶不套錯地景。
+- [54項正常滑鼠抽驗](workplace/scratch/ui-windows-20261104/hd-world-gui.json)由首頁進新遊戲，涵蓋三倍率點許昌、原版／HD、液晶往返、模態遮擋、小地圖、全圖西北／東南邊界、正常存讀檔及缺圖重開。SAVE.DAT與SAVE-slot1.wlsave兩檔SHA在顯示／縮放前後未變。trace同步實際Draw的鏡頭與倍率；沒有狀態注入。GUI未抽移動中軍團，證明範圍限於標記合成測試與已走正常路徑。
+- 首次GUI工具的字串替換誤改helper分割字串而產生SyntaxError，遊戲尚未啟動；修正並先compile語法檢查，再用同一容器／命令乾淨重跑通過，分類為驗收腳本問題。沒有據此改產品輸入或遊戲規則。
+- [本機實際遊戲頁](workplace/scratch/ui-windows-20261104/hd-world-game-review.html)內嵌12張截圖，目視100%、50%、200%與東南邊界。四項斷網頁面抽驗通過，包含搬移單檔、12張切換與窄視窗，JS錯誤及外部請求皆0。[接線收據](workplace/scratch/ui-windows-20261104/hd-world-integration.json)固定32份來源、57選稿、binary與截圖SHA；來源覆蓋包配合base_git_head可重建。抽樣GPU快取最高75,491,140 bytes。
+- spec275第三段僅就色盤0選稿與上述範圍標CONFORMED。原生圖像有限，超過素材1:1的放大仍為插值。其他季節／液晶HD、據點景觀／戰術HD、局部美術、AI與編輯器仍待完成；不宣稱逐區美術接受或原版圖像parity。圖像與頁面留本機，未提交、推送、發行或部署。
+- [收尾核對](workplace/scratch/ui-windows-20261104/hd-world-final-checks.json)七項通過：32份來源與覆蓋包、57張原生PNG、現行binary／收據／頁面、文件入口與擁有權一致。索引仍582份文件／135條斷言，1144列分流與strict生成結果一致，git diff --check通過；工作區root-owned與誤建.md目錄皆0，來源UID/GID1000:1000，本輪Docker容器已清空。
+
+## 2026-11-11：HD龍紋橫幅、原版縮放抽驗與精簡自動工具列
+
+- 使用者指出最上方尚未HD，確認為龍紋／標題／日期橫幅；另要求原版可縮小地圖、工具列小一點並能隱藏。沿grilling做[28／6高度操作稿](workplace/scratch/ui-windows-20261104/toolbar-compact-hide-prototype.html)，使用者選靠上緣顯示、離開收起。新裁定取代工具列始終展開，維持單排與畫布外置。
+- [原版模式13項抽驗](workplace/scratch/ui-windows-20261104/original-map-zoom-gui.json)證明既有50%～200%、滾輪及小地圖可用，無須改縮放規則。初輪誤以左鍵關小地圖，核對既有左開／右關後只修測試，失敗trace與腳本另存before-close-fix。工具列操作稿首輪hover驗收的目標在喚出後消失，改用滑鼠座標觸發並檢查狀態後四項斷網抽驗通過；皆為驗收預期／同步問題。
+- 使用[擷取工具](workplace/scratch/ui-windows-20261104/banner-source-probe.go)取得八組ICONGRF原版橫幅與來源SHA。內建imagegen依色盤0原圖重繪，原生2172×724 PNG保存在[原生選稿](workplace/hd-redraw-local-20261104/faithful/banner-hd-r1.png)，[完整提示詞](workplace/scratch/ui-windows-20261104/banner-prompt-r1.txt)與[生成紀錄](workplace/scratch/ui-windows-20261104/banner-generation-r1.json)可回查。PNG bytes未改，顯示內容矩形為(0,309,2172,106)，排除白色外緣；未把本張美術記為已個別接受。
+- spec275第四段先READY再接線。`-hd-banner`載入既有HD共用驗證契約下的選稿，直接畫原生背景，日期沿原字模即時繪入，原版四個視窗開關及保留熱區未移動。液晶／未提供的季節沿原圖，模式仍用hd_display，沒有新增遊戲存檔欄位。
+- 正式工具列40縮到28高，初始收起6高，靠上緣喚出、離開收起。按住、放開幀、原版選單或拖曳擁有輸入時不切換。一般視窗同步調整客戶區高度，保持遊戲兩倍顯示；捕捉游標重映射並重建raw基準，防止收展引發假捲動。共用滑鼠工具改讀動態高度並保留舊binary的40高fallback。
+- [素材冷測](workplace/scratch/ui-windows-20261104/hd-banner-asset-tests.log)、[介面冷測](workplace/scratch/ui-windows-20261104/hd-banner-ui-tests.log)、[獨立GPU](workplace/scratch/ui-windows-20261104/hd-banner-gpu.log)與vet通過。涵蓋內容矩形、壞圖、原生條紋、即時日期後畫、手勢完整性及18次固定視窗邊界座標轉換。全螢幕／最大化只核對座標數學，未作原生GUI驗收。
+- [正常滑鼠流程](workplace/scratch/ui-windows-20261104/banner-toolbar-gui.json)從首頁走新遊戲，通過96個功能及同步檢查點，含重複收展同步，不稱96個獨立功能。實際1280×812／856，原版縮放／小地圖、HD橫幅／頭像、拖出放開、模式／液晶往返、存讀檔與缺圖重開通過，兩種存檔SHA未被顯示操作重寫。目視HD橫幅與展開後較小工具列。
+- [本機實際遊戲頁](workplace/scratch/ui-windows-20261104/banner-toolbar-game-review.html)內嵌12張截圖並附原生PNG與提示詞，四項斷網頁面抽驗通過。[接線收據](workplace/scratch/ui-windows-20261104/banner-toolbar-integration.json)固定38份來源、binary、工具、素材與截圖SHA；前段32檔覆蓋包與受測程式保留。其他HD場景／色盤、美術修整、AI與編輯器仍待完成，未提交、推送、發行或部署。
+- [收尾核對](workplace/scratch/ui-windows-20261104/banner-toolbar-final-checks.json)七項通過；原生橫幅、既有57張地景及三個美術頁SHA未變，來源與38檔覆蓋包一致。索引仍582份文件／135條斷言，1144列分流與strict生成結果一致；來源UID/GID1000:1000，工作區root-owned與誤建.md目錄皆0，git diff --check通過，本輪Docker容器已清空。
+
+## 2026-11-12：五組已同意景觀接入情報窗
+
+- 接續使用者「ok 繼續囉」，命中復古遊戲路由，載入規格閘門入口、復古重製技能與共同決策規則。沿已同意的五張景觀先列spec275第五段READY，再實作；沒有新增畫風或產品決定。主機gh驗證成功後唯讀核對open Issues，未寫入遠端。
+- `-hd-locations`讀既有manifest.json與originals.json，依實際KYOGRF15頁及City.KindHigh對應許昌6、滎陽14、舞陽2、虎牢關5、汝南0。驗證選稿路徑、尺寸、SHA、原生標記及原映射，兩頁GPU快取按需載入。景觀仍在原情報窗(16,288)、96×96，與64×64頭像共用原生矩形合成，文字與後畫視窗保留順序。
+- [素材冷測](workplace/scratch/ui-windows-20261104/hd-location-asset-tests.log)、[受影響介面冷測](workplace/scratch/ui-windows-20261104/hd-location-ui-tests.log)、[獨立GPU](workplace/scratch/ui-windows-20261104/hd-location-gpu.log)、既有頭像GPU回歸及vet通過。涵蓋實際五張1254×1254選稿、頁0／越界／重複／原映射不符／逃逸／壞圖、原生細節、96與64尺寸、後畫遮擋、快取淘汰及執行中缺圖回退。
+- [正常滑鼠抽驗](workplace/scratch/ui-windows-20261104/hd-location-gui.json)由首頁走新遊戲、小地圖定位、逐一點五城；145個功能與同步檢查點包含重複收展同步，不當作獨立功能數。氾水關共用頁5、宛未選頁10回原圖、原版／HD及液晶往返、快取重載、正常讀檔及缺素材重開通過。SAVE.DAT與SAVE-slot1.wlsave的SHA未被顯示操作改寫。
+- [本機實際畫面頁](workplace/scratch/ui-windows-20261104/hd-location-game-review.html)內嵌13張截圖，附截圖裁區方便比較，未增加圖片細節。[四項離線抽驗](workplace/scratch/ui-windows-20261104/hd-location-review-qa.json)通過，搬移單檔與窄視窗正常，JS錯誤及外部請求皆0。[接線收據](workplace/scratch/ui-windows-20261104/hd-location-integration.json)固定43份來源、覆蓋包、binary、測試與截圖SHA，前段來源與受測程式保留。
+- 五張原生PNG、既有素材索引及美術頁未修改。CONFORMED僅限五頁與上述抽驗，其餘十頁、其他色盤／場景、AI及編輯器仍待完成，不宣稱原版parity或全部HD完成。未提交、推送、發行或部署。
+- [收尾核對](workplace/scratch/ui-windows-20261104/hd-location-final-checks.json)七項通過，43檔來源覆蓋包與本機受測程式一致。索引582份文件／135條斷言，1144列分流與strict生成結果一致；來源UID/GID1000:1000，工作區root-owned與誤建.md目錄皆0，git diff --check通過。本輪Docker容器已清空，其他專案容器未動。
+
+## 2026-11-12：移除額外「右鍵關閉」提示
+
+- 接續後使用者指出「右鍵關閉」訊息視窗多餘，優先處理本項。命中復古遊戲及GUI還原路由，載入既有規格閘門與GUI還原入口，未開始新美術生成。主機gh驗證成功後唯讀核對open Issues，未寫遠端。
+- 據點及軍團情報窗的額外框在程式內明標remake差異；進言結果亦使用同一字串。先在spec266列READY，移除三處額外提示、無用座標與四語字串，保留原版TALK #4、右鍵／返回分派及對白推進。沒有改遊戲規則或存檔欄位。
+- [受影響冷測、vet與本機建置](workplace/scratch/ui-windows-20261104/no-close-hint-tests.log)通過。Go對唯讀模組快取寫入stat cache的提示未造成失敗，未修改原版素材或借用主機工具鏈。
+- GUI工具初輪漏掉新軍團與許昌同格時的據點／軍團二選一；次輪把君主編成軍團，依既有規則阻止進言；第三輪誤用單像素位移選取反白，原契約需越過100–131的範圍。分別查證mapChoice、openAdvise與choiceBandMove，修正測試流程與相對位移，不改產品程式。失敗工具／trace／log／收據以before-city-army-fix、before-lord-corps-fix及before-band-sync-fix保存於同一工作目錄。
+- 以相同容器／命令乾淨重跑後，[正常滑鼠抽驗](workplace/scratch/ui-windows-20261104/no-close-hint-gui.json)69個功能及同步檢查點通過，包含重複工具列同步，不宣稱69個獨立功能。正常首頁、新遊戲、原版／HD據點窗、軍團編成與情報、同格選單、進言結果的右鍵關閉及正常存讀檔通過；兩種存檔未被顯示操作重寫。說服分支結束提示只經程式審查與既有測試，不擴大正常GUI聲明。
+- [本機實際畫面](workplace/scratch/ui-windows-20261104/no-close-hint-game-review.html)附四張修正後截圖與前版比較；[接線收據](workplace/scratch/ui-windows-20261104/no-close-hint-integration.json)保存45檔來源、覆蓋包、binary與截圖SHA，原五組景觀、素材索引及三個美術頁未修改。現行binary為wlgame-no-close-hint-r1，SHA-256 ab9cc9422bad48e6bcf2f0d36350d36d896708fff34b555c8d1074681114ac1b。未提交、推送、發行或部署。
+- [三項離線頁面抽驗](workplace/scratch/ui-windows-20261104/no-close-hint-review-qa.json)通過，五張實際截圖完整、窄視窗無橫向溢出，JS錯誤與外部請求皆0。接線收據的final_checks核對45檔來源覆蓋包、受測程式、文件入口及擁有權通過。索引582份文件／135條斷言、1144列分流與strict生成結果一致；來源UID/GID1000:1000，工作區root-owned與誤建.md目錄皆0，git diff --check通過。本輪容器皆已結束刪除，其他專案容器未動。
+
+## 2026-11-12：編成與存讀檔成功不再重複通知
+
+- 使用者指出「夏侯淵編成完畢」「已儲存第一槽」是原版沒有的訊息，要求考慮必要性與玩家體驗。命中GUI還原與規格閘門路由；核對spec88的額外六秒事件框、spec109的原版編成對白及存讀檔完成關窗流程。先列spec266 READY，再移除編成／存檔／讀檔成功通知，並在成功後清除舊通知，避免前次錯誤殘留。
+- 編成仍顯示原版主將肖像對白並建立部隊；存讀檔成功直接關窗返回。失敗處理、原版事件與其他訊息不改，沒有為此新增提示音、工具列動畫、存檔欄位或遊戲規則。
+- [既有編成、存檔、桌面及事件列冷測、vet與建置](workplace/scratch/ui-windows-20261104/quiet-success-tests.log)通過。[正常滑鼠抽驗](workplace/scratch/ui-windows-20261104/quiet-success-gui.json)從首頁走新遊戲、編成、原版主將對白、存檔、讀檔及HD切換，共50個功能與同步檢查點，包含重複工具列同步，不當作獨立功能數。兩種存檔存在、可正常讀回，顯示操作未重寫存檔。失敗分支由既有測試與程式審查保留，不宣稱全部儲存裝置錯誤GUI完成。
+- [本機比較頁](workplace/scratch/ui-windows-20261104/quiet-success-game-review.html)包含五張本輪截圖與兩張前版畫面；已目視編成原版對白及存檔後地圖。[接線收據](workplace/scratch/ui-windows-20261104/quiet-success-integration.json)固定45檔來源覆蓋包、binary、流程工具、測試與截圖SHA；前版程式與收據保留。未提交、推送、發行或部署。
+- [離線頁面抽驗](workplace/scratch/ui-windows-20261104/quiet-success-review-qa.json)通過七圖載入、窄視窗及離線檢查，JS錯誤與外部請求皆0。收尾核對曾抓到spec109引用檔名錯誤，修正為既有109-formation-leader-line.md後相同核對通過。來源覆蓋包、程式、截圖與既有美術雜湊一致；索引582份文件／135條斷言、1144列分流及strict輸出一致。UID/GID1000:1000、工作區root-owned與誤建.md目錄皆0，git diff --check通過，本輪容器已清空，其他專案容器未動。
+
+## 2026-11-12：通知清理、訊息右鍵與曹操對呂布比較
+
+- 接續移除行軍、戰術下令及已有TALK的外交／撥款摘要，保留失敗與重要事件。使用者指定第一劇本曹操對呂布，抽驗操作、動畫及停手時間推進；沿復古GUI與規格閘門，先READY再實作，不改規則或動畫速度。
+- 預設dosgolem-wolong目錄為空，改用既有dosgolem來源f79eab6db8c64a524a06535e53e5d32b0bbcf7c8唯讀建工具，沒有另建image。初始腳本誤點表頭及選單前提，改查熱區逐步操作；boot失敗紀錄保留，分類為腳本問題。原版素材唯讀，所有工作負載在有界Docker內執行。
+- 原版首次sub_1ECE0取數前設定NewFixed(1)的258-byte狀態，Go用-seed 1，事前固定、不重擲挑結果。正常新遊戲、第一劇本曹操、宣戰呂布13、編成夏侯淵37、向徐州79下令，沒有直接叫戰鬥或修改日期、軍團、勝負。不宣稱自然RTC播種或完整骰序已對齊。
+- [首次失敗收據](workplace/scratch/ui-windows-20261104/cao-lubu-remake-failure-before-message-right-fix.json)重現4/1 9時、(210,114)訊息不接受右鍵。原版同一點是陳留請求援軍，右鍵可繼續。補READY後接回右鍵逐頁、末頁才續行，保留idleGate.Pause。[冷測、vet及建置](workplace/scratch/ui-windows-20261104/cao-lubu-tests-r2.log)通過，[負對照](workplace/scratch/ui-windows-20261104/message-right-negative.log)確實拒絕僅左鍵版本。
+- 修正後首跑在存檔前遇到新訊息，工具未先處理輸入擁有者；補正常右鍵同步後同程式、同種子通過，存檔閘門未改，before-save-owner-sync-fix紀錄保留。[正常GUI](workplace/scratch/ui-windows-20261104/cao-lubu-remake-gui.json)60個功能／同步檢查點、14圖通過，包含宣戰、編成、下令、停手、途中存讀檔及戰鬥退場，不當作60個獨立功能。
+- [可見行軍補充](workplace/scratch/ui-windows-20261104/cao-lubu-visible-gui.json)由正常小地圖移到我軍。初版誤要求第一格移動時小時欄立即變更，改為等到座標及時欄皆前進，不改子刻或速度。兩側同於4/6 6時、夏侯淵(241,108)攻呂布35(243,108)、椎陽76入戰。原版134步及33圖SHA完全重現，加入唯讀1D318寫入累計後仍相同。
+- 戰術同拍尚未通過：原版932拍到sub_19F58結算入口，Go最新最後活動幀440，首次通過的另一取樣為583，兩份皆保留。下令時點、完整入戰RNG與單兵狀態未鎖定，不調速度掩蓋或單由數字判定規則錯誤。原版有梯子，Go本案未取得同事件畫面；投射物、受擊與倒地仍沿Issue #13／#16／#24。原版僅取到寫回入口，七種int61音效呼叫尚未實作，完整戰後返回與音訊不作本輪完成聲明。
+- [比較矩陣](workplace/scratch/ui-windows-20261104/cao-lubu-comparison.json)、[本機頁](workplace/scratch/ui-windows-20261104/cao-lubu-game-review.html)及[接線收據](workplace/scratch/ui-windows-20261104/cao-lubu-integration.json)固定50檔來源、兩側程式、種子、工具及畫面身分。使用者要求完成後commit與push；原版素材、HD圖、存檔及HTML留本機，不作Release或整款完成聲明。
+- [收尾核對](workplace/scratch/ui-windows-20261104/cao-lubu-final-checks.json)通過，12張原版、14張remake及2張視野內行軍圖的離線切換正常，JS錯誤與外部請求皆0。50檔來源及兩側程式／覆蓋包雜湊一致，既有素材未改；582份文件／135條斷言與1144列分流一致。來源UID/GID1000:1000，工作區root-owned與誤建.md目錄皆0，git diff --check通過。本輪容器皆已結束刪除，其他專案容器未動。依授權準備提交並推送，實際提交及遠端核對結果保存於[本機推送收據](workplace/scratch/ui-windows-20261104/repo-update-20261112.json)。

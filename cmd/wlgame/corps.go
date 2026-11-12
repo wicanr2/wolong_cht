@@ -222,7 +222,7 @@ func (g *game) commitForm() {
 		return
 	}
 	leader := g.world.Generals[f.leader]
-	g.lastEvent = big5(leader.Name) + " 編成完畢"
+	g.lastEvent = ""
 	f.active = false
 	g.refreshFormCandidates()
 	// 原版緊接著跳一張主將肖像框（`sub_18810(cx=19Bh, ah=+0x1E, al=+0x01)`，
@@ -382,11 +382,7 @@ func (g *game) drawForm(screen *ebiten.Image) {
 	// 不是武將編號。原版那裡是四格 round-robin 快取，remake 一次全載入——
 	// **只差在載入時機，畫出來的東西相同**。
 	gen := g.world.Generals[f.leader]
-	if img, err := g.lib.Portrait(gen.Portrait, season); err == nil {
-		op := &ebiten.DrawImageOptions{}
-		op.GeoM.Translate(float64(formPortraitX), float64(formPortraitY))
-		screen.DrawImage(ebiten.NewImageFromImage(img), op)
-	}
+	g.drawPortrait(screen, gen.Portrait, formPortraitX, formPortraitY, season)
 	g.td.Draw(screen, big5(gen.Name), formNameX, formNameY, ink)
 	g.drawOriginalNumber(screen, g.world.Factions[g.world.Player].MoraleBase,
 		formMoraleValueX, formMoraleY, formMoraleDigits, ink)

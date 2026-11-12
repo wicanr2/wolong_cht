@@ -947,10 +947,19 @@ func (g *game) drawMinimapViewBox(dst *ebiten.Image) {
 	}
 	x := strategyMinimapX + (g.camX-minimapCamBias)/2
 	y := strategyMinimapY + g.camY/2
+	w, h := gfx.ViewBoxWidth, gfx.ViewBoxRows
+	if g.mapZoomPercent() != 100 {
+		r := g.zoomMinimapBox()
+		x, y, w, h = r.Min.X, r.Min.Y, r.Dx(), r.Dy()
+	}
 	season := g.paletteBank()
-	for dy := 0; dy < gfx.ViewBoxRows; dy++ {
-		for dx := 0; dx < gfx.ViewBoxWidth; dx++ {
-			c := pix[dy*gfx.ViewBoxWidth+dx]
+	for dy := 0; dy < h; dy++ {
+		for dx := 0; dx < w; dx++ {
+			sx, sy := dx, dy
+			if g.mapZoomPercent() != 100 {
+				sx, sy = viewBoxSourceIndex(dx, w, gfx.ViewBoxWidth), viewBoxSourceIndex(dy, h, gfx.ViewBoxRows)
+			}
+			c := pix[sy*gfx.ViewBoxWidth+sx]
 			if c == gfx.ViewBoxTransparent {
 				continue
 			}
@@ -969,11 +978,7 @@ func (g *game) drawNaturalFactionHUD(dst *ebiten.Image, x, y int) {
 	season := g.paletteBank()
 
 	if lord := f.Lord; lord >= 0 && lord < len(g.world.Generals) {
-		if img, err := g.lib.Portrait(g.world.Generals[lord].Portrait, season); err == nil {
-			op := &ebiten.DrawImageOptions{}
-			op.GeoM.Translate(float64(strategySidebarInnerX), float64(strategyFactionInnerY))
-			dst.DrawImage(ebiten.NewImageFromImage(img), op)
-		}
+		g.drawPortrait(dst, g.world.Generals[lord].Portrait, strategySidebarInnerX, strategyFactionInnerY, season)
 	}
 
 	// 顏色也是原版數值，不再自己挑：顯示清單 op 08 的屬性 byte 與繪製

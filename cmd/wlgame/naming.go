@@ -308,11 +308,7 @@ func (g *game) drawNaming(screen *ebiten.Image, season int) {
 	g.td.Draw(screen, initials, namingInitialsX, namingInitialsY, ink)
 
 	// 動態層：肖像、六格、游標底線、本頁的字。
-	if img, err := g.lib.Portrait(m.portrait, season); err == nil {
-		op := &ebiten.DrawImageOptions{}
-		op.GeoM.Translate(namingPortraitX, namingPortraitY)
-		screen.DrawImage(ebiten.NewImageFromImage(img), op)
-	}
+	g.drawPortrait(screen, m.portrait, namingPortraitX, namingPortraitY, season)
 	for i := 0; i < namingCells; i++ {
 		x := namingCellsX + i*namingCellW
 		if i >= 3 {

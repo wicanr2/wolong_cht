@@ -5,7 +5,7 @@
 >
 > 硬規則、目標、工作紀律在 [`CLAUDE.md`](./CLAUDE.md)。這份只管**狀態**。
 >
-> 最後更新：2026-11-06
+> 最後更新：2026-11-12
 
 ## 目前工作：先完成 remake
 
@@ -49,7 +49,7 @@ HD工具列的 [本機A/B比較稿](workplace/scratch/ui-windows-20261104/hd-too
 繪製幾何不逐像素相同，不宣稱原版美術像素parity。
 使用者隨後明確確認「ok 就是這樣」「這就是我要的」「hd 方向確定」。
 **HD美術方向已確認**，以地圖第1稿與景觀第2稿為後續基準：各以原圖保留造型、構圖、視角與配置，
-重畫清楚線條及材質，強化原有色彩。這項畫風決定不再待選；正式素材接線與世界鏡頭仍待實作。
+重畫清楚線條及材質，強化原有色彩。這項畫風決定不再待選；正式接線現況依下方各段。
 確認原話、範圍與兩張圖SHA保存於上述選稿清單的 `user_approval`。
 依使用者「ok go」續做滎陽、舞陽、虎牢關、汝南，各增加地圖與景觀兩張，共五城十張1254×1254原生HD。
 景觀頁碼依原資料為許昌6、滎陽14、舞陽2、虎牢關5、汝南0，沒有按據點類型共用許昌建築。
@@ -88,49 +88,119 @@ HD工具列的 [本機A/B比較稿](workplace/scratch/ui-windows-20261104/hd-too
 前版仍糊的小樣與重生程式另存 `faithful/index-local-retouch.html` 等歷史檔，不再混作現行HD。
 前一版超解析在 `workplace/hd-original-local-20261104/`，
 先前雲端概念在 `workplace/hd-concept-web-20261104/`，兩者只留歷史，不再作目前HD畫風的基準。
-[spec275](docs/spec/275-hd-toolbar-portraits-and-tools.md)仍為DRAFT，未接入正式遊戲或存檔；
+[spec275](docs/spec/275-hd-toolbar-portraits-and-tools.md)整體仍為DRAFT，頭像／偏好、縮放與色盤0地景已接桌面，其餘HD場景、AI及編輯器待完成；
 頭像新增 [原版與HD本機對照](workplace/hd-redraw-local-20261104/faithful/portraits/index.html)：
-目前81張1254×1254原生PNG，原圖皆64×64，圖庫實際150頁，既有69張選稿未改。
-本批新增顏良、文醜、張繡、張魯、馬岱、嚴顏、程普、徐盛、丁奉、曹洪、曹真與滿寵，武將ID／頁碼與來源劇本在第八批來源。
-十二張均來自劇本索引0；武將ID連同劇本核對，避免跨劇本誤認人物。
-沿各自原圖保留黑底、頭部構圖與原色色系，重畫髮鬚、衣料及線條。張魯保留傾斜笑臉，嚴顏保留灰白眉鬚，程普保留斜向頭部構圖。
-嚴顏、程普與曹洪選第2稿，收斂首稿紅／綠／藍細節的比例與平面感；滿寵選第3稿，將下唇橙色橫條融回皮膚明暗。這些顏色皆有原圖依據，符號及材質意義未解。其餘八張選第1稿，新增17次原生輸出未後製，累計100次。
-先核對 [四劇本原始名單](workplace/hd-redraw-local-20261104/faithful/portraits/source-roster.json)，共149個不重複名字；這與150頁圖庫分開計數。
-趙雲原圖放大及RGB樣本確認藍色額飾、深色上唇線；先前將這兩處誤判為多出的細節，第2稿移除後反而不忠實，已改回第1稿。
-[原圖細節勘誤](workplace/hd-redraw-local-20261104/faithful/portraits/portrait-6-source-detail-review.json)保留像素證據、原始提示詞及未選稿，鬍鬚／陰影語意維持未知。
-鄧艾原圖上唇座標38,41確有RGB(211,0,0)單一紅點，重繪保留。[原圖色點核對](workplace/hd-redraw-local-20261104/faithful/portraits/portrait-124-source-detail-review.json)保存樣本；色點意義維持未知。
-[首批原圖](workplace/hd-redraw-local-20261104/faithful/portraits/originals.json)、
-[第二批原圖及映射](workplace/hd-redraw-local-20261104/faithful/portraits/originals-batch-2.json)、
-[第三批原圖及映射](workplace/hd-redraw-local-20261104/faithful/portraits/originals-batch-3.json)、
-[第四批原圖及映射](workplace/hd-redraw-local-20261104/faithful/portraits/originals-batch-4.json)、
-[第五批原圖及映射](workplace/hd-redraw-local-20261104/faithful/portraits/originals-batch-5.json)、
-[第六批原圖及映射](workplace/hd-redraw-local-20261104/faithful/portraits/originals-batch-6.json)、
-[第七批原圖及映射](workplace/hd-redraw-local-20261104/faithful/portraits/originals-batch-7.json)、
-[第八批原圖及映射](workplace/hd-redraw-local-20261104/faithful/portraits/originals-batch-8.json)、
-[提示詞與選稿](workplace/hd-redraw-local-20261104/faithful/portraits/generation-set.json)、
-[第八批檢視與限制](workplace/hd-redraw-local-20261104/faithful/portraits/batch-8.json)保存來源、選稿與未接受範圍。
-[第六批紀錄](workplace/hd-redraw-local-20261104/faithful/portraits/batch-6.json)另保留王平原圖斜紅色額飾的十個像素樣本，圖形意義維持未知。
-本機頁預設顯示新增顏良，可切81位武將、原版／HD／並排／拉桿，支援同步縮放／拖曳及依像素密度限制的HD 1:1。
-21列來源視窗曾因原生對話框聚焦底部連結而捲離標題；已改由上方關閉鈕接收焦點，每次開啟回頂，標題／關閉鈕隨捲動保留。
-[視窗檢視](workplace/hd-redraw-local-20261104/faithful/portraits/source-window-review.json)保存原先scrollTop=522及21列修正後畫面；本輪沿同一方式抽驗81列。
-33張初版在30秒載入門檻逾時，改沿大地圖的暫存圖片網址方法，分開內嵌PNG區塊、解碼後移除並釋放網址。
-[載入紀錄](workplace/hd-redraw-local-20261104/faithful/portraits/loading-review.json)保留當時失敗頁與33張收據；81張沿用同一方法，沒有改PNG、增加逾時或放寬2GB／1 CPU。
-[七項離線抽驗](workplace/hd-redraw-local-20261104/faithful/portraits/qa-result.json)通過，含162張內嵌PNG、搬移單檔、窄視窗81列來源視窗開啟／捲動／關閉／重開及兩倍像素密度。
-本次三次載入約3.3、5.3、4.1秒，各162個暫存網址皆釋放，JS錯誤0、外部請求0；
-[完整性收據](workplace/hd-redraw-local-20261104/faithful/portraits/verification.json)核對100次原生輸出、81張原圖、來源劇本、像素樣本及重建一致，既有69張選稿、城池圖及全圖頁未變。
-歷史頁與收據保存在 [69張快照](workplace/hd-redraw-local-20261104/faithful/portraits/sixtynine-r1-snapshot.json)、[57張快照](workplace/hd-redraw-local-20261104/faithful/portraits/fiftyseven-r1-snapshot.json)、[45張快照](workplace/hd-redraw-local-20261104/faithful/portraits/fortyfive-r1-snapshot.json)、[33張快照](workplace/hd-redraw-local-20261104/faithful/portraits/thirtythree-r1-snapshot.json)、[21張快照](workplace/hd-redraw-local-20261104/faithful/portraits/twentyone-r1-snapshot.json)、[九張快照](workplace/hd-redraw-local-20261104/faithful/portraits/nine-r1-snapshot.json)及 [三張快照](workplace/hd-redraw-local-20261104/faithful/portraits/three-r1-snapshot.json)，錯選趙雲第2稿的候選也另存且不作現行入口。
-目前為150頁中的81張小樣，細部線條是重繪詮釋，未宣稱逐像素相同或已獲使用者逐張接受，尚未接入正式引擎。
+目前146張1254×1254原生PNG，原圖皆64×64，圖庫實際150頁，既有138張選稿未改。
+本批新增李別、刑道榮、劉賢、武安國、劉磐、楊昂、趙廣、趙統，前六張來自劇本索引0，趙廣與趙統為索引1，武將ID與圖庫頁碼逐張核對。
+沿原圖保留灰鬚、長臉、不同頭飾與藍綠紅色塊，明顯新增圖案經細修；細部材質與色塊意義仍屬重繪詮釋／未知。
+累計203次原生輸出均未後製，未選稿保留，尚未逐張取得美術接受；146張選稿已加入可選桌面頭像路徑。
+本機頁預設李別，可切146張原版／HD／並排／拉桿，支援同步縮放、拖曳及依像素密度限制的HD 1:1。
+現有149個原始名稱共用的146個圖庫頁均有小樣；另145、147、148、149四頁未出現在現有名單，用途待確認。
+[七項離線抽驗](workplace/hd-redraw-local-20261104/faithful/portraits/qa-result.json)通過，核對292張內嵌PNG、全部146張切換、搬移單檔及窄視窗來源視窗與兩倍像素密度。
+[完整性收據](workplace/hd-redraw-local-20261104/faithful/portraits/verification.json)核對203次原生輸出、146張原圖、來源映射及重建一致，既有138張選稿與城池、全圖頁未變。
+[第十六批紀錄](workplace/hd-redraw-local-20261104/faithful/portraits/batch-16.json)保存提示詞、選稿與未選稿；
+[138張快照](workplace/hd-redraw-local-20261104/faithful/portraits/138-r1-snapshot.json)保存前批HTML、工具、收據與301項檔案雜湊。
+前批載入工具調整與兩次逾時維持歷史定位，見[第十一批工具檢視](workplace/hd-redraw-local-20261104/faithful/portraits/batch11-browser-review.json)。
+規格仍為DRAFT，原圖細節的重繪詮釋不作原版逐像素對拍或整款HD完成聲明。
 
-使用者另指定HD版參考rich2支援拉遠／拉近。已唯讀核對rich2的
-`/home/anr2/cht/rich2/internal/frontend/native_zoom.go`、`toolbar_controls.go` 與 `/home/anr2/cht/rich2/internal/ui/themetoolbar/toolbar.go`：
-工具列減號／倍率重設／加號，地圖內滾輪，視窗固定。新重繪比較頁保留同型控制、拖曳平移
-及切換比較模式的焦點，工具列大小固定。這仍是圖片檢視，正式HD的世界鏡頭在spec275 DRAFT，
-未以網頁原型冒充引擎完成。
+2026-11-11新增[擴充工具列操作比較稿](workplace/scratch/ui-windows-20261104/hd-toolbar-expanded-r1.html)：
+沿用原版／HD及縮放常駐，加入AI與武將編輯，共11個功能入口／13個實體按鈕。
+使用者於2026-11-11明確指定「工具列要單排」，已採單排；分組雙排只留歷史比較。
+現行頁面開啟及重開皆預設單排，窄視窗仍維持一列並可左右捲動；既有「顯示模式常駐」決定不重問。
+原話、範圍及參考畫面見[選擇紀錄](workplace/scratch/ui-windows-20261104/hd-toolbar-single-choice.json)。
+使用中原實際原圖／HD與曹操頭像，編輯可取消、套用示範及還原，資料只留本頁記憶體。
+AI只預覽開關與既定曲線，未接戰鬥，正式預設及切換時機仍未定案。十項離線抽驗通過，
+目視修正雙排實際分列後，補按鈕群座標與高度檢查；來源、工具及收據入口沿spec275。
+
+2026-11-11接通頭像與顯示偏好首段：使用者選「預設原版，記住之後的選擇」。
+該段桌面由原七項加頭像切換，共八鈕單排；其後縮放接線見下一段，AI及編輯器仍待完成。
+以`-hd-portraits`指定本機選稿目錄，驗證實際圖庫150頁、選稿146頁，缺圖沿用原圖。
+八處Portrait繪製收斂到共用入口，原生高解析合成依原順序保留後畫視窗、文字與游標的遮擋。
+顯示偏好獨立於遊戲存檔，首次不寫設定，玩家切換才保存；缺素材時保留已記住的選擇並顯示原圖。
+[29項正常滑鼠抽驗](workplace/scratch/ui-windows-20261104/hd-head-gui.json)通過君主卡、實際開啟的勢力情報窗、
+離開確認遮擋、正常存檔、模式切換與重開；受影響冷測、獨立GPU細節／遮擋核對及vet通過。
+液晶模式沒有HD變體，沿用原圖並停用切換；切回彩色保留HD偏好，不改原版液晶設定。
+[實際遊戲對照頁](workplace/scratch/ui-windows-20261104/hd-head-game-review.html)及
+[接線收據](workplace/scratch/ui-windows-20261104/hd-head-integration.json)保存binary、來源與測試雜湊。
+命名／編成／軍團／戰術對話已接相同入口，但未逐一完成正常GUI驗收；當時未含地圖HD，現況依後段。
+
+2026-11-11接通戰略地圖縮放：使用者選50%～200%，預設100%、每次25%，工具列與滾輪可操作。
+正式工具列現十一個實體鈕，維持單排。只縮放地圖、城池、軍團、災害與格游標，視窗、文字及HD頭像固定。
+100%保留原版整格分支，回100%吸附最近整格；倍率只屬執行中狀態，新遊戲及讀檔回100%，不改遊戲存檔。
+[31項正常滑鼠抽驗](workplace/scratch/ui-windows-20261104/world-zoom-gui.json)包含三倍率點選同城、模態遮擋、
+滾輪焦點、小地圖定位及讀檔；另有960次原版城池座標檢查、獨立GPU圖層抽驗與vet。
+[正式遊戲截圖頁](workplace/scratch/ui-windows-20261104/world-zoom-game-review.html)留本機，
+[接線收據](workplace/scratch/ui-windows-20261104/world-zoom-integration.json)保存來源、binary、測試與未變素材頁SHA。
+該段使用原版地圖；其後HD地景接線見下一段。此為remake呈現增量，不宣稱原版縮放parity。
+
+2026-11-11接通HD大地圖：`-hd-world workplace/hd-redraw-local-20261104/faithful/world`載入既有35區與22接縫選稿，
+沿原版／HD按鈕與既有hd_display偏好，首次仍原版。地景直接畫到高解析合成面，視窗／頭像固定，
+城池歸屬、首都、軍團與災害沿即時原版資料另疊。接縫沿既有8世界像素透明度，PNG未改。
+來源原圖為色盤0；其他季節與液晶沿原圖，未自行對未提供的HD變體調色。局部美術與其他HD場景仍待完成。
+[54項正常滑鼠抽驗](workplace/scratch/ui-windows-20261104/hd-world-gui.json)通過三倍率點同城、模式／液晶往返、
+全圖兩端、小地圖、正常存讀檔與缺圖重開。SAVE.DAT及原生槽檔兩者SHA均未被顯示／縮放重寫。
+冷測、原版標記12狀態合成、獨立GPU原生細節／遮擋／單區fallback與vet通過；GUI未抽移動中軍團。
+[12張實際遊戲畫面](workplace/scratch/ui-windows-20261104/hd-world-game-review.html)留本機，四項斷網頁面抽驗通過。
+[接線收據](workplace/scratch/ui-windows-20261104/hd-world-integration.json)保存32份來源與57選稿SHA、binary、測試及截圖，
+前段26檔來源覆蓋包與受測程式仍保留。HD不作原版圖像parity或逐區美術接受聲明，AI與編輯器仍待接線。
+
+2026-11-11使用者確認頂部HD範圍為「龍紋、標題與日期的橫幅」，另要求原版可縮小地圖、工具列縮小與隱藏。
+已選靠上緣自動顯示、離開收起；正式展開28高、收起6高，維持十一鈕單排、畫布外置與完整手勢隔離。
+一般視窗隨收展調整高度以維持遊戲顯示倍率，捕捉游標重映射／重建基準，避免變成地圖捲動。
+`-hd-banner workplace/hd-redraw-local-20261104/faithful`載入原圖參考重繪，原生2172×724 PNG未改bytes，
+只取內容矩形排除白色外緣；日期仍沿原字模即時顯示，原版開關熱區不移位。色盤0以外／液晶沿原圖。
+[正常滑鼠收據](workplace/scratch/ui-windows-20261104/banner-toolbar-gui.json)包含96個功能與同步檢查點，
+含重複收展同步，不是96個獨立功能。原版縮放／小地圖、HD橫幅／頭像、拖出放開、模式切換與正常存讀檔通過。
+原版及原生槽檔SHA未被重寫；受影響冷測、獨立GPU與vet通過。全螢幕／最大化只核對座標轉換，未做原生GUI驗收。
+[12張實際畫面](workplace/scratch/ui-windows-20261104/banner-toolbar-game-review.html)與
+[接線收據](workplace/scratch/ui-windows-20261104/banner-toolbar-integration.json)留本機，附38檔來源覆蓋包、PNG與完整提示詞。
+前段32檔來源包與受測程式保留；橫幅依既定畫風製作，尚未聲稱此張美術個別接受。
+
+2026-11-12接通已同意的五組據點景觀：許昌6、滎陽14、舞陽2、虎牢關5、汝南0。
+`-hd-locations workplace/hd-redraw-local-20261104/faithful`沿既有manifest／originals與實際KYOGRF15頁驗證，
+以City.KindHigh選圖，不按城池類型或ID另猜。直接原生合成，保持(16,288)、96×96及原視窗／文字位置；
+GPU最多兩頁快取，其他季節、液晶、未選頁與讀圖失敗沿原圖。五張已同意PNG未修改，沒有新美術生成。
+[正常滑鼠收據](workplace/scratch/ui-windows-20261104/hd-location-gui.json)通過145個功能／同步檢查點，含重複收展同步。
+五城、氾水關共用第5頁、宛未選第10頁、快取重載、液晶往返、正常讀檔及缺素材重開通過；兩種存檔SHA未變。
+冷測、獨立GPU及原頭像GPU抽驗與vet通過；[13張實際畫面](workplace/scratch/ui-windows-20261104/hd-location-game-review.html)
+附真實裁區檢視。[接線收據](workplace/scratch/ui-windows-20261104/hd-location-integration.json)保存43檔來源與五張選稿SHA，
+前段38檔覆蓋包與受測程式保留。完成聲明限五頁及已走正常流程，其餘十頁／HD介面、AI與編輯器仍待完成。
+
+2026-11-12依使用者要求移除remake額外的「右鍵關閉」提示：據點／軍團情報窗外的框與進言結果提示皆移除，
+四語字串同步清理。原版TALK #4狀態列與右鍵／返回／對白操作保留，不改規則及存檔。
+[正常滑鼠抽驗](workplace/scratch/ui-windows-20261104/no-close-hint-gui.json)通過原版／HD據點窗、軍團窗與進言結果的右鍵關閉及存讀檔；
+冷測、vet及建置通過。[實際畫面](workplace/scratch/ui-windows-20261104/no-close-hint-game-review.html)附前版比較，
+現行來源與受測程式見[接線收據](workplace/scratch/ui-windows-20261104/no-close-hint-integration.json)，契約見[spec266](docs/spec/266-mouse-only-desktop-toolbar.md)。
+
+同日使用者再指出編成、存檔完成的額外通知。已移除編成／存檔／讀檔成功事件列，成功後清除舊通知，
+保留原版主將對白、實際部隊、選槽成功關窗及失敗重試。其他事件通知未在此輪刪除，避免漏報重要事件。
+受影響冷測、vet與正常滑鼠50個功能／同步檢查點通過，五張本輪畫面與兩張前版比較見
+[本機頁](workplace/scratch/ui-windows-20261104/quiet-success-game-review.html)，目前受測程式及45檔來源沿
+[接線收據](workplace/scratch/ui-windows-20261104/quiet-success-integration.json)。
+
+2026-11-12續查移除行軍、戰術下令及已有TALK的外交／撥款結算摘要，失敗與重要事件保留。
+依使用者指定，第一劇本曹操正常宣戰呂布、由夏侯淵37出兵徐州79；發現一般訊息漏接右鍵，已修正逐頁推進並通過負對照與正常流程重跑。
+滑鼠靜止時兩側日期及座標皆前進；兩邊在196/4/6 6時、夏侯淵(241,108)對呂布35(243,108)、椎陽76入戰。
+原版134步／33張截圖可重現。戰術過程仍有差異：原版932拍進結算，本次remake約440拍退場；
+完整入戰RNG／單兵狀態與精確命令拍未鎖定，不能把本案當成動畫全等價或速度調參依據。
+下一個比較閘門是固定同一入戰狀態追走位、投射物及HP時序，沿既有Issue #13／#16／#24，不重開已驗證的停手起步機制。
+[本機比較頁](workplace/scratch/ui-windows-20261104/cao-lubu-game-review.html)、
+[比較矩陣](workplace/scratch/ui-windows-20261104/cao-lubu-comparison.json)與
+[50檔來源收據](workplace/scratch/ui-windows-20261104/cao-lubu-integration.json)為最新入口；案例詳見[playtest125](docs/playtest/125-mouse-attacker-march.md)。
 
 | 日期／目前程式 | 最近驗證 | 狀態 | 交付物 |
 |---|---|---|---|
+| 2026-11-12；通知清理與曹操對呂布 | 冷測、vet、右鍵負對照及正常GUI60個功能／同步檢查點通過；原版134步／33圖重現 | 右鍵漏接已修，停手行軍與入戰角色／日期／據點吻合；戰術後段時序仍有差異 | [比較頁](workplace/scratch/ui-windows-20261104/cao-lubu-game-review.html)、[矩陣](workplace/scratch/ui-windows-20261104/cao-lubu-comparison.json)、[收據](workplace/scratch/ui-windows-20261104/cao-lubu-integration.json) |
+| 2026-11-12；移除重複成功通知 | 正常GUI50個功能／同步檢查點、受影響冷測、vet及建置通過 | 編成保留原版對白，編成／存檔／讀檔成功不另開小窗，失敗處理保留 | [實際畫面](workplace/scratch/ui-windows-20261104/quiet-success-game-review.html)、[接線收據](workplace/scratch/ui-windows-20261104/quiet-success-integration.json) |
+| 2026-11-12；移除額外關閉提示 | 正常GUI69個功能／同步檢查點、受影響冷測、vet及建置通過 | 據點／軍團窗與進言結果移除額外提示；保留原版狀態列及右鍵操作 | [實際畫面](workplace/scratch/ui-windows-20261104/no-close-hint-game-review.html)、[接線收據](workplace/scratch/ui-windows-20261104/no-close-hint-integration.json) |
+| 2026-11-12；五組HD據點景觀 | 正常GUI145個功能／同步檢查點、資料冷測、景觀／頭像GPU及vet通過 | 已同意五頁接入情報窗，頁0、共用頁、缺頁／液晶回退與存讀檔通過；其餘HD待完成 | [實際畫面](workplace/scratch/ui-windows-20261104/hd-location-game-review.html)、[接線收據](workplace/scratch/ui-windows-20261104/hd-location-integration.json) |
+| 2026-11-11；HD橫幅與精簡自動工具列 | 正常GUI96個功能／同步檢查點、冷測、GPU與vet通過 | 色盤0橫幅及28／6自動收起已接線，原版縮放／小地圖可用；其他HD與AI／編輯器待完成 | [實際畫面](workplace/scratch/ui-windows-20261104/banner-toolbar-game-review.html)、[接線收據](workplace/scratch/ui-windows-20261104/banner-toolbar-integration.json) |
+| 2026-11-11；HD大地圖接線 | 54項正常滑鼠、資料／標記冷測、GPU細節／遮擋／缺圖與vet通過 | 色盤0已接35區／22接縫；其他季節／液晶沿原圖，局部美術／其他HD場景、AI／編輯器待完成 | [實際遊戲畫面](workplace/scratch/ui-windows-20261104/hd-world-game-review.html)、[接線收據](workplace/scratch/ui-windows-20261104/hd-world-integration.json) |
+| 2026-11-11；戰略地圖縮放 | 31項正常滑鼠、960次城池座標、GPU圖層、冷測與vet通過 | 正式50%～200%、十一鈕單排；HD地圖／AI／編輯器待接線 | [實際遊戲畫面](workplace/scratch/ui-windows-20261104/world-zoom-game-review.html)、[接線收據](workplace/scratch/ui-windows-20261104/world-zoom-integration.json) |
+| 2026-11-11；HD頭像首段 | 29項正常滑鼠抽驗、受影響冷測、GPU細節／遮擋及vet通過 | 已接頭像切換與偏好；當時八鈕，現況依上列 | [實際遊戲畫面](workplace/scratch/ui-windows-20261104/hd-head-game-review.html)、[接線收據](workplace/scratch/ui-windows-20261104/hd-head-integration.json) |
+| 2026-11-11；單排工具列確認稿 | 預設／重開為單排、窄視窗不換列及既有操作抽驗 | 使用者已選單排；AI與編輯器正式接線仍為DRAFT | [確認稿](workplace/scratch/ui-windows-20261104/hd-toolbar-expanded-r1.html)、[選擇紀錄](workplace/scratch/ui-windows-20261104/hd-toolbar-single-choice.json) |
 | 2026-11-06；本週原始碼checkpoint | Go冷測與vet、嚴格未解索引1144列、過期斷言及資產deny-list通過；完整check仍有既有幽靈引用與教訓索引警告 | 依使用者要求整理本週進度提交並推送main；原版素材及HD圖／HTML繼續留本機，不作發行或整款完成聲明 | [工作歷程](WORKLOG.md)、[本機檢查收據](workplace/weekly-push-20261106-checks.json)、[spec274](docs/spec/274-original-list-scrollbar-drag.md)、[spec275](docs/spec/275-hd-toolbar-portraits-and-tools.md) |
-| 2026-11-06；81張HD頭像小樣 | 頭像7項離線抽驗通過，100次原生bytes、81張原圖、來源劇本及四劇本名單核對；既有69張選稿、城池圖與全圖頁未變 | 新增12張，嚴顏／程普／曹洪選第2稿、滿寵選第3稿；保留原圖神情與色塊，沿用既有載入方式及門檻。其餘頭像、全圖局部美術與正式接線待完成，未宣稱逐張驗收 | [頭像對照](workplace/hd-redraw-local-20261104/faithful/portraits/index.html)、[第八批紀錄](workplace/hd-redraw-local-20261104/faithful/portraits/batch-8.json)、[69張快照](workplace/hd-redraw-local-20261104/faithful/portraits/sixtynine-r1-snapshot.json)、[全圖預覽](workplace/hd-redraw-local-20261104/faithful/world/index.html) |
+| 2026-11-11；146張HD頭像小樣 | 七項離線抽驗、203次原生輸出、146張原圖與來源映射及重建一致通過 | 新增八張，既有138張、城池及全圖頁未變；仍為DRAFT小樣 | [對照頁](workplace/hd-redraw-local-20261104/faithful/portraits/index.html)、[本批紀錄](workplace/hd-redraw-local-20261104/faithful/portraits/batch-16.json)、[138張快照](workplace/hd-redraw-local-20261104/faithful/portraits/138-r1-snapshot.json) |
 | 2026-11-04；五座城池原圖參考HD | 十張1254×1254原生PNG；11項離線瀏覽器抽驗通過，JS錯誤0、外部請求0；五城來源／頁碼與原圖及輸出SHA核對 | 使用者已同意五城十張，原生PNG未改。素材與網頁留本機，正式接線仍在spec275 DRAFT | [現行比較頁](workplace/hd-redraw-local-20261104/faithful/index.html)、[第二批同意紀錄](workplace/hd-redraw-local-20261104/faithful/hd-generated/batch-2.json)、[抽驗](workplace/hd-redraw-local-20261104/faithful/qa/native-result.json) |
 | 2026-11-04；許昌離線微量修繪（歷史） | 9項離線瀏覽器與保護區核對曾通過，只證明操作及來源／保護像素 | 使用者指出仍糊，未達HD；已由原生重繪候選取代 | [舊小樣](workplace/hd-redraw-local-20261104/faithful/index-local-retouch.html)、[舊資料](workplace/hd-redraw-local-20261104/faithful/manifest-local-retouch.json) |
 | 2026-11-04；城池與地圖SVG重繪第一批（歷史） | 12項離線瀏覽器與幾何抽驗曾通過，只證明能操作、來源及路網一致 | 使用者已否決A、B兩案，認為失去原版特色；技術檢查不等於美術驗收 | [被否決的比較頁](workplace/hd-redraw-local-20261104/index.html)、[裁定](workplace/hd-redraw-local-20261104/decision.json) |

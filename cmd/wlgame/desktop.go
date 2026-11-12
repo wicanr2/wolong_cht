@@ -15,7 +15,7 @@ import (
 	"github.com/wicanr2/wolong_cht/translations"
 )
 
-const desktopBarHeight = 40
+const desktopBarHeight = 28
 
 // 對拍與錄影仍直接使用 game，座標偏移保持零。
 var desktopGameOffset int
@@ -26,7 +26,6 @@ type mouseHintID int
 
 const (
 	mouseSelect mouseHintID = iota
-	mouseClose
 	mouseContinue
 	mouseReturnTitle
 	mouseReturnMap
@@ -45,7 +44,7 @@ func loadDesktopLabels() map[string][]string {
 		log.Panicf("讀取桌面工具列文字：%v", err)
 	}
 	for _, lang := range []string{"zh-hant", "zh-hans", "ja", "en"} {
-		if len(labels[lang]) != 7 || len(labels["hints-"+lang]) != 6 {
+		if len(labels[lang]) != 7 || len(labels["hints-"+lang]) != 5 {
 			log.Panicf("桌面工具列文字不完整：%s", lang)
 		}
 	}
@@ -77,18 +76,44 @@ const (
 	desktopBack
 	desktopConfirm
 	desktopQuit
+	desktopDisplay
+	desktopZoomOut
+	desktopZoomReset
+	desktopZoomIn
 )
 
-func desktopButton(a desktopAction) image.Rectangle {
-	if a < desktopLanguage || a > desktopQuit {
-		return image.Rectangle{}
+var desktopActions = []desktopAction{desktopLanguage, desktopDisplay, desktopZoomOut, desktopZoomReset, desktopZoomIn, desktopSettings, desktopSave, desktopLoad, desktopBack, desktopConfirm, desktopQuit}
+var desktopWidths = []int{72, 72, 24, 44, 24, 72, 48, 48, 48, 64, 48}
+var desktopDisplayLabels = func() map[string][]string {
+	b, err := translations.Files.ReadFile("desktop-display.json")
+	var m map[string][]string
+	if err == nil {
+		err = json.Unmarshal(b, &m)
 	}
-	x := 6 + (int(a)-1)*90
-	return image.Rect(x, 4, x+88, desktopBarHeight-4)
+	if err != nil {
+		log.Panicf("desktop display labels: %v", err)
+	}
+	for _, lang := range []string{"zh-hant", "zh-hans", "ja", "en"} {
+		if len(m[lang]) != 2 {
+			log.Panicf("desktop display labels: %s", lang)
+		}
+	}
+	return m
+}()
+
+func desktopButton(a desktopAction) image.Rectangle {
+	x := 18
+	for i, action := range desktopActions {
+		if a == action {
+			return image.Rect(x, 2, x+desktopWidths[i], desktopBarHeight-2)
+		}
+		x += desktopWidths[i] + 4
+	}
+	return image.Rectangle{}
 }
 
 func desktopHit(x, y int) desktopAction {
-	for a := desktopLanguage; a <= desktopQuit; a++ {
+	for _, a := range desktopActions {
 		if image.Pt(x, y).In(desktopButton(a)) {
 			return a
 		}
@@ -103,7 +128,11 @@ type desktopGesture struct {
 
 // 完整隔離三個按鍵，包括拖出工具列後放開的那一幀。
 func (b *desktopGesture) pointer(x, y int, down [3]bool, enabled func(desktopAction) bool) (desktopAction, bool) {
-	inside := image.Pt(x, y).In(image.Rect(0, 0, screenW, desktopBarHeight))
+	return b.pointerWithHeight(x, y, down, enabled, desktopBarHeight)
+}
+
+func (b *desktopGesture) pointerWithHeight(x, y int, down [3]bool, enabled func(desktopAction) bool, height int) (desktopAction, bool) {
+	inside := image.Pt(x, y).In(image.Rect(0, 0, screenW, height))
 	blocked := inside
 	action := desktopNone
 	for i := range down {
@@ -147,6 +176,14 @@ func (g *game) desktopEnabled(a desktopAction) bool {
 	switch a {
 	case desktopLanguage:
 		return !g.quitting && (g.launcher != nil && g.naming == nil || g.desktopHostReady() && !g.hudOpen(hudSystem))
+	case desktopDisplay:
+		return g.hdAssetsAvailable() && !g.videoLCD && !g.quitting && (g.launcher != nil && g.naming == nil || g.desktopHostReady())
+	case desktopZoomOut:
+		return g.strategyZoomReady() && g.mapZoomPercent() > 50
+	case desktopZoomReset:
+		return g.strategyZoomReady() && g.mapZoomPercent() != 100
+	case desktopZoomIn:
+		return g.strategyZoomReady() && g.mapZoomPercent() < 200
 	case desktopSettings, desktopSave, desktopLoad:
 		return g.desktopHostReady()
 	case desktopBack:
@@ -168,13 +205,20 @@ func (g *game) desktopEnabled(a desktopAction) bool {
 func (g *game) confirmed() bool { return g.pointerAction == desktopConfirm }
 
 type desktopGame struct {
-	g           *game
-	bar         desktopGesture
-	canvas      *ebiten.Image
-	labels      map[string][]string
-	trace       *os.File
-	traceLast   string
-	traceAction desktopAction
+	g                *game
+	bar              desktopGesture
+	canvas           *ebiten.Image
+	labels           map[string][]string
+	trace            *os.File
+	traceLast        string
+	traceAction      desktopAction
+	hd               hdComposite
+	finalScale       float64
+	hdFrameDrawn     bool
+	barVisible       bool
+	finalGeometry    ebiten.GeoM
+	finalBounds      image.Rectangle
+	hasFinalGeometry bool
 }
 
 func newDesktopGame(g *game) *desktopGame {
@@ -186,12 +230,12 @@ func newDesktopGame(g *game) *desktopGame {
 			log.Fatalf("開啟桌面操作紀錄：%v", err)
 		}
 	}
-	desktopGameOffset = desktopBarHeight
+	desktopGameOffset = desktopRevealHeight
 	return s
 }
 
 func (s *desktopGame) Layout(int, int) (int, int) {
-	return screenW, screenH + desktopBarHeight
+	return screenW, screenH + s.barHeight()
 }
 
 func (s *desktopGame) Update() error {
@@ -214,10 +258,24 @@ func (s *desktopGame) Update() error {
 		s.bar = desktopGesture{previous: down}
 		return g.updateWithPointer(0, 0)
 	}
+	if visible := autoBarVisible(s.barVisible, x, y+s.barHeight(), down, s.bar.previous, s.bar.owned, false); visible != s.barVisible {
+		s.setBarVisible(visible)
+		g.idleGate.Pause()
+		return nil
+	}
 	wasOwned := s.bar.owned[0] || s.bar.owned[1] || s.bar.owned[2]
-	action, blocked := s.bar.pointer(x, y+desktopBarHeight, down, g.desktopEnabled)
+	enabled := g.desktopEnabled
+	if !s.barVisible {
+		enabled = func(desktopAction) bool { return false }
+	}
+	action, blocked := s.bar.pointerWithHeight(x, y+s.barHeight(), down, enabled, s.barHeight())
 	s.traceAction = action
 	if !blocked {
+		_, wheelY := ebiten.Wheel()
+		if g.zoomMapWheel(wheelY, x, y, down) {
+			g.idleGate.Pause()
+			return nil
+		}
 		return g.updateWithPointer(pushX, pushY)
 	}
 	// 停手後沿原版 idle gate 恢復；游標留在工具列不應永久凍結軍團。
@@ -235,6 +293,15 @@ func (s *desktopGame) Update() error {
 		}
 	case desktopSettings:
 		g.hudSet(hudSystem, !g.hudOpen(hudSystem))
+	case desktopDisplay:
+		g.hdDisplay = !g.hdDisplay
+		g.saveDesktopPreferences()
+	case desktopZoomOut:
+		g.zoomMapTo(g.mapZoomPercent()-25, strategyMapW/2, strategyMapH/2)
+	case desktopZoomReset:
+		g.zoomMapTo(100, strategyMapW/2, strategyMapH/2)
+	case desktopZoomIn:
+		g.zoomMapTo(g.mapZoomPercent()+25, strategyMapW/2, strategyMapH/2)
 	case desktopSave:
 		g.beginSaveUI(saveWrite)
 	case desktopLoad:
@@ -261,7 +328,18 @@ func (s *desktopGame) writeTrace() {
 		phase = int(g.launcher.phase)
 	}
 	v := map[string]any{
-		"x": x, "y": y, "captured": desktopPointer.active, "phase": phase,
+		"hdLocationsAvailable": g.hdLocation.pack.Count(), "hdLocationDrawn": g.hdLocation.drawn, "hdLocationPage": g.hdLocation.page, "hdLocationCity": g.hdLocation.city, "hdLocationCacheCount": len(g.hdLocation.cache),
+		"barVisible": s.barVisible, "barHeight": s.barHeight(), "barFullHeight": desktopBarHeight, "barRevealHeight": desktopRevealHeight,
+		"windowSize":        [2]int{s.finalBounds.Dx(), s.finalBounds.Dy()},
+		"hdBannerAvailable": g.hdBanner.pack != nil, "hdBannerDrawn": g.hdBanner.drawn,
+		"hdWorldAvailable": g.hdWorld.pack.Count(), "hdWorldDrawn": g.hdWorld.drawn, "hdWorldCacheBytes": g.hdWorld.bytes,
+		"hdWorldOrigin": g.hdWorld.drawOrigin, "hdWorldZoom": g.hdWorld.drawZoom,
+		"zoomPercent": g.mapZoomPercent(), "zoomReady": g.strategyZoomReady(), "camSub": [2]int{g.camSubX, g.camSubY},
+		"hudMinimap": g.hudOpen(hudMinimap), "hudCommand": g.hudOpen(hudCommand), "cityInfo": g.cityInfo.active,
+		"hdDisplay": g.hdDisplay, "hdAvailable": g.hdPortraits.Count(), "hdNativeDraws": g.hdNativeDraws, "hdScale": s.hd.scale,
+		"hdDrawPhase": g.hdDrawPhase, "hudFaction": g.hudOpen(hudFaction),
+		"videoLCD": g.videoLCD,
+		"x":        x, "y": y, "captured": desktopPointer.active, "phase": phase,
 		"cursorMode":   int(ebiten.CursorMode()),
 		"pointerReady": desktopPointer.active && desktopPointer.rebase == 0,
 		"pointerRaw":   [2]int{desktopPointer.rawX, desktopPointer.rawY},
@@ -275,6 +353,16 @@ func (s *desktopGame) writeTrace() {
 		"buttons": [3]bool{ebiten.IsMouseButtonPressed(ebiten.MouseButtonLeft), ebiten.IsMouseButtonPressed(ebiten.MouseButtonRight), ebiten.IsMouseButtonPressed(ebiten.MouseButtonMiddle)},
 		"canBack": g.desktopEnabled(desktopBack), "hostReady": g.desktopHostReady(),
 	}
+	buttons := map[string][4]int{}
+	for _, row := range []struct {
+		key    string
+		action desktopAction
+	}{{"zoomOut", desktopZoomOut}, {"zoomReset", desktopZoomReset}, {"zoomIn", desktopZoomIn}, {"display", desktopDisplay}, {"language", desktopLanguage}, {"settings", desktopSettings}, {"save", desktopSave}, {"load", desktopLoad}, {"back", desktopBack}, {"confirm", desktopConfirm}, {"quit", desktopQuit}} {
+		r := desktopButton(row.action)
+		buttons[row.key] = [4]int{r.Min.X, r.Min.Y, r.Max.X, r.Max.Y}
+	}
+	v["toolbar"] = buttons
+	v["cityInfoCity"] = g.cityInfo.city
 	if g.list != nil {
 		v["listPhase"], v["listCursor"], v["listPick"] = int(g.list.Phase()), g.list.Cursor, g.listPick != nil
 		v["listRows"], v["listTop"] = g.list.Rows, g.list.Top
@@ -351,20 +439,52 @@ func (s *desktopGame) Draw(dst *ebiten.Image) {
 		s.canvas = ebiten.NewImage(screenW, screenH)
 	}
 	s.canvas.Clear()
+	s.hdFrameDrawn = s.g.hdDisplay && !s.g.videoLCD && s.g.hdAssetsAvailable()
+	s.g.hdWorld.drawn = 0
+	s.g.hdBanner.drawn = false
+	s.g.hdLocation.drawn = false
+	s.g.hdLocation.page, s.g.hdLocation.city = -1, -1
+	s.g.hdNativeDraws = 0
+	s.g.hdDrawPhase = -1
+	if s.g.launcher != nil {
+		s.g.hdDrawPhase = int(s.g.launcher.phase)
+	}
+	if s.hdFrameDrawn {
+		s.hd.begin(s.finalScale)
+		s.g.hdFrame = &s.hd
+	}
 	s.g.Draw(s.canvas)
+	s.g.hdFrame = nil
 	if s.g.launcher != nil && s.g.quitting {
 		s.g.drawYesNo(s.canvas, quitDialogX, quitDialogY, "確定離開？", s.g.quitYes)
 	}
+	if s.hdFrameDrawn {
+		s.hd.flush(s.canvas)
+		op := &ebiten.DrawImageOptions{}
+		op.GeoM.Scale(1/s.hd.scale, 1/s.hd.scale)
+		s.canvas.DrawImage(s.hd.surface, op)
+	}
 	op := &ebiten.DrawImageOptions{}
-	op.GeoM.Translate(0, desktopBarHeight)
+	op.GeoM.Translate(0, float64(s.barHeight()))
 	dst.DrawImage(s.canvas, op)
+	if !s.barVisible {
+		vector.DrawFilledRect(dst, 0, 0, screenW, desktopRevealHeight, color.RGBA{20, 27, 37, 255}, false)
+		vector.DrawFilledRect(dst, screenW/2-18, 2, 36, 2, color.RGBA{190, 170, 126, 255}, false)
+		if desktopPointer.active {
+			x, y := cursorPosition()
+			if y < 0 {
+				drawArrowCursor(dst, image.Pt(x, y+s.barHeight()), color.RGBA{255, 255, 255, 255}, color.RGBA{240, 210, 149, 255})
+			}
+		}
+		return
+	}
 	vector.DrawFilledRect(dst, 0, 0, screenW, desktopBarHeight, color.RGBA{20, 27, 37, 255}, false)
 	labels := s.labels[desktopLocale()]
 	if len(labels) == 0 {
 		labels = s.labels["zh-hant"]
 	}
 	x, y := cursorPosition()
-	for a := desktopLanguage; a <= desktopQuit; a++ {
+	for _, a := range desktopActions {
 		r := desktopButton(a)
 		ink := color.RGBA{240, 210, 149, 255}
 		fill := color.RGBA{39, 48, 62, 255}
@@ -376,8 +496,19 @@ func (s *desktopGame) Draw(dst *ebiten.Image) {
 		vector.DrawFilledRect(dst, float32(r.Min.X), float32(r.Min.Y), float32(r.Dx()), float32(r.Dy()), ink, false)
 		vector.DrawFilledRect(dst, float32(r.Min.X+1), float32(r.Min.Y+1), float32(r.Dx()-2), float32(r.Dy()-2), fill, false)
 		if s.g.td != nil {
-			label := labels[int(a)-1]
-			s.g.td.Draw(dst, label, r.Min.X+(r.Dx()-s.g.td.Width(label))/2, 12, ink)
+			label := ""
+			if a == desktopDisplay {
+				index := 0
+				if s.g.hdDisplay && !s.g.videoLCD && s.g.hdAssetsAvailable() {
+					index = 1
+				}
+				label = desktopDisplayLabels[desktopLocale()][index]
+			} else if a >= desktopZoomOut && a <= desktopZoomIn {
+				label = s.g.desktopZoomLabel(a)
+			} else {
+				label = labels[int(a)-1]
+			}
+			s.g.td.Draw(dst, label, r.Min.X+(r.Dx()-s.g.td.Width(label))/2, (desktopBarHeight-16)/2, ink)
 		}
 	}
 	if desktopPointer.active && y < 0 && s.g.choiceBand.owner == nil && !s.g.listScrollOwnsInput() {

@@ -22,11 +22,12 @@ type desktopPreferences struct {
 	LordCorps           bool   `json:"lord_corps"`
 	DamageReport        bool   `json:"damage_report"`
 	BattleResultSeconds int    `json:"battle_result_seconds"`
+	HDDisplay           bool   `json:"hd_display,omitempty"`
 }
 
 func (g *game) desktopPreferences() desktopPreferences {
 	return desktopPreferences{1, string(uiLang.Lang()), g.videoLCD, g.soundOption(),
-		g.speed, g.tacticalSpeed, g.lordCorps, g.damageReport, g.battleResultSeconds}
+		g.speed, g.tacticalSpeed, g.lordCorps, g.damageReport, g.battleResultSeconds, g.hdDisplay}
 }
 
 func (p desktopPreferences) validate() error {
@@ -64,7 +65,8 @@ func readDesktopPreferences(path string, defaults desktopPreferences) (desktopPr
 		return defaults, fmt.Errorf("偏好檔案超過 64 KiB")
 	}
 	p := defaults
-	p.Version = 0 // 必須明示版本；缺少其他欄位沿用預設。
+	p.Version = 0       // 必須明示版本；缺少其他欄位沿用預設。
+	p.HDDisplay = false // 舊偏好沒有此欄位時仍從原版開始。
 	if err := json.Unmarshal(raw, &p); err != nil {
 		return defaults, err
 	}
@@ -110,6 +112,7 @@ func (g *game) applyDesktopPreferences(p desktopPreferences, explicit map[string
 			return err
 		}
 	}
+	g.hdDisplay = p.HDDisplay
 	if !explicit["video-lcd"] {
 		g.videoLCD = p.VideoLCD
 	}

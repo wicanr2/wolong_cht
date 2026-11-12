@@ -9,7 +9,7 @@
 本地 [`docs/worklist.json`](../worklist.json) 與 `tools/worklist.py verify` 只作輔助。
 1150 列不是同數量的獨立 backlog；可執行項目已由完成的 Issue #28 分流，證據／歷史項目留在本索引。
 
-- 日期：2026-11-06
+- 日期：2026-11-12
 - 產生工具：`tools/re_open_questions.py`
 - 來源：`docs/` 底下所有文件的未解小節、表格裡標未解的列，與收尾是「…未解」的散句
 
@@ -1119,9 +1119,9 @@
 | [`spec/274-original-list-scrollbar-drag.md`](../spec/274-original-list-scrollbar-drag.md) | HD素材、比例與外觀選擇 | 未決 / 否，原版修正後另行共同規劃 | 靜態 | history | — |
 | [`spec/275-hd-toolbar-portraits-and-tools.md`](../spec/275-hd-toolbar-portraits-and-tools.md) | 概念頁允許即時切換；正式遊戲的開關時機仍未定案。 | （散句） | 靜態 | history | — |
 | [`spec/275-hd-toolbar-portraits-and-tools.md`](../spec/275-hd-toolbar-portraits-and-tools.md) | AI切換時機及移動／架梯接線 | 待設計／證據審查；曲線已選雙方1–2倍 / 是，先查現有計時與做prototype | 靜態 | evidence-only | — |
-| [`spec/275-hd-toolbar-portraits-and-tools.md`](../spec/275-hd-toolbar-portraits-and-tools.md) | 新入口分組及窄視窗安排 | 未決 / 是，不能直接縮小已選A | 靜態 | evidence-only | — |
-| [`spec/275-hd-toolbar-portraits-and-tools.md`](../spec/275-hd-toolbar-portraits-and-tools.md) | HD正式素材產製與接線 | 五城十張已獲同意；三十五區試繪覆蓋原圖全部面積與192據點，孤立屋頂已修；81張頭像小樣未宣稱逐張接受 / 畫風不阻塞；局部配色／水紋／邊線、其餘頭像、資產映射與正式接線仍待完成 | 靜態 | evidence-only | — |
-| [`spec/275-hd-toolbar-portraits-and-tools.md`](../spec/275-hd-toolbar-portraits-and-tools.md) | HD世界鏡頭與固定介面 | 本機原型可依世界座標切換全圖／已繪範圍／本區、滑鼠縮放與平移，工具列固定 / 是，正式Ebiten視野、焦點、邊界及命中座標仍待接線與驗證 | 靜態 | evidence-only | — |
+| [`spec/275-hd-toolbar-portraits-and-tools.md`](../spec/275-hd-toolbar-portraits-and-tools.md) | 新入口分組及窄視窗安排 | 已選單排與28／6自動收起；正式工具列十一個實體鈕 / 不阻塞已確認操作；AI與編輯器入口待各自接線 | 靜態 | evidence-only | — |
+| [`spec/275-hd-toolbar-portraits-and-tools.md`](../spec/275-hd-toolbar-portraits-and-tools.md) | HD正式素材產製與接線 | 五城十張已同意，其中五組景觀已接情報窗；35區／22接縫、146頭像及色盤0橫幅已接，未新增逐張接受聲明 / 已接範圍限定抽驗通過；其餘十頁景觀、其他色盤／場景、局部美術及其餘正常視窗待完成 | 靜態 | evidence-only | — |
+| [`spec/275-hd-toolbar-portraits-and-tools.md`](../spec/275-hd-toolbar-portraits-and-tools.md) | HD世界鏡頭與固定介面 | 正式地圖已接50%～200%，色盤0可用HD全圖；視野、焦點、邊界與命中抽驗通過，介面固定 / 不阻塞已接範圍；其他季節與液晶HD仍沿原圖 | 靜態 | evidence-only | — |
 | [`spec/275-hd-toolbar-portraits-and-tools.md`](../spec/275-hd-toolbar-portraits-and-tools.md) | 編輯套用時機、取消及存檔衍生欄位 | 待設計／證據審查 / 是，先做單人垂直鏈草稿 | 靜態 | evidence-only | — |
 | [`spec/275-hd-toolbar-portraits-and-tools.md`](../spec/275-hd-toolbar-portraits-and-tools.md) | 建議原版規則與可選AI輔助分開驗證；開關預設及切換時機尚未定案。 | （散句） | 靜態 | evidence-only | — |
 | [`spec/28-scenario-json.md`](../spec/28-scenario-json.md) | 事件佇列 | 這一輪不進 JSON。編輯器要動它得先有 UI 語意 | 靜態 | evidence-only | — |

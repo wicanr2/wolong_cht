@@ -19,6 +19,38 @@
 - 遭遇契約：[spec175](../spec/175-encounter-standoff-countdown.md)、
   [spec186](../spec/186-standoff-corps-before-city.md)。本次不修改遊戲執行邏輯。
 
+## 2026-11-12：曹操對呂布的正常路徑比較
+
+使用者指定第一劇本曹操開局對呂布，檢查操作、動畫及滑鼠靜止後的時間推進。
+現行Go程式為本機wlgame-cao-lubu-r2；[接線收據](../../workplace/scratch/ui-windows-20261104/cao-lubu-integration.json)保存50檔來源、二進位與工具SHA。
+松崗KI.EXE及SINARIO.DAT沿上方相同雜湊，原版資料唯讀；dosgolem來源提交為f79eab6db8c64a524a06535e53e5d32b0bbcf7c8。
+正常原版流程由新遊戲、第一劇本及曹操選取開始，沒有直接呼叫戰鬥、修改日期、軍團或勝負。
+兩側固定seed1：原版在首次sub_1ECE0取數前設定既有NewFixed(1)的258-byte狀態；Go使用-seed 1。
+這是明示亂數測試條件，不是原版RTC自然播種或整段亂數呼叫次數相同的聲明。
+
+| 比較點 | 原版／remake觀測 |
+|---|---|
+| 出兵 | 曹操0對呂布13宣戰，夏侯淵37編成6000兵，目的地徐州79；主君編成以正常設定關閉 |
+| 停手 | 指標不動時，日期及軍團座標皆前進；Go另以正常小地圖把我軍放入可見區後抽驗，不注入鏡頭或軍團狀態 |
+| 首次阻塞 | 4/1 9時、(210,114)出現陳留援軍訊息；原版右鍵可繼續，Go漏接已修。新的多頁／續行測試通過，舊版本被負對照拒絕 |
+| 入戰 | 兩側皆4/6 6時，夏侯淵37在(241,108)攻呂布35在(243,108)，據點椎陽76；目標徐州並不表示必須等到徐州才遇敵 |
+| 原版重現 | 134步的日期、指令數與結果相同，33張既有截圖SHA相同；加入唯讀節拍觀測後也相同 |
+| 走位 | 原版0／4／16／32拍各48兵一側，後續可見移位；Go正常開場、突擊、戰鬥後段與退場有實際截圖 |
+| 後段差異 | 原版第932拍到sub_19F58結算入口，Go本次最後活動幀440。突擊下令完成時原版181拍、Go首次生效178拍；完整入戰亂數與單兵狀態未鎖定，不能將差距單獨歸因於速度 |
+| 架梯／攀城 | 原版本案可見梯子；Go本輪未取得同一事件的對應畫面，不宣稱其不存在或已等價 |
+
+原版計數器1D318的末值為A4h，會回繞；932來自對該計數器寫入的唯讀累計，不把164當成整場耗時。
+原版取樣停在結算寫回入口，未在此輪新增完整戰後世界返回聲明。
+七種int61音效呼叫尚未實作，音訊排除於本次對拍完成範圍。
+本案沒有關閉Issue #13、#16、#24；下一步須固定入戰狀態，分開比較走位、投射物與HP時序，不為讓畫面接近而直接改速度。
+
+入口：[比較矩陣](../../workplace/scratch/ui-windows-20261104/cao-lubu-comparison.json)、
+[本機實際畫面](../../workplace/scratch/ui-windows-20261104/cao-lubu-game-review.html)、
+[原版重播指令](../../workplace/scratch/ui-windows-20261104/cao-original-replay-final.commands)、
+[原版完整觀測](../../workplace/scratch/ui-windows-20261104/cao-original-replay-observed.log)、
+[Go正常滑鼠收據](../../workplace/scratch/ui-windows-20261104/cao-lubu-remake-gui.json)與
+[視野內行軍收據](../../workplace/scratch/ui-windows-20261104/cao-lubu-visible-gui.json)。
+
 ## 正常操作與前提
 
 兩條路徑均從正常首頁開第一章曹操，remake seed固定1。先由設定關閉主君編成，

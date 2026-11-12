@@ -252,7 +252,7 @@
 | [`docs/re/39-remaining-unread.md`](re/39-remaining-unread.md) | 39 — 剩餘未讀函式的逐支歸屬 | 清單。 | 2026-08-14 |
 | [`docs/re/40-garrison-relief-request.md`](re/40-garrison-relief-request.md) | 40 — 據點求援與援軍派遣 | 整條鏈 confirmed（每一支都逐行讀過）。 sub_140C9 的距離算式裡有一處 | 2026-08-14 |
 | [`docs/re/42-leaf-functions.md`](re/42-leaf-functions.md) | 42 — 戰術以外的 47 支葉節點 | 47 支全部逐行讀過。四件事因此定案：INT 61h 是音源 TSR 的介面、 byte_198A6 的位元圖完整、… | 2026-08-14 |
-| [`docs/re/43-open-questions.md`](re/43-open-questions.md) | 43 — 未解缺口總表（生成的證據索引） | 生成的證據索引，跑 tools/py.sh tools/re_open_questions.py 重出。 證據欄不下… | 2026-11-06 |
+| [`docs/re/43-open-questions.md`](re/43-open-questions.md) | 43 — 未解缺口總表（生成的證據索引） | 生成的證據索引，跑 tools/py.sh tools/re_open_questions.py 重出。 證據欄不下… | 2026-11-12 |
 | [`docs/re/44-threat-and-reinforcement-ai.md`](re/44-threat-and-reinforcement-ai.md) | 44 — 威脅偵測與 AI 出兵：據點每 tick 掃一次 | 整條鏈逐行讀完。三件事定案：據點 +0x18 是佔用圖讀回來的軍團數、 +0x00 低 4 位是「哪幾個鄰居是敵方」… | 2026-08-14 |
 | [`docs/re/45-corps-command-mode.md`](re/45-corps-command-mode.md) | 45 — 軍團的三種指令模式：戰鬥指揮／委任／解體 | 軍團 +0x00 位元 2 定案 ＝ | 2026-08-14 |
 | [`docs/re/46-strategy-chrome-cell-layer.md`](re/46-strategy-chrome-cell-layer.md) | 46 — 主畫面的指令列沒有按鈕圖，外框取自 ICONGRF 段 3 | 指令列的繪製路徑逐支讀完。指令列 | 2026-08-15 |
@@ -520,7 +520,7 @@
 | [`docs/spec/272-world-tick-battle-resume.md`](spec/272-world-tick-battle-resume.md) | 272：戰術戰鬥中斷世界更新，戰後續完同一拍 | CONFORMED。入戰暫停、戰後續跑及存檔保護已實作；正式冷測與正常攻守滑鼠流程通過。 | 2026-11-03 |
 | [`docs/spec/273-encounter-battlefield-context.md`](spec/273-encounter-battlefield-context.md) | 273 — 在接戰位置選場一次，供戰術與畫面共用 | CONFORMED。 | 2026-11-04 |
 | [`docs/spec/274-original-list-scrollbar-drag.md`](spec/274-original-list-scrollbar-drag.md) | 274 — 清單捲軸按住預覽，放開提交 | CONFORMED。 | 2026-11-04 |
-| [`docs/spec/275-hd-toolbar-portraits-and-tools.md`](spec/275-hd-toolbar-portraits-and-tools.md) | 275：HD城池地圖重繪、工具列、頭像、戰術AI輔助與武將編輯 | DRAFT。 | 2026-11-04 |
+| [`docs/spec/275-hd-toolbar-portraits-and-tools.md`](spec/275-hd-toolbar-portraits-and-tools.md) | 275：HD城池地圖重繪、工具列、頭像、戰術AI輔助與武將編輯 | DRAFT（整體）。 | 2026-11-04 |
 | [`docs/spec/28-scenario-json.md`](spec/28-scenario-json.md) | 28 — 劇本的 JSON 匯出與匯入 | CONFORMED。四個區塊 round-trip 全過。 | 2026-08-15 |
 | [`docs/spec/29-audio.md`](spec/29-audio.md) | 29 — 音樂與音效 | CONFORMED。音樂與音效都會出聲、與原版錄音比對過， ⭐ | 2026-08-15 |
 | [`docs/spec/30-victory.md`](spec/30-victory.md) | 30 — 結局：存活勢力數歸一 | CONFORMED。⭐ 觸發條件在機器碼裡是 | 2026-08-16 |

@@ -146,6 +146,12 @@ func (g *game) drawPortrait(screen *ebiten.Image, page, x, y, bank int) {
 	op := &ebiten.DrawImageOptions{}
 	op.GeoM.Translate(float64(x), float64(y))
 	screen.DrawImage(ebiten.NewImageFromImage(img), op)
+	if g.hdFrame != nil && bank < paletteBanksPerMode {
+		if native := g.nativePortrait(page); native != nil {
+			g.hdFrame.portrait(screen, native, x, y)
+			g.hdNativeDraws++
+		}
+	}
 }
 
 func (g *game) drawIventScene(screen *ebiten.Image, page int) {

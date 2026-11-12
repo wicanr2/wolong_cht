@@ -66,13 +66,15 @@ def run(binary, orig, font, output, mode="desktop"):
         def move(x, y, tolerance=1):
             for _ in range(140):
                 s = state()
-                dx, dy = x-s["x"], y-s["y"]
+                # 新外殼收起時只有6px；封存binary仍沿原40px座標。
+                target_y = max(y, 1-s["barHeight"]) if s["captured"] and "barHeight" in s else y
+                dx, dy = x-s["x"], target_y-s["y"]
                 if abs(dx) <= tolerance and abs(dy) <= tolerance:
                     return
                 if s["captured"]:
                     command("mousemove_relative", "--", max(-24, min(24, dx))*2, max(-24, min(24, dy))*2)
                 else:
-                    command("mousemove", "--window", window, x*2, (y+40)*2)
+                    command("mousemove", "--window", window, x*2, (y+s.get("barHeight", 40))*2)
                 # 等待這次位移被遊戲消費，避免負載較高時重送舊座標的修正量。
                 end = time.monotonic()+5
                 while True:
@@ -99,7 +101,18 @@ def run(binary, orig, font, output, mode="desktop"):
             time.sleep(.05)
 
         def toolbar(index):
-            click(50+90*index, -20)
+            key = ["language", "settings", "save", "load", "back", "confirm", "quit"][index]
+            # 原版選單／拖曳擁有輸入時，自動工具列保持收起。
+            if "barVisible" in state() and not state()["barVisible"]:
+                if state()["choiceActive"] or state()["listDragging"]:
+                    return
+                move(320, 2-state()["barHeight"])
+                wait(lambda s: s["barVisible"] and (not s["captured"] or s["pointerReady"]), "reveal compact toolbar")
+            rect = state().get("toolbar", {}).get(key)
+            if rect is None:  # 封存的七鈕binary沒有新幾何紀錄，保留原重播。
+                click(50+90*index, -20)
+            else:
+                click((rect[0]+rect[2])//2, (rect[1]+rect[3])//2-state().get("barHeight", 40))
 
         def band_move(dy, row, y, label):
             assert state()["choiceActive"]

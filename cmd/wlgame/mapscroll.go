@@ -1,6 +1,7 @@
 package main
 
 import (
+	"math"
 	"runtime"
 
 	"github.com/hajimehoshi/ebiten/v2"
@@ -88,6 +89,17 @@ func finishDesktopPointerFrame() {
 }
 
 func (g *game) scrollMapPixels(dx, dy int) {
+	if g.mapZoomPercent() != 100 {
+		q := &g.worldZoom
+		q.fractionX += float64(dx) / g.mapZoomScale()
+		q.fractionY += float64(dy) / g.mapZoomScale()
+		sx, sy := math.Trunc(q.fractionX), math.Trunc(q.fractionY)
+		q.fractionX -= sx
+		q.fractionY -= sy
+		x, y := g.mapOrigin()
+		g.setZoomOrigin(x+sx, y+sy)
+		return
+	}
 	x := max(0, min((384-viewCols)*16, g.camX*16+g.camSubX+dx))
 	y := max(0, min((256-viewRows)*16, g.camY*16+g.camSubY+dy))
 	g.camX, g.camSubX = x/16, x%16

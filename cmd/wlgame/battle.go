@@ -199,7 +199,7 @@ func (g *game) issueBattleCommand(b *tactical.Battle, command int) {
 		g.setEvent("這哪裡有城壁啊！！")
 		return
 	}
-	g.setEvent("下令：" + order.String())
+	g.lastEvent = ""
 }
 
 // toggleBattleSquad 切換底列第 slot 格對應那一隊的選取（熱區 0x15–0x1A）。
@@ -447,11 +447,7 @@ func (g *game) drawBattleTalk(screen *ebiten.Image, text, speaker string, r batt
 
 	commander := g.battleCommander(p, side)
 	if commander >= 0 && commander < len(g.world.Generals) && g.lib != nil && portraitPage >= 0 {
-		if portrait, err := g.lib.Portrait(portraitPage, g.paletteBank()); err == nil {
-			op := &ebiten.DrawImageOptions{}
-			op.GeoM.Translate(float64(r.X+chrome.Tile), float64(r.Y+chrome.Tile))
-			screen.DrawImage(ebiten.NewImageFromImage(portrait), op)
-		}
+		g.drawPortrait(screen, portraitPage, r.X+chrome.Tile, r.Y+chrome.Tile, g.paletteBank())
 	}
 
 	tx := r.X + chrome.Tile + 72

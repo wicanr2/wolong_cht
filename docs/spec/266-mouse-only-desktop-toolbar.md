@@ -23,6 +23,107 @@
 入口為 [`cmd/wlgame/desktop.go`](../../cmd/wlgame/desktop.go)；包裝既有遊戲的更新與繪圖，不改資料格式、存檔或規則。
 按鈕文字來自 `translations/desktop-controls.json`，含四語。對拍 `-shot` 與錄影維持既有 640×400 產物，避免把外殼混入原版畫面比對。
 
+2026-11-11增量：依[spec275頭像首段](275-hd-toolbar-portraits-and-tools.md)加入第八個頭像顯示按鈕，
+單排維持上方40像素，按鈕命中與繪製共用八鈕幾何。原七項action編號與遊戲座標保留。
+下方30項與舊binary雜湊仍是原七鈕的歷史收據，新八鈕正常操作收據沿spec275，不互相代證。
+
+其後依spec275已確認50%～200%鏡頭加入三個縮放鈕，正式工具列共十一鈕，仍為40像素單排。
+可變按鈕寬度、四語文字與命中共用幾何；舊action編號保留，縮放追加編號。
+本段正常縮放／點城／存讀檔收據見[spec275第二段](275-hd-toolbar-portraits-and-tools.md)，不改遊戲規則與原版畫布。
+
+最新裁定依[spec275第四段](275-hd-toolbar-portraits-and-tools.md)：工具列展開28高、收起6高，
+靠上緣喚出、離開收起，仍為十一鈕單排並放在640×400畫布外。按住與放開幀不收展，
+原版文字選單／拖曳持有輸入時不喚出。原七鈕及40高的幾何只保留歷史定位。
+
+### 移除額外「右鍵關閉」提示（CONFORMED，限定抽驗，2026-11-12）
+
+使用者指出「右鍵關閉」訊息多餘，要求移除原版沒有的提示。
+已查證據點／軍團情報窗旁的提示框由remake額外繪製，原版版面見
+[spec23](23-city-info-window.md)、[spec24](24-corps-info-window.md)。
+進言結束後另使用同一個remake提示字串，亦屬本次移除範圍。
+
+- 移除據點與軍團情報窗外的額外提示框，以及進言結果的「右鍵關閉」提示。
+- 刪除無用的提示座標、共用列舉及四語字串，同步其餘提示的索引。
+- 原版TALK #4「以滑鼠的右鍵回復。」保留；不變更右鍵分派、返回、對白推進、存檔或遊戲規則。
+- 驗收採既有桌面、情報窗、進言與取消冷測，正常滑鼠抽驗情報窗關閉及進言返回；本機截圖不作整款原版parity聲明。
+
+本段先列READY再實作。[冷測、vet及建置](../../workplace/scratch/ui-windows-20261104/no-close-hint-tests.log)通過。
+[正常滑鼠抽驗](../../workplace/scratch/ui-windows-20261104/no-close-hint-gui.json)由首頁走新遊戲，
+包含原版／HD據點窗、正常編成後的軍團窗、軍團與據點同格選擇、進言結果及正常存讀檔。
+69個功能與同步檢查點包含重複工具列同步，不當作69個獨立功能；兩種存檔未被顯示或關窗重寫。
+進言說服分支結束提示的移除經程式審查與既有測試，未由本輪正常GUI代證。
+[實際畫面頁](../../workplace/scratch/ui-windows-20261104/no-close-hint-game-review.html)附四張修正後截圖及一張前版比較，
+[離線頁面抽驗](../../workplace/scratch/ui-windows-20261104/no-close-hint-review-qa.json)核對五圖、窄視窗、JS錯誤及外部請求。
+[接線收據](../../workplace/scratch/ui-windows-20261104/no-close-hint-integration.json)保存45檔來源覆蓋包、受測程式及截圖SHA；
+流程與建頁工具分別為[滑鼠工具](../../workplace/scratch/ui-windows-20261104/no-close-hint-gui.py)、
+[建頁工具](../../workplace/scratch/ui-windows-20261104/build-no-close-hint-review.py)及
+[頁面工具](../../workplace/scratch/ui-windows-20261104/qa-no-close-hint-review.cjs)。
+
+### 編成與存讀檔成功不另開通知（CONFORMED，限定抽驗，2026-11-12）
+
+使用者指出「夏侯淵編成完畢」「已儲存第一槽」是額外訊息，要求檢視必要性與玩家體驗。
+已查證兩者同由lastEvent額外事件框呈現，不阻塞輸入，但遮住地圖六秒；沿[spec88](88-display-polish-parity.md)的remake差異。
+編成成功已有[原版主將肖像對白](109-formation-leader-line.md)，存讀檔成功亦會關閉選槽窗。
+
+- 編成、存檔及讀檔成功不再另設lastEvent成功通知，並清除舊通知，避免成功後仍顯示上次失敗。
+- 保留編成後原版對白、部隊狀態、選槽關窗與存檔內容，作為既有結果回饋；不新增提示音或工具列動畫。
+- 存讀檔失敗仍留在選槽窗，沿既有錯誤提示允許重試；編成失敗保留原版TALK #62。
+- 其他遊戲事件與錯誤通知維持既有路徑，不以刪除成功通知代替完整事件稽核。
+- 驗收採既有編成／存檔／桌面冷測，並抽驗正常編成原版對白、成功關窗與存讀檔；不擴大原版parity聲明。
+
+本段先列READY再實作。[冷測、vet與建置](../../workplace/scratch/ui-windows-20261104/quiet-success-tests.log)通過。
+[正常滑鼠收據](../../workplace/scratch/ui-windows-20261104/quiet-success-gui.json)通過50個功能與同步檢查點，包含重複工具列同步，
+不當作50個獨立功能。原版編成主將對白保留，成功編成／存檔／讀檔後無額外通知；兩種存檔存在且正常讀回，未被顯示操作重寫。
+失敗處理依既有測試與程式審查保留，未由本輪正常GUI代證全部儲存裝置錯誤。
+[本機七圖比較頁](../../workplace/scratch/ui-windows-20261104/quiet-success-game-review.html)附五張本輪畫面及兩張前版比較。
+入口為[流程工具](../../workplace/scratch/ui-windows-20261104/quiet-success-gui.py)、
+[建頁工具](../../workplace/scratch/ui-windows-20261104/build-quiet-success-review.py)、
+[頁面抽驗工具](../../workplace/scratch/ui-windows-20261104/qa-quiet-success-review.cjs)及
+[接線收據](../../workplace/scratch/ui-windows-20261104/quiet-success-integration.json)，保留45檔來源覆蓋包、程式、測試與截圖SHA。
+[離線抽驗](../../workplace/scratch/ui-windows-20261104/quiet-success-review-qa.json)通過七圖載入及窄視窗，JS錯誤與外部請求皆0。
+
+### 下令及已有對白的結算不再重複通知（CONFORMED，限定抽驗，2026-11-12）
+
+接續已確認的成功通知清理。已查證行軍與戰術下令額外寫入lastEvent；外交及撥款亦在原版TALK結果之外另寫結算摘要。
+原版操作依[行軍選單](39-march-order-menu.md)、[戰術下令](33-squad-selection.md)及
+[事件說話順序](42-event-scene-speakers.md)，本段不改命令或結算規則。
+
+- 行軍與戰術命令成功時清除額外事件列，依部隊狀態及動作呈現結果；下令失敗保留原處理。
+- 外交成功或玩家拒絕，保留原版對白並移除重複摘要；規則回傳未成立時保留失敗提醒。
+- 撥款成功、玩家拒絕與已知的零金額對白分支，保留TALK並移除額外摘要；其他未成立狀態保留提醒。
+- 不清空原版訊息佇列，不移除宣戰、戰鬥結果、災害等重要事件通知，不改遊戲狀態或存檔。
+- 受影響冷測及正常曹操開局的編成／行軍抽驗；外交／撥款結算以既有規則與對白測試核對，不冒稱完整正常事件GUI通過。
+
+受影響冷測、vet與正常曹操對呂布流程通過；收據沿下段。原版TALK與規則呼叫保留，只移除額外摘要。
+
+### 曹操對呂布的訊息右鍵與停手前進（CONFORMED，限定輸入修正與正常流程抽驗，2026-11-12）
+
+使用者指定完成介面驗證後，由第一劇本曹操開局對呂布，比較正常操作、動畫及滑鼠靜止時的時間推進。
+原版輸入沿[re111](../re/111-c-input-mouse-restoration.md)：訊息等待常式保留右鍵分支，
+原`0x12239`的`EB 0F`只略過左鍵詢問。滑鼠恢復時間沿[spec112](112-cursor-idle-resume-delay.md)。
+
+固定seed1的正常曹操出兵已重現：196/4/1 9時、軍團37在(210,114)停在一則訊息，反覆右鍵未推進。
+`updateMessageOnly`只接受左鍵或確認，漏接右鍵；本段補回右鍵推進目前一頁，不取消整條流程或一次清空佇列。
+最後一頁才執行續行，訊息關閉後仍沿既有idleGate.Pause等待停手，再讓世界前進。
+保留左鍵與工具列確認；不改原版對白、亂數、行軍路線或動畫速度。
+驗收包含多頁訊息與續行、無輸入不跳頁，以及相同seed／正常曹操對呂布路徑重跑；動畫逐項記錄觀測範圍，不預先宣稱全部一致。
+
+[訊息分頁回歸](../../cmd/wlgame/messages_test.go)驗證右鍵逐頁與最後一頁續行，
+[舊行為負對照](../../workplace/scratch/ui-windows-20261104/message-right-negative.log)會拒絕原本只接受左鍵的版本。
+[受影響冷測、vet與建置](../../workplace/scratch/ui-windows-20261104/cao-lubu-tests-r2.log)通過。
+[正常滑鼠收據](../../workplace/scratch/ui-windows-20261104/cao-lubu-remake-gui.json)通過60個功能／同步檢查點及14張截圖，
+包含重複同步，不當作60個獨立功能；完成曹操宣戰呂布、夏侯淵編成、徐州下令、停手行軍、途中存讀檔與椎陽戰鬥退場。
+[可見我軍補充抽驗](../../workplace/scratch/ui-windows-20261104/cao-lubu-visible-gui.json)以正常小地圖移到我軍，證明同一靜止指標下日期及可見軍團都前進。
+
+[原版／remake比較](../../workplace/scratch/ui-windows-20261104/cao-lubu-comparison.json)記錄相同4/6 6時、37對35、椎陽76與兩軍座標；
+原版134步與33張截圖重播相同。戰術後段有差異：原版932拍到結算入口，本次remake約440拍退場。
+完整入戰RNG、單兵狀態與精確下令拍未鎖定，不把這個差距直接當成動畫速度錯誤，也不宣稱全部動畫已一致。
+完整案例入口為[playtest125](../playtest/125-mouse-attacker-march.md)，
+[本機比較頁](../../workplace/scratch/ui-windows-20261104/cao-lubu-game-review.html)提供兩側實際畫面，
+[頁面抽驗](../../workplace/scratch/ui-windows-20261104/cao-lubu-review-qa.json)驗證離線切換。
+[接線收據](../../workplace/scratch/ui-windows-20261104/cao-lubu-integration.json)固定50檔來源覆蓋包、受測程式及工具身分。
+[收尾核對](../../workplace/scratch/ui-windows-20261104/cao-lubu-final-checks.json)核對來源、原版重播、頁面、素材與擁有權。
+
 ## 驗收
 
 - 單元測試驗證工具列按鈕、停用條件、完整手勢隔離、返回一層及確認路由。

@@ -12,7 +12,6 @@ import (
 	"github.com/hajimehoshi/ebiten/v2/vector"
 
 	"github.com/wicanr2/wolong_cht/internal/ui/chrome"
-	"github.com/wicanr2/wolong_cht/internal/ui/textdraw"
 )
 
 // cityInfoState 是據點情報視窗的狀態。
@@ -46,12 +45,6 @@ const (
 	cityProductionDigits = 6
 	cityGrowthDigits     = 4
 	cityPreventionDigits = 3
-
-	// remake 差異：操作提示自己一個框，接在原版視窗右邊
-	// （下面已經沒有空間了——視窗底就是畫面底）。
-	cityHintX = cityWinX + cityWinW
-	cityHintW = 240
-	cityHintH = 32
 )
 
 // cityKindLabels 是 `cs:7DF5` 的六個詞。索引就是 City.Kind，
@@ -103,7 +96,9 @@ func (g *game) drawCityInfo(screen *ebiten.Image) {
 
 	// 左半那張 96×96 景觀圖，張號是據點記錄 +0x16 的高 4 位。
 	// **解不出來就留白**——換一張頂替會讓「圖對不對」永遠測不出來。
-	if img, err := g.lib.Location(c.KindHigh, season); err == nil {
+	if g.drawHDLocation(screen, c.KindHigh, season) {
+		// 規格275：原生景觀保留其後文字、視窗與游標的遮擋。
+	} else if img, err := g.lib.Location(c.KindHigh, season); err == nil {
 		op := &ebiten.DrawImageOptions{}
 		op.GeoM.Translate(float64(cityViewX), float64(cityViewY))
 		screen.DrawImage(ebiten.NewImageFromImage(img), op)
@@ -136,8 +131,4 @@ func (g *game) drawCityInfo(screen *ebiten.Image) {
 		cityGrowthX, cityRowY+2*cityRowStep, cityGrowthDigits, growthInk)
 	g.drawOriginalNumber(screen, c.Prevention,
 		cityPreventionX, cityRowY+3*cityRowStep, cityPreventionDigits, labelInk)
-
-	// ↓ remake 差異：原版按右鍵關掉，沒有這行字。
-	g.chrome.Window(screen, cityHintX, cityWinY, cityHintW, cityHintH, chrome.Menu)
-	g.td.Draw(screen, mouseHint(mouseClose), cityHintX+8, cityWinY+(cityHintH-textdraw.GlyphH)/2, labelInk)
 }

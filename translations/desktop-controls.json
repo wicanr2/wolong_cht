@@ -37,7 +37,6 @@
   ],
   "hints-zh-hant": [
     "左鍵選擇　右鍵返回",
-    "右鍵關閉",
     "左鍵繼續",
     "左鍵返回首頁",
     "左鍵回戰略",
@@ -45,7 +44,6 @@
   ],
   "hints-zh-hans": [
     "左键选择　右键返回",
-    "右键关闭",
     "左键继续",
     "左键返回首页",
     "左键回战略",
@@ -53,7 +51,6 @@
   ],
   "hints-ja": [
     "左クリックで選択、右で戻る",
-    "右クリックで閉じる",
     "左クリックで続行",
     "左クリックで開始画面へ",
     "左クリックで戦略へ",
@@ -61,7 +58,6 @@
   ],
   "hints-en": [
     "Click: choose / Right: back",
-    "Right-click to close",
     "Click to continue",
     "Click to return to title",
     "Click to return to map",

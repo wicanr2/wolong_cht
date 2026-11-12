@@ -135,12 +135,7 @@ func (g *game) commitMarchMode() {
 		g.setEvent(err.Error())
 		return
 	}
-	name := big5(g.world.Generals[g.world.Leader(m.corps)].Name)
-	dest := g.cityName(m.dest)
-	if dest == "" {
-		dest = "原地"
-	}
-	g.lastEvent = name + " 向 " + dest + " 行軍（" + mode.String() + "）"
+	g.lastEvent = ""
 	g.finishMarchOrder()
 }
 

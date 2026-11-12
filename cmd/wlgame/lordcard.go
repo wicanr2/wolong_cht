@@ -107,19 +107,11 @@ func (g *game) drawLordCard(screen *ebiten.Image, p launcherPlayer, season int) 
 	g.td.Draw(screen, "據點數", lordLabelX, lordCitiesY, ink)
 
 	// 動態層。
-	if img, err := g.lib.Portrait(p.Portrait, season); err == nil {
-		op := &ebiten.DrawImageOptions{}
-		op.GeoM.Translate(lordPortraitX, lordPortraitY)
-		screen.DrawImage(ebiten.NewImageFromImage(img), op)
-	}
+	g.drawPortrait(screen, p.Portrait, lordPortraitX, lordPortraitY, season)
 	g.td.Draw(screen, p.Lord, lordNameX, lordNameY, ink)
 	// 軍師是 0x7F（無）時**連頭像都不畫**，原版就是這樣。
 	if p.HasAdvisor {
-		if img, err := g.lib.Portrait(p.AdvisorPortrait, season); err == nil {
-			op := &ebiten.DrawImageOptions{}
-			op.GeoM.Translate(lordAdvPortraitX, lordAdvPortraitY)
-			screen.DrawImage(ebiten.NewImageFromImage(img), op)
-		}
+		g.drawPortrait(screen, p.AdvisorPortrait, lordAdvPortraitX, lordAdvPortraitY, season)
 		g.td.Draw(screen, p.Advisor, lordAdvNameX, lordAdvNameY, ink)
 	}
 	g.td.Draw(screen, p.Capital, lordCapitalNameX, lordCapitalY, ink)

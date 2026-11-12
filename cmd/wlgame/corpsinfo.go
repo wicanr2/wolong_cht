@@ -16,7 +16,6 @@ import (
 
 	"github.com/wicanr2/wolong_cht/internal/rules/army"
 	"github.com/wicanr2/wolong_cht/internal/ui/chrome"
-	"github.com/wicanr2/wolong_cht/internal/ui/textdraw"
 )
 
 type corpsInfoState struct {
@@ -56,13 +55,6 @@ const (
 	corpsSlotY      = 288
 	corpsSlotStep   = 16
 	corpsSlotDigits = 4
-
-	// remake 差異：提示自己一個框，接在原版視窗左邊
-	// （視窗右緣就是畫面右緣，下緣就是畫面下緣）。
-	corpsHintW = 176
-	corpsHintX = corpsWinX - corpsHintW
-	corpsHintH = 32
-	corpsHintY = corpsWinY
 )
 
 // corpsInfoTalk 是軍團情報面板的狀態列（`sub_17F90` 的 `sub_18853(cx = 4)`，
@@ -123,11 +115,7 @@ func (g *game) drawCorpsInfo(screen *ebiten.Image) {
 
 	// 上半：頭像與三個名字。軍團編號 ＝ 主將的武將編號。
 	leader := g.world.Generals[g.world.Leader(g.corpsInfo.corps)]
-	if img, err := g.lib.Portrait(leader.Portrait, season); err == nil {
-		op := &ebiten.DrawImageOptions{}
-		op.GeoM.Translate(float64(corpsPortraitX), float64(corpsPortraitY))
-		screen.DrawImage(ebiten.NewImageFromImage(img), op)
-	}
+	g.drawPortrait(screen, leader.Portrait, corpsPortraitX, corpsPortraitY, season)
 	g.td.Draw(screen, big5(leader.Name), corpsHeadValueX, corpsLeaderY, ink)
 	if c.Faction >= 0 && c.Faction < len(g.world.Factions) {
 		f := g.world.Factions[c.Faction]
@@ -160,15 +148,6 @@ func (g *game) drawCorpsInfo(screen *ebiten.Image) {
 		}
 		g.drawOriginalNumber(screen, c.Units[k].Men*strategyReserveMenPerPoint,
 			corpsSlotValueX, y, corpsSlotDigits, labelInk)
-	}
-
-	// ↓ remake 差異：原版按右鍵關掉，沒有這行字。
-	// ⚠ **選點期間不畫**：那時候面板不吃輸入（右鍵是選點的取消），
-	// 這行字會說謊（docs/spec/149 §1.3）。
-	if !g.mapPickActive() && !g.marchMode.active && g.marchReturn == nil {
-		g.chrome.Window(screen, corpsHintX, corpsHintY, corpsHintW, corpsHintH, chrome.Menu)
-		g.td.Draw(screen, mouseHint(mouseClose), corpsHintX+8,
-			corpsHintY+(corpsHintH-textdraw.GlyphH)/2, labelInk)
 	}
 }
 

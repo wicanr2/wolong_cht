@@ -86,7 +86,7 @@ func (g *game) updateMessageOnly() {
 	// `-auto-messages`（docs/spec/118）：截圖模式沒有人按 Enter，
 	// 自然流程就停在遭遇訊息上走不到戰場。**只在帶了旗標時成立**——
 	// 桌面左鍵與鍵盤都能確認，原版正常編軍對話證據見 docs/spec/155。
-	if !g.autoMessages && !g.confirmed() &&
+	if !g.autoMessages && !g.confirmed() && !g.cancelled() &&
 		!inpututil.IsMouseButtonJustPressed(ebiten.MouseButtonLeft) {
 		return
 	}

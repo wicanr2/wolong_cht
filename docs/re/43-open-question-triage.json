@@ -1,7 +1,7 @@
 {
   "schema": "wolong-re-open-question-triage/1",
   "generated_by": "tools/re_triage.py",
-  "generated_on": "2026-11-06",
+  "generated_on": "2026-11-12",
   "source": "tools/re_open_questions.py",
   "source_note": "每列以來源檔、章節、內容、狀態與 occurrence 固定指紋；內容變動必須重新稽核。",
   "classification_policy": {
@@ -13300,41 +13300,41 @@
     {
       "file": "docs/spec/275-hd-toolbar-portraits-and-tools.md",
       "item": "新入口分組及窄視窗安排",
-      "status": "未決 / 是，不能直接縮小已選A",
+      "status": "已選單排與28／6自動收起；正式工具列十一個實體鈕 / 不阻塞已確認操作；AI與編輯器入口待各自接線",
       "section": "未解",
       "domain": "其他",
       "verdict": "靜態",
       "occurrence": 0,
-      "id": "oq-75328c5197da69e1181b",
+      "id": "oq-ce759f08b99baa57e78c",
       "classification": "evidence-only",
       "github_issue": null,
-      "reason": "後續HD／窄視窗安排仍在 spec275 DRAFT，保留未決範圍，不默認已選A可直接縮小。"
+      "reason": "使用者已選28／6自動收起並維持單排；正式十一鈕限定GUI抽驗通過，AI及編輯器仍待接線。"
     },
     {
       "file": "docs/spec/275-hd-toolbar-portraits-and-tools.md",
       "item": "HD正式素材產製與接線",
-      "status": "五城十張已獲同意；三十五區試繪覆蓋原圖全部面積與192據點，孤立屋頂已修；81張頭像小樣未宣稱逐張接受 / 畫風不阻塞；局部配色／水紋／邊線、其餘頭像、資產映射與正式接線仍待完成",
+      "status": "五城十張已同意，其中五組景觀已接情報窗；35區／22接縫、146頭像及色盤0橫幅已接，未新增逐張接受聲明 / 已接範圍限定抽驗通過；其餘十頁景觀、其他色盤／場景、局部美術及其餘正常視窗待完成",
       "section": "未解",
       "domain": "其他",
       "verdict": "靜態",
       "occurrence": 0,
-      "id": "oq-2961741784f55a140df6",
+      "id": "oq-ecb85c6d9362728a7df5",
       "classification": "evidence-only",
       "github_issue": null,
-      "reason": "HD美術及正式接線仍為 spec275 的後續工作；81張小樣未逐張接受，不影響本週原版修正 checkpoint，也不宣稱HD完成。"
+      "reason": "已同意的五頁景觀已接情報窗並通過正常GUI及GPU抽驗；其餘十頁、其他色盤／場景與局部美術仍待完成，不重開已接五頁或新增美術接受聲明。"
     },
     {
       "file": "docs/spec/275-hd-toolbar-portraits-and-tools.md",
       "item": "HD世界鏡頭與固定介面",
-      "status": "本機原型可依世界座標切換全圖／已繪範圍／本區、滑鼠縮放與平移，工具列固定 / 是，正式Ebiten視野、焦點、邊界及命中座標仍待接線與驗證",
+      "status": "正式地圖已接50%～200%，色盤0可用HD全圖；視野、焦點、邊界與命中抽驗通過，介面固定 / 不阻塞已接範圍；其他季節與液晶HD仍沿原圖",
       "section": "未解",
       "domain": "其他",
       "verdict": "靜態",
       "occurrence": 0,
-      "id": "oq-d4b5f6dcc29cc546e977",
+      "id": "oq-cae3f096dd60a719cf5c",
       "classification": "evidence-only",
       "github_issue": null,
-      "reason": "HD世界鏡頭及固定介面仍在 spec275 DRAFT，原型不代證正式引擎；不誤併已關閉的原版畫面 gate。"
+      "reason": "50%～200%鏡頭及色盤0的HD全圖已完成限定抽驗，介面固定；其他季節及液晶尚無HD素材，沿原圖。"
     },
     {
       "file": "docs/spec/275-hd-toolbar-portraits-and-tools.md",

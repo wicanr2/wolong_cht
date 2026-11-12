@@ -668,11 +668,9 @@ func (g *game) drawAdvise(screen *ebiten.Image) {
 		// 第四、五項沒有說服迴圈，畫面就是 `sub_13B08` 的三句。
 		g.drawIventScene(screen, 0)
 		g.drawAdviseBoxes(screen)
-		hint := mouseHint(mouseClose)
 		if g.adviseTalking() {
-			hint = mouseHint(mouseContinue)
+			g.drawLegacyHint(screen, mouseHint(mouseContinue), talkUpperBoxY-4*chrome.Tile)
 		}
-		g.drawLegacyHint(screen, hint, talkUpperBoxY-4*chrome.Tile)
 
 	case advisePersuade:
 		// 原版的說服畫面（docs/spec/45 §1）：`IVENTGRF` 第 0 頁的插圖，
@@ -687,7 +685,6 @@ func (g *game) drawAdvise(screen *ebiten.Image) {
 			return
 		}
 		if g.sess == nil {
-			g.drawLegacyHint(screen, mouseHint(mouseClose), hintY)
 			return
 		}
 		g.drawLegacyChoiceBox(screen, talkChoiceX, talkChoiceY,

@@ -266,7 +266,7 @@ func (g *game) writeSave(slot int) error {
 	if err := g.writeNativeSave(slot); err != nil {
 		return err
 	}
-	g.lastEvent = fmt.Sprintf("已儲存第 %d 槽", slot+1)
+	g.lastEvent = ""
 	return nil
 }
 
@@ -317,7 +317,7 @@ func (g *game) readSave(slot int) error {
 	}
 	// 優先讀原生檔——原版格式裝不下 routes／游標那些欄位，
 	// 從它讀回來的世界會少掉一部分執行期狀態（`docs/spec/20` §2.4）。
-	w, native, err := g.loadSavedWorld(slot)
+	w, _, err := g.loadSavedWorld(slot)
 	if err != nil {
 		return err
 	}
@@ -330,6 +330,7 @@ func (g *game) readSave(slot int) error {
 	w.SetTactical(g.tactical)
 	battlesetup.AttachTerrain(w, worldMapOf(g.lib))
 	g.world = w
+	g.resetMapZoom()
 	g.view = nil
 	g.saveBase = g.saveFile
 	if player >= 0 && player < len(w.Factions) {
@@ -340,11 +341,7 @@ func (g *game) readSave(slot int) error {
 			g.clampCam()
 		}
 	}
-	kind := "原版格式"
-	if native {
-		kind = "原生檔"
-	}
-	g.lastEvent = fmt.Sprintf("已讀取第 %d 槽（%s）；信賴度 %d", slot+1, kind, w.Trust)
+	g.lastEvent = ""
 	return nil
 }
 

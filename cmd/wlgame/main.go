@@ -117,6 +117,17 @@ const (
 )
 
 type game struct {
+	hdDisplay          bool
+	hdPortraits        *library.HDPortraits
+	hdWorld            hdWorldState
+	hdBanner           hdBannerState
+	hdLocation         hdLocationState
+	hdFrame            *hdComposite
+	hdPortraitCache    map[int]*ebiten.Image
+	hdPortraitLRU      []int
+	hdPortraitFailed   map[int]bool
+	hdNativeDraws      int
+	hdDrawPhase        int
 	focusManaged       bool
 	battleExactFixture bool
 	lib                *library.Library
@@ -246,6 +257,7 @@ type game struct {
 
 	camX, camY       int
 	camSubX, camSubY int
+	worldZoom        worldZoomState
 	// chromeBank 是 `g.chrome` 現在是用哪一組調色盤畫的。
 	// **視窗外框與底紋也吃調色盤**——換畫面模式（甚至換季）時要跟著重畫，
 	// 否則框還是舊配色（docs/spec/152 §2.1）。
@@ -1319,9 +1331,7 @@ func (g *game) updateWithPointer(pushX, pushY int) error {
 // 看得到。⚠ 兩條走的是同一支 `dispatchPopupMenu`，差別**只在有沒有
 // 重畫地圖**——照抄的是那個差別，不是「哪一項要留框」。
 func (g *game) moveCamTo(x, y int) {
-	g.camX, g.camY = x, y
-	g.camSubX, g.camSubY = 0, 0
-	g.clampCam()
+	g.centreCamOn(x+centreCol, y+centreRow)
 	if g.cmdMenu.stale {
 		g.closePopupMenu()
 	}
@@ -1329,6 +1339,10 @@ func (g *game) moveCamTo(x, y int) {
 }
 
 func (g *game) clampCam() {
+	if g.mapZoomPercent() != 100 {
+		g.setZoomOrigin(float64(g.camX*16+g.camSubX), float64(g.camY*16+g.camSubY))
+		return
+	}
 	if g.camX < 0 {
 		g.camSubX = 0
 		g.camX = 0
@@ -1375,19 +1389,15 @@ func (g *game) Draw(screen *ebiten.Image) {
 	// 大地圖鋪滿橫幅以下的全部畫面。四季調色盤直接吃時鐘算出來的季節——
 	// 所以畫面會隨遊戲時間換季，不需要另外驅動。
 	// 原版累積像素外推，但用除以 16 的派生欄列重畫（spec/149 §6）。
-	if img, err := g.lib.RenderWorldMarked(g.camX, g.camY, viewCols, viewRows,
-		season, g.cityMarks(), g.corpsMarks()); err == nil {
-		op := &ebiten.DrawImageOptions{}
-		op.GeoM.Translate(0, float64(strategyMapY))
-		screen.DrawImage(ebiten.NewImageFromImage(img), op)
-	}
-	g.drawDisasterOverlay(screen)
+	g.drawStrategyMap(screen)
 
 	// 橫幅是原版美術（ICONGRF 段 0），不是自己畫的長條。
 	// 上面已經印好「臥竜伝」與「年 月 日」，這裡只填數字。
 	// ⚠ 橫幅寫的是日文「臥竜伝」——松崗版沒有重繪這張圖
 	// （docs/reference/03），中文化要補的缺口之一。
-	if b, err := g.lib.Banner(season); err == nil {
+	if g.drawHDBanner(screen, season) {
+		// 日期與原版熱區仍由下方共用路徑處理。
+	} else if b, err := g.lib.Banner(season); err == nil {
 		screen.DrawImage(ebiten.NewImageFromImage(b), &ebiten.DrawImageOptions{})
 	} else {
 		vector.DrawFilledRect(screen, 0, 0, screenW, bannerH,
@@ -1485,6 +1495,7 @@ func (g *game) Draw(screen *ebiten.Image) {
 // sub_123FF；所以它仍畫範圍輪廓。若 MCH 缺檔，才退回低干擾向量 marker，
 // 不把 fallback 說成原版 parity。
 func (g *game) drawDisasterOverlay(screen *ebiten.Image) {
+	mapW, mapH := g.mapSourceBounds()
 	objects := g.world.RenderDisasterObjects()
 	objectByCity := make(map[int]state.DisasterObjectSnapshot, len(objects))
 	for _, object := range objects {
@@ -1513,7 +1524,7 @@ func (g *game) drawDisasterOverlay(screen *ebiten.Image) {
 			w, h := img.Bounds().Dx(), img.Bounds().Dy()
 			drawX := x + world.TileSize/2 - w/2
 			drawY := y + world.TileSize/2 - h/2
-			if drawX+w <= 0 || drawX >= strategyMapW || drawY+h <= strategyMapY || drawY >= screenH {
+			if drawX+w <= 0 || drawX >= mapW || drawY+h <= strategyMapY || drawY >= mapH {
 				continue
 			}
 			op := &ebiten.DrawImageOptions{}
@@ -1521,7 +1532,7 @@ func (g *game) drawDisasterOverlay(screen *ebiten.Image) {
 			screen.DrawImage(img, op)
 			continue
 		}
-		if x+world.TileSize <= 0 || x >= strategyMapW || y+world.TileSize <= strategyMapY || y >= screenH {
+		if x+world.TileSize <= 0 || x >= mapW || y+world.TileSize <= strategyMapY || y >= mapH {
 			continue
 		}
 		g.drawDisasterMarker(screen, x, y, marker)
@@ -1555,7 +1566,8 @@ func (g *game) drawMapObject(screen *ebiten.Image, o state.DisasterObjectSnapsho
 	cols, rows := w/world.TileSize, h/world.TileSize
 	x := (o.X - cols/2 - g.camX) * world.TileSize
 	y := strategyMapY + (o.Y-rows/2-g.camY)*world.TileSize
-	if x+w <= 0 || x >= strategyMapW || y+h <= strategyMapY || y >= screenH {
+	mapW, mapH := g.mapSourceBounds()
+	if x+w <= 0 || x >= mapW || y+h <= strategyMapY || y >= mapH {
 		return
 	}
 	op := &ebiten.DrawImageOptions{}
@@ -1631,7 +1643,8 @@ func (g *game) drawStormArea(screen *ebiten.Image, area economy.StormArea) {
 	y := strategyMapY + (area.MinY-g.camY)*world.TileSize
 	w := (area.MaxX - area.MinX + 1) * world.TileSize
 	h := (area.MaxY - area.MinY + 1) * world.TileSize
-	if w <= 0 || h <= 0 || x+w <= 0 || x >= strategyMapW || y+h <= strategyMapY || y >= screenH {
+	mapW, mapH := g.mapSourceBounds()
+	if w <= 0 || h <= 0 || x+w <= 0 || x >= mapW || y+h <= strategyMapY || y >= mapH {
 		return
 	}
 	c := color.RGBA{80, 194, 232, 150}
@@ -1905,6 +1918,10 @@ func main() {
 	seed := flag.Int("seed", -1, "驗收用固定亂數種子；負值時照原版以時鐘播種")
 	rngState := flag.String("rng-state", "", "對拍用：載入原版當下的亂數狀態（`ipeek:1ECFC:258` 讀出來的 258 byte，docs/spec/147 §5）")
 	shot := flag.String("shot", "", "跑 N 幀之後截圖到這個路徑就結束（驗收用）")
+	hdPortraitDir := flag.String("hd-portraits", "", "本機HD頭像選稿目錄；缺圖沿用原圖，不隨引擎散布")
+	hdWorldDir := flag.String("hd-world", "", "本機HD大地圖選稿目錄；缺圖及未提供的色盤沿用原圖")
+	hdBannerDir := flag.String("hd-banner", "", "本機HD橫幅選稿目錄；缺圖及未提供的色盤沿用原圖")
+	hdLocationDir := flag.String("hd-locations", "", "本機已同意的城池景觀選稿目錄；按原圖庫頁碼取圖，缺圖沿原圖")
 	framesDir := flag.String("frames-dir", "", "把每一張畫出來的圖寫成 fNNNNN.png（推廣片素材，docs/spec/71）")
 	framesN := flag.Int("frames", 300, "配 -frames-dir：錄幾張就結束")
 	shotFrames := flag.Int("shot-frames", 120, "截圖前先跑幾幀（配 -shot-when 時退成下限）")
@@ -2085,6 +2102,34 @@ func main() {
 		saveFile: *saveFile, saveBase: path, sound: sound.Open(*audioDir),
 		cmdCell: -1} // −1 ＝ 沒有指令流程在跑（零值 0 是「進言」）
 	g.sound.SetSilent(silentAudio)
+	if *hdLocationDir != "" {
+		if pack, err := library.LoadHDLocations(*hdLocationDir, originalLocationCount(g)); err != nil {
+			log.Printf("HD locations unavailable; original assets retained: %v", err)
+		} else {
+			g.hdLocation.pack = pack
+		}
+	}
+	if *hdBannerDir != "" {
+		if pack, err := library.LoadHDBanner(*hdBannerDir); err != nil {
+			log.Printf("HD banner unavailable; original assets retained: %v", err)
+		} else {
+			g.hdBanner.pack = pack
+		}
+	}
+	if *hdWorldDir != "" {
+		if pack, err := library.LoadHDWorld(*hdWorldDir); err != nil {
+			log.Printf("HD world unavailable; original assets retained: %v", err)
+		} else {
+			g.hdWorld.pack = pack
+		}
+	}
+	if *hdPortraitDir != "" {
+		if pack, err := library.LoadHDPortraits(*hdPortraitDir, originalPortraitCount(g)); err != nil {
+			log.Printf("HD portraits unavailable; original assets retained: %v", err)
+		} else {
+			g.hdPortraits = pack
+		}
+	}
 	if *audioDir != "" && !g.sound.Available() {
 		log.Printf("音檔目錄 %s 沒有 ogg，靜音跑。要有音樂請跑 tools/bgm2ogg.sh", *audioDir)
 	}
@@ -2230,7 +2275,7 @@ func main() {
 	var app ebiten.Game = g
 	if g.shotPath == "" && g.rec == nil {
 		app = newDesktopGame(g)
-		ebiten.SetWindowSize(screenW*2, (screenH+desktopBarHeight)*2)
+		ebiten.SetWindowSize(screenW*2, (screenH+desktopRevealHeight)*2)
 	}
 	if err := ebiten.RunGame(app); err != nil && err != ebiten.Termination {
 		log.Fatal(err)
@@ -2291,6 +2336,7 @@ func (g *game) startWorld(path string, slot int, player int, overridePlayer, new
 	}
 
 	g.world = w
+	g.resetMapZoom()
 	g.roads = g.buildRoads(w)
 	if g.roads != nil {
 		w.SetRoads(g.roads)

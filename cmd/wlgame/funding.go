@@ -110,20 +110,10 @@ func (g *game) resolveFunding(c state.FundingChoice, option state.FundingOption)
 		(option == state.FundingSetAmount && c.OfferAmount == 0)
 	if ok || knownTalk {
 		g.enqueueFundingTalk(c, option)
-	}
-	if option == state.FundingReject {
-		g.setEvent(fundingTitle(kind) + "：拒絕")
+		g.lastEvent = ""
 		return
 	}
-	if !ok {
-		g.setEvent(fundingTitle(kind) + "：撥款未成立")
-		return
-	}
-	if option == state.FundingSetAmount {
-		g.setEvent(fundingTitle(kind) + "：指定金額撥款")
-	} else {
-		g.setEvent(fundingTitle(kind) + "：全額撥款")
-	}
+	g.setEvent(fundingTitle(kind) + "：撥款未成立")
 }
 
 // fundingTalkIndices 是 sub_139E8 的 TALK.DAT base+offset 映射。

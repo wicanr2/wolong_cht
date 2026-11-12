@@ -107,18 +107,14 @@ func (g *game) resolveDiplomacy(c state.DiplomacyChoice, option state.DiplomacyO
 	g.diplomacyEditingAmount = false
 	g.amountCursorActive = false
 	if option == state.DiplomacyReject {
-		g.setEvent(diplomacyTitle(kind) + "：拒絕")
+		g.lastEvent = ""
 		return
 	}
 	if !ok {
 		g.setEvent(diplomacyTitle(kind) + "：交涉未成立")
 		return
 	}
-	if option == state.DiplomacyOfferFunds {
-		g.setEvent(diplomacyTitle(kind) + "：提供資金後成立")
-	} else {
-		g.setEvent(diplomacyTitle(kind) + "：無條件成立")
-	}
+	g.lastEvent = ""
 }
 
 // diplomacyTalkBase 對應 sub_138C7／sub_138E6 傳給 sub_13902 的 CX。

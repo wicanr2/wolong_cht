@@ -119,13 +119,7 @@ func (g *game) desktopMapCursorVisible() bool {
 		return false
 	}
 	x, y := cursorPosition()
-	if g.hudOpen(hudCommand) && x < strategyCommandW && y < strategyCommandY+strategyCommandH ||
-		g.hudOpen(hudMinimap) && x >= strategySidebarX && y < strategyFactionY ||
-		g.hudOpen(hudFaction) && x >= strategySidebarX && y >= strategyFactionY {
-		return false
-	}
-	_, _, ok := g.mapPickTileAt(x, y)
-	return ok
+	return g.strategyMapPointVisible(x, y)
 }
 
 // cursorPoint 解析 `-cursor X,Y`。空字串回 nil（不畫）。

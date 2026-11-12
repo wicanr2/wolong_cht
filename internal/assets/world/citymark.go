@@ -2,6 +2,7 @@ package world
 
 import (
 	"image"
+	"image/draw"
 
 	"github.com/wicanr2/wolong_cht/internal/assets/palette"
 )
@@ -165,7 +166,7 @@ func (m *Map) applyDecor(mark CityMark, base byte, put func(x, y int, tile byte)
 	}
 }
 
-// RenderMarked 與 Render 相同，但先照 marks 換掉據點中心（與大城的四個角）
+// markerTables 與 Render 相同，但先照 marks 換掉據點中心（與大城的四個角）
 // 的圖塊，再把首都的 MCH 圖塊疊上去，最後疊 corps（docs/spec/74）。
 //
 // ⚠ **同一格同時有首都與軍團時只畫軍團**（docs/spec/74 §4.05）——
@@ -174,10 +175,9 @@ func (m *Map) applyDecor(mark CityMark, base byte, put func(x, y int, tile byte)
 //
 // mch 可以是 nil（沒載到 `MMAP.MCH`）——那樣少的是首都與軍團那幾張，
 // 其餘照畫，不要整張失敗。
-func (m *Map) RenderMarked(ts *TileSet, mch *MCH, pal *palette.Palette, bank,
-	x0, y0, cols, rows int, marks []CityMark, corps []CorpsMark) (*image.RGBA, error) {
-	swap := make(map[int]byte, len(marks)*5)
-	overlay := make(map[int]byte, len(marks))
+func (m *Map) markerTables(marks []CityMark, corps []CorpsMark) (swap, overlay, corpsAt map[int]byte) {
+	swap = make(map[int]byte, len(marks)*5)
+	overlay = make(map[int]byte, len(marks))
 	put := func(x, y int, tile byte) { swap[y*Width+x] = tile }
 	for _, mark := range marks {
 		base, err := m.Tile(mark.X, mark.Y)
@@ -193,7 +193,7 @@ func (m *Map) RenderMarked(ts *TileSet, mch *MCH, pal *palette.Palette, bank,
 		}
 	}
 
-	corpsAt := make(map[int]byte, len(corps))
+	corpsAt = make(map[int]byte, len(corps))
 	for _, c := range corps {
 		corpsAt[c.Y*Width+c.X] = c.Tile
 		// ⭐ **軍團站在首都中心格時，首都疊圖不畫**（docs/spec/74 §4.05）。
@@ -202,7 +202,13 @@ func (m *Map) RenderMarked(ts *TileSet, mch *MCH, pal *palette.Palette, bank,
 		// 透明的那一圈——那一圈露的是底下哪一層，兩邊就差在這裡。
 		delete(overlay, c.Y*Width+c.X)
 	}
+	return
+}
 
+// RenderMarked renders the original ground and shared dynamic marker tables.
+func (m *Map) RenderMarked(ts *TileSet, mch *MCH, pal *palette.Palette, bank,
+	x0, y0, cols, rows int, marks []CityMark, corps []CorpsMark) (*image.RGBA, error) {
+	swap, overlay, corpsAt := m.markerTables(marks, corps)
 	img := image.NewRGBA(image.Rect(0, 0, cols*TileSize, rows*TileSize))
 	for ry := 0; ry < rows; ry++ {
 		for rx := 0; rx < cols; rx++ {
@@ -228,6 +234,57 @@ func (m *Map) RenderMarked(ts *TileSet, mch *MCH, pal *palette.Palette, bank,
 			}
 			// 軍團那一層（首都疊圖已經在建 corpsAt 時被拿掉了）。
 			if id, ok := corpsAt[my*Width+mx]; ok {
+				blitMCH(img, mch, pal, bank, id, rx, ry)
+			}
+		}
+	}
+	return img, nil
+}
+
+// RenderMarkers is the HD presentation overlay, using the same state decisions
+// as RenderMarked. Terrain remains transparent; original ownership glyphs use
+// the changed-pixel rectangle plus a one-pixel border (spec275 third slice).
+func (m *Map) RenderMarkers(ts *TileSet, mch *MCH, pal *palette.Palette, bank,
+	x0, y0, cols, rows int, marks []CityMark, corps []CorpsMark) (*image.RGBA, error) {
+	swap, overlay, corpsAt := m.markerTables(marks, corps)
+	img := image.NewRGBA(image.Rect(0, 0, cols*TileSize, rows*TileSize))
+	for ry := 0; ry < rows; ry++ {
+		for rx := 0; rx < cols; rx++ {
+			mx, my := x0+rx, y0+ry
+			key := my*Width + mx
+			if selected, ok := swap[key]; ok {
+				base, err := m.Tile(mx, my)
+				if err != nil {
+					return nil, err
+				}
+				if selected != base {
+					a, err := ts.spec.RenderRGBA(ts.data, int(base), pal, bank)
+					if err != nil {
+						return nil, err
+					}
+					b, err := ts.spec.RenderRGBA(ts.data, int(selected), pal, bank)
+					if err != nil {
+						return nil, err
+					}
+					box := image.Rectangle{}
+					for y := 0; y < TileSize; y++ {
+						for x := 0; x < TileSize; x++ {
+							if a.RGBAAt(x, y) != b.RGBAAt(x, y) {
+								box = box.Union(image.Rect(x, y, x+1, y+1))
+							}
+						}
+					}
+					if !box.Empty() {
+						box = box.Inset(-1).Intersect(b.Bounds())
+						offset := image.Pt(rx*TileSize, ry*TileSize)
+						draw.Draw(img, box.Add(offset), b, box.Min, draw.Src)
+					}
+				}
+			}
+			if id, ok := overlay[key]; ok {
+				blitMCH(img, mch, pal, bank, id, rx, ry)
+			}
+			if id, ok := corpsAt[key]; ok {
 				blitMCH(img, mch, pal, bank, id, rx, ry)
 			}
 		}
