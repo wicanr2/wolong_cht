@@ -1330,3 +1330,17 @@
 - 戰術同拍尚未通過：原版932拍到sub_19F58結算入口，Go最新最後活動幀440，首次通過的另一取樣為583，兩份皆保留。下令時點、完整入戰RNG與單兵狀態未鎖定，不調速度掩蓋或單由數字判定規則錯誤。原版有梯子，Go本案未取得同事件畫面；投射物、受擊與倒地仍沿Issue #13／#16／#24。原版僅取到寫回入口，七種int61音效呼叫尚未實作，完整戰後返回與音訊不作本輪完成聲明。
 - [比較矩陣](workplace/scratch/ui-windows-20261104/cao-lubu-comparison.json)、[本機頁](workplace/scratch/ui-windows-20261104/cao-lubu-game-review.html)及[接線收據](workplace/scratch/ui-windows-20261104/cao-lubu-integration.json)固定50檔來源、兩側程式、種子、工具及畫面身分。使用者要求完成後commit與push；原版素材、HD圖、存檔及HTML留本機，不作Release或整款完成聲明。
 - [收尾核對](workplace/scratch/ui-windows-20261104/cao-lubu-final-checks.json)通過，12張原版、14張remake及2張視野內行軍圖的離線切換正常，JS錯誤與外部請求皆0。50檔來源及兩側程式／覆蓋包雜湊一致，既有素材未改；582份文件／135條斷言與1144列分流一致。來源UID/GID1000:1000，工作區root-owned與誤建.md目錄皆0，git diff --check通過。本輪容器皆已結束刪除，其他專案容器未動。依授權準備提交並推送，實際提交及遠端核對結果保存於[本機推送收據](workplace/scratch/ui-windows-20261104/repo-update-20261112.json)。
+
+### 2026-11-12：訂正戰術開場移動倒數
+
+- 使用者續行曹操對呂布的操作與動畫比較。先讀CONTEXT、現行Issues #13／#16／#24及復古戰術對拍路由，沿既有工作區；使用reverse-engineer-retro-game-remake與use-ida-pro-9-4技能，不新增美術、AI規則或速度調整。
+- dosgolem來源f79eab6db8c64a524a06535e53e5d32b0bbcf7c8乾淨，原版固定seed1的正常開局重播不改部隊、日期或戰鬥結果。新增唯讀19C45、19FA0、1ADC8觀測，保存完整96槽及258-byte RNG；兩次共同230快照含指令數均相同。正式Go來源未接觀測器，早期觀測版只使用可丟棄Go build overlay。
+- 原自然入戰的兵種、血量、戰力及X相同，但94槽Y不同，RNG置換表相同而狀態byte不同。另見原版96槽倒數0、Go均1。以原版擺位前的RNG隔離Spawn後，其他8項初始化欄位全等，只剩96個倒數不同。[修正前](workplace/scratch/ui-windows-20261104/cao-spawn-before.json)保留，不搜尋種子或略過亂數湊結果。
+- IDA Pro9.4一次性DB的[指令／bytes／xref匯出](workplace/scratch/ui-windows-20261104/ida-probe.json)證實19ADF先清零兵士，19C95只設存在旗標。19CC0–19CC7將ES移到兵士段+0xC0個段落，19D20的0x180屬+0xC00城牆物件。舊spec200的設定端推論因此推翻；保留歷史並先READY，再將Spawn.Stun改0。資料庫SHA為03d00e84f396d3fc828a6d0f2407a0e4515d735b334e7a73c37c1ab5ef938321，KI.EXE SHA沿spec200。
+- [修正後初始化](workplace/scratch/ui-windows-20261104/cao-spawn-after.json)96槽9項全等，[首次移動](workplace/scratch/ui-windows-20261104/cao-first-movement-after.json)另驗X／Y、血量、餘力、倒數及步行相位全部相同。這是局部同輸入規則驗證，不宣稱原版主迴圈入口之後的全部RNG、腳本或結算已同步。
+- [四套件冷測、vet及建置](workplace/scratch/ui-windows-20261104/cao-delay-tests.log)通過，含戰術、世界、桌面及手機。新增TestSpawnHasNoArtificialMovementDelay驗96槽倒數與首批餘力，[舊版設1的負對照](workplace/scratch/ui-windows-20261104/cao-delay-negative.log)確實被拒絕。正式binary wlgame-cao-delay-r1 SHA為98d871656c47cacc66e869304a33e5d6a16810d897bcb476fc84afb3c14bef15。
+- 工具環境問題分開保留：login shell移除Go PATH、探針誤用欄位名、GUI未指定工作目錄、IDA版本API名稱不符，均修正隔離腳本後重跑，未當作產品缺陷。正常GUI再遇兩個取樣錯誤：等待喊話消失才下令，以及首格移動便要求小時改變。依spec155及15-realtime原有契約修正，before-talk-gate-fix與before-idle-hour-gate-fix失敗紀錄保留，不改戰術速度、子刻或遊戲程式來遷就腳本。
+- 正式程式[正常滑鼠收據](workplace/scratch/ui-windows-20261104/cao-delay-remake-gui.json)通過61個功能／同步檢查點與14圖，從首頁曹操、宣戰呂布、編夏侯淵、停手行軍、途中存讀檔，自然入戰直到戰後返回。spec200僅將本次初始化／首批移動範圍標CONFORMED；機制文件與CONTEXT追加訂正。相鄰物件的完整分類改為不阻塞證據，不再掛到兩兵漂移Issue #13。
+- [接線收據](workplace/scratch/ui-windows-20261104/cao-delay-integration.json)保存來源覆蓋包、正式binary、原版工具、快照、測試與SHA；[本機對照頁](workplace/scratch/ui-windows-20261104/cao-delay-game-review.html)五圖離線載入，[390寬頁面抽驗](workplace/scratch/ui-windows-20261104/cao-delay-review-qa.json)通過，JS錯誤及外部請求0。截圖屬不同自然入戰狀態的流程檢視，沒有原版／remake同拍畫面聲明。
+- 完整入戰RNG與命令相位、投射物、架梯及後段結算仍沿Issues #13／#16／#24；未關閉遠端Issue，未作Release。原版素材、HTML、快照、存檔及二進位繼續留本機。
+- [收尾核對](workplace/scratch/ui-windows-20261104/cao-delay-final-checks.json)通過；582份文件／135條斷言、1144列分流與嚴格生成輸出一致。來源覆蓋包、正式binary、固定seed、觀測工具、快照及瀏覽器收據雜湊相符，新證據連結存在，工作區root-owned與.md目錄皆0。容器已結束刪除，未動其他專案資源。沿使用者先前提交與推送指示更新repo，實際提交與遠端核對寫入[本機推送收據](workplace/scratch/ui-windows-20261104/repo-delay-update-20261112.json)。

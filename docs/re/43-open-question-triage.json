@@ -10615,9 +10615,9 @@
       "verdict": "靜態",
       "occurrence": 0,
       "id": "oq-d0ddd87d637726e7a999",
-      "classification": "actionable",
-      "github_issue": 13,
-      "reason": "戰術第 4 tick 後兩名士兵的中繼目標／狀態差異，併入 Issue #13。"
+      "classification": "evidence-only",
+      "github_issue": null,
+      "reason": "2026-11-12 spec200已核對相鄰物件與兵士的段基址，兵士倒數0已修正；其餘物件分類不阻塞本片，也不是Issue #13的兩兵漂移工作。"
     },
     {
       "file": "docs/spec/202-c-rng-seed.md",

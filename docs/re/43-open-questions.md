@@ -913,7 +913,7 @@
 | [`spec/20-save-format.md`](../spec/20-save-format.md) | 存檔區塊的 7 KB 未解區 | `+0x1EC0`–`+0x42C0`，靠 `raw` 原樣保存，但**內容仍不知道**（`docs/formats/08`） | 靜態 | merge-target | [#25](https://github.com/wicanr2/wolong_cht/issues/25) |
 | [`spec/20-save-format.md`](../spec/20-save-format.md) | 原版 `SAVE.DAT` 的槽位語意 | 四個槽與 `SINARIO.DAT` 的四個劇本是不是同一個編號空間，未確認 | 靜態 | merge-target | [#25](https://github.com/wicanr2/wolong_cht/issues/25) |
 | [`spec/200-opening-move-delay.md`](../spec/200-opening-move-delay.md) | 拍 4 之後仍有 **2 個兵**對不上：`0/2/0`（隊 2 的隊長）與 `0/5/2`。 | （未解小節內文） | 靜態 | actionable | [#13](https://github.com/wicanr2/wolong_cht/issues/13) |
-| [`spec/200-opening-move-delay.md`](../spec/200-opening-move-delay.md) | 0001 9DB1`（`280h`）與 `0001 9E35`（`3C0h`）那兩種物件是什麼，還沒對。 | （未解小節內文） | 靜態 | actionable | [#13](https://github.com/wicanr2/wolong_cht/issues/13) |
+| [`spec/200-opening-move-delay.md`](../spec/200-opening-move-delay.md) | 0001 9DB1`（`280h`）與 `0001 9E35`（`3C0h`）那兩種物件是什麼，還沒對。 | （未解小節內文） | 靜態 | evidence-only | — |
 | [`spec/202-c-rng-seed.md`](../spec/202-c-rng-seed.md) | RTC 的未指定暫存器 | 本輪固定回覆，不外推真實 BIOS 保留哪些值 | 靜態 | evidence-only | — |
 | [`spec/202-c-rng-seed.md`](../spec/202-c-rng-seed.md) | 非法 BCD 與堆疊重疊 | 未驗證，不能從合法資料層推定 | 靜態 | evidence-only | — |
 | [`spec/202-c-rng-seed.md`](../spec/202-c-rng-seed.md) | C 機器碼匹配 | spec/255 已判手寫組語，C 機器碼匹配不可行 | 靜態 | merge-target | [#25](https://github.com/wicanr2/wolong_cht/issues/25) |

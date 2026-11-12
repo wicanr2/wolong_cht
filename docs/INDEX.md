@@ -438,7 +438,7 @@
 | [`docs/spec/198-ivent-scene-frame.md`](spec/198-ivent-scene-frame.md) | 198 — 事件插圖少了外面那個框 | CONFORMED。 | 2026-09-11 |
 | [`docs/spec/199-persuade-scene-clears-the-advise-menu.md`](spec/199-persuade-scene-clears-the-advise-menu.md) | 199 — 說服場景進場要擦掉進言選單 | CONFORMED。 | 2026-09-11 |
 | [`docs/spec/20-save-format.md`](spec/20-save-format.md) | 20 — remake 原生存檔格式 | CONFORMED。編解碼、路徑與遊戲接線都實作並驗過。 存檔一次寫兩份（原版格式 ＋ 原生檔），讀檔優先原生檔。 | 2026-08-14 |
-| [`docs/spec/200-opening-move-delay.md`](spec/200-opening-move-delay.md) | 200 — 開場的兵晚一拍才走 | CONFORMED。 | 2026-09-11 |
+| [`docs/spec/200-opening-move-delay.md`](spec/200-opening-move-delay.md) | 200 — 開場移動倒數與兵士記錄 | CONFORMED。2026-11-12 訂正：兵士移動倒數為0；限初始化與首次移動批次抽驗。 | 2026-11-12 |
 | [`docs/spec/201-c-rng-function.md`](spec/201-c-rng-function.md) | 201：sub_1ECE0 的 C 還原契約 | CONFORMED。原版與 C 的局部介面對照、C 與 Go 的資料規則對照均通過。 | 2026-10-08 |
 | [`docs/spec/202-c-rng-seed.md`](spec/202-c-rng-seed.md) | 202：sub_1EC82 的 C 播種契約 | CONFORMED。固定 RTC 回覆下，完整播種介面及合法時間矩陣的原版/C/Go 對照通過。 | 2026-10-08 |
 | [`docs/spec/203-c-game-clock.md`](spec/203-c-game-clock.md) | 203：sub_11D8E 的 C 時鐘契約 | CONFORMED。O0/O2 各 292,297 組原版/C 局部對照相同；callee 與等待輸入使用明示 fi… | 2026-10-08 |

@@ -186,10 +186,20 @@ GPU最多兩頁快取，其他季節、液晶、未選頁與讀圖失敗沿原�
 下一個比較閘門是固定同一入戰狀態追走位、投射物及HP時序，沿既有Issue #13／#16／#24，不重開已驗證的停手起步機制。
 [本機比較頁](workplace/scratch/ui-windows-20261104/cao-lubu-game-review.html)、
 [比較矩陣](workplace/scratch/ui-windows-20261104/cao-lubu-comparison.json)與
-[50檔來源收據](workplace/scratch/ui-windows-20261104/cao-lubu-integration.json)為最新入口；案例詳見[playtest125](docs/playtest/125-mouse-attacker-march.md)。
+[50檔來源收據](workplace/scratch/ui-windows-20261104/cao-lubu-integration.json)保存該輪入口；案例詳見[playtest125](docs/playtest/125-mouse-attacker-march.md)。
+
+同日續查[spec200訂正](docs/spec/200-opening-move-delay.md)：舊文件把兵士段之後0xC00的城牆物件倒數1套到兵士，
+正常原版96槽移動倒數皆為0。已移除開場額外硬直，保留挨打及發射倒數。
+以同一原版擺位前RNG核對，96槽的9項初始化欄位及首次移動的6項欄位全部相同；
+自然開局的完整RNG仍不同，不由此推論整場戰術一致。兩次原版唯讀觀測的230個共同快照全等。
+四個受影響套件冷測／vet、舊錯版負對照，以及正式程式正常滑鼠61個功能／同步檢查點通過。
+目前程式`wlgame-cao-delay-r1`，來源與測試在[本輪收據](workplace/scratch/ui-windows-20261104/cao-delay-integration.json)，
+[本機畫面](workplace/scratch/ui-windows-20261104/cao-delay-game-review.html)僅供正常流程檢視。
+下一步仍沿Issues #13／#16／#24固定入戰與命令相位後追中繼目標、投射物、架梯及結算；不直接調速度。
 
 | 日期／目前程式 | 最近驗證 | 狀態 | 交付物 |
 |---|---|---|---|
+| 2026-11-12；開場移動倒數訂正 | 96槽初始化及首次移動欄位吻合；原版230共同快照、四套件冷測／vet、負對照、正常GUI61個檢查點通過 | 移除誤套城牆物件的一拍硬直；完整戰術差異仍沿Issues #13／#16／#24 | [spec200](docs/spec/200-opening-move-delay.md)、[來源收據](workplace/scratch/ui-windows-20261104/cao-delay-integration.json)、[本機畫面](workplace/scratch/ui-windows-20261104/cao-delay-game-review.html) |
 | 2026-11-12；通知清理與曹操對呂布 | 冷測、vet、右鍵負對照及正常GUI60個功能／同步檢查點通過；原版134步／33圖重現 | 右鍵漏接已修，停手行軍與入戰角色／日期／據點吻合；戰術後段時序仍有差異 | [比較頁](workplace/scratch/ui-windows-20261104/cao-lubu-game-review.html)、[矩陣](workplace/scratch/ui-windows-20261104/cao-lubu-comparison.json)、[收據](workplace/scratch/ui-windows-20261104/cao-lubu-integration.json) |
 | 2026-11-12；移除重複成功通知 | 正常GUI50個功能／同步檢查點、受影響冷測、vet及建置通過 | 編成保留原版對白，編成／存檔／讀檔成功不另開小窗，失敗處理保留 | [實際畫面](workplace/scratch/ui-windows-20261104/quiet-success-game-review.html)、[接線收據](workplace/scratch/ui-windows-20261104/quiet-success-integration.json) |
 | 2026-11-12；移除額外關閉提示 | 正常GUI69個功能／同步檢查點、受影響冷測、vet及建置通過 | 據點／軍團窗與進言結果移除額外提示；保留原版狀態列及右鍵操作 | [實際畫面](workplace/scratch/ui-windows-20261104/no-close-hint-game-review.html)、[接線收據](workplace/scratch/ui-windows-20261104/no-close-hint-integration.json) |
@@ -1006,6 +1016,12 @@ DOSBox-X 那條路**不刪**：它是這一條的正對照，而且 PC-98 版只
 ---
 
 ## 6. 已被推翻的斷言
+
+### 2026-11-12：兵士的開場移動倒數
+
+| 舊斷言 | 原始定位與推翻原因 | 證據 |
+|---|---|---|
+| spec200將開場倒數1標為confirmed，並以`00019D20`作設定端 | `00019CC0–00019CC7`先將ES改為兵士段加0xC0個段落；19D20寫的是`+0xC00`城牆物件。19ADF先清零兵士，正常入戰96槽倒數皆0；相同擺位輸入只剩該96槽不同，已修正 | [spec200訂正](docs/spec/200-opening-move-delay.md)、[同輸入收據](workplace/scratch/ui-windows-20261104/cao-delay-integration.json) |
 
 ### 2026-10-10：小地圖資料拷貝方向
 

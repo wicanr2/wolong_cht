@@ -40,6 +40,32 @@ func TestSpawnPutsEveryoneOnTheEdgeColumn(t *testing.T) {
 	}
 }
 
+// 原版先清零兵士記錄；相鄰城牆物件的倒數 1 不屬於兵士（spec/200）。
+func TestSpawnHasNoArtificialMovementDelay(t *testing.T) {
+	b := spawnBattle(t)
+	for side := range b.Sides {
+		for k := range b.Sides[side].Soldiers {
+			b.Sides[side].Soldiers[k].Stun = 4
+		}
+	}
+	b.Spawn(nil)
+	for side := range b.Sides {
+		for k, s := range b.Sides[side].Soldiers {
+			if s.Stun != 0 {
+				t.Fatalf("側 %d 槽 %d：開場倒數=%d，應為0", side, k, s.Stun)
+			}
+		}
+	}
+	b.Step()
+	for side := range b.Sides {
+		for k, s := range b.Sides[side].Soldiers {
+			if s.Stamina != StaminaFull-1 {
+				t.Fatalf("側 %d 槽 %d：首次移動批次餘力=%d，應為%d", side, k, s.Stamina, StaminaFull-1)
+			}
+		}
+	}
+}
+
 type countedSpawnRandom struct{ calls int }
 
 func (r *countedSpawnRandom) Next() int {
