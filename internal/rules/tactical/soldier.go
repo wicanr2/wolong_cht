@@ -77,11 +77,7 @@ func (b *Battle) updateSoldierCommand(side, k int) {
 	case Attack, Charge:
 		b.doAttack(side, k)
 	case ScaleWal:
-		b.doScaleWall(side, k)
-		if changed {
-			// 1AB4A–1AB78：新命令同時設定中繼點，後續拍保留繞路點。
-			s.StepX, s.StepY, s.StepZ = s.GoalX, s.GoalY, s.GoalZ
-		}
+		b.doScaleWall(side, k, changed)
 	case Guard:
 		b.doGuard(side, k)
 	case Retreat:
@@ -209,19 +205,19 @@ func (b *Battle) doAttackAction(side, k int) {
 	}
 }
 
-// doScaleWall 是命令 3：走到登城點，目標高度取那一格的可站立層。
-func (b *Battle) doScaleWall(side, k int) {
+// doScaleWall 是命令3；1AB4A–1AB78只在新命令時固定目標與中繼點。
+func (b *Battle) doScaleWall(side, k int, changed bool) {
 	s := &b.Sides[side].Soldiers[k]
-	x := b.Field.GateX()
-	s.GoalX, s.GoalY = clamp(x), s.Y
-	// ⭐ 目標 Z 取**高平面**那一格的地面層（原版 `loc_1AB39` 的
-	// `bh |= 10h` ＋ `al = es:[bx] & 7`，docs/re/11 §5.8i）——
-	// 那是**牆頂**，不是腳下的地面。用 standZ 的話，牆腳有地面的那幾格
-	// 會算出 Z ＝ 0，於是「目前 Z ＝ 目標 Z」，純 Z 移動一次都不會試。
-	if lv, ok := b.Field.GroundLevel(s.GoalX, s.GoalY, PlaneHigh); ok {
-		s.GoalZ = lv
-	} else {
-		s.GoalZ = b.standZ(s, s.GoalX, s.GoalY)
+	if changed {
+		x := b.Field.GateX()
+		s.GoalX, s.GoalY = clamp(x), s.Y
+		// 1AB6B–1AB78讀牆頂高平面，不能改取腳下低平面。
+		if lv, ok := b.Field.GroundLevel(s.GoalX, s.GoalY, PlaneHigh); ok {
+			s.GoalZ = lv
+		} else {
+			s.GoalZ = b.standZ(s, s.GoalX, s.GoalY)
+		}
+		s.StepX, s.StepY, s.StepZ = s.GoalX, s.GoalY, s.GoalZ
 	}
 	if s.X == s.GoalX && s.Z == s.GoalZ {
 		s.Cmd, s.Next = Attack, Attack // 上去了就轉成攻擊

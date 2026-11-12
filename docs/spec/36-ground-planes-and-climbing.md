@@ -122,6 +122,39 @@ dosgolem `f79eab6db8c64a524a06535e53e5d32b0bbcf7c8`，執行前固定seed1。
 [勘誤回填表](../../workplace/scratch/ui-windows-20261104/cao-scale-backlinks.json)留本機。
 本片沒有新增獨立未解項，第132／139拍與其他既有邊界仍沿Issue #16／#24。
 
+## 2026-11-13：登城繞路時保留接令目標（CONFORMED，限本片）
+
+本片沿Issue #16追查第145拍槽81的GoalY差異。原版士兵由Y32繞到Y33時，GoalY仍32；
+舊Go每拍按自身Y重設GoalY，變成33，之後尋路終點跟著繞路位置漂移。
+原版`1AB4A cmp al,ah`／`1AB4C jz 1AB7B`只在新命令時通過，
+`1AB50`取接令當下Y、`1AB5B`寫GoalXY，不是每拍重設目標。
+
+沿用本頁2026-11-13命令取證的IDA Pro9.4 DOS/V linear指令與bytes，
+`KI.EXE` SHA-256為`fffeba985231cda4d636e93d10f598470b1f691d00275e4aa38e285893d43868`，
+DB SHA-256為`b0a2912fcf2617d7f05bea6639224c71dd86186ad3636ec1a33b602ba3289593`。
+候選只將GoalXYZ與StepXYZ初始化限制於新命令，持續登城保留Goal、Step及既有繞路。
+再次接到新的登城命令才按當下Y初始化。既有到位處理暫不改；內部命令6與高層剩餘差異仍另列限制。
+不改原版資料、時間基準、存檔格式、玩家輸入、AI加成或素材。
+
+DRAFT已依上述原指令與可丟棄候選審查。候選前146拍96槽27欄位與完整RNG吻合，
+第147拍位置、鎖敵與旗標仍有差異，沿既有Issue #16保留，不擴張本片。
+正式接線須驗接令初始化、繞路後Goal／Step／Path保留、重新接令按新Y初始化，
+並重驗原版146拍、冷測受影響套件、拒絕舊錯版，以及正常曹操開局至自然入戰與退卻。
+
+本片DRAFT經上述取證與候選審查列READY後接線。原版182筆觀測沿前片dosgolem
+`f79eab6db8c64a524a06535e53e5d32b0bbcf7c8`固定seed1收據，輸入及原始觀測SHA未變，未重新挑選結果。
+[正式比對](../../workplace/scratch/ui-windows-20261104/cao-route-evidence.json)前146拍96槽27欄位、完整RNG與腳本PC／wait／cond吻合。
+第145拍槽81的Y33、GoalY32與原版相同；第147拍位置、鎖敵與旗標仍有差異，不宣稱後段戰鬥一致。
+[七套件冷測／vet／建置](../../workplace/scratch/ui-windows-20261104/cao-route-tests.log)及舊錯版負對照通過。
+
+[正常滑鼠](../../workplace/scratch/ui-windows-20261104/cao-route-remake-gui.json)69個功能／同步檢查點、16圖通過，含重複工具列同步。
+正常曹操開局、編夏侯淵、停手行軍、途中存讀檔、自然遇呂布後，實際點側欄登城令。
+第188→194拍滑鼠未動，主將由X11走到17，Goal保持(42,32,4)，之後突擊、主動退卻返回。
+這條正常路徑沒有注入戰場或強制勝負，也不把六拍正常操作樣本當成原版同拍畫面對拍。
+[來源收據](../../workplace/scratch/ui-windows-20261104/cao-route-integration.json)及
+[回填表](../../workplace/scratch/ui-windows-20261104/cao-route-backlinks.json)留本機。
+本片無新增獨立工作項；第147拍及既有高層、內部命令6、投射物／架梯與完整結果沿Issue #16／#24。
+
 ## 1. 原版做什麼
 
 戰場不是一張高度圖，是**兩個平面**：低平面（地面）與高平面（城牆頂）。

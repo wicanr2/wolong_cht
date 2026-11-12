@@ -2,6 +2,38 @@ package tactical
 
 import "testing"
 
+func TestScaleOrderKeepsGoalAcrossDetour(t *testing.T) {
+	lib := realLib(t)
+	for side := 0; side < 2; side++ {
+		for _, kind := range []Kind{Archer, Infantry} {
+			b := NewBattle(realField(t, lib, 76), SyntheticFormations(), nil, 0)
+			s := &b.Sides[side].Soldiers[33]
+			*s = Soldier{Alive: true, Kind: kind, X: 60, Y: 32, Cmd: Holding, Next: ScaleWal, Target: -1}
+			b.updateSoldierCommand(side, 33)
+			if s.GoalX != 42 || s.GoalY != 32 || s.GoalZ != 4 {
+				t.Fatalf("新登城令應固定接令列32：%+v", *s)
+			}
+			// 原版第145拍槽81由Y32繞到Y33，目標仍為(42,32)。
+			s.X, s.Y = 53, 33
+			s.StepX, s.StepY, s.StepZ = 53, 34, 0
+			path := &Waypoints{pts: []Point{{X: 54, Y: 34}, {X: 55, Y: 34}}}
+			s.Path = path
+			b.updateSoldierCommand(side, 33)
+			if s.GoalX != 42 || s.GoalY != 32 || s.GoalZ != 4 ||
+				s.StepX != 53 || s.StepY != 34 || s.StepZ != 0 || s.Path != path || s.Path.Len() != 2 {
+				t.Fatalf("登城繞路不可改寫接令目標與既有路徑：%+v", *s)
+			}
+			s.Next = Attack
+			b.updateSoldierCommand(side, 33)
+			s.Next = ScaleWal
+			b.updateSoldierCommand(side, 33)
+			if s.GoalY != 33 || s.StepY != 33 || s.Path != nil {
+				t.Fatalf("重新接令應以當下列33初始化：%+v", *s)
+			}
+		}
+	}
+}
+
 func TestGuardLeaderPassesRangeOrderAndKeepsFormation(t *testing.T) {
 	for side := 0; side < 2; side++ {
 		for _, distance := range []int{15, 16, 17} {

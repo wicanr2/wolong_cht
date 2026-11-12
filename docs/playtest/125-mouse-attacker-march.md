@@ -21,7 +21,14 @@
 
 ## 2026-11-13：登城首拍與高層讀取
 
-後續目前程式為`wlgame-cao-script-r1`，見[spec159軍令續片](../spec/159-tactical-command-movement-order.md)。
+最新程式`wlgame-cao-route-r1`修正登城繞路時的目標列漂移，契約見[spec36繞路續片](../spec/36-ground-planes-and-climbing.md)。
+[正常滑鼠](../../workplace/scratch/ui-windows-20261104/cao-route-remake-gui.json)69個功能／同步檢查點、16圖通過，含重複工具列同步。
+在正常曹操對呂布流程點側欄登城，停手六拍目標保持(42,32,4)、主將X11→17，之後突擊與主動退卻返回。
+[登城畫面](../../workplace/scratch/ui-windows-20261104/cao-route-remake-scale-wall.png)已目視核對原版畫布、部隊與喊話。
+途中存讀檔、自然入戰及改線沿同一正常流程；規則重播前146拍吻合，第147拍移動、鎖敵與旗標差異仍留在[證據](../../workplace/scratch/ui-windows-20261104/cao-route-evidence.json)。
+不由此次樣本宣稱全部架梯、投射物、其他角色、手機GUI或整場原版同拍畫面完成。
+
+前輪程式為`wlgame-cao-script-r1`，見[spec159軍令續片](../spec/159-tactical-command-movement-order.md)。
 [正常滑鼠](../../workplace/scratch/ui-windows-20261104/cao-script-remake-gui.json)66個功能／同步檢查點、15圖通過，
 同一曹操開局沿宣戰、編成、停手行軍、途中存讀檔、自然入戰、改線、突擊及主動退卻返回。
 目視核對戰術單兵、城牆及原版喊話，不把喊話誤判成暫停或額外戰報。

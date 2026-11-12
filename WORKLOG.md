@@ -1453,3 +1453,13 @@
 - [正常滑鼠](workplace/scratch/ui-windows-20261104/cao-script-remake-gui.json)66個功能／同步檢查點、15圖通過，包含重複工具列同步。曹操第一劇本宣戰呂布、編夏侯淵、停手行軍、途中存讀檔、自然入戰、改線後移動、突擊及主動退卻返回；目視核對城牆、單兵及原版喊話。仍是椎陽遭遇，不代證夏侯淵守許昌、整場同狀態畫面或手機GUI。
 - [來源收據](workplace/scratch/ui-windows-20261104/cao-script-integration.json)保存七檔來源覆蓋包、81份證據、binary與原版輸入；[回填表](workplace/scratch/ui-windows-20261104/cao-script-backlinks.json)核對舊規格與引用。spec159本片CONFORMED、整體仍READY，素材／IDA／binary／截圖留本機，不作Release。
 - 收尾通過索引582份文件／135條斷言、嚴格未解與分流1145列、過期斷言及原版資產deny-list。嚴格檢查曾因「無新增未解項」觸發無結構缺口，已改成工作項並將本片獨立於整體限制節，乾淨重跑通過，未改玩家程式。不存在引用仍為修改前相同的204筆歷史workplace缺件，本輪新增0；census.tsv缺席的歷史符號層未執行。來源覆蓋包、81份證據及原版輸入一致，UID/GID1000:1000，root-owned與誤建.md目錄0；本輪容器均已結束移除，未動其他專案資源。[收尾核對](workplace/scratch/ui-windows-20261104/cao-script-final-checks.json)保存範圍。依既有指示提交推送，遠端核對另存本機repo-script-update-20261113.json。
+
+## 2026-11-13：登城繞路保留接令目標列
+
+- 接續Issue #16的第145拍槽81差異，命中復古remake、spec閘門與RE回填路由，沿用既有技能及IDA9.4證據。核對單兵仍為登城命令3、低平面，並非正在射擊或已上牆。原版從Y32繞到Y33時GoalY仍32，Go每拍用自身Y改成33，造成尋路終點漂移。
+- 原指令1AB4A／1AB4C的新命令閘包住1AB50取Y及1AB5B寫GoalXY。前輪只把Step初始化限制於新命令，這次補齊Goal初始化。spec36先列DRAFT、候選核對後READY再接線；同一命令保留Goal、Step及Path，換令後重接登城才按新的Y初始化。既有到位分支未改，內部命令6仍保留限制。存檔格式、時間模型、工具列與AI加成未改。
+- 沿前片dosgolem固定seed1的182筆原版觀測，原始輸入與觀測SHA均未變，沒有重擲或平移拍點。本輪未重跑IDA或原版長流程，重用的原始指令、DB身分與收據已明列spec36。正式來源[前146拍](workplace/scratch/ui-windows-20261104/cao-route-evidence.json)96槽27欄位、RNG及腳本狀態吻合；第147拍同時有X／Y、Facing、HighTerrain、MoveFlag、PathQueued、Swapped、Target差異，不只鎖敵，後段仍沿Issue #16／#24。
+- [七套件冷測／vet／建置](workplace/scratch/ui-windows-20261104/cao-route-tests.log)通過。新回歸涵蓋雙側弓兵／步兵的接令固定列、繞路後保留目標與路徑、重新接令按新列初始化；舊程式因GoalY漂移被拒絕。負對照準備首次未明確指定git工作目錄，補git -C /repo後重跑，要求實際測試斷言失敗而非建置／overlay錯誤；屬驗證腳本問題，未改玩家程式。
+- [正常滑鼠](workplace/scratch/ui-windows-20261104/cao-route-remake-gui.json)69個功能／同步檢查點、16圖通過，含重複工具列同步。曹操第一劇本宣戰呂布、編夏侯淵、停手行軍、途中存讀檔、自然在椎陽入戰、改線後，實際點側欄登城令。第188→194拍滑鼠未動，主將X11→17，Goal保持(42,32,4)，之後突擊與主動退卻返回。已目視登城畫面的單兵、城牆、底列指令與原版喊話。這是正常流程抽樣，沒有戰場注入或強制勝負，也不代表原版同拍像素、架梯、投射物或手機GUI完成。
+- [來源收據](workplace/scratch/ui-windows-20261104/cao-route-integration.json)保存兩檔來源覆蓋包、49份證據、binary及原版輸入；[回填表](workplace/scratch/ui-windows-20261104/cao-route-backlinks.json)對應舊re11與spec159。spec36本片CONFORMED，整體戰術排程仍未完成。原始素材、快照、binary與畫面皆留本機，不作Release。
+- 收尾通過索引582份文件／135條斷言、嚴格未解與分流1145列、過期斷言及原版資產deny-list。不存在引用維持修改前相同的204筆歷史workplace缺件，本輪新增0，缺席census.tsv的歷史符號層未執行。兩檔來源覆蓋包、49份證據、原版輸入及原IDA資料庫SHA一致；來源UID/GID1000:1000，root-owned與誤建.md目錄0。本輪容器已結束移除，沒有新建image或清理其他專案資源。[收尾核對](workplace/scratch/ui-windows-20261104/cao-route-final-checks.json)保存結果。依既有指示commit並push，遠端核對另存本機repo-route-update-20261113.json。

@@ -1259,6 +1259,11 @@ DB SHA-256 `b0a2912fcf2617d7f05bea6639224c71dd86186ad3636ec1a33b602ba3289593`。
 [原指令與bytes](../../workplace/scratch/ui-windows-20261104/scale-order-20261113/ida-probe.json)
 及[spec36續片](../spec/36-ground-planes-and-climbing.md)保存新證據與原版第137拍差異。
 
+2026-11-13登城目標保留勘誤：同一個`1AB4A`新命令閘也包住`1AB50`取Y與`1AB5B`寫GoalXY。
+前輪Go只把Step初始化限制於新命令，仍每拍改Goal，導致士兵繞到Y33時目標由接令列32漂移成33。
+[spec36繞路續片](../spec/36-ground-planes-and-climbing.md)補齊此閘，延用上述原指令與資料庫身分，
+不把城牆上的內部命令6或全部攻城行為一併宣稱已完成。
+
 ### 5.8j ⭐ 移動：三軸依序試，撞到就走繞路點
 
 ```asm
