@@ -223,6 +223,16 @@ func Category(field int) int {
 	return 2
 }
 
+// ScriptSlot 是 sub_1CBE5 的四槽選擇，與能力用的 Category 不同。
+// 攻城依玩家攻守選 AI 防守1／主攻0，陸戰2、海戰3（spec59）。
+func ScriptSlot(field int, playerDefends bool) int {
+	slot := Category(field) + 1
+	if playerDefends && slot == 1 {
+		return 0
+	}
+	return slot
+}
+
 // ---------------------------------------------------------------------------
 // 子圖塊的像素
 // ---------------------------------------------------------------------------

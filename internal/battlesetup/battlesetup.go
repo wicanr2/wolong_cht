@@ -18,7 +18,6 @@ import (
 type Provider struct {
 	lib *battle.Library
 	sp  *battle.Sprites
-
 }
 
 // Options 是 Load 要的東西。
@@ -62,16 +61,16 @@ func Load(opt Options) (*Provider, *state.TacticalSetup, error) {
 	setup := &state.TacticalSetup{
 		Forms: forms,
 		Field: p.BuildField,
-		// 戰場類別 ＝ `battle.Category(戰場編號)`，與腳本段選擇同一個來源。
+		// 能力分類為0／1／2；腳本另依玩家攻守選四槽（spec59）。
 		// ⛔ 不可以拿大地圖圖塊代替（`state.TacticalSetup.Category` 的說明）。
 		Category: func(field int, siege bool) int {
 			return battle.Category(field)
 		},
-		Script: func(field int, siege bool, tactic int) []byte {
+		Script: func(field int, siege bool, tactic int, playerDefends bool) []byte {
 			if p.lib == nil {
 				return nil
 			}
-			return p.lib.Script(tactic, battle.Category(field))
+			return p.lib.Script(tactic, battle.ScriptSlot(field, playerDefends))
 		},
 	}
 	return p, setup, nil

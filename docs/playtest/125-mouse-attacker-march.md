@@ -21,7 +21,18 @@
 
 ## 2026-11-12：曹操對呂布的正常路徑比較
 
-最新程式為`wlgame-cao-path-r1`，依[spec134](../spec/134-pathfind-wave-order.md)補回反向擴散與成本回溯。
+目前程式為`wlgame-cao-phase-r1`，補回[spec59](../spec/59-battle-opening-orders.md)的攻守腳本四槽。
+原版實際段1，舊Go誤讀段0。新唯讀觀測重現117個共同快照；正式來源的前73拍，
+每拍96槽27欄位、完整RNG及腳本游標／等待／條件吻合。第74拍仍有鎖敵、地形及移動差異。
+[正常滑鼠收據](../../workplace/scratch/ui-windows-20261104/cao-phase-remake-gui.json)通過66個功能／同步檢查點、15圖，
+從曹操開局、宣戰呂布、夏侯淵編成、下令徐州、停手行軍與途中存讀檔，自然入戰、改線、突擊及主動退卻返回。
+第一次取樣在戰術已退出後仍讀戰場欄位，第二次開場持續前進但超過舊時限；
+保留兩份原紀錄、修正腳本競態及驗收時限後，同一binary及拍點條件重跑通過。
+[來源收據](../../workplace/scratch/ui-windows-20261104/cao-phase-integration.json)與[本機頁](../../workplace/scratch/ui-windows-20261104/cao-phase-game-review.html)
+保存正式程式、來源及限制，不宣稱完整攻城勝負、投射物或架梯已一致。
+下方保留先前各輪收據。
+
+前輪程式為`wlgame-cao-path-r1`，依[spec134](../spec/134-pathfind-wave-order.md)補回反向擴散與成本回溯。
 同一入戰狀態前40拍，每拍96槽27欄位與完整RNG相同；12筆尋路含11筆成功及1筆失敗均吻合。
 新原版唯讀觀測的17個共同快照未變，第4拍槽29差異已修正。
 正式GUI重新通過66個功能／同步檢查點、15圖，含改線後停手移動、突擊與正常主動退卻返回，

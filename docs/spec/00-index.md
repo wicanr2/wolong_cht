@@ -145,7 +145,7 @@
 | 戰場轉 180 度 | [`56-battlefield-rotation.md`](56-battlefield-rotation.md) | 已實作；地形、小地圖、子圖塊與**旗**都餵同一份 |
 | 戰術的等角投影 | [`57-tactical-projection.md`](57-tactical-projection.md) | 已實作；地形走出來、物件算出來 |
 | 顯示格的深度範圍與 8 列的帶 | [`58-display-slot-depth-range.md`](58-display-slot-depth-range.md) | 已實作 |
-| 開場的常令 | [`59-battle-opening-orders.md`](59-battle-opening-orders.md) | 已實作並有單測 |
+| 開場常令與四槽腳本選擇 | [`59-battle-opening-orders.md`](59-battle-opening-orders.md) | CONFORMED，限原開場修正及2026-11-12攻守選槽；前73拍單兵／RNG／腳本狀態吻合，完整戰況仍待對拍 |
 | 戰場對白的壽命與每側一個框 | [`60-battle-talk-duration.md`](60-battle-talk-duration.md) | 已實作並有單測 |
 | 兵的開場體力 ＝ 軍團士氣 | [`61-soldier-initial-hp-from-morale.md`](61-soldier-initial-hp-from-morale.md) | 已實作；要與 `62` 一起看 |
 | 被換位的兵這一幀不動 | [`62-swapped-unit-skips-its-turn.md`](62-swapped-unit-skips-its-turn.md) | 已實作並有迴歸閘 |

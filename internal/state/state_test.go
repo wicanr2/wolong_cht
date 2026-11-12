@@ -2433,11 +2433,11 @@ func normalScenarioWorld(t *testing.T) *World {
 			return tactical.NewFieldFromTileLayers(tiles, battleLib.Heights(node),
 				battleLib.TileLayers(node), gate)
 		},
-		Script: func(node int, siege bool, tactic int) []byte {
+		Script: func(node int, siege bool, tactic int, playerDefends bool) []byte {
 			if !siege {
 				return nil
 			}
-			return battleLib.Script(tactic, battle.Category(node))
+			return battleLib.Script(tactic, battle.ScriptSlot(node, playerDefends))
 		},
 	})
 

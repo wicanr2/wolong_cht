@@ -207,7 +207,7 @@ GPU最多兩頁快取，其他季節、液晶、未選頁與讀圖失敗沿原�
 該輪分歧位於第4拍槽29的繞路中繼X：原版2、Go5；已由下方spec134續片修正，
 不猜補中繼點或用調速度掩蓋。完整攻城勝負、投射物及架梯仍沿Issues #13／#16／#24。
 
-目前受測程式為`wlgame-cao-path-r1`，已依[spec134](docs/spec/134-pathfind-wave-order.md)
+前輪受測程式為`wlgame-cao-path-r1`，已依[spec134](docs/spec/134-pathfind-wave-order.md)
 修正反向擴散與成本回溯。原版12筆尋路的11筆成功完整路徑及1筆失敗皆吻合；
 同一入戰狀態前40拍，每拍96槽27欄位與完整RNG均相同，第4拍槽29的中繼點差異已消除。
 新原版唯讀觀測的17個共同快照與前輪相同。四套件冷測／vet、舊錯版負對照及正常GUI66個檢查點通過。
@@ -216,8 +216,20 @@ GPU最多兩頁快取，其他季節、液晶、未選頁與讀圖失敗沿原�
 保存來源及限制。完整導航／成本表仍有未映射差異，本片不開啟全表重寫；
 40拍後的命令相位、投射物、架梯與完整攻城結果仍沿Issues #13／#16／#24，不調速度掩蓋。
 
+目前程式為`wlgame-cao-phase-r1`，依[spec59續片](docs/spec/59-battle-opening-orders.md)
+補回AI腳本四槽選擇：玩家主攻的攻城戰讀AI防守槽1，玩家守城讀AI主攻槽0，陸戰槽2、海戰槽3。
+能力分類仍為0／1／2，不改腳本取數或等待。正常原版實際載入的256bytes證實本案應為段1，
+舊Go錯讀段0，造成第69拍先出現RNG差異。新增唯讀觀測後117個原版共同快照皆未變。
+正式來源的前73拍，每拍96槽27欄位、完整RNG與腳本游標／等待／條件均吻合。
+六套件冷測／vet、舊選法負對照及正常GUI66個功能／同步檢查點、15圖通過。
+正常流程由曹操開局到停手行軍、存讀檔、自然入戰、改線、突擊及主動退卻返回。
+[來源收據](workplace/scratch/ui-windows-20261104/cao-phase-integration.json)及[本機頁](workplace/scratch/ui-windows-20261104/cao-phase-game-review.html)保存程式與證據。
+第74拍仍有鎖敵、地形與移動差異；投射物、架梯及完整結果仍沿Issues #13／#16／#24。
+本片不重寫完整導航／成本表、不調速度，也不宣稱整場戰鬥或全部角色已對拍。
+
 | 日期／目前程式 | 最近驗證 | 狀態 | 交付物 |
 |---|---|---|---|
+| 2026-11-12；wlgame-cao-phase-r1 | 前73拍96槽27欄位、RNG及腳本狀態吻合，原版117快照重現；六套件冷測／vet、負對照及正常GUI66點通過 | 攻守腳本槽已修；第74拍鎖敵／地形／移動及後段動畫仍待對拍 | [spec59](docs/spec/59-battle-opening-orders.md)、[收據](workplace/scratch/ui-windows-20261104/cao-phase-integration.json)、[本機頁](workplace/scratch/ui-windows-20261104/cao-phase-game-review.html) |
 | 2026-11-12；wlgame-cao-path-r1 | 前40拍96槽27欄位及RNG、12筆尋路吻合；四套件冷測／vet、負對照、正常GUI66點通過 | 第4拍繞路差異已修；全地形、投射物、架梯及完整結果仍待對拍 | [spec134](docs/spec/134-pathfind-wave-order.md)、[收據](workplace/scratch/ui-windows-20261104/cao-path-integration.json)、[本機畫面](workplace/scratch/ui-windows-20261104/cao-path-game-review.html) |
 | 2026-11-12；鎖敵與隊長就位修正 | 前3拍96槽27欄位與40個RNG狀態吻合；四套件冷測／vet、負對照、正常GUI66個檢查點通過 | 改陣形線後就位隊長會移動；該輪第4拍差異已由spec134續片修正 | [spec159](docs/spec/159-tactical-command-movement-order.md)、[收據](workplace/scratch/ui-windows-20261104/cao-move-integration.json)、[本機畫面](workplace/scratch/ui-windows-20261104/cao-move-game-review.html) |
 | 2026-11-12；開場移動倒數訂正 | 96槽初始化及首次移動欄位吻合；原版230共同快照、四套件冷測／vet、負對照、正常GUI61個檢查點通過 | 移除誤套城牆物件的一拍硬直；完整戰術差異仍沿Issues #13／#16／#24 | [spec200](docs/spec/200-opening-move-delay.md)、[來源收據](workplace/scratch/ui-windows-20261104/cao-delay-integration.json)、[本機畫面](workplace/scratch/ui-windows-20261104/cao-delay-game-review.html) |

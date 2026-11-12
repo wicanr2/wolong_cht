@@ -11,9 +11,62 @@ remake 先前一律先下一發「攻擊」，於是**開局第一個 tick 兩�
   [`../re/11`](../re/11-tactical-battle.md) §3.5）、實機截圖（§3）
 - 推論等級：**強證據**（腳本內容 confirmed，開場常令由畫面反推）
 
+## 2026-11-12：依攻守選腳本槽（CONFORMED，限本片）
+
+本片補正腳本段選擇，不改腳本指令、能力分類、戰場、存檔或正式速度。
+輸入為松崗DOS/V `KI.EXE`，SHA-256
+`fffeba985231cda4d636e93d10f598470b1f691d00275e4aa38e285893d43868`。
+IDA Pro9.4、位址為IDA DOS/V linear；一次性DB SHA-256
+`48588a9e2b39af2209dffce5ab5964c847bef2c902d0f6954873cf3a67f04c97`。
+[原指令與bytes](../../workplace/scratch/ui-windows-20261104/script-load-20261112/ida-probe.json)
+由既有`tools/ida.sh probe`及`tools/ida_range.py`取得，原資料與符號未修改。
+
+| 原始定位 | 已證實契約 |
+|---|---|
+| `1CBEB–1CBEE` | 將0／1／2的戰場分類加1，得到腳本槽1／2／3 |
+| `1CBF0–1CBFB` | 玩家守方旗標成立，且加1後為1時，改選槽0；野戰兩類不受攻守影響 |
+| `1CBFE–1CC14` | 對方主將戰法值乘4，再加腳本槽；每個戰法有四段，不能直接使用能力分類 |
+| `1CC17–1CC27` | 段編號乘256，讀取完整256-byte腳本 |
+
+| 場景 | 玩家主攻 | 玩家防守 |
+|---|---:|---:|
+| 攻城 | 1，AI防守 | 0，AI主攻 |
+| 陸上野戰 | 2 | 2 |
+| 海上野戰 | 3 | 3 |
+
+dosgolem `f79eab6db8c64a524a06535e53e5d32b0bbcf7c8`沿正常第一劇本曹操對呂布、固定seed1，
+新增唯讀腳本觀測重播至116拍，117個共同快照的指令數、96槽記錄、完整RNG與全域資料均未變。
+原版實際載入的256bytes與`BATTLE.DAT`段1完全相同，SHA-256
+`43af82e9e62ab72fe852d52029cada98f071e26e49bc1bfb877f69af9f271dbe`。
+舊Go依呂布戰法0、能力類別0讀段0，第69拍先多取亂數，第70拍後命令不同。
+使用原版實際腳本的可丟棄候選，前73拍96槽27欄位及RNG吻合；第74拍仍有Target、地形及移動差異，留在既有Issue #16。
+本片不改亂數產生器或腳本等待。先前69拍差異來自錯誤資料選擇，不是取數公式的證據。
+
+正式資料來源須將玩家攻守傳到腳本選擇，能力用的`Category`仍為0／1／2。
+驗收需覆蓋四槽、戰法0與7、0xBF／0xC0／0xD0／0xD1邊界，以及玩家攻守的state回呼。
+使用正式資料來源重跑前73拍；冷測資料、戰場來源、戰術、世界、桌面與手機，舊選法須被拒絕。
+正常GUI仍從曹操開局自然入戰、下令與退卻返回，不以局部探針代替玩家路徑。
+全戰況、其他主將的長程結果、投射物與架梯不在本片完成聲明內。
+
+### 本片實作與驗收
+
+正式`TacticalSetup.Script`傳入玩家是否守方，由`battle.ScriptSlot`唯一選槽；
+桌面與手機共用`battlesetup.Load`。既有戰場及能力分類不變，存檔沒有新增欄位。
+[正式73拍收據](../../workplace/scratch/ui-windows-20261104/cao-phase-after-comparison.json)每拍96槽27欄位與完整RNG全等，
+腳本游標、等待、條件三項亦全等；[獨立證據核對](../../workplace/scratch/ui-windows-20261104/cao-phase-evidence.json)保存117個原版共同快照及實際段1。
+四槽、戰法0／7、分類邊界及玩家攻守回呼通過；[六套件冷測／vet／建置](../../workplace/scratch/ui-windows-20261104/cao-phase-tests.log)
+與[舊選法負對照](../../workplace/scratch/ui-windows-20261104/cao-phase-negative.log)通過。
+[正常滑鼠流程](../../workplace/scratch/ui-windows-20261104/cao-phase-remake-gui.json)66個功能／同步檢查點、15圖通過，
+含途中存讀檔及自然入戰後的改線、突擊、主動退卻返回。
+GUI第一次在戰場已退出後讀戰術欄位，屬驗證腳本取樣競態；第二次開場持續前進至30拍但超過舊30秒上限。
+兩份原紀錄保留，修正取樣及驗收時限後以同一binary重跑，遊戲拍點條件未改。
+[來源收據](../../workplace/scratch/ui-windows-20261104/cao-phase-integration.json)封存七檔來源及正式程式雜湊，
+[本機頁](../../workplace/scratch/ui-windows-20261104/cao-phase-game-review.html)四圖供流程檢視，不作原版同拍畫面聲明。
+第74拍的13槽仍有鎖敵、地形與移動差異，整場結果與其他角色正常路徑未代證。
+
 ## 1. 原版做什麼
 
-AI 那一側由 `BATTLE.DAT` 的一段驅動，段編號 ＝ 武將 `+0x16` × 4 ＋ 戰場類別。
+AI 那一側由 `BATTLE.DAT` 的一段驅動，段編號 ＝ 武將 `+0x16` × 4 ＋ 腳本槽；四槽對應沿上節訂正。
 張遼（`+0x16` ＝ 2）在攻城那幾段的開頭是：
 
 ```

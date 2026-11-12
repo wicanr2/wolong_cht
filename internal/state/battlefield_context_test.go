@@ -118,9 +118,9 @@ func TestWaterSelectionSharedAcrossCallbacksAndNextEncounter(t *testing.T) {
 			}
 			return 2
 		}
-		setup.Script = func(field int, siege bool, tactic int) []byte {
+		setup.Script = func(field int, siege bool, tactic int, playerDefends bool) []byte {
 			scriptCalls++
-			if field != 209+roll || siege {
+			if field != 209+roll || siege || playerDefends {
 				t.Fatalf("script used %d", field)
 			}
 			return nil
@@ -132,6 +132,34 @@ func TestWaterSelectionSharedAcrossCallbacksAndNextEncounter(t *testing.T) {
 			t.Fatalf("shared selection: %+v category=%d script=%d", p, categoryCalls, scriptCalls)
 		}
 		w.pending = nil
+	}
+}
+
+func TestTacticalScriptReceivesParticipatingPlayerRole(t *testing.T) {
+	for _, mode := range []combat.Mode{combat.Siege, combat.Field} {
+		for _, defends := range []bool{false, true} {
+			w, att, def := standoffFixture(t)
+			playerCorps := att
+			if defends {
+				playerCorps = def
+			}
+			w.Player = w.Corps[playerCorps].Faction
+			setup, calls := fieldTestSetup(), 0
+			setup.Script = func(field int, siege bool, tactic int, playerDefends bool) []byte {
+				calls++
+				if playerDefends != defends || siege != (mode == combat.Siege) {
+					t.Fatalf("mode=%v：腳本取得錯誤玩家攻守%v", mode, playerDefends)
+				}
+				return []byte{0, 1}
+			}
+			w.SetTactical(setup)
+			if err := w.StageBattle(att, def, mode, &fieldRandom{}); err != nil {
+				t.Fatal(err)
+			}
+			if calls != 1 {
+				t.Fatalf("AI腳本呼叫%d次，應只有非玩家一側", calls)
+			}
+		}
 	}
 }
 

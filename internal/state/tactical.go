@@ -31,9 +31,10 @@ type TacticalSetup struct {
 	Field func(node int, siege, rotate bool) *tactical.Field
 
 	// Script 回傳一側的 AI 腳本。tactic 是武將記錄 `+0x16`（0–7），
-	// 段編號 ＝ tactic × 4 ＋ 戰場類別（`sub_1CBE5`，docs/re/11 §3.2）。
+	// playerDefends 指玩家在守方，供攻城的AI主攻0／防守1選槽；
+	// 陸戰槽2、海戰槽3。能力分類不能直接當腳本槽（spec59）。
 	// 沒設或回 nil 那一側就不由腳本驅動。
-	Script func(node int, siege bool, tactic int) []byte
+	Script func(node int, siege bool, tactic int, playerDefends bool) []byte
 
 	// Category 回傳這一場的**戰場類別**（0 攻城／1 陸上／2 海上）。
 	//
@@ -164,8 +165,8 @@ func (w *World) beginTactical(att, def, node int, m combat.Mode, garrison int, f
 	deploy(1, def)
 	b.Spawn(w.rng)
 
-	// AI 那一側交給 `BATTLE.DAT` 的腳本（段編號 ＝ 武將 +0x16 × 4 ＋
-	// 戰場類別，docs/re/11 §3.2）。**玩家那一側不裝**，由畫面層下命令。
+	// AI 那一側交給 BATTLE.DAT 的角色腳本（spec59）。
+	// 玩家那一側不裝，由畫面層下命令。
 	//
 	// 腳本第一個指令通常是查詢，所以掛上去之前先給一個「攻擊」當底，
 	// 免得沒有腳本的那一場開局所有人都站著不動。
@@ -174,7 +175,7 @@ func (w *World) beginTactical(att, def, node int, m combat.Mode, garrison int, f
 		var code []byte
 		if w.Corps[corpsOf[side]].Faction != w.Player && w.tactical.Script != nil {
 			code = w.tactical.Script(field.number, m == combat.Siege,
-				w.Generals[w.Leader(corpsOf[side])].Tactic)
+				w.Generals[w.Leader(corpsOf[side])].Tactic, b.PlayerSide == tactical.DefenderSide)
 		}
 		if code == nil {
 			if w.Corps[corpsOf[side]].Faction == w.Player {

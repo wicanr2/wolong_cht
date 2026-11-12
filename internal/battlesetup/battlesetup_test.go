@@ -48,8 +48,33 @@ func TestProviderLoadsExplicitSelectionForEveryEncounter(t *testing.T) {
 		if got := s.Category(tc.number, tc.number < 192); got != battle.Category(tc.number) {
 			t.Fatalf("category %d", got)
 		}
-		if !reflect.DeepEqual(s.Script(tc.number, false, 2), p.lib.Script(2, battle.Category(tc.number))) {
+		if !reflect.DeepEqual(s.Script(tc.number, false, 2, false), p.lib.Script(2, battle.ScriptSlot(tc.number, false))) {
 			t.Fatalf("script field %d", tc.number)
+		}
+	}
+}
+
+func TestProviderSelectsFourOriginalScriptSlots(t *testing.T) {
+	if _, err := os.Stat(original + "/KI.EXE"); err != nil {
+		t.Skip("缺少原版素材")
+	}
+	p, setup, err := Load(Options{Dir: original})
+	if err != nil {
+		t.Fatal(err)
+	}
+	if p.lib == nil {
+		t.Fatal("缺少真實戰場腳本")
+	}
+	for _, tc := range []struct {
+		field, slot int
+		defends     bool
+	}{{76, 1, false}, {76, 0, true}, {191, 1, false}, {191, 0, true},
+		{192, 2, false}, {208, 2, true}, {209, 3, false}, {213, 3, true}} {
+		for _, tactic := range []int{0, 7} {
+			got := setup.Script(tc.field, tc.field < 192, tactic, tc.defends)
+			if len(got) != tactical.ScriptCodeSize || !reflect.DeepEqual(got, p.lib.Script(tactic, tc.slot)) {
+				t.Fatalf("field=%d playerDefends=%v tactic=%d：腳本應取槽%d", tc.field, tc.defends, tactic, tc.slot)
+			}
 		}
 	}
 }

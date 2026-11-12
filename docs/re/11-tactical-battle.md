@@ -118,6 +118,12 @@ mov cs:word_1D311, si
 
 ### 3.2 ⭐ 腳本來自 `BATTLE.DAT`，而且是**依武將挑的**
 
+2026-11-12追加訂正（confirmed）：下方`inc al`及玩家守方分支不能省略。
+腳本槽為攻城AI主攻0／防守1、陸戰2、海戰3，不等同能力分類0／1／2。
+`1CBEB–1CC27`原始bytes與IDA Pro9.4的DOS/V linear位址、KI.EXE／DB身分見
+[spec59續片](../spec/59-battle-opening-orders.md)。正常曹操主攻原版載入段1，
+117個共同快照重現；Go舊用段0造成69拍差異。新來源前73拍96槽及腳本狀態吻合，範圍不外推後段。
+
 `sub_1CBE5` 把 256 byte 讀進 `word_1D30C`：
 
 ```asm
@@ -131,7 +137,7 @@ mov bx, ds:0D30h / sub bx, 2240h / shr bx, 1   ; 軍團位址 → 武將記錄
 mov ds, word ptr ds:0D52h
 mov ah, [bx+4256h]             ; ★ 武將 +0x16
 shl ah, 1 / shl ah, 1          ; ×4
-add ah, al                     ; 段編號 ＝ 武將+0x16 × 4 + 戰場類別
+add ah, al                     ; 段編號 ＝ 武將+0x16 × 4 + 腳本槽
 xor al, al                     ; ax ＝ 段編號 × 256 ＝ 檔案位移
 mov dx, 0D8Fh                  ; 'BATTLE.DAT'
 mov bx, ds:0D30Ch / mov di, 100h
@@ -140,7 +146,7 @@ call sub_1E38C
 
 ```
 BATTLE.DAT ＝ 8,192 B ＝ 32 段 × 256 B
-段編號 ＝ 武將 +0x16（0–7）× 4 ＋ 戰場類別（0–3）
+段編號 ＝ 武將 +0x16（0–7）× 4 ＋ 腳本槽（0–3，對應見上方訂正）
 ```
 
 **檔案是不是腳本，用資料就驗得掉**（`tools/battledat.py verify`）：

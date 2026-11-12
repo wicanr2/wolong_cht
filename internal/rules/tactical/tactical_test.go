@@ -757,7 +757,7 @@ func TestRealSiegeFieldBattleTerminates(t *testing.T) {
 	b.Place()
 	b.Order(0, -1, Attack)
 	b.Order(1, -1, Attack)
-	if code := lib.Script(0, battle.Category(fieldNumber)); code != nil {
+	if code := lib.Script(0, battle.ScriptSlot(fieldNumber, false)); code != nil {
 		b.SetScript(1, NewScript(code, 1))
 	}
 	if !b.Run(200000) {
