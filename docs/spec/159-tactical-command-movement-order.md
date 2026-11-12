@@ -242,6 +242,11 @@ Cmd／Next 保持 Form。不能把隊員沒有改命令解讀為未到位。
 
 ## 驗收限制（#16 尚未完成）
 
+2026-11-13：[spec36登城續片](36-ground-planes-and-climbing.md)補回`1AB58`／`1AB78`的新命令StepXYZ，
+並修正高層掃描。正式來源前138拍96槽27欄位與完整RNG吻合；加入腳本PC／wait／cond則前131拍吻合。
+第132拍cond原版26、Go7，第139拍守陣命令仍不同，均由[獨立收據](../../workplace/scratch/ui-windows-20261104/cao-scale-evidence.json)保留。
+此為已完成窄規則的續片，不把整體排程提升為CONFORMED，也不關閉#16。
+
 目前窄收據已確認命令／移動批次、首拍體力扣減與獨立 Z 點的規則接縫；
 2026-09-14 的完整 `SAVE-FIELD.DAT` replay 仍有原版與 remake 的開場相位差，
 因此本節保持 READY，不能把這次窄修正升格為 CONFORMED，也不能關閉 #16。

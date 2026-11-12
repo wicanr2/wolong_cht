@@ -1428,3 +1428,15 @@
 - 受影響桌面冷測與vet通過。r1正常曹操對呂布流程118個功能／同步檢查點、19圖通過，驗到自然戰鬥返回四秒無提示、日期繼續前進、手動戰報、切換不補播、開關兩種重啟記憶，兩種遊戲存檔SHA不變。r2另補軍團情報同一句教學的省略，最終程式再跑44個功能／同步檢查點、三圖，正常勢力選擇、編成後軍團情報及右鍵返回均目視通過。數字包含重複工具列同步，不作獨立功能數。短驗收腳本首次漏開原版指令列，分類為驗證腳本問題；補正常展開操作後，以同一image、binary乾淨重跑通過，原log保留。r2未再重跑整場戰鬥；啟用後新結果提示由本輪模型回歸及前片顯示收據支持，不冒稱新的正常戰鬥GUI驗收。
 - [本輪來源收據](workplace/scratch/ui-windows-20261104/quiet-notice-integration-20261113.json)核對13檔來源、覆蓋包、兩個binary及22圖；來源UID/GID1000:1000，root-owned與誤建.md目錄皆0。截圖、binary與原版素材只留本機。當輪行為與限制見[spec89](docs/spec/89-siege-damage-report-toggle.md)及[spec266](docs/spec/266-mouse-only-desktop-toolbar.md)。
 - 收尾文件檢查通過：582份文件／135條斷言、嚴格未解索引與分流1145列、過期斷言及原版資產deny-list均通過。受測13檔來源與兩個binary仍一致。本輪容器已結束移除，沒有臥龍傳殘留容器；未重建工具image或清理其他專案資源。依既有指示提交推送，提交及遠端核對見[本機推送收據](workplace/scratch/ui-windows-20261104/repo-quiet-notice-update-20261113.json)。
+
+## 2026-11-13：登城首拍中繼點與高層地面
+
+- 沿復古remake、規格閘門、IDA9.4、文件職責與RE回填路由接續既有Issue #16。維持已確認的滑鼠操作、預設關閉戰報及原版規則，不開新設計訪談。原版正常曹操開局、固定seed1的輸入只延長最後戰術節拍，取得182個快照；原先117筆指令數、單位、RNG與全域資料前綴完全相同。
+- IDA Pro9.4重新讀`1A7B7–1A839`、`1AB39–1AB7C`、`1BBA6–1BC39`及`1BCA6–1BD07`。新登城命令同時寫StepXY／Z，原Go只更新Goal；無低層地面時原版仍掃高層，原Go提前回傳。spec36先列READY再修改，正式實作限這兩處；同命令後續拍保留繞路點。未改RNG、時間基準、存檔格式或AI加成。
+- 原指令另證實`1BC18`只清DH導航旗標，DL高度仍保留，推翻舊re63「整格清0」摘要。已勘誤原始文件與程式註解，未擴張為全部正規化重寫。低層4096原始byte仍全等，高層差異455降為60。勘誤與未受影響引用見[回填表](workplace/scratch/ui-windows-20261104/cao-scale-backlinks.json)。
+- [正式逐兵](workplace/scratch/ui-windows-20261104/cao-scale-after-comparison.json)前138拍96槽27欄位及完整RNG吻合。[腳本比對](workplace/scratch/ui-windows-20261104/cao-scale-script-comparison.json)發現第132拍cond原版26、Go7，故含腳本的完整狀態聲明限前131拍；第139拍守陣命令仍不同。原版入口受控規則重播與正常GUI是兩種證據，不宣稱整場同狀態或全部動畫完成。
+- [七套件冷測／vet／建置](workplace/scratch/ui-windows-20261104/cao-scale-tests.log)通過；新測試涵蓋獨立高層、門格條件、城壁替代圖塊及雙側隊長／隊員登城首拍與後續路徑。兩個舊錯版分別被回歸測試拒絕。最後只再修正正規化註解，[Go詞元核對](workplace/scratch/ui-windows-20261104/cao-scale-comment-check.json)確認與受測來源的執行詞元相同，原受測來源及binary保留。
+- [正常滑鼠](workplace/scratch/ui-windows-20261104/cao-scale-remake-gui.json)66個功能／同步檢查點、15圖通過，含曹操開局宣戰呂布、編夏侯淵、停手行軍、途中存讀檔、自然入戰、改線後移動、突擊及主動退卻返回；計數含重複工具列同步。已目視戰術畫面有城牆與單兵，沒有強制入戰或勝負。仍是夏侯淵攻、呂布守椎陽，未代證許昌留守情境或手機GUI。
+- IDA預設locked-v1標籤不存在，檢查官方manifest後沿用已存在且相容的py312-v1，不另建image。早期探針缺overlay、Go internal路徑及日誌命名錯誤均屬驗證腳本／環境，修正後同容器工具鏈乾淨重跑，未列產品缺陷。早期共用nav輸出曾被候選覆寫，已排除該檔，以命名固定的cao-scale-after-nav.bin為正式收據。
+- [來源收據](workplace/scratch/ui-windows-20261104/cao-scale-integration.json)保存四檔來源、77份證據、binary與五份原版輸入身分。spec36本片CONFORMED，整體spec159仍READY；腳本、後續守陣、高層導航、架梯、投射物及完整結果沿既有Issues保留。原版素材、IDA資料庫、binary與截圖皆只留本機，不作Release。
+- 收尾通過索引582份文件／135條斷言、嚴格未解與分流1145列、過期斷言及原版資產deny-list。全庫引用掃描仍有204筆歷史workplace缺件，與HEAD用同一檢查器核對相同，本輪新增0；歷史census.tsv缺席的符號層未執行，不宣稱全庫掃描全綠。來源覆蓋包、77份證據及原版輸入雜湊一致，UID/GID1000:1000，工作區root-owned與誤建.md目錄0；本輪容器已結束移除，未重建image或動其他專案資源。[收尾核對](workplace/scratch/ui-windows-20261104/cao-scale-final-checks.json)及[引用差量](workplace/scratch/ui-windows-20261104/cao-scale-doc-phantom-delta.json)保存結果。依既有指示commit並push，提交與遠端核對另存本機repo-scale-update-20261113.json。

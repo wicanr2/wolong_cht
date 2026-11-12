@@ -2,6 +2,35 @@ package tactical
 
 import "testing"
 
+func TestNewScaleOrderSetsWaypointAndPreservesLaterPath(t *testing.T) {
+	lib := realLib(t)
+	for side := 0; side < 2; side++ {
+		for _, k := range []int{32, 33} { // 隊長及隊員。
+			for _, kind := range []Kind{Infantry, Archer} {
+				b := NewBattle(realField(t, lib, 76), SyntheticFormations(), nil, 0)
+				s := &b.Sides[side].Soldiers[k]
+				*s = Soldier{Alive: true, Kind: kind, X: 60, Y: 35, Cmd: Holding, Next: ScaleWal,
+					StepX: 59, StepY: 34, StepZ: 1, Target: -1}
+				b.updateSoldierCommand(side, k)
+				if s.Cmd != ScaleWal || s.StepX != 42 || s.StepY != 35 || s.StepZ != 4 || s.GoalX != 42 || s.GoalY != 35 {
+					t.Fatalf("側%d槽%d新登城中繼點不符原版第137拍：%+v", side, k, *s)
+				}
+				b.updateSoldierMovement(side, k)
+				if s.X != 59 {
+					t.Fatalf("新登城命令首拍未朝城牆移動：%+v", *s)
+				}
+				s.StepX, s.StepY, s.StepZ = 58, 34, 3
+				path := &Waypoints{pts: []Point{{X: 57, Y: 34}}}
+				s.Path = path
+				b.updateSoldierCommand(side, k)
+				if s.StepX != 58 || s.StepY != 34 || s.StepZ != 3 || s.Path != path || s.Path.Len() != 1 {
+					t.Fatalf("持續登城不可重設中繼點與繞路：%+v", *s)
+				}
+			}
+		}
+	}
+}
+
 func TestSwapWaypointHeightAndTerrainFlags(t *testing.T) {
 	// 原版1B783–1B795；同高坡地也交換，不能改成只補Z差。
 	tests := []struct {

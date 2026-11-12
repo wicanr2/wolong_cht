@@ -72,11 +72,12 @@ func groundOf(tile byte, layers *[256][Levels]byte) (int, int) {
 	for l < lowPlaneLevels && rec[l] < topFace {
 		l++
 	}
-	if l >= lowPlaneLevels {
-		return noGround, noGround
-	}
 	lo := l
-	if tile >= gateTile {
+	if lo >= lowPlaneLevels {
+		lo = noGround
+	}
+	// 1BCD9直接進高層掃描；低層不存在不代表城牆頂不存在。
+	if lo != noGround && tile >= gateTile {
 		// 門在高平面標 8；`sub_1BD07` 會把它換成鄰格牆頂的高度。
 		return lo, navGate
 	}
@@ -189,18 +190,12 @@ func (f *Field) cellGround(x, y int) (int, int) {
 	return h, noGround
 }
 
-// normaliseHighPlane 重現 `sub_1BBA6` 尾端那一段：整面牆頂壓成單一高度。
+// normaliseHighPlane 是 `sub_1BBA6` 尾端正規化的既有近似。
 //
-//	統計有地面的格子，層 ≤ 4 與 > 4 哪邊多 → 目標高度 4 或 5
-//	高度不同的：是門就改成目標高度，不是門就整格清 0
-//
-// 常數在這裡是 +1 之後的（5 與 6），因為 byte 存的是層號 +1。
-// 原版用 bit 3（門）當「這一格有高平面」的判準；byte 存 +1 之後
-// **有地面就一定非 0**，兩種寫法等價。
+// 原版只統計門格，在高度4與5間選擇；高度不同的非門格只清導航旗標，
+// 保留高度低3位（1BC18）。這裡仍清除地面，尚未完全對齊，見spec36續片。
 func (f *Field) normaliseHighPlane() {
-	// 原版寫死在 4 與 5 之間二選一（`cmp al, 4 / ja`），因為它的牆頂
-	// 只可能落在那兩層。這裡改成**取多數**：在原版資料上結果相同
-	// （門格旁邊的牆頂都是同一層），而合成戰場的牆可以是別的高度。
+	// 既有實作取高度的多數，合成戰場允許其他高度；不能據此推論原版全表相同。
 	count := map[int8]int{}
 	for y := 0; y < Height; y++ {
 		for x := 0; x < Width; x++ {

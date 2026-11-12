@@ -19,9 +19,22 @@
 - 遭遇契約：[spec175](../spec/175-encounter-standoff-countdown.md)、
   [spec186](../spec/186-standoff-corps-before-city.md)。本次不修改遊戲執行邏輯。
 
+## 2026-11-13：登城首拍與高層讀取
+
+目前程式`wlgame-cao-scale-r1`接入[spec36續片](../spec/36-ground-planes-and-climbing.md)，戰報提示維持預設關閉。
+[正常滑鼠](../../workplace/scratch/ui-windows-20261104/cao-scale-remake-gui.json)66個功能／同步檢查點、15圖通過，
+包含重複工具列同步。流程為曹操第一劇本、宣戰呂布、編夏侯淵、停手行軍、途中存讀檔、自然入戰、改線、突擊與主動退卻返回。
+目視核對[戰術畫面](../../workplace/scratch/ui-windows-20261104/cao-scale-remake-battle-animation-1.png)的城牆、單兵及介面。
+依舊在椎陽遭遇呂布，沒有強制入戰，也未驗到夏侯淵守許昌的指定局面。
+
+[獨立規則收據](../../workplace/scratch/ui-windows-20261104/cao-scale-evidence.json)重播相同原版入口與seed，
+逐兵27欄位及RNG限前138拍相同；腳本內部狀態限前131拍，後續差異明列保留。
+七套件冷測／vet及兩項舊錯版負對照通過，來源見[接線收據](../../workplace/scratch/ui-windows-20261104/cao-scale-integration.json)。
+不由這次正常流程抽樣宣稱整場同狀態、架梯、投射物或手機GUI已完成。
+
 ## 2026-11-12：曹操對呂布的正常路徑比較
 
-目前程式為`wlgame-battle-notice-r2`，接通使用者選定的三秒提示與按需戰報，契約見[spec89續片](../spec/89-siege-damage-report-toggle.md)。
+當輪程式為`wlgame-battle-notice-r2`，接通使用者當時選定的三秒提示與按需戰報，現已改為預設關閉，契約見[spec89續片](../spec/89-siege-damage-report-toggle.md)。
 [正常滑鼠收據](../../workplace/scratch/ui-windows-20261104/battle-notice-remake-gui.json)通過109個功能／同步檢查點、20圖，
 包含重複同步，不當作獨立功能。兩次自然遭遇涵蓋提示自行消失、停手日期前進、工具列重開、
 原版／HD明細、四種關閉方式、讀檔失效及點提示無地圖穿透；兩種存檔SHA未被介面重寫。

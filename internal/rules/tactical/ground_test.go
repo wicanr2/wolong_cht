@@ -7,6 +7,30 @@ import (
 	"github.com/wicanr2/wolong_cht/internal/assets/battle"
 )
 
+func TestGroundScansHighPlaneWithoutLowGround(t *testing.T) {
+	var layers [256][Levels]byte
+	layers[0x20][4] = topFace
+	layers[0xE0][5] = topFace
+	layers[0xF8][6] = topFace
+	layers[0xF9][2] = topFace
+	layers[0xF9][4] = topFace
+	for _, tt := range []struct {
+		tile      byte
+		low, high int
+	}{
+		{0x20, noGround, 4},
+		{0xD0, noGround, 5}, // 城壁讀破壞後的0xE0。
+		{0xF8, noGround, 6}, // 無低層時不設門標記。
+		{0xF9, 2, navGate},
+		{0x21, noGround, noGround},
+	} {
+		low, high := groundOf(tt.tile, &layers)
+		if low != tt.low || high != tt.high {
+			t.Fatalf("圖塊%#x的兩平面=%d/%d，應為%d/%d", tt.tile, low, high, tt.low, tt.high)
+		}
+	}
+}
+
 func TestOriginalPlayableRowsInclude62(t *testing.T) {
 	if Height != 64 || MaxY != 62 || !inBounds(10, 62) || inBounds(10, 63) || clampY(63) != 62 {
 		t.Fatalf("原版有效Y應為1–62，緩衝64列：Height=%d MaxY=%d", Height, MaxY)

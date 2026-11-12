@@ -69,7 +69,7 @@ func (b *Battle) updateSoldierCommand(side, k int) {
 	s := &b.Sides[side].Soldiers[k]
 	s.HitGeneral = false
 	b.lockOnNearest(side, k)
-	s.applyNewOrder()
+	changed := s.applyNewOrder()
 
 	switch s.Cmd {
 	case Form:
@@ -78,6 +78,10 @@ func (b *Battle) updateSoldierCommand(side, k int) {
 		b.doAttack(side, k)
 	case ScaleWal:
 		b.doScaleWall(side, k)
+		if changed {
+			// 1AB4A–1AB78：新命令同時設定中繼點，後續拍保留繞路點。
+			s.StepX, s.StepY, s.StepZ = s.GoalX, s.GoalY, s.GoalZ
+		}
 	case Guard:
 		b.doGuard(side, k)
 	case Retreat:

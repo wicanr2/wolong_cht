@@ -1222,19 +1222,28 @@ cmp byte ptr [si+1Eh], 0 / jz .1
     db 0B2h                            ; ★ mov dl, imm8
 byte_1AB4F db 1Fh                      ;   ← 立即值就是索引第二欄！
     mov dh, [si+8]
-    mov [si+10h], dx / mov [si+14h], dx   ; 目標 ＝ (登城點 X, 自己的 Y)
+    mov [si+10h], dx / mov [si+14h], dx   ; 中繼XY與目標XY ＝ (登城點 X, 自己的 Y)
     bh = dh / bl = 0 / bx >>= 2 / bl += dl / bh |= 10h
     mov es, cs:word_1D2FC
     mov al, es:[bx] / and al, 7
-    mov [si+12h], al                      ; 目標 Z
+    mov [si+12h], al                      ; 中繼 Z
 ```
 
 ⭐ **又一處自我修改碼**：`BATTLE.MAP` 索引的第二欄被 `sub_1CAEB`
 直接寫進 `mov dl, imm8` 的立即運算元裡。§4.5 說它「是城門附近的 X」，
 現在可以定案了——**它是城壁移動的目標 X（登城點）**。
 
-目標的 Z 從 `word_1D2FC` 的 `0x1000` 起查（`Y × 64 + X`，取低 3 位），
+中繼 Z 從 `word_1D2FC` 的 `0x1000` 起查（`Y × 64 + X`，取低 3 位），
 那是**每一格的可站立層**。
+
+2026-11-13登城初始化勘誤：`1A7B7–1A7DA`及隊員分支`1A7FD–1A827`保留AL舊命令、
+AH新命令，`1AB4A cmp al,ah`只允許新命令經`1AB58`設定StepXY與`1AB78`設定StepZ。
+不能只設定Goal等下一拍，也不能每拍重設繞路中繼點。
+推論等級為已證實；IDA Pro9.4 DOS/V linear，輸入`KI.EXE` SHA-256
+`fffeba985231cda4d636e93d10f598470b1f691d00275e4aa38e285893d43868`，
+DB SHA-256 `b0a2912fcf2617d7f05bea6639224c71dd86186ad3636ec1a33b602ba3289593`。
+[原指令與bytes](../../workplace/scratch/ui-windows-20261104/scale-order-20261113/ida-probe.json)
+及[spec36續片](../spec/36-ground-planes-and-climbing.md)保存新證據與原版第137拍差異。
 
 ### 5.8j ⭐ 移動：三軸依序試，撞到就走繞路點
 

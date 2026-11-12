@@ -239,7 +239,7 @@ GPU最多兩頁快取，其他季節、液晶、未選頁與讀圖失敗沿原�
 當時第85拍槽73／79的StepZ差異已由下列spec62續片處理。高平面、佔用成本、投射物、架梯及完整結果仍保留既有Issues邊界，
 不由本片開啟全導航表重寫、宣稱全部角色／手機GUI或整場戰鬥一致。
 
-目前程式為`wlgame-cao-swap-r1`，依[spec62續片](docs/spec/62-swapped-unit-skips-its-turn.md)
+前輪程式為`wlgame-cao-swap-r1`，依[spec62續片](docs/spec/62-swapped-unit-skips-its-turn.md)
 補回低平面坡地換位的StepZ條件交換，並在每名兵重畫時更新地形旗標，避免換位時提早交換。
 原版467次換位前後記錄符合規則，117共同快照重現；正式來源前115個可比邊界，
 每拍96槽27欄位、完整RNG及腳本PC／wait／cond吻合，第85拍高度及後續旗標差異已消除。
@@ -252,6 +252,7 @@ GPU最多兩頁快取，其他季節、液晶、未選頁與讀圖失敗沿原�
 
 | 日期／目前程式 | 最近驗證 | 狀態 | 交付物 |
 |---|---|---|---|
+| 2026-11-13；wlgame-cao-scale-r1 | 前138拍96槽27欄位／RNG吻合，含腳本則前131拍；七套件冷測／vet、兩負對照、正常GUI66點／15圖通過 | 登城接令即設定中繼XYZ，獨立掃高層；低層導航0差、高層仍60差。腳本第132拍、單兵第139拍起仍不同；戰報維持預設關閉 | [spec36](docs/spec/36-ground-planes-and-climbing.md)、[收據](workplace/scratch/ui-windows-20261104/cao-scale-integration.json) |
 | 2026-11-13；wlgame-quiet-notice-r2 | 受影響冷測／vet；r1正常戰後118點／19圖，r2控制44點／3圖通過，均含重複同步 | 依新裁定戰報提示改選項、首次及舊偏好預設關閉，手動戰報保留；啟用不補播，開關可記憶。省略勢力選擇／軍團情報TALK #4教學，保留原文與右鍵返回 | [spec89](docs/spec/89-siege-damage-report-toggle.md)、[spec266](docs/spec/266-mouse-only-desktop-toolbar.md)、[收據](workplace/scratch/ui-windows-20261104/quiet-notice-integration-20261113.json) |
 | 2026-11-12；wlgame-battle-notice-r2 | 受影響冷測／vet、獨立GPU像素、正常GUI109個功能／同步檢查點與兩次自然遭遇通過；四項離線頁面抽驗通過 | 已採B三秒提示與按需明細，工具列十二鈕單排、28／6收展；停手世界前進，讀檔清舊戰報；不改戰術規則 | [spec89](docs/spec/89-siege-damage-report-toggle.md)、[實際畫面頁](workplace/scratch/ui-windows-20261104/battle-notice-game-review.html)、[來源收據](workplace/scratch/ui-windows-20261104/battle-notice-integration.json) |
 | 2026-11-12；軍團圖示補驗，沿用wlgame-cao-swap-r1 | 正常定位後的編成／行軍／兩勢力同框、原版三項與remake四項局部圖塊像素吻合；正常GUI96個功能／同步檢查點 | 前輪截圖鏡頭看不到兩軍，現補可見證據，未修改繪圖；許昌留守觀察至4/20未遇呂布進攻，指定守城情境仍未驗收 | [playtest50補驗](docs/playtest/50-corps-on-map.md)、[局部像素](workplace/scratch/ui-windows-20261104/corps-map-pixels.json)、[許昌觀察](workplace/scratch/ui-windows-20261104/xuchang-defence-gui.json) |
@@ -1077,6 +1078,13 @@ DOSBox-X 那條路**不刪**：它是這一條的正對照，而且 PC-98 版只
 ---
 
 ## 6. 已被推翻的斷言
+
+### 2026-11-13：登城只設目標、低層缺席便沒有高層
+
+`1AB58`／`1AB78`直接寫中繼XY／Z，新命令首拍即生效；舊Go只寫Goal，晚一拍移動。
+`1BCD9 → 1BCEF`證實沒有低層仍掃高層，舊Go提早返回漏掉城牆頂。
+另外`1BC18`清DH仍保留DL高度，舊re63「非門整格清0」已勘誤，但正規化未全修。
+原始指令、資料庫身分及有界驗收見[spec36續片](docs/spec/36-ground-planes-and-climbing.md)。
 
 ### 2026-11-12：鎖敵距離與就位隊長
 
