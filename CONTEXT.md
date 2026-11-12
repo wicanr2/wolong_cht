@@ -227,7 +227,7 @@ GPU最多兩頁快取，其他季節、液晶、未選頁與讀圖失敗沿原�
 第74拍仍有鎖敵、地形與移動差異；投射物、架梯及完整結果仍沿Issues #13／#16／#24。
 本片不重寫完整導航／成本表、不調速度，也不宣稱整場戰鬥或全部角色已對拍。
 
-目前程式為`wlgame-cao-ground-r1`，依[spec36續片](docs/spec/36-ground-planes-and-climbing.md)
+前輪程式為`wlgame-cao-ground-r1`，依[spec36續片](docs/spec/36-ground-planes-and-climbing.md)
 補回規則地圖的64列原版緩衝與Y1–62，並修正水平升降的中繼高度及高／低平面旗標。
 規則原本沿用原版士兵座標，卻對到移除表頭後的地形；第74拍的相鄰列誤讀已消除。
 繪圖地形維持62列，動態物件直接走原版投影，破壞重繪按原版列號讀取；鏡頭與游標公式保留。
@@ -236,11 +236,23 @@ GPU最多兩頁快取，其他季節、液晶、未選頁與讀圖失敗沿原�
 七套件冷測／vet、四項舊錯版負對照及正常GUI66個功能／同步檢查點、15圖通過，
 包含曹操開局、停手行軍、途中存讀檔、自然入戰、改線、突擊及主動退卻返回。
 [來源收據](workplace/scratch/ui-windows-20261104/cao-ground-integration.json)與[本機頁](workplace/scratch/ui-windows-20261104/cao-ground-game-review.html)保存受測程式與證據。
-下一個最小差異是第85拍槽73／79的StepZ。高平面、佔用成本、投射物、架梯及完整結果仍保留既有Issues邊界，
+當時第85拍槽73／79的StepZ差異已由下列spec62續片處理。高平面、佔用成本、投射物、架梯及完整結果仍保留既有Issues邊界，
 不由本片開啟全導航表重寫、宣稱全部角色／手機GUI或整場戰鬥一致。
+
+目前程式為`wlgame-cao-swap-r1`，依[spec62續片](docs/spec/62-swapped-unit-skips-its-turn.md)
+補回低平面坡地換位的StepZ條件交換，並在每名兵重畫時更新地形旗標，避免換位時提早交換。
+原版467次換位前後記錄符合規則，117共同快照重現；正式來源前115個可比邊界，
+每拍96槽27欄位、完整RNG及腳本PC／wait／cond吻合，第85拍高度及後續旗標差異已消除。
+七套件冷測／vet、四錯版負對照與正常GUI66個功能／同步檢查點、15圖通過。
+正常路徑包含曹操開局、宣戰、編成、停手行軍、途中存讀檔、自然入戰、改線、突擊及主動退卻返回。
+[來源收據](workplace/scratch/ui-windows-20261104/cao-swap-integration.json)與[本機頁](workplace/scratch/ui-windows-20261104/cao-swap-game-review.html)
+保存受測程式與限制。原版僅取得至第115拍命令後／移動前邊界，不把計數器116當成第116拍已驗證。
+本輪停止於這段抽樣；後續命令／移動與HP時序、投射物、架梯及完整結果仍沿Issues #13／#16／#24，
+高平面導航與成本限制保留，不宣稱全部角色、手機GUI或整場戰鬥已一致。
 
 | 日期／目前程式 | 最近驗證 | 狀態 | 交付物 |
 |---|---|---|---|
+| 2026-11-12；wlgame-cao-swap-r1 | 前115拍96槽27欄位／RNG／腳本狀態吻合；467次原版換位與117共同快照核對；七套件冷測／vet、四負對照及正常GUI66點通過 | 換位高度與重畫旗標時機已修；後段戰鬥及高平面仍有界 | [spec62](docs/spec/62-swapped-unit-skips-its-turn.md)、[收據](workplace/scratch/ui-windows-20261104/cao-swap-integration.json)、[本機頁](workplace/scratch/ui-windows-20261104/cao-swap-game-review.html) |
 | 2026-11-12；wlgame-cao-ground-r1 | 前84拍96槽27欄位／RNG／腳本狀態、低平面4096bytes吻合，原版117快照重現；七套件冷測／vet、四負對照及正常GUI66點通過 | 第74拍地形差異已修；第85拍兩槽StepZ及其他既有戰鬥限制仍待對拍 | [spec36](docs/spec/36-ground-planes-and-climbing.md)、[收據](workplace/scratch/ui-windows-20261104/cao-ground-integration.json)、[本機頁](workplace/scratch/ui-windows-20261104/cao-ground-game-review.html) |
 | 2026-11-12；wlgame-cao-phase-r1 | 前73拍96槽27欄位、RNG及腳本狀態吻合，原版117快照重現；六套件冷測／vet、負對照及正常GUI66點通過 | 攻守腳本槽已修；第74拍鎖敵／地形／移動及後段動畫仍待對拍 | [spec59](docs/spec/59-battle-opening-orders.md)、[收據](workplace/scratch/ui-windows-20261104/cao-phase-integration.json)、[本機頁](workplace/scratch/ui-windows-20261104/cao-phase-game-review.html) |
 | 2026-11-12；wlgame-cao-path-r1 | 前40拍96槽27欄位及RNG、12筆尋路吻合；四套件冷測／vet、負對照、正常GUI66點通過 | 第4拍繞路差異已修；全地形、投射物、架梯及完整結果仍待對拍 | [spec134](docs/spec/134-pathfind-wave-order.md)、[收據](workplace/scratch/ui-windows-20261104/cao-path-integration.json)、[本機畫面](workplace/scratch/ui-windows-20261104/cao-path-game-review.html) |

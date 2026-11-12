@@ -2,6 +2,73 @@ package tactical
 
 import "testing"
 
+func TestSwapWaypointHeightAndTerrainFlags(t *testing.T) {
+	// 原版1B783–1B795；同高坡地也交換，不能改成只補Z差。
+	tests := []struct {
+		name              string
+		z, otherZ         int
+		plane, otherPlane byte
+		want, otherWant   int
+	}{
+		{"flat low plane", 0, 0, 0, 0, 2, 4},
+		{"ascending low slope", 0, 1, 0, 0, 4, 2},
+		{"descending low slope", 1, 0, 0, 0, 4, 2},
+		{"equal height low slope", 1, 1, 0, 0, 4, 2},
+		{"both high plane", 4, 5, 0x10, 0x10, 2, 4},
+		{"first high plane", 4, 1, 0x10, 0, 2, 4},
+		{"second high plane", 1, 4, 0, 0x10, 2, 4},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			for side := 0; side < 2; side++ {
+				b := NewBattle(flatField(), SyntheticFormations(), nil, 0)
+				me, other := &b.Sides[side].Soldiers[1], &b.Sides[side].Soldiers[2]
+				*me = Soldier{Alive: true, Kind: Infantry, X: 10, Y: 20, Z: tt.z,
+					StepZ: 2, PlaneHigh: tt.plane, HighTerrain: true}
+				*other = Soldier{Alive: true, Kind: Infantry, X: 11, Y: 20, Z: tt.otherZ,
+					StepZ: 4, PlaneHigh: tt.otherPlane}
+				if !b.swapWith(side, 1, side, 2) {
+					t.Fatal("可換位的步兵被拒絕")
+				}
+				if me.StepZ != tt.want || other.StepZ != tt.otherWant {
+					t.Fatalf("中繼高度=%d/%d，原版=%d/%d", me.StepZ, other.StepZ, tt.want, tt.otherWant)
+				}
+				if me.X != 11 || other.X != 10 || me.Z != tt.otherZ || other.Z != tt.z ||
+					me.PlaneHigh != tt.otherPlane || other.PlaneHigh != tt.plane || !other.Swapped {
+					t.Fatal("既有位置、平面或被換位旗標未正確交換")
+				}
+				if !me.HighTerrain || other.HighTerrain {
+					t.Fatal("換位函式不應交換地形旗標")
+				}
+			}
+		})
+	}
+}
+
+func TestSwappedTerrainFlagRefreshesAtEachDraw(t *testing.T) {
+	rows := make([][]int, Height)
+	for y := range rows {
+		rows[y] = make([]int, Width)
+	}
+	rows[20][10] = 4
+	b := NewBattle(NewField(rows, 0), SyntheticFormations(), nil, 0)
+	me, other := &b.Sides[0].Soldiers[1], &b.Sides[0].Soldiers[2]
+	*me = Soldier{Alive: true, Kind: Infantry, X: 10, Y: 20, HighTerrain: true}
+	*other = Soldier{Alive: true, Kind: Infantry, X: 11, Y: 20}
+	if !b.swapWith(0, 1, 0, 2) {
+		t.Fatal("換位失敗")
+	}
+	b.drawUnitCollision(0, 1)
+	if me.HighTerrain || other.HighTerrain {
+		t.Fatal("主動換位者應先重算，被換者尚未輪到時保留原旗標")
+	}
+	b.updateSoldierMovement(0, 2)
+	b.drawUnitCollision(0, 2)
+	if !other.HighTerrain || other.Swapped || other.X != 10 {
+		t.Fatal("被換者跳過移動後仍應重畫並重算地形旗標")
+	}
+}
+
 func TestLockOnUsesOriginalYDirectionAndScanOrder(t *testing.T) {
 	tests := []struct {
 		name     string

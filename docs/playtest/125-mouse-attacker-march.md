@@ -21,7 +21,14 @@
 
 ## 2026-11-12：曹操對呂布的正常路徑比較
 
-目前程式為`wlgame-cao-ground-r1`，依[spec36](../spec/36-ground-planes-and-climbing.md)補回規則地圖表頭列、
+目前程式為`wlgame-cao-swap-r1`，依[spec62](../spec/62-swapped-unit-skips-its-turn.md)修正坡地換位的StepZ交換與重畫旗標時機。
+原版117共同快照重現，467次換位前後記錄符合規則；正式來源前115個可比邊界，96槽27欄位、RNG與腳本狀態吻合。
+[正常滑鼠收據](../../workplace/scratch/ui-windows-20261104/cao-swap-remake-gui.json)66個功能／同步檢查點、15圖通過，
+含曹操對呂布開局、編成、停手行軍、途中存讀檔、自然入戰、改線、突擊與正常主動退卻返回。
+[來源收據](../../workplace/scratch/ui-windows-20261104/cao-swap-integration.json)與[本機頁](../../workplace/scratch/ui-windows-20261104/cao-swap-game-review.html)
+保存程式與證據；本輪不作高平面導航、投射物、架梯、完整結果或原版同拍像素聲明。以下保留前輪收據。
+
+前輪程式為`wlgame-cao-ground-r1`，依[spec36](../spec/36-ground-planes-and-climbing.md)補回規則地圖表頭列、
 Y1–62、斜坡的StepZ增減與低／高平面旗標，並讓動態物件直接用原版投影。
 原版117個共同快照重現，第73拍96筆移動完成點及原始地圖／模型吻合，低平面4096bytes全等。
 正式來源前84拍，每拍96槽27欄位、完整RNG與腳本狀態相同；第85拍槽73／79的StepZ仍有差異。

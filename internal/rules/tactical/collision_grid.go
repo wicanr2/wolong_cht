@@ -34,10 +34,14 @@ func (b *Battle) unitDying(side, k int) bool {
 }
 
 func (b *Battle) drawUnitCollision(side, k int) {
+	s := &b.Sides[side].Soldiers[k]
+	// sub_1B240的1B2D3–1B300：換位、硬直或停留也依目前格重設bit1。
+	if s.Alive && b.Field != nil {
+		s.HighTerrain = b.Field.HighTerrain(s.X, s.Y)
+	}
 	if b.unitCollision == nil {
 		return
 	}
-	s := &b.Sides[side].Soldiers[k]
 	id := b.collisionSlot(side, k)
 	if s.Alive {
 		b.unitCollision.drawSlot(id, s.X, s.Y, s.Z)

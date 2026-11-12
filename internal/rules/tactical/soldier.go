@@ -694,7 +694,11 @@ func (b *Battle) swapWith(side, k, side2, k2 int) bool {
 		}
 	}
 	me.PlaneHigh, other.PlaneHigh = other.PlaneHigh, me.PlaneHigh
-	me.HighTerrain, other.HighTerrain = other.HighTerrain, me.HighTerrain
+	// 1B783–1B795：雙方均在低平面且至少一人Z非零，才交換中繼高度。
+	if me.PlaneHigh == PlaneHighGround && other.PlaneHigh == PlaneHighGround && (me.Z != 0 || other.Z != 0) {
+		me.StepZ, other.StepZ = other.StepZ, me.StepZ
+	}
+	// bit1留給各自的重畫點重算，不隨位置交換（spec62）。
 	me.Climbing, other.Climbing = other.Climbing, me.Climbing
 	other.Swapped = true
 	return true

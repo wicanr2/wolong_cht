@@ -12,6 +12,48 @@
 
 ## 1. 原版做什麼
 
+### 2026-11-12：換位的中繼高度與地形旗標續片
+
+**狀態：CONFORMED，限本片。** 舊文的被換位跳過機制保留。
+本片從第85拍槽73／79的StepZ差異開始，先以可丟棄覆蓋檔驗證，
+不修改換位資格、碰撞格表、傷害、AI命令或存檔格式。
+
+- 工具為IDA Pro9.4，位址均為DOS/V linear；輸入KI.EXE SHA-256為
+  `fffeba985231cda4d636e93d10f598470b1f691d00275e4aa38e285893d43868`。
+  一次性DB SHA-256為`47537903862d87add7996cc733e57e3e1ed0182771cf1c1946bc5122bb36b16e`。
+  [原始指令與bytes](../../workplace/scratch/ui-windows-20261104/swap-20261112/ida-probe.json)
+  保留原始函式名、739函式探針、工具與UID/GID。
+- **已證實，靜態**：`sub_1B732`交換位置、碰撞索引及`+1E`平面後，
+  `1B778–1B78D`以`1B783 or al,ah`先檢查雙方平面OR為0，再檢查雙方目前Z的OR不為0。
+  兩條件皆成立，`1B78F–1B795`才交換兩人的`+12h`中繼高度。
+  平地兩人Z均0或任一方在高平面時，中繼高度各自保留。
+- **已證實，靜態與實測**：此函式不交換`+00 bit1`地形旗標。
+  它只以`1B732 or [di],40h`標記被換者。舊Go交換HighTerrain的行為沒有原版依據。
+  原版保留旗標直到各自重畫，不在換位函式依新位置重新計算。
+  `sub_1B240`的`1B2D3–1B300`於每名兵重畫時，以目前格子的圖塊定義高度是否至少4重設bit1。
+  被換者輪到時也會重畫；已經輪過的被換者則保留原旗標直到下一拍。
+  [重畫指令與bytes](../../workplace/scratch/ui-windows-20261104/swap-redraw-20261112/ida-probe.json)
+  的DB SHA-256為`1a217870ca1a7ed5cba51c4d04110c4ba5bb83246af2db4453bbc9c72c41f25a`。
+  此旗標由鎖敵的平面懲罰消費，不能只當繪圖狀態。
+- dosgolem來源`f79eab6db8c64a524a06535e53e5d32b0bbcf7c8`，原版與remake使用同一初態及受控RNG。
+  固定seed1檔SHA-256為`2624479abfc3b6b8b9fc4b12961433dfaa55c08e301381b5167068b9a2654fb7`。
+  [正常玩家輸入](../../workplace/scratch/ui-windows-20261104/cao-swap-original.commands)
+  自第一劇本曹操開局、向呂布宣戰、編成行軍後自然入戰；沒有直接開戰或強制勝負。
+  [重播快照](../../workplace/scratch/ui-windows-20261104/cao-swap-original.jsonl)117筆與前輪逐筆相同。
+- [換位前後記錄](../../workplace/scratch/ui-windows-20261104/cao-swap-events.jsonl)
+  在`1B732`及`1B798`各取一次，截至第115拍共467對，全部符合上述條件。
+  17對位於低平面坡地，3對的StepZ不同，4對的地形旗標不同。
+  第84拍槽73／79換位前Z為1／0、StepZ為1／0，換位後均為0／1；
+  這解釋了第85拍命令後、移動前的首次差異。此重播沒有高平面換位，高平面排除條件只由靜態指令支持。
+
+實作契約：`swapWith`按上述條件交換StepZ，移除HighTerrain對調；
+`drawUnitCollision`在每名活兵的重畫點，依目前地形更新HighTerrain，不等待移動成功。
+既有位置、平面、碰撞格及Swapped處理保留。此為原版規則勘誤，不是新玩法。
+`TestSwapWaypointHeightAndTerrainFlags`須分開測平地、單側坡地、雙側坡地與高平面；
+正式修正再以同初態逐拍比較、正常滑鼠入戰／改線／退卻及相關冷測驗證。
+存檔欄位不變，正常途中存讀檔沿既有GUI路徑抽測。
+尚未驗證的高平面導航、投射物、架梯及完整結算不由本片推定完成。
+
 2026-09-08 大將例外（READY）：本輪 IDA 9.4 匯出的
 `ida-collision-lifecycle/collision-entry.json` 保留未歸屬函式區段原始 bytes。
 IDA DOS/V linear `0001B548–0001B557`：兵種 0 且命令 0 或 5 時，
@@ -118,3 +160,16 @@ loc_1AE26:
 
 同一個迴圈緊接著測 `[si+1]`——挨打之後的硬直計時。
 兩者接力擋掉三幀，見 [`63`](63-hit-stun.md)。
+
+## 2026-11-12續片驗證
+
+[正式115拍比較](../../workplace/scratch/ui-windows-20261104/cao-swap-after-comparison.json)
+及[獨立核對](../../workplace/scratch/ui-windows-20261104/cao-swap-evidence.json)通過96槽27欄位、完整RNG及腳本PC／wait／cond。
+上限由本輪原版115個實際入口決定，不把計數器116當成完整第116拍。
+七套件冷測／vet／建置、四錯版負對照及正常滑鼠66點、15圖通過，含途中存讀檔、自然入戰、改線、停手移動及正常退卻。
+[來源收據](../../workplace/scratch/ui-windows-20261104/cao-swap-integration.json)保存正式程式、受測三檔來源及工具雜湊；
+[本機頁](../../workplace/scratch/ui-windows-20261104/cao-swap-game-review.html)展示四張實際流程畫面，不作整場同狀態或像素對拍聲明。
+舊spec／RE勘誤與不受影響引用見[回填表](../../workplace/scratch/ui-windows-20261104/cao-swap-backlinks.json)，收尾腳本檢查原始位址與勘誤標記。
+
+本片沒有新增未解項。高平面動態樣本不足為證據限制，後段戰鬥仍由spec159與既有Issues管理。
+<!-- 缺口：無 -->

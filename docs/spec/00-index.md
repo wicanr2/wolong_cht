@@ -148,7 +148,7 @@
 | 開場常令與四槽腳本選擇 | [`59-battle-opening-orders.md`](59-battle-opening-orders.md) | CONFORMED，限原開場修正及2026-11-12攻守選槽；前73拍單兵／RNG／腳本狀態吻合，完整戰況仍待對拍 |
 | 戰場對白的壽命與每側一個框 | [`60-battle-talk-duration.md`](60-battle-talk-duration.md) | 已實作並有單測 |
 | 兵的開場體力 ＝ 軍團士氣 | [`61-soldier-initial-hp-from-morale.md`](61-soldier-initial-hp-from-morale.md) | 已實作；要與 `62` 一起看 |
-| 被換位的兵這一幀不動 | [`62-swapped-unit-skips-its-turn.md`](62-swapped-unit-skips-its-turn.md) | 已實作並有迴歸閘 |
+| 被換位的兵這一幀不動 | [`62-swapped-unit-skips-its-turn.md`](62-swapped-unit-skips-its-turn.md) | CONFORMED；含坡地StepZ與重畫旗標續片，前115拍有界驗證 |
 | 挨打的三幀硬直 | [`63-hit-stun.md`](63-hit-stun.md) | 已實作並有單測 |
 | 遷都之後說什麼 | [`64-capital-relocation-report.md`](64-capital-relocation-report.md) | 已實作並有單測；他國遷都要有外交官才報得回來 |
 | 退到畫面外的兵算生還 | [`65-retreated-soldiers-survive.md`](65-retreated-soldiers-survive.md) | 已實作並有單測 |
