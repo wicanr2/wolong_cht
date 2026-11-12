@@ -617,9 +617,7 @@ func (b *Battle) formationSpot(side, k int) (int, int) {
 // **命令 3（城壁移動）在沒有城的戰場自動變成命令 1（攻擊）**——
 // 原版指令 3 與 13 都有這一段（docs/re/11 §3.7）。
 func (b *Battle) Order(side, squad int, c Command) {
-	if c == ScaleWal && !b.Field.IsSiege() {
-		c = Attack
-	}
+	c = b.orderForField(c)
 	// ⚠ 只有**守方**的突擊會拆城壁（`sub_1B7CB` 的側別閘，
 	// 見 SortieBreaksWalls）。攻方突擊只是加快疲勞、火力全開。
 	if c == Charge && b.Field.IsSiege() && side == DefenderSide {
@@ -860,4 +858,12 @@ func (b *Battle) Run(maxFrames int) bool {
 		b.Step()
 	}
 	return b.Done
+}
+
+// orderForField 是玩家與腳本共用的無城壁命令轉換。
+func (b *Battle) orderForField(c Command) Command {
+	if c == ScaleWal && !b.Field.IsSiege() {
+		return Attack
+	}
+	return c
 }

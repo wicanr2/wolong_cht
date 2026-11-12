@@ -1440,3 +1440,16 @@
 - IDA預設locked-v1標籤不存在，檢查官方manifest後沿用已存在且相容的py312-v1，不另建image。早期探針缺overlay、Go internal路徑及日誌命名錯誤均屬驗證腳本／環境，修正後同容器工具鏈乾淨重跑，未列產品缺陷。早期共用nav輸出曾被候選覆寫，已排除該檔，以命名固定的cao-scale-after-nav.bin為正式收據。
 - [來源收據](workplace/scratch/ui-windows-20261104/cao-scale-integration.json)保存四檔來源、77份證據、binary與五份原版輸入身分。spec36本片CONFORMED，整體spec159仍READY；腳本、後續守陣、高層導航、架梯、投射物及完整結果沿既有Issues保留。原版素材、IDA資料庫、binary與截圖皆只留本機，不作Release。
 - 收尾通過索引582份文件／135條斷言、嚴格未解與分流1145列、過期斷言及原版資產deny-list。全庫引用掃描仍有204筆歷史workplace缺件，與HEAD用同一檢查器核對相同，本輪新增0；歷史census.tsv缺席的符號層未執行，不宣稱全庫掃描全綠。來源覆蓋包、77份證據及原版輸入雜湊一致，UID/GID1000:1000，工作區root-owned與誤建.md目錄0；本輪容器已結束移除，未重建image或動其他專案資源。[收尾核對](workplace/scratch/ui-windows-20261104/cao-scale-final-checks.json)及[引用差量](workplace/scratch/ui-windows-20261104/cao-scale-doc-phantom-delta.json)保存結果。依既有指示commit並push，提交與遠端核對另存本機repo-scale-update-20261113.json。
+
+## 2026-11-13：按兵種傳令與隊長／隊員守陣
+
+- 接續Issue #16，命中復古remake、spec閘門、IDA9.4、文件職責與RE回填路由。使用既有hr-go-ebiten工具鏈與IDA py312-v1，不更換image、不重開工具列／戰報選擇。主機gh核對Issue仍OPEN；未寫入Issue。
+- 重新沿相同曹操正常輸入與固定seed1補擷取城壁、軍團摘要及椎陽據點。原版182筆舊欄位的指令數、單兵、RNG與全域資料完全相同。原版城兵120、城壁1700；前輪重播以0建場導致查詢7而非26，補傳原資料後第132拍差異消失。正式beginTactical原已傳Garrison，城防公式沒有改。
+- IDA9.4原指令證明指令13讀隊長+0x24，即第一隊員+4兵種，首隊大將跳過Next寫入，七隊員仍接令；舊Go用大將兵種0漏掉首隊。隊長守陣依距離16傳Guard或Form給隊員，自己留陣形；隊員不另判距離，餘力<16只改Next，當拍仍走兵種動作。原版bit3要求刷新中繼點，與Cmd是否改變分開。spec159先DRAFT補證，候選審查列READY後才改正式來源。
+- 加入TargetRefresh與共用單兵傳令入口，消費旗標時刷新StepXYZ／清繞路。守陣動作與既有攻擊入口的餘力上限分開，指令13不借玩家突擊／退卻入口；無城壁命令降級收斂到同一函式。戰略存檔格式、原版時間基準、玩家工具列與統帥AI加成未改。
+- 舊spec96由「呼叫者沒寫餘力」推論守陣不回復，忽略1A9CC→陣形常式→1AA79，已按被呼叫端勘誤。原資料庫身分及原始bytes保存在[spec159續片](docs/spec/159-tactical-command-movement-order.md)，原函式與位址未改名。第一候選只修軍令，仍漏守陣目標；第二候選共用攻擊入口誤套40上限、漏bit3；最終候選補齊本片傳遞／消費後才接線，沒有調參數或平移拍點。
+- [正式比對](workplace/scratch/ui-windows-20261104/cao-script-evidence.json)前144拍96槽27欄位、完整RNG與腳本PC／wait／cond吻合。第145拍槽81的GoalY原版32、Go33仍保留；腳本三欄至180拍相同不等於後段單兵相同。bit3其他產生端、高層導航60byte、內部命令6、箭、梯子與完整結果沿既有Issues，不由本片代證。
+- [七套件冷測／vet／建置](workplace/scratch/ui-windows-20261104/cao-script-tests.log)通過，含首隊兵種、首隊大將保留、死槽傳令、玩家突擊副作用隔離、距離15／16／17、餘力15／16、重複軍令刷新與未刷新保留路徑。舊兵種來源、舊守陣流程與禁用刷新旗標三個負對照均被回歸測試拒絕。舊測試誤將隊員疲勞閘套到隊長，依原指令改為驗到位回復並保持守陣。
+- [正常滑鼠](workplace/scratch/ui-windows-20261104/cao-script-remake-gui.json)66個功能／同步檢查點、15圖通過，包含重複工具列同步。曹操第一劇本宣戰呂布、編夏侯淵、停手行軍、途中存讀檔、自然入戰、改線後移動、突擊及主動退卻返回；目視核對城牆、單兵及原版喊話。仍是椎陽遭遇，不代證夏侯淵守許昌、整場同狀態畫面或手機GUI。
+- [來源收據](workplace/scratch/ui-windows-20261104/cao-script-integration.json)保存七檔來源覆蓋包、81份證據、binary與原版輸入；[回填表](workplace/scratch/ui-windows-20261104/cao-script-backlinks.json)核對舊規格與引用。spec159本片CONFORMED、整體仍READY，素材／IDA／binary／截圖留本機，不作Release。
+- 收尾通過索引582份文件／135條斷言、嚴格未解與分流1145列、過期斷言及原版資產deny-list。嚴格檢查曾因「無新增未解項」觸發無結構缺口，已改成工作項並將本片獨立於整體限制節，乾淨重跑通過，未改玩家程式。不存在引用仍為修改前相同的204筆歷史workplace缺件，本輪新增0；census.tsv缺席的歷史符號層未執行。來源覆蓋包、81份證據及原版輸入一致，UID/GID1000:1000，root-owned與誤建.md目錄0；本輪容器均已結束移除，未動其他專案資源。[收尾核對](workplace/scratch/ui-windows-20261104/cao-script-final-checks.json)保存範圍。依既有指示提交推送，遠端核對另存本機repo-script-update-20261113.json。

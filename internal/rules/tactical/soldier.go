@@ -168,10 +168,26 @@ func (b *Battle) doAttack(side, k int) {
 	if s.Stamina > StaminaFighting {
 		s.Stamina = StaminaFighting
 	}
+	b.doAttackAction(side, k)
+}
+
+// doAttackAction 不施加突擊餘力上限；守陣共用此兵種動作入口。
+func (b *Battle) doAttackAction(side, k int) {
+	s := &b.Sides[side].Soldiers[k]
 	if s.Target < 0 {
 		return
 	}
 	e := &b.Sides[1-side].Soldiers[s.Target]
+	// 原版+0x00 bit3獨立於Cmd變更，重複傳令也能要求刷新。
+	if s.TargetRefresh {
+		x, y, z := e.X, e.Y, e.Z
+		if s.Kind == Archer {
+			x, y, z = s.X, s.Y, s.Z
+		}
+		s.StepX, s.StepY, s.StepZ = x, y, z
+		s.Path = nil
+		s.TargetRefresh = false
+	}
 
 	if s.IsGeneral() && s.Cmd == Attack {
 		// 命令 1 時大將只移動不攻擊。
@@ -212,33 +228,32 @@ func (b *Battle) doScaleWall(side, k int) {
 	}
 }
 
-// doGuard 是命令 4：**敵人曼哈頓距離 ≤ 16 就打，否則回陣形**。
-// 門檻出自 `sub_1A99C` 的 `cmp dl, 10h`（docs/re/11 §5.8b）。
+// doGuard 依隊長距離傳令；隊員直接走兵種處理器（spec159續片）。
+// 門檻出自1A9C1，隊員疲勞閘在1ABB2。
 const guardRange = 16
 
 func (b *Battle) doGuard(side, k int) {
 	s := &b.Sides[side].Soldiers[k]
-	if s.Target < 0 {
-		// ⚠ 還沒鎖到敵人 → 待在陣形位置，**但命令維持守陣**。
-		// 開場的兵本來就站在陣形位置上，借用 doFormation 的話
-		// 第一幀就會被判成「到位」而降級成就位——等到鎖上敵人時
-		// 命令已經不是守陣了，永遠不會反應（docs/spec/96）。
-		b.walkToFormation(side, k)
+	if k%PerSquad != 0 {
+		if s.Stamina < StaminaBackToForm {
+			s.Next = Form
+		}
+		b.doAttackAction(side, k)
 		return
 	}
-	e := &b.Sides[1-side].Soldiers[s.Target]
-	if abs(s.X-e.X)+abs(s.Y-e.Y) <= guardRange {
-		b.doAttack(side, k)
-		return
+	order := Form
+	if s.Target >= 0 && s.Target < len(b.Sides[1-side].Soldiers) {
+		e := &b.Sides[1-side].Soldiers[s.Target]
+		if abs(s.X-e.X)+abs(s.Y-e.Y) <= guardRange {
+			order = Guard
+		}
 	}
-	// 敵人走遠了 → 回陣形。原版**只有疲勞** `[si+19h] < 16 時才把命令改回 0
-	// （`sub_1ABB2`）；距離只換行為，不換命令。
-	if s.Stamina < StaminaBackToForm {
-		s.Cmd, s.Next = Form, Form
-		b.doFormation(side, k)
-		return
+	for j := k + 1; j < k+PerSquad; j++ {
+		b.Sides[side].Soldiers[j].receiveTargetOrder(order)
 	}
-	b.walkToFormation(side, k)
+	if b.walkToFormation(side, k) {
+		s.Stamina = StaminaFull
+	}
 }
 
 // doRetreat 是命令 5：往自軍側的邊緣走，走出畫面就離場。

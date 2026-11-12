@@ -143,11 +143,20 @@ func (s *Script) exec(b *Battle, op, par, arg int) {
 		b.Order(side, squad, Command(arg))
 
 	case opOrderBy:
-		// 只對某個兵種的隊下命令（`cmp ah, [si+24h]`，參數 × 18）。
+		// 1A636讀隊長+0x24，即第一隊員的兵種；首隊大將不收此令。
 		want := Kind(par * kindStride)
+		c := b.orderForField(Command(arg))
 		for k := 0; k < Squads; k++ {
-			if b.Sides[side].Soldiers[k*PerSquad].Kind == want {
-				b.Order(side, k, Command(arg))
+			first := k * PerSquad
+			if b.Sides[side].Soldiers[first+1].Kind != want {
+				continue
+			}
+			start := first
+			if first == 0 {
+				start++
+			}
+			for i := start; i < first+PerSquad; i++ {
+				b.Sides[side].Soldiers[i].receiveTargetOrder(c)
 			}
 		}
 

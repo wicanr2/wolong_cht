@@ -240,7 +240,60 @@ remake 同位置卻變成 7，提供動態反證。
 允許將 doFormation 的 Holding 切換限於每隊第 0 槽；隊員到位照常補體力，
 Cmd／Next 保持 Form。不能把隊員沒有改命令解讀為未到位。
 
+## 2026-11-13：按兵種下令與隊員守陣（CONFORMED，限本片）
+
+本片追查前輪第132／139拍差異。補擷取原版城壁1700耐久與兩軍64byte摘要後，
+第132拍查詢差異消失，屬重播未傳城兵120的設定錯誤；正式`beginTactical`已傳`Garrison`，不用改公式。
+原版`1A65D`查到1700÷64取整為26；重播先前以城兵0得到500÷64取整為7。
+前輪131拍含腳本的界線保留為當時收據，本輪以補齊輸入的收據另驗。
+
+原版`1A636 cmp ah,[si+24h]`讀隊長後第一名隊員的`+4`兵種，非隊長`+4`。
+`1A63B–1A647`跳過首隊大將的命令寫入，仍呼叫`1A8DE`對七隊員寫入Next。
+不篩存活旗標，不更新全軍常令，也不經玩家的突擊開門或退卻入口。
+隊員守陣走`1ABB2`，與隊長的`1A99C`不同。DRAFT經下列原指令與可丟棄候選審查後列READY。
+
+| 原始定位 | 已證實的本片契約 |
+|---|---|
+| `1A636`、`1A63B–1A647`、`1A8DE–1A8F5` | 用第一隊員兵種挑隊；首隊大將不改Next，其餘匹配槽含不在場槽均寫Next並設`+0x00 bit3` |
+| `1A9A6–1A9CC` | 守陣隊長依距離≤16傳Guard、否則Form給七隊員，自己仍走陣形位置，不直接追敵 |
+| `1AA2C → 1AA69–1AA79` | 陣形常式到位補餘力128，不把守陣隊長改成Holding；舊spec96只看呼叫者推論不補餘力有誤 |
+| `1ABB2–1ABD1` | 守陣隊員餘力<16只把Next設Form，當拍仍走兵種處理器；不再做隊長的距離判定，也不套`1AB7C`的突擊餘力40上限 |
+| `1ABD5–1ABEF`、`1AC10–1AC2A`、`1AC66–1AC80` | 兵種處理器讀取並清bit3，刷新StepXYZ並清繞路。弓兵取自身座標，騎兵／步兵取鎖定敵人座標；不是只按Cmd有無變化決定 |
+
+以`Soldier.TargetRefresh`保存上述原版bit3的本片傳遞與消費，不改戰略存檔。
+指令13與隊長守陣共用單兵傳令入口；保留原有玩家整隊下令、突擊與退卻入口的語意。
+共用攻擊動作與既有攻擊入口的耗力分開，守陣只走前者，不猜補其他攻擊／內部命令的剩餘差異。
+無城壁時ScaleWal降成Attack的既有規則收斂到共用入口，不新增另一份判定。
+
+最終一次性DB SHA-256為`a6cadd2896d12e743f11ff1c633d8c03ba4718d38d67da523a9c742472fdd2cb`。
+可丟棄候選前144拍96槽27欄位及完整RNG吻合，第145拍槽81的GoalY仍不同，沿Issue #16保留。
+正式接線後須重驗該144拍、腳本狀態、三類舊錯版負對照、隊長／隊員邊界，並由正常曹操開局抽驗至退卻。
+bit3的其他命令產生端、完整高層導航、內部命令6、箭與梯子不由本片代證。
+
+本片由DRAFT補證、候選審查列READY後接入。正式來源的[144拍比對](../../workplace/scratch/ui-windows-20261104/cao-script-after-comparison.json)
+逐兵27欄位、RNG及腳本PC／wait／cond吻合；[獨立收據](../../workplace/scratch/ui-windows-20261104/cao-script-evidence.json)
+確認原版182筆既有欄位完全重現、補齊城壁與摘要，並保留第145拍槽81的GoalY差異。
+只比腳本三欄至180拍仍相同，但不由此宣稱後段單兵一致。
+[七套件冷測／vet／建置](../../workplace/scratch/ui-windows-20261104/cao-script-tests.log)、
+三項舊錯版負對照及[正常滑鼠](../../workplace/scratch/ui-windows-20261104/cao-script-remake-gui.json)66個功能／同步檢查點、15圖通過。
+正常流程含曹操第一劇本宣戰呂布、編夏侯淵、停手行軍、途中存讀檔、自然遭遇、改線、突擊及主動退卻返回。
+計數含重複工具列同步，不是66項獨立功能，也不是整場原版同狀態畫面對拍。
+[來源收據](../../workplace/scratch/ui-windows-20261104/cao-script-integration.json)與
+[勘誤回填表](../../workplace/scratch/ui-windows-20261104/cao-script-backlinks.json)留本機；本片沒有新增獨立工作項，
+第145拍及後段限制沿既有Issue #16／#24，整體本規格仍READY。
+
+證據輸入為松崗DOS/V `KI.EXE` SHA-256
+`fffeba985231cda4d636e93d10f598470b1f691d00275e4aa38e285893d43868`，
+IDA Pro9.4 DOS/V linear，[原指令及bytes](../../workplace/scratch/ui-windows-20261104/script-query-20261113/ida-probe.json)。
+[補擷取原版](../../workplace/scratch/ui-windows-20261104/cao-script-original.jsonl)以相同種子與正常輸入重跑，
+182筆既有指令數、單位、RNG與全域資料完全相同，只增加摘要、城壁與據點資料。
+原版執行器為dosgolem `f79eab6db8c64a524a06535e53e5d32b0bbcf7c8`，執行前固定seed1，
+種子raw SHA-256為`2624479abfc3b6b8b9fc4b12961433dfaa55c08e301381b5167068b9a2654fb7`。
+remake擺位與規則重播分別還原原版擺位前及入場後的完整RNG狀態，不以重擲選擇結果。
+本片不改存檔格式、時間模型、統帥AI加成、完整導航、架梯或投射物；整體#16仍未完成。
+
 ## 驗收限制（#16 尚未完成）
+
 
 2026-11-13：[spec36登城續片](36-ground-planes-and-climbing.md)補回`1AB58`／`1AB78`的新命令StepXYZ，
 並修正高層掃描。正式來源前138拍96槽27欄位與完整RNG吻合；加入腳本PC／wait／cond則前131拍吻合。

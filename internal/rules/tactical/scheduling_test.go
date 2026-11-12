@@ -2,6 +2,70 @@ package tactical
 
 import "testing"
 
+func TestGuardLeaderPassesRangeOrderAndKeepsFormation(t *testing.T) {
+	for side := 0; side < 2; side++ {
+		for _, distance := range []int{15, 16, 17} {
+			b := newTestBattle(flatField())
+			s := &b.Sides[side].Soldiers[8]
+			s.X, s.Y, s.Target = 20, 32, 0
+			s.Cmd, s.Next, s.Stamina = Guard, Guard, 70
+			e := &b.Sides[1-side].Soldiers[0]
+			e.X, e.Y = 20+distance, 32
+			x, y := b.formationSpot(side, 8)
+			b.doGuard(side, 8)
+			if s.Cmd != Guard || s.GoalX != x || s.GoalY != y {
+				t.Fatalf("隊長應留守陣形：%+v", *s)
+			}
+			want := Guard
+			if distance > 16 {
+				want = Form
+			}
+			for j := 9; j < 16; j++ {
+				f := &b.Sides[side].Soldiers[j]
+				if f.Next != want || !f.TargetRefresh {
+					t.Fatalf("距離%d槽%d傳令=%v/%v，應為%v", distance, j, f.Next, f.TargetRefresh, want)
+				}
+			}
+		}
+	}
+}
+
+func TestGuardFollowerRefreshesTargetWithoutChargeFatigue(t *testing.T) {
+	for side := 0; side < 2; side++ {
+		for _, stamina := range []int{15, 16, 128} {
+			b := newTestBattle(flatField())
+			s := &b.Sides[side].Soldiers[1]
+			*s = Soldier{Alive: true, Kind: Cavalry, X: 50, Y: 30, Cmd: Guard, Next: Guard,
+				Target: 0, Stamina: stamina, StepX: 50, StepY: 30, TargetRefresh: true}
+			e := &b.Sides[1-side].Soldiers[0]
+			e.X, e.Y, e.Z = 5, 32, 0
+			b.doGuard(side, 1)
+			if s.Cmd != Guard || s.Stamina != stamina || s.GoalX != 5 || s.StepX != 5 || s.StepY != 32 || s.TargetRefresh {
+				t.Fatalf("隊員守陣應直接設定追敵中繼點，不套距離或突擊耗力：%+v", *s)
+			}
+			want := Guard
+			if stamina < 16 {
+				want = Form
+			}
+			if s.Next != want {
+				t.Fatalf("餘力%d應只修改下拍軍令為%v：%+v", stamina, want, *s)
+			}
+			s.StepX, s.StepY = 49, 29
+			path := &Waypoints{pts: []Point{{X: 48, Y: 29}}}
+			s.Path = path
+			b.doGuard(side, 1)
+			if s.StepX != 49 || s.Path != path {
+				t.Fatal("未收到刷新旗標時應保留中繼點")
+			}
+			s.receiveTargetOrder(Guard)
+			b.doGuard(side, 1)
+			if s.StepX != 5 || s.Path != nil || s.TargetRefresh {
+				t.Fatal("相同軍令重新傳遞仍須消費刷新旗標")
+			}
+		}
+	}
+}
+
 func TestNewScaleOrderSetsWaypointAndPreservesLaterPath(t *testing.T) {
 	lib := realLib(t)
 	for side := 0; side < 2; side++ {

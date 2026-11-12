@@ -6,6 +6,52 @@ import (
 	"testing"
 )
 
+func TestScriptOrderByUsesFirstFollowerAndPreservesGeneral(t *testing.T) {
+	for side := 0; side < 2; side++ {
+		b := newTestBattle(flatField())
+		for i := range b.Sides {
+			for j := range b.Sides[i].Soldiers {
+				b.Sides[i].Soldiers[j].Next = Holding
+			}
+		}
+		sd := &b.Sides[side]
+		sd.Standing = Attack
+		sd.Kinds[0], sd.Kinds[1] = Archer, Archer
+		sd.Soldiers[0].Kind = 0
+		sd.Soldiers[1].Kind = Cavalry
+		sd.Soldiers[8].Kind = Archer
+		sd.Soldiers[9].Kind = Cavalry
+		sd.Soldiers[3].Alive = false
+		NewScript([]byte{0x2d, 4}, side).Step(b) // 指令13：騎兵守陣。
+		for j, s := range sd.Soldiers {
+			want := Guard
+			if j == 0 || j >= 16 {
+				want = Holding
+			}
+			if s.Next != want || s.TargetRefresh != (want == Guard) {
+				t.Fatalf("側%d槽%d傳令=%v/%v，應為%v", side, j, s.Next, s.TargetRefresh, want)
+			}
+		}
+		if sd.Standing != Attack || b.Sides[1-side].Soldiers[1].Next != Holding {
+			t.Fatal("按兵種下令不可改常令或對方軍令")
+		}
+	}
+}
+
+func TestScriptOrderByDoesNotUsePlayerSortieEntry(t *testing.T) {
+	b := newTestBattle(walledField(0))
+	b.Sides[1].Soldiers[1].Kind = Cavalry
+	NewScript([]byte{0x2d, 2}, 1).Step(b)
+	if b.Sides[1].Sortied {
+		t.Fatal("1A60D不可借用玩家突擊開門入口")
+	}
+	for _, s := range b.Structures {
+		if s.Broken {
+			t.Fatal("按兵種下令不應自行拆牆")
+		}
+	}
+}
+
 // 原始 6A／8A opcode 的比較方向來自 IDA 0001A5BD jnb／0001A5C6 jbe。
 // 使用實際查詢與退卻命令，包含相等及 byte 上下界，避免只測內部布林值。
 func TestScriptUnsignedInclusiveBranch(t *testing.T) {

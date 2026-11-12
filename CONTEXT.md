@@ -252,6 +252,7 @@ GPU最多兩頁快取，其他季節、液晶、未選頁與讀圖失敗沿原�
 
 | 日期／目前程式 | 最近驗證 | 狀態 | 交付物 |
 |---|---|---|---|
+| 2026-11-13；wlgame-cao-script-r1 | 前144拍96槽27欄位／RNG／腳本吻合；原版182筆舊欄位重現；七套件冷測／vet、三負對照、正常GUI66點／15圖通過 | 補齊測試城防後第132拍假差異消失；修正按兵種傳令漏掉首隊、隊長／隊員守陣分派及目標刷新。第145拍弓兵GoalY與後段仍有界 | [spec159續片](docs/spec/159-tactical-command-movement-order.md)、[收據](workplace/scratch/ui-windows-20261104/cao-script-integration.json) |
 | 2026-11-13；wlgame-cao-scale-r1 | 前138拍96槽27欄位／RNG吻合，含腳本則前131拍；七套件冷測／vet、兩負對照、正常GUI66點／15圖通過 | 登城接令即設定中繼XYZ，獨立掃高層；低層導航0差、高層仍60差。腳本第132拍、單兵第139拍起仍不同；戰報維持預設關閉 | [spec36](docs/spec/36-ground-planes-and-climbing.md)、[收據](workplace/scratch/ui-windows-20261104/cao-scale-integration.json) |
 | 2026-11-13；wlgame-quiet-notice-r2 | 受影響冷測／vet；r1正常戰後118點／19圖，r2控制44點／3圖通過，均含重複同步 | 依新裁定戰報提示改選項、首次及舊偏好預設關閉，手動戰報保留；啟用不補播，開關可記憶。省略勢力選擇／軍團情報TALK #4教學，保留原文與右鍵返回 | [spec89](docs/spec/89-siege-damage-report-toggle.md)、[spec266](docs/spec/266-mouse-only-desktop-toolbar.md)、[收據](workplace/scratch/ui-windows-20261104/quiet-notice-integration-20261113.json) |
 | 2026-11-12；wlgame-battle-notice-r2 | 受影響冷測／vet、獨立GPU像素、正常GUI109個功能／同步檢查點與兩次自然遭遇通過；四項離線頁面抽驗通過 | 已採B三秒提示與按需明細，工具列十二鈕單排、28／6收展；停手世界前進，讀檔清舊戰報；不改戰術規則 | [spec89](docs/spec/89-siege-damage-report-toggle.md)、[實際畫面頁](workplace/scratch/ui-windows-20261104/battle-notice-game-review.html)、[來源收據](workplace/scratch/ui-windows-20261104/battle-notice-integration.json) |
@@ -1078,6 +1079,14 @@ DOSBox-X 那條路**不刪**：它是這一條的正對照，而且 PC-98 版只
 ---
 
 ## 6. 已被推翻的斷言
+
+### 2026-11-13：腳本城防查詢與守陣角色
+
+前輪第132拍cond差異是重播以城兵0建場，原版城兵120、城壁耐久1700；正式遊戲本就傳入城兵，公式未改。
+`1A636`讀第一名隊員兵種，首隊大將不收該軍令，七隊員仍收；舊Go拿隊長兵種0漏掉首隊。
+`1A99C`是隊長的距離傳令，`1ABB2`是隊員動作與Next疲勞閘；原先合成一條流程有誤。
+隊長經陣形常式`1AA79`到位補餘力，舊spec96只看呼叫者而說不補，也已勘誤。
+原版bit3另要求刷新追敵中繼點，不能只按Cmd變更判定。證據與限制見[spec159續片](docs/spec/159-tactical-command-movement-order.md)。
 
 ### 2026-11-13：登城只設目標、低層缺席便沒有高層
 

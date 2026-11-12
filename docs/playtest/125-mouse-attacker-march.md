@@ -21,7 +21,15 @@
 
 ## 2026-11-13：登城首拍與高層讀取
 
-目前程式`wlgame-cao-scale-r1`接入[spec36續片](../spec/36-ground-planes-and-climbing.md)，戰報提示維持預設關閉。
+後續目前程式為`wlgame-cao-script-r1`，見[spec159軍令續片](../spec/159-tactical-command-movement-order.md)。
+[正常滑鼠](../../workplace/scratch/ui-windows-20261104/cao-script-remake-gui.json)66個功能／同步檢查點、15圖通過，
+同一曹操開局沿宣戰、編成、停手行軍、途中存讀檔、自然入戰、改線、突擊及主動退卻返回。
+目視核對戰術單兵、城牆及原版喊話，不把喊話誤判成暫停或額外戰報。
+[原版規則重播](../../workplace/scratch/ui-windows-20261104/cao-script-evidence.json)前144拍96槽27欄位、RNG與腳本吻合，
+第145拍弓兵GoalY仍不同。前輪第132拍差異證實來自測試漏傳城兵，不是正式遊戲城防公式。
+這些正常畫面與受控重播分別驗證，不宣稱整場同狀態或架梯、投射物、手機GUI完成。
+
+前輪程式`wlgame-cao-scale-r1`接入[spec36續片](../spec/36-ground-planes-and-climbing.md)，戰報提示維持預設關閉。
 [正常滑鼠](../../workplace/scratch/ui-windows-20261104/cao-scale-remake-gui.json)66個功能／同步檢查點、15圖通過，
 包含重複工具列同步。流程為曹操第一劇本、宣戰呂布、編夏侯淵、停手行軍、途中存讀檔、自然入戰、改線、突擊與主動退卻返回。
 目視核對[戰術畫面](../../workplace/scratch/ui-windows-20261104/cao-scale-remake-battle-animation-1.png)的城牆、單兵及介面。

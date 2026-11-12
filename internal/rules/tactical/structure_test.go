@@ -457,19 +457,13 @@ func TestGuardKeepsItsCommand(t *testing.T) {
 			s.Cmd, Guard)
 	}
 
-	// 疲勞掉下去才准降回陣形（原版 sub_1ABB2）。
-	b.Deploy(1, 0, Infantry, 1)
-	b.Place()
-	e := &b.Sides[1].Soldiers[0]
-	e.X, e.Y, e.Z = s.X+guardRange+4, s.Y, s.Z // 遠得不會觸發攻擊
-	s.Target = 0
+	// 1A9CC呼叫陣形；隊長到位補餘力且保持守陣，疲勞閘只屬隊員。
 	s.Stamina = StaminaBackToForm - 1
 	b.doGuard(0, 0)
-	// 降回命令 0 之後，兵本來就站在陣形位置上，同一幀就走完命令 0 的
-	// 「到位 → 就位」。所以這裡要的是「**不再是守陣**」。
-	if s.Cmd == Guard {
-		t.Errorf("疲勞低於 %d 時應該降回陣形，命令卻還是守陣", StaminaBackToForm)
+	if s.Cmd != Guard || s.Next != Guard || s.Stamina != StaminaFull {
+		t.Fatalf("守陣隊長到位應保持軍令並回復餘力：%+v", *s)
 	}
+
 }
 
 // TestClimbTriedWhenBlockedBeforeReachingGoal 釘住 docs/spec/97：

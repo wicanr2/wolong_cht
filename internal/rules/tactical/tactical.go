@@ -141,9 +141,10 @@ const (
 
 // Soldier 是一個兵。欄位對應原版的 32 byte 記錄（docs/re/11 §5.8l）。
 type Soldier struct {
-	Alive bool
-	Kind  Kind
-	HP    int
+	TargetRefresh bool // 原版+0x00 bit3，命令傳遞要求重設攻擊中繼點。
+	Alive         bool
+	Kind          Kind
+	HP            int
 
 	X, Y, Z int
 	Facing  int
@@ -501,3 +502,6 @@ func abs(v int) int {
 	}
 	return v
 }
+
+// receiveTargetOrder 對應1A8E5／1A8E8；不以在場與否過濾命令欄位。
+func (s *Soldier) receiveTargetOrder(c Command) { s.Next = c; s.TargetRefresh = true }
