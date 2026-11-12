@@ -1358,3 +1358,15 @@
 - [本機對照頁](workplace/scratch/ui-windows-20261104/cao-move-game-review.html)四張正式畫面與[斷網抽驗](workplace/scratch/ui-windows-20261104/cao-move-review-qa.json)通過，390寬無溢出，JS錯誤及外部請求皆0。[接線收據](workplace/scratch/ui-windows-20261104/cao-move-integration.json)固定5檔來源覆蓋包、binary、原版快照、探針、測試與頁面雜湊。
 - spec159只有本片兩項標CONFORMED，整體排程仍READY，Issues #13／#16／#24保留。下一個最小查證點是第4拍槽29的尋路輸入及中繼點輸出，完整投射物、架梯及結算未代證。原版、HTML、截圖、快照及binary留本機，不作Release。
 - [收尾核對](workplace/scratch/ui-windows-20261104/cao-move-final-checks.json)通過：5檔來源、覆蓋包、binary、原版快照及頁面雜湊一致，1144列分流與嚴格輸出未變，582份文件／135條斷言索引通過，新證據連結存在。工作區root-owned與.md目錄皆0，來源UID/GID1000:1000。本輪有界容器皆結束刪除，其他專案資源未動。沿先前指示提交與推送，實際Git提交及遠端核對保存於[本機推送收據](workplace/scratch/ui-windows-20261104/repo-move-update-20261112.json)。
+
+### 2026-11-12：戰術尋路的反向擴散與成本回溯
+
+- 沿CONTEXT、現行Issues #13／#16及復古戰術對拍路由接手，base為69e7f05。使用既有逆向與IDA技能，聚焦第4拍槽29的中繼點，不改速度、AI加成、存檔或美術。
+- dosgolem乾淨來源f79eab6db8c64a524a06535e53e5d32b0bbcf7c8以正常曹操開局重播，首次RND前固定seed1；新增唯讀1BD46、1AF44、1AF4C觀測，17個共同快照含指令數、96筆原記錄與完整RNG皆未變。12筆請求有11筆成功、1筆失敗，不重擲或選樣。
+- IDA Pro9.4經既有非root image及tools/ida.sh probe匯出[原始bytes](workplace/scratch/ui-windows-20261104/path-20261112/ida-probe.json)，KI.EXE與DB身分見spec134。擴充既有tools/ida_range.py的/output模式，不另造專用工具、不改符號。最初文字輸出留在暫存/work，已改正重跑並只刪自己產生的檔案；原版觀測器生成時的leading-plus編譯錯誤及原稿保留，屬工具問題。
+- 靜態資料流證實從GoalXY往目前XY擴散；停止格一出隊就返回，回溯預算為波數減2。成本／軸順序決定轉角，不讀前驅。第一筆(1,44)往(5,43)，原版為(2,44)、(2,43)、(5,43)，舊Go為(5,44)、(5,43)。候選驗證後才修改正式明確平面路徑；goalPlane=-1的通用helper保留原相容語意，正式computePath明示平面，兩者共用擴散。
+- [正式40拍比較](workplace/scratch/ui-windows-20261104/cao-path-after-comparison.json)每拍96槽27欄位與完整RNG全等；[12筆尋路](workplace/scratch/ui-windows-20261104/cao-path-evidence.json)的11筆完整點列及1筆失敗均吻合。檢查工具最初錯把所有請求視為成功，已依原版失敗分支修正，不丟棄樣本。全低平面表仍有586個導航旗標與26個成本值不同，語意未逐項映射，保留evidence-only限制，不另開全表重寫或宣稱全場一致。
+- [四套件冷測／vet／建置](workplace/scratch/ui-windows-20261104/cao-path-tests.log)通過；新增精確加權轉角與下降／門格／不可攀登測試，既有上升獨立Z點亦通過。[舊錯版負對照](workplace/scratch/ui-windows-20261104/cao-path-negative.log)被精確三轉角測試拒絕。正式binary wlgame-cao-path-r1 SHA為901d4e58879dab7831d16a890ef9959e2701666492bee38143d22bb7f7a0e870。
+- [正常滑鼠流程](workplace/scratch/ui-windows-20261104/cao-path-remake-gui.json)66個功能／同步檢查點、15圖通過：曹操宣戰、編夏侯淵、下令徐州、停手行軍與途中存讀檔，自然入戰、改線、停手移動、突擊及主動退卻返回。沒有直接開戰、注入部隊或強制勝負；自然GUI不當作同狀態整場對拍。
+- [來源收據](workplace/scratch/ui-windows-20261104/cao-path-integration.json)封存三檔來源、binary、工具、種子及原始輸入雜湊；[本機頁](workplace/scratch/ui-windows-20261104/cao-path-game-review.html)四張正式畫面通過390寬[離線抽驗](workplace/scratch/ui-windows-20261104/cao-path-review-qa.json)，JS錯誤與外部請求皆0。spec134限本片CONFORMED，機制文件及目前狀態已同步；投射物、架梯、40拍後命令與完整結算仍沿Issues #13／#16／#24，未關閉Issue或作Release。
+- [收尾核對](workplace/scratch/ui-windows-20261104/cao-path-final-checks.json)通過：三檔來源覆蓋包、32份證據、正式binary、五份原版輸入及頁面雜湊相符，1145列分流與嚴格生成輸出一致，582份文件／135條斷言索引通過。工作區root-owned及誤建.md目錄皆0，來源UID/GID1000:1000。所有本輪有界容器已結束刪除，未動其他專案資源。依使用者指示commit並push，實際提交與遠端核對見[本機推送收據](workplace/scratch/ui-windows-20261104/repo-path-update-20261112.json)。

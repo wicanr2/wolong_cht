@@ -370,7 +370,7 @@
 | [`docs/spec/131-dosgolem-oracle.md`](spec/131-dosgolem-oracle.md) | 131 — 原版 oracle 換成 dosgolem：不再需要 DOSBox | CONFORMED。 | 2026-09-05 |
 | [`docs/spec/132-march-turnback-at-peace.md`](spec/132-march-turnback-at-peace.md) | 132 — 行軍走到和平勢力的邊界要掉頭 | CONFORMED。 | 2026-09-05 |
 | [`docs/spec/133-opening-deployment.md`](spec/133-opening-deployment.md) | 133 — 開場擺位：邊界那一欄 ＋ 亂數 Y | CONFORMED。 | 2026-09-05 |
-| [`docs/spec/134-pathfind-wave-order.md`](spec/134-pathfind-wave-order.md) | 134 — 尋路是波數佇列，不是先進先出：成本高的格子要等波數追上才展開 | CONFORMED。 | 2026-09-05 |
+| [`docs/spec/134-pathfind-wave-order.md`](spec/134-pathfind-wave-order.md) | 134 — 戰術尋路：波數佇列、反向擴散與成本回溯 | CONFORMED，限本片12筆尋路與前40拍抽驗。2026-11-12補回反向擴散與成本回溯；原波數排序的歷史收據… | 2026-11-12 |
 | [`docs/spec/135-script-message-command.md`](spec/135-script-message-command.md) | 135 — 腳本指令 16 是「掛一個對白框」：攻城戰的開場勸降 | CONFORMED。 | 2026-09-05 |
 | [`docs/spec/136-battle-talk-parameters.md`](spec/136-battle-talk-parameters.md) | 136 — 對白框的參數是一條共用串流：\6 也吃一個，變體用原始的 0–7 | CONFORMED。 | 2026-09-05 |
 | [`docs/spec/137-builtin-symbol-font.md`](spec/137-builtin-symbol-font.md) | 137 — 全形標點要用原版內建的那 408 格，不是倚天 SPCFONT.15 | CONFORMED。 | 2026-09-05 |

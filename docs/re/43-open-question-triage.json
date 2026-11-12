@@ -14882,6 +14882,19 @@
       "classification": "evidence-only",
       "github_issue": null,
       "reason": "目前列只保留原版證據邊界，未命中現行玩家路徑、規則或交付 Issue；若影響範圍改變，先建立新 Issue 再調整分類。"
+    },
+    {
+      "file": "docs/spec/134-pathfind-wave-order.md",
+      "item": "完整導航與佔用成本的語意映射",
+      "status": "第一筆全低平面表有586個導航旗標及26個成本值不同，原始成本含0、8、50、100；尚未逐項追寫入端與建立語意映射。本片只驗已到達的前40拍及12筆尋路，不由此開啟全表重寫或宣稱全場parity",
+      "section": "未解與限制",
+      "domain": "其他",
+      "verdict": "靜態",
+      "occurrence": 0,
+      "id": "oq-39693d4de540e65c39cd",
+      "classification": "evidence-only",
+      "github_issue": null,
+      "reason": "全低平面表仍有未映射的原始值差異，保留證據限制；不阻塞本片12筆尋路及前40拍，不由此新開全表重寫。"
     }
   ]
 }

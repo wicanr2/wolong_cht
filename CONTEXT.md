@@ -197,19 +197,29 @@ GPU最多兩頁快取，其他季節、液晶、未選頁與讀圖失敗沿原�
 [本機畫面](workplace/scratch/ui-windows-20261104/cao-delay-game-review.html)僅供正常流程檢視。
 下一步仍沿Issues #13／#16／#24固定入戰與命令相位後追中繼目標、投射物、架梯及結算；不直接調速度。
 
-目前已完成[spec159本片](docs/spec/159-tactical-command-movement-order.md)的鎖敵Y方向與隊長就位修正。
+前輪已完成[spec159本片](docs/spec/159-tactical-command-movement-order.md)的鎖敵Y方向與隊長就位修正。
 原版候選Y較大時多加一次Y差；隊長命令7仍追隨陣形線並在原位補餘力，隊員則維持空分派。
 同一入戰狀態的前3拍、每拍96槽27欄位全等，40個RNG狀態相同。
 四套件冷測／vet及舊錯版負對照通過；正式程式正常滑鼠66個功能／同步檢查點通過，
 含中央線改目標(3,32)至(26,32)、停手前進、改回、突擊與正常退卻返回。
-目前binary為`wlgame-cao-move-r1`，[接線收據](workplace/scratch/ui-windows-20261104/cao-move-integration.json)
+該輪binary為`wlgame-cao-move-r1`，[接線收據](workplace/scratch/ui-windows-20261104/cao-move-integration.json)
 與[本機畫面](workplace/scratch/ui-windows-20261104/cao-move-game-review.html)保存來源、測試與限制。
-下一個分歧已定位第4拍槽29的繞路中繼X：原版2、Go5。應取得該筆尋路的輸入／輸出再修正，
+該輪分歧位於第4拍槽29的繞路中繼X：原版2、Go5；已由下方spec134續片修正，
 不猜補中繼點或用調速度掩蓋。完整攻城勝負、投射物及架梯仍沿Issues #13／#16／#24。
+
+目前受測程式為`wlgame-cao-path-r1`，已依[spec134](docs/spec/134-pathfind-wave-order.md)
+修正反向擴散與成本回溯。原版12筆尋路的11筆成功完整路徑及1筆失敗皆吻合；
+同一入戰狀態前40拍，每拍96槽27欄位與完整RNG均相同，第4拍槽29的中繼點差異已消除。
+新原版唯讀觀測的17個共同快照與前輪相同。四套件冷測／vet、舊錯版負對照及正常GUI66個檢查點通過。
+正常流程含曹操宣戰、編夏侯淵、停手行軍、存讀檔、自然入戰、改線、突擊及主動退卻返回。
+[接線收據](workplace/scratch/ui-windows-20261104/cao-path-integration.json)與[本機畫面](workplace/scratch/ui-windows-20261104/cao-path-game-review.html)
+保存來源及限制。完整導航／成本表仍有未映射差異，本片不開啟全表重寫；
+40拍後的命令相位、投射物、架梯與完整攻城結果仍沿Issues #13／#16／#24，不調速度掩蓋。
 
 | 日期／目前程式 | 最近驗證 | 狀態 | 交付物 |
 |---|---|---|---|
-| 2026-11-12；鎖敵與隊長就位修正 | 前3拍96槽27欄位與40個RNG狀態吻合；四套件冷測／vet、負對照、正常GUI66個檢查點通過 | 改陣形線後就位隊長會移動；第4拍繞路中繼點仍有差異 | [spec159](docs/spec/159-tactical-command-movement-order.md)、[收據](workplace/scratch/ui-windows-20261104/cao-move-integration.json)、[本機畫面](workplace/scratch/ui-windows-20261104/cao-move-game-review.html) |
+| 2026-11-12；wlgame-cao-path-r1 | 前40拍96槽27欄位及RNG、12筆尋路吻合；四套件冷測／vet、負對照、正常GUI66點通過 | 第4拍繞路差異已修；全地形、投射物、架梯及完整結果仍待對拍 | [spec134](docs/spec/134-pathfind-wave-order.md)、[收據](workplace/scratch/ui-windows-20261104/cao-path-integration.json)、[本機畫面](workplace/scratch/ui-windows-20261104/cao-path-game-review.html) |
+| 2026-11-12；鎖敵與隊長就位修正 | 前3拍96槽27欄位與40個RNG狀態吻合；四套件冷測／vet、負對照、正常GUI66個檢查點通過 | 改陣形線後就位隊長會移動；該輪第4拍差異已由spec134續片修正 | [spec159](docs/spec/159-tactical-command-movement-order.md)、[收據](workplace/scratch/ui-windows-20261104/cao-move-integration.json)、[本機畫面](workplace/scratch/ui-windows-20261104/cao-move-game-review.html) |
 | 2026-11-12；開場移動倒數訂正 | 96槽初始化及首次移動欄位吻合；原版230共同快照、四套件冷測／vet、負對照、正常GUI61個檢查點通過 | 移除誤套城牆物件的一拍硬直；完整戰術差異仍沿Issues #13／#16／#24 | [spec200](docs/spec/200-opening-move-delay.md)、[來源收據](workplace/scratch/ui-windows-20261104/cao-delay-integration.json)、[本機畫面](workplace/scratch/ui-windows-20261104/cao-delay-game-review.html) |
 | 2026-11-12；通知清理與曹操對呂布 | 冷測、vet、右鍵負對照及正常GUI60個功能／同步檢查點通過；原版134步／33圖重現 | 右鍵漏接已修，停手行軍與入戰角色／日期／據點吻合；戰術後段時序仍有差異 | [比較頁](workplace/scratch/ui-windows-20261104/cao-lubu-game-review.html)、[矩陣](workplace/scratch/ui-windows-20261104/cao-lubu-comparison.json)、[收據](workplace/scratch/ui-windows-20261104/cao-lubu-integration.json) |
 | 2026-11-12；移除重複成功通知 | 正常GUI50個功能／同步檢查點、受影響冷測、vet及建置通過 | 編成保留原版對白，編成／存檔／讀檔成功不另開小窗，失敗處理保留 | [實際畫面](workplace/scratch/ui-windows-20261104/quiet-success-game-review.html)、[接線收據](workplace/scratch/ui-windows-20261104/quiet-success-integration.json) |

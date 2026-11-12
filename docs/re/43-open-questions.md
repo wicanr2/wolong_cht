@@ -7,7 +7,7 @@
 
 現行工作與狀態由 GitHub [Issues](https://github.com/wicanr2/wolong_cht/issues) 管理；
 本地 [`docs/worklist.json`](../worklist.json) 與 `tools/worklist.py verify` 只作輔助。
-1150 列不是同數量的獨立 backlog；可執行項目已由完成的 Issue #28 分流，證據／歷史項目留在本索引。
+1151 列不是同數量的獨立 backlog；可執行項目已由完成的 Issue #28 分流，證據／歷史項目留在本索引。
 
 - 日期：2026-11-12
 - 產生工具：`tools/re_open_questions.py`
@@ -22,7 +22,7 @@
 
 ## 0. ⚠ 這個數字在量什麼
 
-**1144 列分布在 463 份文件，平均每份 2.5 列。**
+**1145 列分布在 464 份文件，平均每份 2.5 列。**
 
 ⭐ **所以它比較接近「文件有多少份」，不是「原版還有多少沒解」。**
 每寫一份新文件就帶進約三列自己的未解——而 `check.sh --strict` 還會
@@ -50,8 +50,8 @@
 | 程式碼理解 | 321 | 314 | 6 | 1 |
 | 驗收 | 246 | 220 | 26 | 0 |
 | 外部資料 | 6 | 5 | 1 | 0 |
-| 其他 | 540 | 516 | 23 | 1 |
-| **合計** | **1144** | 1081 | 60 | 3 |
+| 其他 | 541 | 517 | 23 | 1 |
+| **合計** | **1145** | 1082 | 60 | 3 |
 
 ⚠ **這是列數，不是獨立問題數。** 索引檔的「現況」欄是別的文件的摘要，同一個缺口在那份文件自己的未解表裡還有一列——這類共 **0** 列（另有少數只是提到「未解」兩個字的圖例列）。
 
@@ -59,7 +59,7 @@
 
 | 來源目錄 | 列數 |
 |---|---:|
-| `docs/spec/` | 497 |
+| `docs/spec/` | 498 |
 | `docs/re/` | 321 |
 | `docs/playtest/` | 246 |
 | `docs/release/` | 26 |
@@ -698,7 +698,7 @@
 | [`reference/04-first-survey.md`](../reference/04-first-survey.md) | 不要憑「同一份專案應該用同一個編譯器」外推——**`KI.EXE` 的編譯器未解。 | （散句） | 靜態 | evidence-only | — |
 | [`reference/05-eten-font-provenance.md`](../reference/05-eten-font-provenance.md) | `END_S13/S14/S15` 是中文版加的結局段 | S13／S14 是字型。**`END_S15` 仍未解** | 靜態 | evidence-only | — |
 
-## 2.6 其他（540 條）
+## 2.6 其他（541 條）
 
 | 出處 | 缺口 | 現況 | 裁決 | 分流 | Issue |
 |---|---|---|---|---|---|
@@ -817,6 +817,7 @@
 | [`spec/133-opening-deployment.md`](../spec/133-opening-deployment.md) | 走進陣形要走多久 | 原版節拍 9 已經散開，但沒有量過「全部到位」是第幾拍 | 靜態 | actionable | [#16](https://github.com/wicanr2/wolong_cht/issues/16) |
 | [`spec/133-opening-deployment.md`](../spec/133-opening-deployment.md) | 既有的戰場對拍會不會漂 | 現有的取樣點（`-battle-steps 120`）在兩邊都已經到位之後，**理論上不受影響**，但沒重跑過 | 靜態 | merge-target | [#12](https://github.com/wicanr2/wolong_cht/issues/12) |
 | [`spec/133-opening-deployment.md`](../spec/133-opening-deployment.md) | **移動層怎麼處理同格多兵** | 擋住接線的就是它（§3.5）。原版不查佔用，remake 的 `tryMove`／`anyoneAt` 以「一格一個兵」為前提 / 先讀原版的移動與碰撞判定，看它怎麼容許重疊 | 靜態 | actionable | [#16](https://github.com/wicanr2/wolong_cht/issues/16) |
+| [`spec/134-pathfind-wave-order.md`](../spec/134-pathfind-wave-order.md) | 完整導航與佔用成本的語意映射 | 第一筆全低平面表有586個導航旗標及26個成本值不同，原始成本含0、8、50、100；尚未逐項追寫入端與建立語意映射。本片只驗已到達的前40拍及12筆尋路，不由此開啟全表重寫或宣稱全場parity | 靜態 | evidence-only | — |
 | [`spec/135-script-message-command.md`](../spec/135-script-message-command.md) | 參數值 3 | `byte_1D349` 只會是 0／1／2，閘算得出 3 但沒有值對得上——沒有腳本用到，或是原版的死分支 | 靜態 | evidence-only | — |
 | [`spec/136-battle-talk-parameters.md`](../spec/136-battle-talk-parameters.md) | 參數超過兩個的訊息 | 戰場對白只推兩個。若有第三個標記，原版讀堆疊殘值，remake 丟棄整則 | 靜態 | merge-target | [#14](https://github.com/wicanr2/wolong_cht/issues/14) |
 | [`spec/137-builtin-symbol-font.md`](../spec/137-builtin-symbol-font.md) | （那 408 格**來自哪裡**仍未解。 | （散句） | 靜態 | evidence-only | — |

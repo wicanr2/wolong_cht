@@ -38,7 +38,7 @@
 第一拍有6個鎖定目標不同，第5拍起另有就位隊長的餘力差異。
 [可丟棄候選版](../../workplace/scratch/ui-windows-20261104/cao-movement-candidate-comparison.json)
 前3拍96槽的抽驗欄位全等，第4拍仍有槽29的StepX不同。
-該後續繞路差異保持開啟，不以本節修改尋路演算法。
+該輪保留的繞路差異已由下方spec134續片修正，原收據保留。
 
 實作驗收：補Y方向與等距選擇測試；隊長就位維持餘力及陣形線改變後更新目標，
 隊員命令7仍為空分派。冷測戰術、世界、桌面及手機，舊錯版須被負對照拒絕；
@@ -56,6 +56,16 @@
 桌面只在既有opt-in trace新增隊長位置、目標及餘力，不加玩家通知或存檔欄位。
 輸入雜湊、來源覆蓋包、正式binary與測試工具見[本輪收據](../../workplace/scratch/ui-windows-20261104/cao-move-integration.json)，
 正常流程畫面見[本機對照頁](../../workplace/scratch/ui-windows-20261104/cao-move-game-review.html)。
+
+## 2026-11-12續片：尋路中繼點
+
+[spec134](134-pathfind-wave-order.md)依新原版12筆請求與IDA指令，補回目標往士兵位置的反向擴散、
+波數減2及成本／軸順序回溯。正式程式的[新比較](../../workplace/scratch/ui-windows-20261104/cao-path-after-comparison.json)
+前40拍96槽27欄位與完整RNG皆吻合，第4拍槽29差異已消除。
+四套件冷測／vet、舊錯版負對照及正常滑鼠66點通過；
+[新來源收據](../../workplace/scratch/ui-windows-20261104/cao-path-integration.json)保存正式程式與範圍。
+本片仍在腳本／玩家命令開始前，沒有把整份排程規格提升為CONFORMED；
+投射物、架梯與整場結算仍沿既有Issues。
 
 ## 已證實的流程
 

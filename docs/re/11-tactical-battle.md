@@ -1700,7 +1700,15 @@ and byte ptr [si+1Bh], 3       ; ★ 0→1→2→3→0
 
 ### 5.15 ⭐ 繞路點是誰算的：`loc_1BD46`
 
-`sub_1AED2` 在命令生效那一刻設好起點終點，然後叫這一支；
+2026-11-12追加訂正（confirmed）：擴散根為GoalXY，停止位置為士兵目前XY，方向不能反過來。
+`1AEF6–1AF1C`的AX／DX與`1BD54–1BD6E`的資料流，配合12筆動態請求，推翻舊Go前向搜尋的假設。
+回溯從停止波數減2開始，只讀成本與軸優先序，不讀前驅。
+KI.EXE SHA-256為`fffeba985231cda4d636e93d10f598470b1f691d00275e4aa38e285893d43868`，
+IDA Pro9.4、位址為IDA DOS/V linear；DB SHA-256為`6222778af84519afe0e6a4013cdcf66178eb08e4f2d87a172f9ddf2f143694f8`。
+原始bytes及工具身分見[spec134](../spec/134-pathfind-wave-order.md)的證據入口。
+下方波數及成本回溯摘要保留，不能解讀成從士兵位置擴散或前驅回溯。
+
+`sub_1AED2` 在尋路請求出隊時設好目前位置與目標，然後叫這一支；
 回傳的 `al` 是點數，寫進兵記錄 `+0x17`。
 
 **第一段：波前擴散**
@@ -1710,7 +1718,7 @@ mov cs:byte_1BE33, cl      ; ★ 自我修改碼：0xEB（jmp）或 0x74（jz）
 mov es, cs:word_1D300      ; 成本圖
 xor di, di / mov cx, 2000h / mov ax, 0FFFFh / rep stosw   ; 全部填 0xFFFF
 ...
-mov word ptr [bx], 1       ; 起點放 1
+mov word ptr [bx], 1       ; 目標根放 1
 mov dx, 2                  ; 下一波
 ```
 

@@ -2,6 +2,69 @@ package tactical
 
 import "testing"
 
+// 此加權小地形釘住spec134的逆向展開與成本回溯，不需原版素材。
+func TestPathExplicitPlaneUsesOriginalCostBacktrace(t *testing.T) {
+	stack := make([][]int, Height)
+	for y := range stack {
+		stack[y] = make([]int, Width)
+		for x := range stack[y] {
+			if x < 10 || x > 18 || y < 5 || y > 14 {
+				stack[y][x] = 4
+			}
+		}
+	}
+	f := NewField(stack, 0)
+	occupied := map[[2]int]bool{
+		{11, 6}: true, {10, 7}: true, {11, 8}: true,
+		{10, 9}: true, {11, 9}: true, {11, 10}: true,
+		{11, 11}: true, {10, 12}: true, {11, 13}: true,
+	}
+	penalty := func(x, y int) int {
+		if occupied[[2]int{x, y}] {
+			return 8
+		}
+		return 0
+	}
+	want := []Point{{X: 11, Y: 10}, {X: 11, Y: 9}, {X: 14, Y: 9}}
+	got := f.FindPathForPlanes(Point{X: 10, Y: 10}, Point{X: 14, Y: 9}, PlaneLow, PlaneLow, false, penalty)
+	if len(got) != len(want) {
+		t.Fatalf("原版成本回溯中繼點=%v，應為%v", got, want)
+	}
+	for i := range want {
+		if got[i] != want[i] {
+			t.Fatalf("原版成本回溯第%d點=%v，應為%v", i, got[i], want[i])
+		}
+	}
+}
+
+func TestPathExplicitPlanePreservesDescentAndClimbGate(t *testing.T) {
+	f := flatField()
+	const gateX, y = 20, 30
+	for x := gateX; x <= 30; x++ {
+		f.lvl[PlaneHigh][y][x] = 4
+		if x < 30 {
+			f.nav[PlaneHigh][y][x] |= navRight
+			f.nav[PlaneHigh][y][x+1] |= navLeft
+		}
+	}
+	f.nav[PlaneLow][y][gateX] |= navGate
+	f.nav[PlaneHigh][y][gateX] |= navGate
+	from, to := Point{X: 30, Y: y}, Point{X: 10, Y: y}
+	if got := f.FindPathForPlanes(from, to, PlaneHigh, PlaneLow, false, nil); len(got) != 0 {
+		t.Fatalf("不能攀登時不應跨平面：%v", got)
+	}
+	got := f.FindPathForPlanes(from, to, PlaneHigh, PlaneLow, true, nil)
+	for _, p := range got {
+		if p.HasZ {
+			if p.X != gateX || p.Y != y || p.Z != 0 {
+				t.Fatalf("原版下降Z點錯誤：%+v", p)
+			}
+			return
+		}
+	}
+	t.Fatalf("缺少獨立下降Z點：%v", got)
+}
+
 // 平地上直線走：一路同方向，**中間不該有轉彎點**，只留終點。
 func TestPathStraightLineHasNoTurns(t *testing.T) {
 	f := flatField()

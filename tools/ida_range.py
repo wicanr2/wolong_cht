@@ -10,16 +10,24 @@
 # ⚠ headless 的 print 不進 stdout，一律寫檔；輸出帶 probe（輸入檔 SHA-256）。
 # 用法：tools/ida.sh script dosv tools/ida_range.py KI.EXE.i64
 # 輸出 /work/range.txt
+# 非root探針：OUTPUT/range_list.txt設區間後，執行
+# tools/ida.sh probe dosv tools/ida_range.py OUTPUT
+# 另輸出OUTPUT/ida-probe.json，保留原指令、bytes、位址與工具身分。
+import json
+import os
 import ida_auto
+import ida_bytes
 import ida_funcs
+import ida_kernwin
 import ida_nalt
 import ida_pro
 import idc
 
-OUT = "/work/range.txt"
 # 要看哪幾段寫在 /work/range_list.txt，一行一筆「起 迄 說明」（十六進位）；
 # 檔案不在就用下面的預設。**工具固定，要看什麼是輸入**（同 tools/ida_dump.py）。
-LIST = "/work/range_list.txt"
+PROBE = os.path.isfile("/output/range_list.txt")
+OUT = "/output/range.txt" if PROBE else "/work/range.txt"
+LIST = "/output/range_list.txt" if PROBE else "/work/range_list.txt"
 RANGES = [
     (0x19C46, 0x19CE2, "開場擺位：0x19C61 寫兵的 Y、0x19C7B 寫 X"),
 ]
@@ -48,7 +56,9 @@ def main():
     lines = ["位址區間反組譯（IDA DOS/V linear address）",
              "輸入檔 SHA-256：%s" % ida_nalt.retrieve_input_file_sha256().hex(),
              "函式數：%d" % ida_funcs.get_func_qty()]
+    regions = []
     for start, end, note in ranges():
+        records = []
         lines.append("")
         lines.append("==== %08X–%08X  %s ====" % (start, end, note))
         ea = start
@@ -56,9 +66,23 @@ def main():
             f = ida_funcs.get_func(ea)
             owner = ida_funcs.get_func_name(f.start_ea) if f else "（無函式）"
             lines.append("  %08X  %-10s  %s" % (ea, owner, idc.GetDisasm(ea)))
+            records.append({"address": hex(ea), "function": owner,
+                            "instruction": idc.GetDisasm(ea),
+                            "bytes": (ida_bytes.get_bytes(ea, idc.get_item_size(ea)) or b"").hex()})
             ea = idc.next_head(ea, end)
+        regions.append({"start": hex(start), "end": hex(end), "note": note,
+                        "instructions": records})
     with open(OUT, "w", encoding="utf-8") as fh:
         fh.write("\n".join(lines) + "\n")
+    if PROBE:
+        with open("/output/ida-probe.json", "w", encoding="utf-8") as fh:
+            json.dump({"tool": "IDA Pro " + ida_kernwin.get_kernel_version(),
+                       "address_space": "IDA DOS/V linear",
+                       "input_sha256": ida_nalt.retrieve_input_file_sha256().hex(),
+                       "function_count": ida_funcs.get_func_qty(),
+                       "uid": os.getuid(), "gid": os.getgid(), "regions": regions},
+                      fh, ensure_ascii=False, indent=2)
+            fh.write("\n")
     ida_pro.qexit(0)
 
 

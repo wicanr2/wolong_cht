@@ -5,11 +5,14 @@ package tactical
 // 原版的流程分兩段：
 //
 //  1. **擴散**：把成本圖（`ds:0D300`，16 KB）全部填成 `0xFFFF`，
-//     從起點放 1，用一個環狀佇列往外長。每走一格加的**不是 1，
+//     從目標放 1，用一個環狀佇列往士兵位置長。每走一格加的**不是 1，
 //     而是那一格的佔用成本**（`mov al, es:[bx+2000h]`）——
 //     所以這是 uniform-cost 搜尋，不是單純的 BFS。
-//  2. **回溯**：從終點沿著遞減的波數走回去，
+//  2. **回溯**：從士兵位置依成本及軸順序取點，不沿擴散前驅，
 //     **只有轉彎時才寫一個點**（`ch` 記著上一步是橫的還是縱的）。
+//
+// 正式單兵明示終點平面；goalPlane=-1的舊通用helper保留前向相容語意。
+// 證據與範圍見spec/134的2026-11-12訂正。
 //
 // ⭐ 回溯的計數器是 `mov cl, 40h` ＝ **64 個點**，一個點 2 byte
 // ＝ 128 byte，正好是每個兵那塊 `0x1800 + 兵編號 × 128` 的大小（§5.8k）。
@@ -46,7 +49,7 @@ type Penalty func(x, y int) int
 // pathNode 是擴散時每一格的狀態。
 type pathNode struct {
 	cost int // 0xFFFF ＝ 還沒走到
-	from int // 從哪一格過來的（回溯用；−1 ＝ 起點）
+	from int // 舊通用helper的前驅；正式單兵依成本回溯，不讀這一欄
 }
 
 const unreached = 0xFFFF
@@ -82,9 +85,10 @@ func (f *Field) FindPathForPlanes(from, to Point, startPlane, goalPlane int,
 // gateX 那一小段城壁與 2–14 格門。純地形尋路在城封死時回空，兵就會
 // 整團停在城牆前不動，直到攻城計時器把大將耗光——**攻方永遠攻不進去**。
 //
-// ⚠ **`force` 這個參數是 remake 加的，原版沒有。** 演算法本身不是近似——
-// 檔頭那段就是 `loc_1BD46` 的移植（docs/re/11 §5.15）；原版把算出來的
-// 轉角點存進 `0x1800 + 兵編號 × 128`，remake 存進 `Soldier.Path`。
+// ⚠ **`force` 這個參數是 remake 加的，原版沒有。** 正式明示平面的單兵
+// 路徑採loc_1BD46的反向擴散／成本回溯（spec/134）；原版把點寫進
+// `0x1800 + 兵編號 × 128`，remake存進Soldier.Path。
+// 此通用helper未明示終點平面，保留既有前向相容語意，不作逐點parity聲明。
 //
 // 加 `force` 的理由是**驗收路徑要能終止**：AI 對 AI 的自動戰鬥沒有玩家
 // 換陣形，城封死時純地形尋路回空，兵會整團停在牆前直到攻城計時器把大將
@@ -137,7 +141,14 @@ func (f *Field) findPathForPlanes(from, to Point, startPlane, goalPlane int,
 	// ⚠ **少了「推回」那一步，`penalty` 就完全不起作用**——純先進先出
 	// 之下直線一定比繞路先碰到終點，於是被大將擋住（大將不能對調，
 	// §5.16）的兵會永久卡死在原地。
-	start := idx(from.X, from.Y, startPlane)
+	reverse := goalPlane >= 0
+	searchFrom, searchTo := from, to
+	rootPlane, stopPlane := startPlane, goalPlane
+	if reverse {
+		searchFrom, searchTo = to, from
+		rootPlane, stopPlane = goalPlane, startPlane
+	}
+	start := idx(searchFrom.X, searchFrom.Y, rootPlane)
 	nodes[start].cost = 1
 
 	// 原版的環狀佇列：`si` 寫、`di` 讀、`cx` 記本波的結尾。
@@ -150,8 +161,8 @@ func (f *Field) findPathForPlanes(from, to Point, startPlane, goalPlane int,
 
 	for {
 		// `cmp bx, cs:word_1BD44 / jz loc_1BE4A`：彈到終點就收工。
-		if cur%cells%Width == to.X && cur%cells/Width == to.Y &&
-			(goalPlane < 0 || cur/cells == goalPlane) {
+		if cur%cells%Width == searchTo.X && cur%cells/Width == searchTo.Y &&
+			(stopPlane < 0 || cur/cells == stopPlane) {
 			goal = cur
 			break
 		}
@@ -213,6 +224,10 @@ func (f *Field) findPathForPlanes(from, to Point, startPlane, goalPlane int,
 	if goal < 0 {
 		return nil
 	}
+	if reverse {
+		// 1BE4A：用停止時波數減2，停止格自己的佔用成本可能還沒到期。
+		return f.originalPathPoints(nodes, goal, wave-2)
+	}
 
 	// ② 回溯。從終點往回走，**只有轉彎才記一個點**。
 	var back []Point
@@ -259,6 +274,75 @@ func (f *Field) findPathForPlanes(from, to Point, startPlane, goalPlane int,
 		out = out[:MaxWaypoints]
 	}
 	return out
+}
+
+// originalPathPoints 對應1BE4A–1BF23；只讀成本，不追擴散前驅。
+func (f *Field) originalPathPoints(nodes []pathNode, cur, remaining int) []Point {
+	const cells = Width * Height
+	points := make([]Point, 0, 8)
+	appendXY := func() bool {
+		points = append(points, Point{X: cur % cells % Width, Y: cur % cells / Width})
+		return len(points) >= MaxWaypoints
+	}
+	axis, first := 0, true
+	for remaining > 0 {
+		plane, x, y := cur/cells, cur%cells%Width, cur%cells/Width
+		move := func(a int) bool {
+			for _, delta := range []int{-1, 1} {
+				nx, ny := x, y
+				if a == 0 {
+					nx += delta
+				} else {
+					ny += delta
+				}
+				if !inBounds(nx, ny) {
+					continue
+				}
+				n := plane*cells + ny*Width + nx
+				if nodes[n].cost == remaining {
+					cur = n
+					return true
+				}
+			}
+			return false
+		}
+		moved := move(axis)
+		if !moved {
+			axis = 1 - axis
+			// 第一次選方向不寫點，其後換軸才寫當前XY。
+			if !first && appendXY() {
+				return points
+			}
+			moved = move(axis)
+		}
+		if moved {
+			remaining--
+			if remaining == 0 {
+				appendXY()
+				return points
+			}
+			first = false
+			continue
+		}
+		// 1BEE0：門格可換平面；其餘情況遞減預算，不猜一個前驅。
+		other := (1-plane)*cells + y*Width + x
+		if f.nav[plane][y][x]&navGate != 0 && nodes[other].cost <= remaining {
+			z := 0
+			if 1-plane == PlaneHigh {
+				if v, ok := f.GroundLevel(x, y, PlaneHigh); ok {
+					z = v
+				}
+			}
+			points = append(points, Point{X: x, Y: y, Z: z, HasZ: true})
+			if len(points) >= MaxWaypoints {
+				return points
+			}
+			cur, remaining = other, nodes[other].cost
+		}
+		remaining--
+		axis, first = 0, true
+	}
+	return points
 }
 
 // planeAt 挑一個位置該用哪個平面：優先用 want，那個平面沒有地面就換另一個。
