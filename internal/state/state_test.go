@@ -2422,9 +2422,10 @@ func normalScenarioWorld(t *testing.T) *World {
 			// 同一件事的兩半（docs/spec/56 §2.1）：玩家守城時原版把玩家
 			// 放在 X=5 並把地形轉 180 度，只做後者不做前者，玩家會出現在
 			// 攻方的進場區、AI 在城裡，**這場戰鬥永遠打不完**。
-			tiles, gate := battleLib.Tiles(node), battleLib.GateX(node)
+			tiles, gate := battleLib.MinimapRows(node), battleLib.GateX(node)
 			if rotate {
-				tiles, gate = battle.Rotate180(tiles), battle.RotateGateX(gate)
+				copy(tiles[1:len(tiles)-1], battle.Rotate180(tiles[1:len(tiles)-1]))
+				gate = battle.RotateGateX(gate)
 			}
 			// ⭐ **要帶七層子圖塊表**，與正式路徑（`internal/battlesetup`）一致。
 			// 少了它 `Field` 走的是「合成戰場」那條退路：地面層直接取堆疊

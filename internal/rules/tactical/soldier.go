@@ -591,6 +591,8 @@ func (b *Battle) tryMove(side, k, x, y, z int) (moved, walled bool) {
 		}
 		return b.swapWith(side, k, side2, k2), false
 	}
+	// 1B228–1B23E：水平升降同時調整中繼高度，保持相對Z差。
+	s.StepZ += z - s.Z
 	s.X, s.Y, s.Z = x, y, z
 	s.syncTerrain(b.Field, x, y, z)
 	return true, false

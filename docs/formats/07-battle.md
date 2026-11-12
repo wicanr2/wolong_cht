@@ -105,6 +105,10 @@ remake 拿地形列號畫的小地圖與原版逐像素對齊，往左往右各�
 （＝一列）都明顯更差（9.4% → ≥ 19.5%）。兩個框都要用對，換算表見
 [`../spec/57`](../spec/57-tactical-projection.md) §2。
 
+2026-11-12規則入口訂正：`Library.Tiles`的62列仍供地形繪圖，正式規則改讀`MinimapRows`的完整64列。
+原版記憶體的第76場4096bytes已與檔案核對，士兵有效Y1–62；修正與證據見
+[spec36](../spec/36-ground-planes-and-climbing.md)。這是資料使用端的列號修正，檔案格式不變。
+
 ### 2.2 戰場會依進攻方向轉 180 度（confirmed）
 
 ```asm

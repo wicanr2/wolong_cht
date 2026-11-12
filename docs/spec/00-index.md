@@ -121,7 +121,7 @@
 | 底列六格是選部隊 | [`33-squad-selection.md`](33-squad-selection.md) | 已實作並有單測；六張命令圖示照 `ICONGRF` 段 3 的 `碼 × 0xC0` |
 | 一覽表的欄位與版面 | [`38-list-windows.md`](38-list-windows.md) | 四個家族、捲軸的四個熱區與欄寬定義都照原版 |
 | 戰術畫面的玩家操作 | [`37-tactical-player-controls.md`](37-tactical-player-controls.md) | 陣形選單與陣形線已接；說明書 4.2–4.6 的功能逐條對照過 |
-| 兩個平面的地面圖與登城 | [`36-ground-planes-and-climbing.md`](36-ground-planes-and-climbing.md) | 已實作並有單測，拿三張原版攻城圖對過數字 |
+| 兩平面與原版列號、水平高度 | [`36-ground-planes-and-climbing.md`](36-ground-planes-and-climbing.md) | CONFORMED，限既有規則及2026-11-12列號／斜坡修正；前84拍與低平面4096bytes吻合，完整高平面與戰況仍待對拍 |
 | 縮小地圖的據點標記 | [`35-strategy-minimap.md`](35-strategy-minimap.md) | 已實作並有單測；22 勢力的選擇視窗用「點一下換下一個」代替 |
 | 兩個速度設定的五檔 | [`34-speed-steps.md`](34-speed-steps.md) | 已實作並有單測；「最高速」的上限是 remake 差異 |
 | 行軍指示的三選一 | [`39-march-order-menu.md`](39-march-order-menu.md) | 已接進畫面並有單測 |

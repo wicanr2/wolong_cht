@@ -124,9 +124,11 @@ func (p *Provider) BuildField(n int, siege, rotate bool) *tactical.Field {
 	// 用原始圖塊值建，不只用堆疊高度——城壁與門是從圖塊值認出來的，
 	// 而且打壞時要換圖塊再重算高度（docs/re/11 §5.9）。
 	// 再加上七層子圖塊表：兩個平面的地面圖與登城都靠它算（docs/spec/36）。
-	tiles, gate := p.lib.Tiles(n), p.lib.GateX(n)
+	// 規則格號包含表頭與尾段，與士兵的原版Y一致（spec36）。
+	tiles, gate := p.lib.MinimapRows(n), p.lib.GateX(n)
 	if rotate {
-		tiles, gate = battle.Rotate180(tiles), battle.RotateGateX(gate)
+		copy(tiles[1:len(tiles)-1], battle.Rotate180(tiles[1:len(tiles)-1]))
+		gate = battle.RotateGateX(gate)
 	}
 	return tactical.NewFieldFromTileLayers(
 		tiles, p.lib.Heights(n), p.lib.TileLayers(n), gate)

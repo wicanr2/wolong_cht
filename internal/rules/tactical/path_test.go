@@ -282,14 +282,10 @@ func TestWaypointsApplyIndependentZWithoutOverwritingXY(t *testing.T) {
 	}
 }
 
-// ⭐ Y 的上限要跟實際的列數一致。
-//
-// `sub_1AACF` 把座標夾在 1–62，但一張戰場只有 62 列（0–61）——
-// 拿 62 去索引會越界。**這個 bug 一直在，是尋路開始探邊界才炸出來的**：
-// 在那之前沒有任何路徑會走到最後一列。
+// 原版緩衝含64列，有效地形是1–62；不能把表頭移除後直接使用士兵Y。
 func TestFieldBoundsMatchRowCount(t *testing.T) {
-	if MaxY != Height-1 {
-		t.Fatalf("MaxY ＝ %d，應為 %d", MaxY, Height-1)
+	if MaxY != 62 || MaxY >= Height {
+		t.Fatalf("MaxY ＝ %d，應為62且位於緩衝內", MaxY)
 	}
 	if inBounds(1, Height) {
 		t.Error("Y ＝ Height 不該算在範圍內")

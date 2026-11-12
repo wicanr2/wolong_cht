@@ -118,8 +118,8 @@ type View struct {
 	// tileRev 是 subs 是照哪一個版本的圖塊展開的。城壁或門被打壞時
 	// 規則層會改圖塊值並把版本 +1，這裡就要重新展開（docs/spec/66）。
 	tileRev int
-	cache map[int]*ebiten.Image
-	pal   [16]color.RGBA
+	cache   map[int]*ebiten.Image
+	pal     [16]color.RGBA
 	// buf 是原生解析度的離屏畫布，畫完再整張放大。
 	buf *ebiten.Image
 
@@ -148,7 +148,7 @@ type View struct {
 	// cursorX, cursorY 是小地圖上那個十字的位置（原版 word_1D32C／
 	// word_1D32E）。**與鏡頭是兩組變數**，只是被同一個點選一起改。
 	cursorX, cursorY int
-	camCol, camRow       int
+	camCol, camRow   int
 }
 
 // image 把一個子圖塊轉成 Ebiten 的圖，解過就快取起來。
@@ -350,7 +350,7 @@ func (v *View) drawTerrain(dst *ebiten.Image, ox, oy int) {
 // 兩者在鏡頭是奇數時對一半的格子差一列，而原版的物件走的就是這一條
 // （docs/spec/57 §2）。
 func (v *View) ScreenPos(ox, oy, x, y, z int) (int, int, bool) {
-	col, row := isoProject(x, y, z)
+	col, row := isoProjectOriginal(x, y, z)
 	if col < v.camCol || col >= v.camCol+isoCols ||
 		row < v.camRow || row >= v.camRow+isoRows {
 		return 0, 0, false
@@ -432,7 +432,7 @@ func (v *View) syncTiles(b *tactical.Battle) {
 	for y := range cells {
 		cells[y] = make([]byte, len(v.subs[y]))
 		for x := range cells[y] {
-			cells[y][x] = b.Field.Tile(x, y)
+			cells[y][x] = b.Field.Tile(x, y+originalRowBias)
 		}
 	}
 	if next := v.lib.SubTilesFor(v.field, cells); next != nil {
@@ -460,6 +460,7 @@ func (v *View) buildDisplayList(b *tactical.Battle) []battleDisplayEntry {
 		frame = b.Frame
 	}
 	for _, banner := range v.banners {
+		// 旗由62列地形掃描而來；其餘動態物件已保存原版Y（spec57訂正）。
 		col, row := isoProject(banner.X, banner.Y, banner.Z)
 		// sub_1BB10 → sub_1DC03：一般高度用 base+phase*2；Z=6
 		// 的特殊分支用 base+8+phase，且兩者都只登錄一個 raw unit。
@@ -472,7 +473,7 @@ func (v *View) buildDisplayList(b *tactical.Battle) []battleDisplayEntry {
 	}
 	if b != nil {
 		for i, p := range b.Projectiles() {
-			col, row := isoProject(p.X, p.Y, p.Z)
+			col, row := isoProjectOriginal(p.X, p.Y, p.Z)
 			entries = append(entries, battleDisplayEntry{kind: displayProjectile,
 				col: col, row: row, cellCol: col - v.camCol, cellRow: row - v.camRow,
 				layer: p.Z, lane: 0, x: p.X, y: p.Y, z: p.Z,
@@ -482,7 +483,7 @@ func (v *View) buildDisplayList(b *tactical.Battle) []battleDisplayEntry {
 		// 倒地動畫：原版每幀由 `sub_1B360` 換一組圖重畫（docs/spec/68）。
 		// 圖號已經是「這一側這一幀該用哪一張」，直接走人物那條路。
 		for _, d := range b.Deaths() {
-			col, row := isoProject(d.X, d.Y, d.Z)
+			col, row := isoProjectOriginal(d.X, d.Y, d.Z)
 			raw := battle.CombinedSourceTerrainTiles + d.Sprite()*2
 			entries, order = v.appendTallDisplayUnits(entries, order, col, row,
 				d.X, d.Y, d.Z, raw)
@@ -493,7 +494,7 @@ func (v *View) buildDisplayList(b *tactical.Battle) []battleDisplayEntry {
 				if !s.Alive {
 					continue
 				}
-				col, row := isoProject(s.X, s.Y, s.Z)
+				col, row := isoProjectOriginal(s.X, s.Y, s.Z)
 				flags := int(s.PoseStep) & battle.PoseFlagStep
 				if s.HitGeneral {
 					flags |= battle.PoseFlagHitGeneral
@@ -573,7 +574,7 @@ const battleSmallUnit = 0x20
 // ⭐ **高度要含物件**（`+1`），不是只有地形那一份（`+3`）。
 // `sub_1DDB4` 取鄰格高度用的是 `+1`；只算 lane 0 的話，平地上
 // `z1 = 0`，兵的下半（第 1 層）就永遠畫不出來——**畫面上是半截人**
-//（docs/spec/88 §3）。地形記 `2z`、物件記 `2z+1`（`58` §1 的編碼）。
+// （docs/spec/88 §3）。地形記 `2z`、物件記 `2z+1`（`58` §1 的編碼）。
 //
 // `start`（`+2`）維持只看 lane 0 的小 unit：那一格記的是地面，
 // 物件不該把起始深度往上推。
@@ -734,7 +735,6 @@ func (v *View) drawDisplaySlice(dst *ebiten.Image, slots [2]battleDisplaySlot, s
 	}
 }
 
-
 // ProjectileSourceIndex 是原版 `sub_1AD2D`／`sub_1AD7F` 的 raw 圖號。
 // 這些值是合併圖形表索引，不是 BATTLE.SCH 的直接單位編號。
 func ProjectileSourceIndex(p tactical.ProjectileView) int {
@@ -743,7 +743,6 @@ func ProjectileSourceIndex(p tactical.ProjectileView) int {
 	}
 	return 0x210 + (p.Direction & 1)
 }
-
 
 // Options 是開一張戰場要的東西。
 type Options struct {

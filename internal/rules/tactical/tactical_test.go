@@ -366,7 +366,7 @@ func TestProjectileCooldownMatchesRawLaunchBranches(t *testing.T) {
 func TestRawPlaneHighAndTerrainFlag(t *testing.T) {
 	b := newTestBattle(walledField(32))
 	s := &b.Sides[0].Soldiers[1]
-	*s = Soldier{Alive: true, Kind: Infantry, X: 32, Y: 10, Z: 4}
+	*s = Soldier{Alive: true, Kind: Infantry, X: 32, Y: 10, Z: 4, OnWall: true}
 	s.syncTerrain(b.Field, s.X, s.Y, s.Z)
 	if s.PlaneHigh != PlaneHighElevated || !s.Climbing {
 		t.Fatalf("高位平面欄位錯誤：PlaneHigh=%#x climbing=%v", s.PlaneHigh, s.Climbing)
@@ -374,6 +374,7 @@ func TestRawPlaneHighAndTerrainFlag(t *testing.T) {
 	if !s.HighTerrain {
 		t.Fatal("堆疊 4 層的格子沒有設定 +0x00 bit 1 對應旗標")
 	}
+	s.OnWall = false
 	s.syncTerrain(b.Field, 10, 10, 0)
 	if s.PlaneHigh != PlaneHighGround || s.Climbing || s.HighTerrain {
 		t.Fatalf("回到地面後 raw terrain 沒清除：%+v", *s)
@@ -750,7 +751,7 @@ func TestRealSiegeFieldBattleTerminates(t *testing.T) {
 		t.Fatal(err)
 	}
 	const fieldNumber = 56 // 劇本 1 的濮陽，正常 AI 截圖所進的攻城場
-	f := NewFieldFromTiles(lib.Tiles(fieldNumber), lib.Heights(fieldNumber), lib.GateX(fieldNumber))
+	f := NewFieldFromTiles(lib.MinimapRows(fieldNumber), lib.Heights(fieldNumber), lib.GateX(fieldNumber))
 	b := NewBattle(f, forms, &fixedRand{seq: []int{1, 7, 3}}, 127)
 	b.Deploy(0, 0, Infantry, 16)
 	b.Deploy(1, 0, Infantry, 49)

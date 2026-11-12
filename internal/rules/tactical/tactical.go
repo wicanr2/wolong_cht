@@ -16,18 +16,15 @@ package tactical
 // （`sub_1BA2E`／`sub_1B047`，docs/re/11 §5.2）。
 const (
 	Width  = 64
-	Height = 62
+	Height = 64
 	Levels = 7
 
 	// 座標會被 `sub_1AACF` 夾在 1–62。
 	MinCoord = 1
 	MaxCoord = 62
 
-	// ⚠ **戰場只有 Height 列**（`BATTLE.MAP` 一張圖 62 列 × 64 行），
-	// 所以 Y 的上限比 `sub_1AACF` 的 62 少一格。原版的格子陣列是
-	// 64 × 64（每層 0x1000），最後兩列是空的；本專案只存 62 列，
-	// 用 MaxCoord 去索引會越界。**X 用 MaxCoord、Y 用 MaxY。**
-	MaxY = Height - 1
+	// 原版Y0為表頭、1–62為地形、63為尾段；規則保留完整緩衝（spec36）。
+	MaxY = MaxCoord
 )
 
 // 一側的編制：6 隊 × 8 人，每隊 1 隊長 ＋ 7 隊員
@@ -257,10 +254,11 @@ func (s *Soldier) Plane() int {
 	return PlaneLow
 }
 
-func (s *Soldier) syncTerrain(f *Field, x, y, z int) {
+func (s *Soldier) syncTerrain(f *Field, x, y, _ int) {
 	s.PlaneHigh = PlaneHighGround
 	s.Climbing = false
-	if z > 0 {
+	// 低平面斜坡可以Z>0；只有實際換平面才寫+1E=10h（spec36）。
+	if s.OnWall {
 		s.PlaneHigh = PlaneHighElevated
 		s.Climbing = true
 	}
@@ -486,7 +484,7 @@ func clamp(v int) int {
 	return v
 }
 
-// clampY 是 Y 的版本，上限是實際的列數（見 MaxY）。
+// clampY 使用原版有效Y範圍1–62，表頭與尾段不供士兵站立。
 func clampY(v int) int {
 	if v <= 0 {
 		return MinCoord

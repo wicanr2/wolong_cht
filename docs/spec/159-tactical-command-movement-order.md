@@ -73,6 +73,13 @@
 [新收據](../../workplace/scratch/ui-windows-20261104/cao-phase-integration.json)前73拍96槽27欄位、RNG與腳本狀態吻合，
 第74拍仍有鎖敵、地形及移動差異。本片沒有改腳本等待或取數，整體移動排程仍為READY。
 
+## 2026-11-12續片：規則列號與水平高度
+
+[spec36](36-ground-planes-and-climbing.md)補回64列原版Field及水平升降的StepZ／平面旗標，
+將本案逐兵吻合範圍延伸至前84拍；低平面4096bytes全等。
+[新收據](../../workplace/scratch/ui-windows-20261104/cao-ground-integration.json)保留第85拍槽73／79的StepZ差異，
+整體移動排程仍為READY，不把已完成的第74拍修正或未映射的高平面表重開為全表重寫。
+
 ## 已證實的流程
 
 | 原始定位／指令 | 附加語意與等級 | 證據 |

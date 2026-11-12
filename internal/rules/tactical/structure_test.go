@@ -217,7 +217,7 @@ func TestStructuresAgainstRealMap(t *testing.T) {
 	if err != nil {
 		t.Skip("找不到原版 BATTLE.MAP，跳過")
 	}
-	const idx, fieldSize, cellsOff, numFields = 512, 4096, 0x40, 214
+	const idx, fieldSize, numFields = 512, 4096, 214
 
 	var heights [256]int
 	for i := TileWallLo; i <= TileWallHi; i++ {
@@ -230,7 +230,7 @@ func TestStructuresAgainstRealMap(t *testing.T) {
 	siege, withWall, overflow := 0, 0, 0
 	for n := 0; n < numFields; n++ {
 		gateX := int(raw[n*2+1])
-		base := idx + n*fieldSize + cellsOff
+		base := idx + n*fieldSize
 		tiles := make([][]byte, Height)
 		for y := 0; y < Height; y++ {
 			tiles[y] = append([]byte(nil), raw[base+y*Width:base+(y+1)*Width]...)

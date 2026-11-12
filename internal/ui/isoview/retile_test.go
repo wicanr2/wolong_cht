@@ -15,7 +15,7 @@ import (
 // 展開的靜態副本，少了這一步就會「走得過去但牆還立著」。
 func TestBrokenStructureRepaintsTerrain(t *testing.T) {
 	read := func(n string) []byte {
-		b, err := os.ReadFile("../../workplace/orig/dosv/" + n)
+		b, err := os.ReadFile("../../../workplace/orig/dosv/" + n)
 		if err != nil {
 			t.Skip("找不到原版 " + n + "，跳過")
 		}
@@ -45,7 +45,7 @@ func TestBrokenStructureRepaintsTerrain(t *testing.T) {
 		t.Fatal("214 張戰場裡找不到任何城壁或門")
 	}
 
-	f := tactical.NewFieldFromTileLayers(lib.Tiles(field), lib.Heights(field),
+	f := tactical.NewFieldFromTileLayers(lib.MinimapRows(field), lib.Heights(field),
 		lib.TileLayers(field), lib.GateX(field))
 	b := &tactical.Battle{Field: f}
 	v := &View{lib: lib, set: lib.TileSet(field), field: field,
@@ -61,10 +61,10 @@ func TestBrokenStructureRepaintsTerrain(t *testing.T) {
 	}
 
 	delta := 0x10
-	if f.Tile(wx, wy) >= tactical.TileGateLo {
+	if f.Tile(wx, wy+originalRowBias) >= tactical.TileGateLo {
 		delta = 8
 	}
-	f.Retile(wx, wy, delta)
+	f.Retile(wx, wy+originalRowBias, delta)
 	if f.Revision() == 0 {
 		t.Fatal("Retile 之後版本沒有變，繪圖層不會知道要重畫")
 	}
@@ -80,11 +80,11 @@ func TestBrokenStructureRepaintsTerrain(t *testing.T) {
 }
 
 func tilesFromField(f *tactical.Field) [][]byte {
-	out := make([][]byte, tactical.Height)
+	out := make([][]byte, battle.Height)
 	for y := range out {
 		out[y] = make([]byte, tactical.Width)
 		for x := range out[y] {
-			out[y][x] = f.Tile(x, y)
+			out[y][x] = f.Tile(x, y+originalRowBias)
 		}
 	}
 	return out

@@ -6,6 +6,24 @@ import (
 	"testing"
 )
 
+func TestDynamicObjectsUseOriginalY(t *testing.T) {
+	for _, cam := range [][2]int{{36, 14}, {35, 14}, {36, 15}, {35, 15}} {
+		v := &View{camWorldX: cam[0], camWorldY: cam[1]}
+		v.applyCameraOrigin()
+		x, y, ok := v.ScreenPos(0, 0, cam[0], cam[1], 0)
+		if !ok || x != 0 || y != 0 {
+			t.Fatalf("原版物件原點%v被多加表頭列：(%d,%d)/%v", cam, x, y, ok)
+		}
+	}
+	v := &View{}
+	b := &tactical.Battle{}
+	b.Sides[0].Soldiers[0] = tactical.Soldier{Alive: true, X: 20, Y: 24}
+	entries := v.buildDisplayList(b)
+	if len(entries) != 2 || entries[0].col != 44 || entries[0].row != 34 {
+		t.Fatalf("原版(20,24,0)的物件投影應為(44,34)：%+v", entries)
+	}
+}
+
 func TestProjectileSourceIndex(t *testing.T) {
 	for _, tc := range []struct {
 		name string

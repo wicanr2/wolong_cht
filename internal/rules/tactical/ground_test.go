@@ -7,6 +7,38 @@ import (
 	"github.com/wicanr2/wolong_cht/internal/assets/battle"
 )
 
+func TestOriginalPlayableRowsInclude62(t *testing.T) {
+	if Height != 64 || MaxY != 62 || !inBounds(10, 62) || inBounds(10, 63) || clampY(63) != 62 {
+		t.Fatalf("原版有效Y應為1–62，緩衝64列：Height=%d MaxY=%d", Height, MaxY)
+	}
+	rows := make([][]int, 64)
+	for y := range rows {
+		rows[y] = make([]int, 64)
+	}
+	rows[62][10] = 1
+	f := NewField(rows, 0)
+	if z, ok := f.GroundLevel(10, 62, PlaneLow); !ok || z != 1 {
+		t.Fatalf("原版最後地形列的高度=%d/%v，應為1", z, ok)
+	}
+}
+
+func TestLowSlopeKeepsPlaneAndRelativeWaypointHeight(t *testing.T) {
+	rows := make([][]int, Height)
+	for y := range rows {
+		rows[y] = make([]int, Width)
+	}
+	rows[10][11] = 1
+	b := &Battle{Field: NewField(rows, 0)}
+	s := &b.Sides[0].Soldiers[1]
+	*s = Soldier{Alive: true, Kind: Infantry, X: 10, Y: 10, Z: 0, StepZ: 3}
+	if moved, _ := b.tryMove(0, 1, 11, 10, 0); !moved || s.Z != 1 || s.StepZ != 4 || s.PlaneHigh != 0 || s.OnWall || s.Climbing {
+		t.Fatalf("低平面上坡應同步中繼高度並保持平面：%+v", *s)
+	}
+	if moved, _ := b.tryMove(0, 1, 10, 10, 0); !moved || s.Z != 0 || s.StepZ != 3 || s.PlaneHigh != 0 {
+		t.Fatalf("低平面下坡應保留相對中繼高度：%+v", *s)
+	}
+}
+
 // realLib 載入原版戰場資料；沒有素材就跳過。
 func realLib(t *testing.T) *battle.Library {
 	t.Helper()
@@ -30,7 +62,7 @@ func realLib(t *testing.T) *battle.Library {
 
 func realField(t *testing.T, lib *battle.Library, n int) *Field {
 	t.Helper()
-	return NewFieldFromTileLayers(lib.Tiles(n), lib.Heights(n), lib.TileLayers(n), lib.GateX(n))
+	return NewFieldFromTileLayers(lib.MinimapRows(n), lib.Heights(n), lib.TileLayers(n), lib.GateX(n))
 }
 
 // 地面層要與機器碼演算法算出來的一樣（docs/re/63 §2）：
@@ -166,7 +198,6 @@ func TestSiegeWallBlocksUntilBroken(t *testing.T) {
 		}
 	}
 }
-
 
 // ⭐ 打壞城門那一格就開得出通道。
 //

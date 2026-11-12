@@ -817,7 +817,7 @@
 | [`spec/133-opening-deployment.md`](../spec/133-opening-deployment.md) | 走進陣形要走多久 | 原版節拍 9 已經散開，但沒有量過「全部到位」是第幾拍 | 靜態 | actionable | [#16](https://github.com/wicanr2/wolong_cht/issues/16) |
 | [`spec/133-opening-deployment.md`](../spec/133-opening-deployment.md) | 既有的戰場對拍會不會漂 | 現有的取樣點（`-battle-steps 120`）在兩邊都已經到位之後，**理論上不受影響**，但沒重跑過 | 靜態 | merge-target | [#12](https://github.com/wicanr2/wolong_cht/issues/12) |
 | [`spec/133-opening-deployment.md`](../spec/133-opening-deployment.md) | **移動層怎麼處理同格多兵** | 擋住接線的就是它（§3.5）。原版不查佔用，remake 的 `tryMove`／`anyoneAt` 以「一格一個兵」為前提 / 先讀原版的移動與碰撞判定，看它怎麼容許重疊 | 靜態 | actionable | [#16](https://github.com/wicanr2/wolong_cht/issues/16) |
-| [`spec/134-pathfind-wave-order.md`](../spec/134-pathfind-wave-order.md) | 完整導航與佔用成本的語意映射 | 第一筆全低平面表有586個導航旗標及26個成本值不同，原始成本含0、8、50、100；尚未逐項追寫入端與建立語意映射。本片只驗已到達的前40拍及12筆尋路，不由此開啟全表重寫或宣稱全場parity | 靜態 | evidence-only | — |
+| [`spec/134-pathfind-wave-order.md`](../spec/134-pathfind-wave-order.md) | 完整導航與佔用成本的語意映射 | 2026-11-12經spec36列號修正後，低平面4096個原始byte全等，舊586格殘差已消除；高平面仍有455個byte不同，尚未建立語意映射。先前26格成本差異未由本片重驗，語意映射仍保留限制；不由此開啟全表重寫或宣稱全場parity | 靜態 | evidence-only | — |
 | [`spec/135-script-message-command.md`](../spec/135-script-message-command.md) | 參數值 3 | `byte_1D349` 只會是 0／1／2，閘算得出 3 但沒有值對得上——沒有腳本用到，或是原版的死分支 | 靜態 | evidence-only | — |
 | [`spec/136-battle-talk-parameters.md`](../spec/136-battle-talk-parameters.md) | 參數超過兩個的訊息 | 戰場對白只推兩個。若有第三個標記，原版讀堆疊殘值，remake 丟棄整則 | 靜態 | merge-target | [#14](https://github.com/wicanr2/wolong_cht/issues/14) |
 | [`spec/137-builtin-symbol-font.md`](../spec/137-builtin-symbol-font.md) | （那 408 格**來自哪裡**仍未解。 | （散句） | 靜態 | evidence-only | — |

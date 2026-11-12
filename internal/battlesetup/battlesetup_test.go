@@ -36,9 +36,10 @@ func TestProviderLoadsExplicitSelectionForEveryEncounter(t *testing.T) {
 		number int
 		rotate bool
 	}{{193, true}, {210, false}, {82, true}, {211, false}, {193, false}} {
-		tiles, gate := p.lib.Tiles(tc.number), p.lib.GateX(tc.number)
+		tiles, gate := p.lib.MinimapRows(tc.number), p.lib.GateX(tc.number)
 		if tc.rotate {
-			tiles, gate = battle.Rotate180(tiles), battle.RotateGateX(gate)
+			copy(tiles[1:len(tiles)-1], battle.Rotate180(tiles[1:len(tiles)-1]))
+			gate = battle.RotateGateX(gate)
 		}
 		want := tactical.NewFieldFromTileLayers(tiles, p.lib.Heights(tc.number), p.lib.TileLayers(tc.number), gate)
 		got := s.Field(tc.number, tc.number < 192, tc.rotate)
@@ -75,6 +76,42 @@ func TestProviderSelectsFourOriginalScriptSlots(t *testing.T) {
 			if len(got) != tactical.ScriptCodeSize || !reflect.DeepEqual(got, p.lib.Script(tactic, tc.slot)) {
 				t.Fatalf("field=%d playerDefends=%v tactic=%d：腳本應取槽%d", tc.field, tc.defends, tactic, tc.slot)
 			}
+		}
+	}
+}
+
+func TestProviderKeepsOriginalRuleRows(t *testing.T) {
+	if _, err := os.Stat(original + "/KI.EXE"); err != nil {
+		t.Skip("缺少原版素材")
+	}
+	p, _, err := Load(Options{Dir: original})
+	if err != nil {
+		t.Fatal(err)
+	}
+	raw, err := os.ReadFile(original + "/BATTLE.MAP")
+	if err != nil {
+		t.Fatal(err)
+	}
+	const field = 76
+	block := raw[battle.IndexSize+field*battle.FieldSize : battle.IndexSize+(field+1)*battle.FieldSize]
+	for _, rotate := range []bool{false, true} {
+		f := p.BuildField(field, true, rotate)
+		for y := 0; y < 64; y++ {
+			for x := 0; x < 64; x++ {
+				want := block[y*64+x]
+				if rotate && y > 0 && y < 63 {
+					want = battle.RotateTile(block[(63-y)*64+63-x])
+				}
+				if got := f.Tile(x, y); got != want {
+					t.Fatalf("原版列號 field=%d rotate=%v (%d,%d)：%#x，應為%#x", field, rotate, x, y, got, want)
+				}
+			}
+		}
+	}
+	f := p.BuildField(field, true, false)
+	for _, tc := range []struct{ x, y, z int }{{55, 36, 0}, {55, 26, 1}, {55, 24, 1}} {
+		if z, ok := f.GroundLevel(tc.x, tc.y, tactical.PlaneLow); !ok || z != tc.z {
+			t.Fatalf("原版低平面(%d,%d)=%d/%v，應為%d", tc.x, tc.y, z, ok, tc.z)
 		}
 	}
 }
