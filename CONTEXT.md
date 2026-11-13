@@ -252,6 +252,7 @@ GPU最多兩頁快取，其他季節、液晶、未選頁與讀圖失敗沿原�
 
 | 日期／目前程式 | 最近驗證 | 狀態 | 交付物 |
 |---|---|---|---|
+| 2026-11-14；wlgame-cao-route157-r1 | 槽66原11點與8192個word搜尋成本全等；前159拍96槽27欄位／RNG／腳本及額外成本全表相同，剩餘點數同至160拍；七套件冷測／vet、舊錯版負對照、正常GUI69點／16圖通過 | 補回原版1BFDC換平面成本的word索引讀byte，消除157拍槽66差異。搜尋根、導航及回溯不改。下一差異為160拍槽71／85的移動／旗標；向高平面公式只有原指令與配置證據，本樣本15次成功換層均向低 | [spec134續片](docs/spec/134-pathfind-wave-order.md)、[收據](workplace/scratch/ui-windows-20261104/cao-route157-integration.json) |
 | 2026-11-14；wlgame-cao-fire-r1 | 前156拍96槽27欄位／腳本及剩餘點數全等；槽87同至162拍、完整RNG同至165拍、成本8192 bytes同至158拍；七套件冷測／vet、五類舊錯版負對照、正常GUI69點／16圖通過 | 高地形與高平面成立時登城令當拍攻擊，後續命令6回同處理器；射擊成功設動作圖號及硬直，依原版出口清除。原稱157拍受擊實為發射者自身硬直。157拍仍有槽66 StepXY／點數差異，159拍成本起不同；完整飛道具命中及戰果未驗收 | [spec159射擊續片](docs/spec/159-tactical-command-movement-order.md)、[收據](workplace/scratch/ui-windows-20261104/cao-fire-integration.json) |
 | 2026-11-13；wlgame-cao-climb-r1 | 原版槽87四次Z0→1→2→3→4重現；前156拍96槽27欄位／RNG／腳本及剩餘點數全等，成本同至157拍；七套件冷測／vet、舊錯版負對照、正常GUI69點／16圖通過 | 登城按StepZ方向每次±1，上爬立即設高平面、下降至Z0才清，嘗試前按門奇偶設面向。既有GroundLevel／遠層佔位閘保留；下降無原版動態抽樣。當時157拍槽87硬直等差異已由11/14續片證實為射擊；本列保留前輪界線 | [spec36續片](docs/spec/36-ground-planes-and-climbing.md)、[收據](workplace/scratch/ui-windows-20261104/cao-climb-integration.json) |
 | 2026-11-13；wlgame-cao-terrain-r1 | 前152拍96槽27欄位／RNG／腳本全等；成本及剩餘點數仍限153拍；七套件冷測／vet、舊錯版負對照、正常GUI69點／16圖通過 | 補上原版圖塊≥0xF0先清高地形旗標，消除152拍槽87差異。原版182筆主觀測及101筆命令收據逐byte不變，保留兩筆既有命令診斷。下一差異為153拍槽87 Z原版1、Go4，154拍成本／點數仍不同 | [spec62續片](docs/spec/62-swapped-unit-skips-its-turn.md)、[收據](workplace/scratch/ui-windows-20261104/cao-terrain-integration.json) |

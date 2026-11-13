@@ -1539,3 +1539,19 @@
 - [勘誤回填](workplace/scratch/ui-windows-20261104/cao-fire-backlinks.json)連回re11／21／36、spec36／62／63／200與戰鬥機制。保留原始funcs_1ACF6名稱，補1AD01四字表定位；命令6舊未知列改記已證入口及仍未驗收的下城限制。spec159本片CONFORMED，整體排程仍READY，未寫入或關閉Issue。五檔來源覆蓋包、binary、輸入與實際證據數見[來源收據](workplace/scratch/ui-windows-20261104/cao-fire-integration.json)，原版資料、IDA、binary及畫面留本機，不作Release。
 - 收尾通過嚴格未解、1143列分流、過期斷言及資產deny-list與正對照。索引生成582份文件／135條斷言；官方檢查仍因65個歷史本機缺失連結回傳1，與HEAD同工具比較新增0。引用掃描352筆既有缺失、新增0，缺席census.tsv的符號層未執行。只更新命令6那一列的指紋與理由，保留merge-target／Issue #16，其餘分流不動。
 - 收據腳本初次要求直接寫入位址，但規格僅有包含該位址的區間，補上1AD67／1ADB1精確定位後通過；引用掃描首次寫入唯讀工作樹失敗，將輸出統一至/output後同一容器命令乾淨重跑，未改產品。五檔來源覆蓋包、87份證據、輸入與IDA匯出SHA核對一致，正式資料庫未改。UID/GID1000:1000，root-owned及誤建.md目錄0；本輪容器已結束移除，未動其他專案資源。[收尾核對](workplace/scratch/ui-windows-20261104/cao-fire-final-checks.json)保存結果；依既有授權commit並push，提交與遠端核對另存本機repo-fire-update-20261114.json。
+
+## 2026-11-14：換平面尋路的word索引成本
+
+- 接續第157拍槽66 StepXY及剩餘點數差異。開工工作樹乾淨，主機gh核對Issue #16仍OPEN，本地verify通過。載入復古remake、規格閘門、文件職責、dosgolem與RE回填路由；依AGENTS規則由唯讀子代理核對舊證據及候選契約，未授權其改檔、建置、測試或提交。沿用既有Go／Ebiten image，不重建工具鏈。
+- 原版以相同正常曹操輸入與固定seed1重跑兩次，補槽66的156拍入口／成功／取首點三筆及內部62筆觀測。182筆主觀測與101筆命令收據皆與前片逐byte相同，保留第64／88步既有診斷。原版11點首點(46,31)、取後剩10；Go原首點(45,30)、剩6。兩邊成本表相同，完整替換原版導航也不改Go錯路，排除當次60-byte高平面殘差作充分解釋。
+- 唯讀審查先指出原版另有搜尋根挑選。新1BDD3實讀高平面(42,31)，與Go相同；1BE4A停止波數52，故本片不改根選擇。真正差異為1BFCD將BX還原word索引，1BFDC仍直接讀byte；一般XY分支則先除2。導航／額外成本／搜尋表實讀段35B3／37B3／39B3，均相隔200h paragraphs。
+- 目的低平面讀額外成本表2*cell，可跨低／高平面；目的高平面落在搜尋表低平面cell的低byte，FFFFh讀255。15次成功動態讀取均向低平面，實值全部符合倍索引；10次與一般格成本不同，含九筆50及一筆8，並非空場等價。向高平面保留原指令及配置推導等級，不宣稱本輪成功動態樣本。
+- 既有IDA9.4匯出含原始bytes，SHA78d2dd…57fb9與KI.EXE身分核對通過。歷史database.sha256及獨立DB不在工作區，不宣稱重新驗證缺席資料庫，也沒有重開IDA或改名。初次定位誤用pathfind.go，改沿實際path.go入口；資料庫身分檔查無即按既有原始匯出界線記錄，沒有建立替代假收據。
+- [隔離候選](workplace/scratch/ui-windows-20261104/cao-route157-candidate-isolate.jsonl)只改換層讀法，沿Go或原版導航均與原版8192個word搜尋成本及11點路徑全等，舊讀法有1481個word不同。[審查](workplace/scratch/ui-windows-20261104/cao-route157-review.json)補齊reverse限定、讀更新前低byte及倍索引跨表頭／邊框；spec134由DRAFT列READY後才接正式來源。
+- 正式path.go以typed回呼及目前搜尋節點表示上述讀值，沒有任意記憶體越界。只限明示終點平面的反向搜尋，保留goalPlane=-1相容helper、普通XY讀法、根選擇、導航、回溯、FIFO、force fallback、時間、UI與戰略存檔。新回歸涵蓋倍索引4032對低表(0,63)、4098對高表(2,0)、低byte／FFFFh及雙門選擇，也驗舊helper仍由等距北門下降。
+- [七套件冷測／vet／建置](workplace/scratch/ui-windows-20261104/cao-route157-tests.log)通過。舊來源只補helper供目前測試編譯，仍因雙門選路斷言失敗，負對照有效。[正式證據](workplace/scratch/ui-windows-20261104/cao-route157-evidence.json)確認主串流與候選逐byte相同，前159拍96槽27欄位／RNG／腳本及8192-byte額外成本全等；剩餘點數同至160拍，完整RNG同至165拍。第160拍槽71／85的移動、旗標與成本差異沿Issue #16保留，不追入本片。
+- [正常滑鼠](workplace/scratch/ui-windows-20261104/cao-route157-remake-gui.json)69個功能／同步檢查點、16圖通過，含重複同步。曹操第一劇本宣戰呂布、編夏侯淵、停手行軍、途中存讀檔、自然在椎陽入戰、改線、登城、突擊與退卻返回。登城211→217拍指標不動，主將X29→35、Goal保持(42,32,4)；已目視單兵、城牆、側欄及底列指令。不代證原版同拍畫面、許昌留守、完整戰果、投射物／架梯或手機GUI。
+- [回填表](workplace/scratch/ui-windows-20261104/cao-route157-backlinks.json)連回re11／63、spec36／159與戰鬥機制；[來源收據](workplace/scratch/ui-windows-20261104/cao-route157-integration.json)保存兩檔來源覆蓋包、binary、原版輸入與實際證據數。spec134本片CONFORMED，整體Issue #16仍未完成，未寫入或關閉Issue。原版資料、IDA匯出、binary與畫面留本機，不作Release。
+- 收尾通過嚴格未解、1143列分流、過期斷言及資產deny-list與正對照。只更新完整導航限制一列的指紋與理由，保留evidence-only分類。索引仍有65個歷史本機缺失連結；引用掃描352筆既有缺失、323個唯一引用，與HEAD同工具比較新增0。缺席census.tsv的符號層未執行，不宣稱全庫全綠。
+- 官方tools/check.sh --docs初次容器轉接誤用含斜線的shell alias，入口失敗並暫時清空生成未解表。已保留失敗日誌，以唯讀Python轉接腳本掛到容器內既有wrapper位置，重生並核對1143列後乾淨重跑；主機wrapper未改，沒有在主機跑工作負載。官方入口仍因上述既有索引／引用缺件回傳1，補充檢查與差量通過，未當成產品缺陷。
+- 兩檔來源覆蓋包、102份證據、原版輸入與既有IDA匯出SHA核對一致，UID/GID1000:1000，root-owned及誤建.md目錄0。本輪容器已結束移除，沒有重建image或動其他專案資源。[收尾核對](workplace/scratch/ui-windows-20261104/cao-route157-final-checks.json)保存範圍；依既有授權commit並push，提交與遠端核對另存本機repo-route157-update-20261114.json。

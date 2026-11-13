@@ -2,6 +2,90 @@ package tactical
 
 import "testing"
 
+func TestPathPlaneCostWordIndexBounds(t *testing.T) {
+	nodes := make([]pathNode, 2*Width*Height)
+	for _, tc := range []struct{ x, y, wantX, wantY, wantPlane int }{
+		{31, 31, 62, 62, PlaneLow},
+		{32, 31, 0, 63, PlaneLow},
+		{1, 32, 2, 0, PlaneHigh},
+		{63, 63, 62, 63, PlaneHigh},
+	} {
+		called := false
+		got := planeChangePenalty(nodes, tc.x, tc.y, PlaneLow, func(x, y, plane int) int {
+			called = true
+			if x != tc.wantX || y != tc.wantY || plane != tc.wantPlane {
+				t.Fatalf("換層成本讀(%d,%d,%d)，應為(%d,%d,%d)", x, y, plane, tc.wantX, tc.wantY, tc.wantPlane)
+			}
+			return 50
+		})
+		if !called || got != 50 {
+			t.Fatal("倍索引必須讀實際成本表，不能丟棄外框")
+		}
+	}
+	for _, cost := range []int{0x1234, unreached, 0} {
+		nodes[30*Width+20].cost = cost
+		nodes[Width*Height+30*Width+20].cost = 0x78
+		got := planeChangePenalty(nodes, 20, 30, PlaneHigh, func(int, int, int) int {
+			t.Fatal("往高平面應讀搜尋表低byte，不讀額外成本回呼")
+			return 0
+		})
+		if got != cost&255 {
+			t.Fatalf("搜尋成本%X的低byte=%d，得到%d", cost, cost&255, got)
+		}
+	}
+}
+
+func TestPathPlaneCostChangesGateChoice(t *testing.T) {
+	f := flatField()
+	const gateX = 20
+	for y := 20; y <= 40; y++ {
+		f.lvl[PlaneHigh][y][gateX] = 4
+		if y > 20 {
+			f.nav[PlaneHigh][y][gateX] |= navUp
+		}
+		if y < 40 {
+			f.nav[PlaneHigh][y][gateX] |= navDown
+		}
+	}
+	for _, y := range []int{20, 40} {
+		f.nav[PlaneLow][y][gateX] |= navGate
+		f.nav[PlaneHigh][y][gateX] |= navGate
+	}
+	// 北門的倍索引落在低表(40,40)，該格不在本次步行區域內。
+	penalty := func(x, y, plane int) int {
+		if plane == PlaneLow && x == 40 && y == 40 {
+			return 100
+		}
+		return 0
+	}
+	from, to := Point{X: 10, Y: 30}, Point{X: 20, Y: 30}
+	got := f.findPathForPlaneCosts(from, to, PlaneLow, PlaneHigh, true, penalty, nil)
+	found := false
+	for _, p := range got {
+		if p.HasZ {
+			if p.X != gateX || p.Y != 40 || p.Z != 4 {
+				t.Fatalf("應依倍索引成本選南門，得到%v", got)
+			}
+			found = true
+			break
+		}
+	}
+	if !found {
+		t.Fatalf("缺少南門獨立Z點：%v", got)
+	}
+	// 未明示終點平面的舊helper仍沿一般成本，由等距北門下降。
+	legacy := f.findPathForPlaneCosts(to, from, PlaneHigh, -1, true, penalty, nil)
+	for _, p := range legacy {
+		if p.HasZ {
+			if p.Y != 20 || p.Z != 0 {
+				t.Fatalf("相容helper不應改用倍索引：%v", legacy)
+			}
+			return
+		}
+	}
+	t.Fatalf("相容helper缺少下降點：%v", legacy)
+}
+
 // 此加權小地形釘住spec134的逆向展開與成本回溯，不需原版素材。
 func TestPathExplicitPlaneUsesOriginalCostBacktrace(t *testing.T) {
 	stack := make([][]int, Height)

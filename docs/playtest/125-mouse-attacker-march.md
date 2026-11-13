@@ -19,9 +19,21 @@
 - 遭遇契約：[spec175](../spec/175-encounter-standoff-countdown.md)、
   [spec186](../spec/186-standoff-corps-before-city.md)。本次不修改遊戲執行邏輯。
 
+## 2026-11-14：換平面尋路成本
+
+最新程式`wlgame-cao-route157-r1`補原版換層的word索引成本讀法，契約見[spec134](../spec/134-pathfind-wave-order.md)。
+[正常滑鼠](../../workplace/scratch/ui-windows-20261104/cao-route157-remake-gui.json)69個功能／同步檢查點、16圖通過，含重複同步。
+流程含曹操第一劇本宣戰呂布、編夏侯淵、停手行軍、途中存讀檔、自然在椎陽入戰、改線、登城、突擊與退卻返回。
+登城211→217拍指標不動，主將X29→35、Goal保持(42,32,4)；
+[實際畫面](../../workplace/scratch/ui-windows-20261104/cao-route157-remake-scale-wall.png)已目視單兵、城牆、側欄及底列指令。
+[正式證據](../../workplace/scratch/ui-windows-20261104/cao-route157-evidence.json)前159拍96槽27欄位／RNG／腳本及額外成本全表相同，
+剩餘點數同至160拍，槽66完整11點及8192個word搜尋成本吻合。下一差異為160拍槽71／85的移動與旗標。
+[來源收據](../../workplace/scratch/ui-windows-20261104/cao-route157-integration.json)保存兩檔來源及原版輸入。
+向高平面成本公式限原指令／配置推導；不代證許昌留守、原版同拍畫面、整場戰果、完整投射物／架梯或手機GUI。
+
 ## 2026-11-14：城上攻擊與射擊硬直
 
-最新程式`wlgame-cao-fire-r1`接回登城後同拍攻擊及發射成功圖號／硬直，契約見[spec159](../spec/159-tactical-command-movement-order.md)。
+前輪程式`wlgame-cao-fire-r1`接回登城後同拍攻擊及發射成功圖號／硬直，契約見[spec159](../spec/159-tactical-command-movement-order.md)。
 [正常滑鼠](../../workplace/scratch/ui-windows-20261104/cao-fire-remake-gui.json)69個功能／同步檢查點、16圖通過，含重複同步。
 流程含曹操第一劇本宣戰呂布、編夏侯淵、停手行軍、途中存讀檔、自然在椎陽入戰、改線、登城、突擊與退卻返回。
 登城210→216拍指標不動，主將X28→34、Goal保持(42,32,4)；

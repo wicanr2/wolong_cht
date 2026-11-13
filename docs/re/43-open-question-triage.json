@@ -14860,15 +14860,15 @@
     {
       "file": "docs/spec/134-pathfind-wave-order.md",
       "item": "完整導航與佔用成本的語意映射",
-      "status": "2026-11-13雙平面成本按主要生命週期接線，前153拍8192 bytes全等；第154拍起仍有差異。低平面導航4096 bytes的既有全等不變，高平面仍有60-byte殘差。尚未建立完整戰況與全部地形的語意映射，不由本片宣稱全場parity",
+      "status": "2026-11-14換層word索引正式修正後，前159拍8192-byte成本全等，第160拍起仍有差異。低平面導航4096 bytes的既有全等不變，高平面仍有60-byte殘差。尚未建立完整戰況與全部地形的語意映射，不由本片宣稱全場parity",
       "section": "未解與限制",
       "domain": "其他",
       "verdict": "靜態",
       "occurrence": 0,
-      "id": "oq-ae040b66af603f6308fb",
+      "id": "oq-9203b6cb8442d0f19b29",
       "classification": "evidence-only",
       "github_issue": null,
-      "reason": "保留完整導航與後段戰況的證據邊界；成本窄片已驗證，玩家排程工作沿Issue #16另列，本列不形成新工作。"
+      "reason": "換層成本窄片已驗證；完整導航與後段戰況仍保留證據限制，玩家排程沿Issue #16，本列不形成新工作。"
     }
   ]
 }

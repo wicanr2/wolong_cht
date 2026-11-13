@@ -180,15 +180,21 @@ func (f *Field) findPathForPlaneCosts(from, to Point, startPlane, goalPlane int,
 		} else {
 			plane := cur / cells
 			cx, cy := cur%cells%Width, cur%cells/Width
-			push := func(nx, ny, np, extra int) {
+			push := func(nx, ny, np, extra int, transition bool) {
 				n := idx(nx, ny, np)
 				// `cmp dx, [bx-2] / jnb ret`
 				if wave >= nodes[n].cost {
 					return
 				}
+				var occupancy int
+				if reverse && transition {
+					occupancy = planeChangePenalty(nodes, nx, ny, np, penalty)
+				} else {
+					occupancy = penalty(nx, ny, np)
+				}
 				// `add ax, dx`：新成本 ＝ **波數** ＋ 那一格的成本。
 				// 平面切換的高度差走 extra（原版是另一支的加法）。
-				nodes[n] = pathNode{cost: wave + extra + penalty(nx, ny, np), from: cur}
+				nodes[n] = pathNode{cost: wave + extra + occupancy, from: cur}
 				queue = append(queue, n)
 			}
 			for _, d := range navSteps {
@@ -202,7 +208,7 @@ func (f *Field) findPathForPlaneCosts(from, to Point, startPlane, goalPlane int,
 					!(plane == PlaneLow && f.breachLinked(cx, cy, nx, ny, force)) {
 					continue
 				}
-				push(nx, ny, plane, 0)
+				push(nx, ny, plane, 0, false)
 			}
 			// 換平面：只有門格可以，而且只有爬得上去的兵種
 			// （`sub_1AF69` 的 `cmp [si+4], 12h`，docs/re/63 §4）。
@@ -214,7 +220,7 @@ func (f *Field) findPathForPlaneCosts(from, to Point, startPlane, goalPlane int,
 				zHere, okHere := f.GroundLevel(cx, cy, plane)
 				zThere, okThere := f.GroundLevel(cx, cy, other)
 				if okHere && okThere {
-					push(cx, cy, other, abs(zThere-zHere))
+					push(cx, cy, other, abs(zThere-zHere), true)
 				}
 			}
 		}
@@ -437,4 +443,16 @@ func (w *Waypoints) Len() int {
 		return 0
 	}
 	return len(w.pts) - w.i
+}
+
+// planeChangePenalty 保留1BFCD／1BFDC的word索引讀byte，見spec134。
+// 目的低平面讀倍索引的額外成本；目的高平面落在搜尋表低平面的低byte。
+func planeChangePenalty(nodes []pathNode, x, y, plane int, penalty planePenalty) int {
+	cell := y*Width + x
+	if plane == PlaneHigh {
+		return nodes[cell].cost & 0xff
+	}
+	offset := 2 * cell
+	const cells = Width * Height
+	return penalty(offset%Width, offset%cells/Width, offset/cells)
 }
