@@ -21,7 +21,16 @@
 
 ## 2026-11-13：登城首拍與高層讀取
 
-最新程式`wlgame-cao-impact-r1`修正水平撞牆後仍試其他軸及面向寫入太晚，並保留尋路請求，契約見[spec159本片](../spec/159-tactical-command-movement-order.md)。
+最新程式`wlgame-cao-waypoint-r1`補回換鎖敵時的路徑刷新，契約見[spec159鎖敵續片](../spec/159-tactical-command-movement-order.md)。
+[正常滑鼠](../../workplace/scratch/ui-windows-20261104/cao-waypoint-remake-gui.json)69個功能／同步檢查點、16圖通過，含重複同步。
+曹操開局宣戰呂布、編夏侯淵、停手行軍、途中存讀檔，自然在椎陽入戰後改線、登城、突擊及主動退卻返回。
+登城190→196拍滑鼠未動，主將X11→17，Goal保持(42,32,4)；[實際畫面](../../workplace/scratch/ui-windows-20261104/cao-waypoint-remake-scale-wall.png)已目視核對。
+[規則證據](../../workplace/scratch/ui-windows-20261104/cao-waypoint-evidence.json)前151拍96槽27欄位、RNG及腳本吻合，
+完整路徑點數仍於150／151拍槽55不同，152拍槽87的HighTerrain也不同。
+已用同導航、只換原版成本的隔離探針定位該點數差異，不將探針接入正式遊戲。
+[來源收據](../../workplace/scratch/ui-windows-20261104/cao-waypoint-integration.json)保存範圍；不代證整場同拍畫面、許昌留守、完整架梯／投射物或手機GUI。
+
+前輪程式`wlgame-cao-impact-r1`修正水平撞牆後仍試其他軸及面向寫入太晚，並保留尋路請求，契約見[spec159本片](../spec/159-tactical-command-movement-order.md)。
 [正常滑鼠](../../workplace/scratch/ui-windows-20261104/cao-impact-remake-gui.json)69個功能／同步檢查點、16圖通過，含重複同步。
 正常曹操開局、宣戰呂布、編夏侯淵、停手行軍及途中存讀檔，自然在椎陽入戰，改線後實際點登城令。
 第200→206拍指標固定，主將X18→24，Goal保持(42,32,4)，之後突擊、主動退卻返回。

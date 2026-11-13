@@ -1474,3 +1474,15 @@
 - [正常滑鼠](workplace/scratch/ui-windows-20261104/cao-impact-remake-gui.json)69個功能／同步檢查點、16圖通過，包含重複同步。曹操第一劇本宣戰呂布、編夏侯淵、停手行軍、途中存讀檔、自然遇敵、改線、實際登城、突擊與主動退卻返回。第200→206拍指標不動，主將X18→24、Goal保持(42,32,4)；已目視登城畫面的單兵、城牆及底列指令。不代證夏侯淵守許昌、整場原版同拍畫面、架梯、投射物或手機GUI。
 - [回填表](workplace/scratch/ui-windows-20261104/cao-impact-backlinks.json)勘誤re11、re80、spec120、spec93及舊測量。1C653佇列本身原已解，本次只補結構物呼叫前提與CF出口；刪除兩筆已解的證據索引列，保留其他分流。spec159本片CONFORMED，整體排程仍READY。三檔來源、binary、實際證據數與原版輸入見[來源收據](workplace/scratch/ui-windows-20261104/cao-impact-integration.json)。素材、IDA、binary及截圖留本機，不作Release。
 - 收尾通過索引582份文件／135條斷言、嚴格未解與分流1143列、過期斷言及資產deny-list與正對照。引用掃描保留原有204筆歷史workplace缺件，與HEAD同工具比較新增0；缺席census.tsv的歷史符號層未執行，不宣稱全庫全綠。來源覆蓋包、實際證據、原版輸入與IDA資料庫SHA一致，UID/GID1000:1000，root-owned及誤建.md目錄0。本輪容器已結束移除，未動其他專案資源。[收尾核對](workplace/scratch/ui-windows-20261104/cao-impact-final-checks.json)保存結果。依既有指示commit並push，遠端核對另存本機repo-impact-update-20261113.json。
+
+## 2026-11-13：換鎖敵時刷新追擊路徑
+
+- 接續Issue #16的150拍槽54差異，核對現況表、五張證據入口、GitHub Issue仍OPEN及本地verify。命中並載入復古remake、spec閘門、IDA9.4、文件職責與RE回填路由。依專案AGENTS規則派唯讀子代理核對舊證據與DRAFT，不授權編輯、建置或收尾。沿用既有image與全滑鼠選項。
+- 原版補取145–152拍48筆尋路及149–151拍39筆鎖敵／消費觀測；兩次相同正常曹操輸入、固定seed1重播，182筆主觀測均與前片逐byte相同。149拍槽54尋路成功且已取首點，否定尋路失敗／force假說；150拍敵人11→13時原版設bit3，再由騎兵清舊路徑、Step改(5,26)。Go只接傳令產生端，漏掉換鎖敵產生端。
+- 新IDA9.4原指令證實1A8BB比較舊敵，1A8C0只在改變時設bit3，1A8C3寫新敵；相同敵人不清既有刷新要求。spec159本片由DRAFT經原版指令、動態軌跡及獨立審查列READY後，正式只補有效候選變更時設TargetRefresh。既有兵種動作消費，無敵人防護、初始化、存檔、時間、UI、尋路及force不變。沒有外推所有bit3產生端或消費後攻擊返回時序一致。
+- [七套件冷測／vet／建置](workplace/scratch/ui-windows-20261104/cao-waypoint-tests.log)通過；雙側三兵種、攻擊／突擊／守陣涵蓋同敵保路、同敵移位、換敵清路，獨立鎖敵驗既有旗標保留與無敵人防護。舊程式實際因換敵未清路的斷言被拒絕。正式受控重播前151拍96槽27欄位、完整RNG及腳本三欄吻合，第152拍槽87的HighTerrain仍不同。
+- 額外逐拍比路徑點數，150／151拍槽55原版剩4、Go剩3，因此不把151拍27欄抽驗當成完整路徑一致。原版149拍低平面比士兵表多20格結構物成本，11格城壁100、9格門50；固定相同導航，只換原版成本即可重現完整五點。既有IDA資料亦有19D6C／19DE8候選寫入，完整DS／SI與覆寫生命週期未由本片驗完，不直接猜補正式成本。限制、隔離探針及勘誤入口為[spec134](docs/spec/134-pathfind-wave-order.md)，沿既有#16處理。
+- [正常滑鼠](workplace/scratch/ui-windows-20261104/cao-waypoint-remake-gui.json)69個功能／同步檢查點、16圖通過，含重複同步。曹操開局宣戰呂布、編夏侯淵、停手行軍、途中存讀檔、自然在椎陽入戰、改線、實際登城、突擊與主動退卻返回。登城190→196拍滑鼠未動，主將X11→17、Goal保持(42,32,4)；已目視單兵、城牆及底列指令。不代證許昌留守、整場同拍畫面、架梯／投射物或手機GUI。
+- 首次比較誤讀仍在寫入的原版觀測，停在KeyError140；改讀事先凍結的相同182筆參考，收尾另核對新原版逐byte相同，沒有平移拍點或重擲。IDA技能安裝連結指向官方工具專案，初次容器僅掛codex目錄無法解連結；補正唯讀掛載後載入正式技能與工具文件，沿用已驗證py312-v1，沒有另建image。這些是驗證環境問題，未改玩家程式繞過。
+- [正式證據](workplace/scratch/ui-windows-20261104/cao-waypoint-evidence.json)、[回填表](workplace/scratch/ui-windows-20261104/cao-waypoint-backlinks.json)及[來源收據](workplace/scratch/ui-windows-20261104/cao-waypoint-integration.json)保存三檔來源覆蓋包、binary、原版輸入與實際證據數。spec159本片CONFORMED、整體仍READY；未寫入或關閉Issue。原版資料、IDA、binary與截圖留本機，不作Release。
+- 收尾通過索引582份文件／135條斷言、嚴格未解及1143列分流、過期斷言與資產deny-list及正對照。生成索引只有日期由11/12更新11/13，輔助腳本最初把日期也當內容凍結；核對差量後只容許日期更新，全部證據列與分流不變。引用掃描維持原有204筆歷史缺件、新增0，缺席census.tsv的歷史符號層未執行。來源覆蓋包、原版輸入及IDA資料庫SHA核對一致，UID/GID1000:1000，root-owned與誤建.md目錄0；本輪容器均結束移除，未動其他專案資源。[收尾核對](workplace/scratch/ui-windows-20261104/cao-waypoint-final-checks.json)保存範圍。依既有授權commit並push，遠端核對另存本機repo-waypoint-update-20261113.json。

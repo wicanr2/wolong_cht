@@ -31,6 +31,10 @@ func (b *Battle) lockOnNearest(side, k int) {
 			best, bestD = i, d
 		}
 	}
+	// 1A8BB–1A8C3：換鎖敵時要求兵種處理器刷新中繼點，沿用同一敵人則保留繞路。
+	if best >= 0 && me.Target != best {
+		me.TargetRefresh = true
+	}
 	me.Target = best
 }
 

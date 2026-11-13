@@ -2,6 +2,65 @@ package tactical
 
 import "testing"
 
+func TestTargetChangeRefreshesAttackPath(t *testing.T) {
+	for side := 0; side < 2; side++ {
+		for _, kind := range []Kind{Cavalry, Archer, Infantry} {
+			for _, order := range []Command{Attack, Charge, Guard} {
+				b := NewBattle(flatField(), SyntheticFormations(), &fixedRand{}, 0)
+				s := &b.Sides[side].Soldiers[1]
+				*s = Soldier{Alive: true, Kind: kind, X: 45, Y: 27, Target: 0,
+					Cmd: order, Next: order, Stamina: 28, StepX: 45, StepY: 16, StepZ: 3}
+				foes := &b.Sides[1-side].Soldiers
+				foes[0] = Soldier{Alive: true, X: 5, Y: 26}
+				foes[1] = Soldier{Alive: true, X: 1, Y: 1}
+				path := &Waypoints{pts: []Point{{X: 45, Y: 16}, {X: 5, Y: 26}}, i: 1}
+				s.Path = path
+				b.updateSoldierCommand(side, 1)
+				if s.Target != 0 || s.TargetRefresh || s.Path != path || s.StepX != 45 || s.StepY != 16 || s.StepZ != 3 {
+					t.Fatalf("側%d兵種%d命令%d同敵人應保留繞路：%+v", side, kind, order, *s)
+				}
+				foes[0].Y = 25
+				b.updateSoldierCommand(side, 1)
+				if s.Target != 0 || s.Path != path || s.StepY != 16 || s.TargetRefresh {
+					t.Fatal("同敵人移位不可當成換目標")
+				}
+				foes[0].X, foes[0].Y = 1, 1
+				foes[1].X, foes[1].Y = 5, 26
+				b.updateSoldierCommand(side, 1)
+				x, y := 5, 26
+				if kind == Archer {
+					x, y = s.X, s.Y
+				}
+				if s.Target != 1 || s.TargetRefresh || s.Path != nil || s.StepX != x || s.StepY != y || s.StepZ != 0 || s.Cmd != order {
+					t.Fatalf("側%d兵種%d命令%d換敵人須由兵種處理器刷新並清路：%+v", side, kind, order, *s)
+				}
+			}
+		}
+	}
+}
+
+func TestLockOnPreservesPendingRefreshAndPath(t *testing.T) {
+	for side := 0; side < 2; side++ {
+		b := NewBattle(flatField(), SyntheticFormations(), nil, 0)
+		s := &b.Sides[side].Soldiers[1]
+		*s = Soldier{Alive: true, Kind: Infantry, X: 45, Y: 27, Target: 0,
+			TargetRefresh: true, StepX: 45, StepY: 16}
+		b.Sides[1-side].Soldiers[0] = Soldier{Alive: true, X: 5, Y: 26}
+		path := &Waypoints{pts: []Point{{X: 5, Y: 26}}}
+		s.Path = path
+		b.lockOnNearest(side, 1)
+		if !s.TargetRefresh || s.Path != path || s.StepY != 16 {
+			t.Fatal("鎖敵不可清除既有刷新要求，也不可提早消費或刪路")
+		}
+		b.Sides[1-side].Soldiers[0].Alive = false
+		s.Target, s.TargetRefresh = -1, false
+		b.lockOnNearest(side, 1)
+		if s.Target != -1 || s.TargetRefresh || s.Path != path {
+			t.Fatal("沒有有效敵人時沿用既有防護，不新增刷新或刪路")
+		}
+	}
+}
+
 func TestScaleOrderKeepsGoalAcrossDetour(t *testing.T) {
 	lib := realLib(t)
 	for side := 0; side < 2; side++ {

@@ -141,7 +141,7 @@ const (
 
 // Soldier 是一個兵。欄位對應原版的 32 byte 記錄（docs/re/11 §5.8l）。
 type Soldier struct {
-	TargetRefresh bool // 原版+0x00 bit3，命令傳遞要求重設攻擊中繼點。
+	TargetRefresh bool // 原版+0x00 bit3，換鎖敵或傳令要求重設攻擊中繼點。
 	Alive         bool
 	Kind          Kind
 	HP            int
