@@ -71,7 +71,6 @@ func (b *Battle) updateSoldier(side, k int) {
 // updateSoldierCommand 在移動與硬直閘之前執行（docs/spec/159）。
 func (b *Battle) updateSoldierCommand(side, k int) {
 	s := &b.Sides[side].Soldiers[k]
-	s.HitGeneral = false
 	b.lockOnNearest(side, k)
 	changed := s.applyNewOrder()
 
@@ -80,7 +79,7 @@ func (b *Battle) updateSoldierCommand(side, k int) {
 		b.doFormation(side, k)
 	case Attack, Charge:
 		b.doAttack(side, k)
-	case ScaleWal:
+	case ScaleWal, wallAttack:
 		b.doScaleWall(side, k, changed)
 	case Guard:
 		b.doGuard(side, k)
@@ -120,6 +119,7 @@ func (b *Battle) updateSoldierMovement(side, k int) {
 	if s.Stun > 0 {
 		if s.Stun--; s.Stun == 0 {
 			s.Hurt = false
+			s.HitGeneral = false
 		}
 		s.PoseStep ^= 1
 		return
@@ -179,7 +179,8 @@ func (b *Battle) doAttackAction(side, k int) {
 	}
 	e := &b.Sides[1-side].Soldiers[s.Target]
 	// 原版+0x00 bit3獨立於Cmd變更，重複傳令也能要求刷新。
-	if s.TargetRefresh {
+	refreshed := s.TargetRefresh
+	if refreshed {
 		x, y, z := e.X, e.Y, e.Z
 		if s.Kind == Archer {
 			x, y, z = s.X, s.Y, s.Z
@@ -187,6 +188,9 @@ func (b *Battle) doAttackAction(side, k int) {
 		s.StepX, s.StepY, s.StepZ = x, y, z
 		s.Path = nil
 		s.TargetRefresh = false
+		if s.Kind == Archer {
+			s.GoalX, s.GoalY, s.GoalZ = x, y, z
+		}
 	}
 
 	if s.IsGeneral() && s.Cmd == Attack {
@@ -195,7 +199,9 @@ func (b *Battle) doAttackAction(side, k int) {
 		return
 	}
 	if s.Kind == Archer {
-		s.GoalX, s.GoalY, s.GoalZ = s.X, s.Y, s.Z // 弓兵不動
+		if !refreshed {
+			s.GoalX, s.GoalY = e.X, e.Y
+		}
 		b.shoot(side, k, e)
 		return
 	}
@@ -209,9 +215,14 @@ func (b *Battle) doAttackAction(side, k int) {
 	}
 }
 
-// doScaleWall 是命令3；1AB4A–1AB78只在新命令時固定目標與中繼點。
+// doScaleWall 是命令3／內部6；城上當拍攻擊，其他情況只在新命令時固定目標。
 func (b *Battle) doScaleWall(side, k int, changed bool) {
 	s := &b.Sides[side].Soldiers[k]
+	if s.HighTerrain && s.planeHigh() != 0 {
+		s.Next = wallAttack
+		b.doAttack(side, k)
+		return
+	}
 	if changed {
 		x := b.Field.GateX()
 		s.GoalX, s.GoalY = clamp(x), s.Y
@@ -222,9 +233,6 @@ func (b *Battle) doScaleWall(side, k int, changed bool) {
 			s.GoalZ = b.standZ(s, s.GoalX, s.GoalY)
 		}
 		s.StepX, s.StepY, s.StepZ = s.GoalX, s.GoalY, s.GoalZ
-	}
-	if s.X == s.GoalX && s.Z == s.GoalZ {
-		s.Cmd, s.Next = Attack, Attack // 上去了就轉成攻擊
 	}
 }
 
@@ -360,6 +368,7 @@ func (b *Battle) moveToward(side, k int) {
 			applyWaypoint(s, p)
 		} else {
 			s.MoveFlag = false
+			s.HitGeneral = false
 			b.faceLockedTarget(side, s)
 			if s.Target >= 0 && s.Target < len(b.Sides[1-side].Soldiers) {
 				e := &b.Sides[1-side].Soldiers[s.Target]
@@ -550,6 +559,7 @@ func (b *Battle) computePath(side, k int) {
 // 呼叫端要靠它決定要不要重算繞路：撞到兵可以靠對調解決，撞到地形不行。
 func (b *Battle) tryMove(side, k, x, y, z int) (handled, walled bool) {
 	s := &b.Sides[side].Soldiers[k]
+	s.HitGeneral = false
 	if !inBounds(x, y) {
 		return false, true
 	}
@@ -642,6 +652,7 @@ func (b *Battle) tryClimb(side, k int) bool {
 		face ^= 1
 	}
 	s.Facing = face << 1
+	s.HitGeneral = false
 	if b.Field.GateBlocksHighPlane(s.X, s.Y) {
 		// ⭐ **爬不上去的那一下要打門**（docs/spec/98）。原版
 		// `sub_1B186` 回報「上一層有實體」時把實體編號留在 al，

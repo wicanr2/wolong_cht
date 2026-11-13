@@ -1525,3 +1525,17 @@
 - [正常滑鼠](workplace/scratch/ui-windows-20261104/cao-climb-remake-gui.json)69個功能／同步檢查點、16圖通過，曹操第一劇本宣戰呂布、編夏侯淵、停手行軍、途中存讀檔、自然在椎陽入戰、改線、登城、突擊及退卻返回。登城197→203拍指標不動、主將X19→25、Goal保持(42,32,4)；已目視城牆、單兵、側欄及底列指令。不代證原版同拍畫面、許昌留守、下降動態、完整戰果、架梯／投射物或手機GUI。
 - [回填表](workplace/scratch/ui-windows-20261104/cao-climb-backlinks.json)連回re11／63、spec97／98／159／134／62及戰鬥機制；[來源收據](workplace/scratch/ui-windows-20261104/cao-climb-integration.json)保存三檔來源覆蓋包、binary、輸入與實際證據數。spec36本片CONFORMED，整體Issue #16仍未完成，沒有寫入或關閉Issue。原版資料、IDA匯出、binary與畫面留本機，不作Release。
 - 收尾通過嚴格未解、1143列分流、過期斷言及資產deny-list與正對照。索引生成582份文件／135條斷言，官方檢查仍因65個歷史本機缺失連結回傳1，與HEAD同工具比較新增0；引用掃描352筆既有缺失、新增0，缺席census.tsv的符號層未執行。三檔來源覆蓋包、71份證據、原版輸入及現存IDA匯出SHA核對一致，未稱重驗缺席DB。UID/GID1000:1000，root-owned及誤建.md目錄0；本輪容器均結束移除，沒有重建image或動其他專案資源。[收尾核對](workplace/scratch/ui-windows-20261104/cao-climb-final-checks.json)保存範圍；依既有授權commit並push，遠端核對另存本機repo-climb-update-20261113.json。
+
+## 2026-11-14：城上同拍攻擊與射擊硬直
+
+- 接續Issue #16第157拍差異。開工工作樹乾淨，主機gh核對Issue仍OPEN，本地verify通過。載入復古remake、規格閘門、IDA9.4、RE回填與文件職責路由；依專案AGENTS規則由唯讀子代理審查硬直清除端，未授權其修改、建置、測試或提交。沿用既有Go／Ebiten與IDA py312-v1，沒有重建image。
+- 新原版追蹤72筆發射事件，固定seed1、正常曹操相同輸入，182筆主觀測及101筆命令收據逐byte不變。兩筆既有第64／88步診斷保留，不宣稱該兩次輸入成功。初次額外hook沿用換位串流檔名而混寫，已保留初稿，改成獨立shot-events串流後重跑；沒有更動seed或挑選拍點。
+- IDA9.4原指令證實1AB39在高地形及高平面皆成立時只寫Next6，當拍進1AB7C攻擊並把餘力壓到40。157拍槽87的硬直2來自普通箭配置成功出口1AD67，並非受到攻擊。命令6的隊長／隊員分派均回1AB39；普通／特殊發射設略過旗標、動作圖號與冷卻8／6。原始名稱、bytes、位址及DB身分見[spec159](docs/spec/159-tactical-command-movement-order.md)，沒有改名或回寫正式資料庫。
+- 弓兵刷新時取自身Goal／Step並清路，未刷新時GoalXY取鎖敵而保留Step／路。移除原版沒有的曼哈頓20射程閘，按1ACD6及1AD01四方向表補齊同高／低位目標偏移與10／54界線，保留byte繞回。兩軸距皆0時原版面向保留西向，不能因X相等改東。
+- 候選審查指出取消命令入口的提前清圖號，須同時接齊硬直歸零、路點耗盡、水平／垂直查詢及普通／大將受擊清除端。補齊後由DRAFT列READY再接正式來源；1B6F4才是大將圖號清除，1B6F0只設硬直。射擊、移動及受擊沿既有單兵狀態交UI呈現，沒有新增玩家通知、指令按鈕、時間或存檔欄位。
+- [七套件冷測／vet／建置](workplace/scratch/ui-windows-20261104/cao-fire-tests.log)通過。首次測試誤用不存在的Path欄位，改成現有Waypoints；移除射程閘後遠距fixture真的取用亂數，揭露空fixedRand序列除零，改提供明確固定序列，沒有弱化helper或正式規則。舊程式經型別適配後，在城上分派、目標刷新、同格面向、射擊旗標及清除端五類實際斷言失敗，沒有用編譯失敗充當負對照。
+- [正式證據](workplace/scratch/ui-windows-20261104/cao-fire-evidence.json)前156拍96槽27欄位／腳本及剩餘點數全等；槽87同至162拍、完整RNG同至165拍、成本8192 bytes同至158拍。157拍全軍只剩槽66 StepXY／點數差異，159拍成本起不同。只用兩檔唯讀觀測覆蓋正式規則；完整飛道具32槽配置、飛行／命中、垂直碰撞、架梯與戰果不由本片代證。
+- [正常滑鼠](workplace/scratch/ui-windows-20261104/cao-fire-remake-gui.json)69個功能／同步檢查點、16圖通過，含重複同步。曹操第一劇本宣戰呂布、編夏侯淵、停手行軍、途中存讀檔、自然在椎陽入戰、改線、登城、突擊與退卻返回。登城210→216拍指標不動，主將X28→34、Goal保持(42,32,4)；已目視單兵、城牆、側欄及底列指令。不代證原版同拍畫面、許昌留守或手機GUI。
+- [勘誤回填](workplace/scratch/ui-windows-20261104/cao-fire-backlinks.json)連回re11／21／36、spec36／62／63／200與戰鬥機制。保留原始funcs_1ACF6名稱，補1AD01四字表定位；命令6舊未知列改記已證入口及仍未驗收的下城限制。spec159本片CONFORMED，整體排程仍READY，未寫入或關閉Issue。五檔來源覆蓋包、binary、輸入與實際證據數見[來源收據](workplace/scratch/ui-windows-20261104/cao-fire-integration.json)，原版資料、IDA、binary及畫面留本機，不作Release。
+- 收尾通過嚴格未解、1143列分流、過期斷言及資產deny-list與正對照。索引生成582份文件／135條斷言；官方檢查仍因65個歷史本機缺失連結回傳1，與HEAD同工具比較新增0。引用掃描352筆既有缺失、新增0，缺席census.tsv的符號層未執行。只更新命令6那一列的指紋與理由，保留merge-target／Issue #16，其餘分流不動。
+- 收據腳本初次要求直接寫入位址，但規格僅有包含該位址的區間，補上1AD67／1ADB1精確定位後通過；引用掃描首次寫入唯讀工作樹失敗，將輸出統一至/output後同一容器命令乾淨重跑，未改產品。五檔來源覆蓋包、87份證據、輸入與IDA匯出SHA核對一致，正式資料庫未改。UID/GID1000:1000，root-owned及誤建.md目錄0；本輪容器已結束移除，未動其他專案資源。[收尾核對](workplace/scratch/ui-windows-20261104/cao-fire-final-checks.json)保存結果；依既有授權commit並push，提交與遠端核對另存本機repo-fire-update-20261114.json。

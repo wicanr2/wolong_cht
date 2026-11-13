@@ -19,14 +19,27 @@
 - 遭遇契約：[spec175](../spec/175-encounter-standoff-countdown.md)、
   [spec186](../spec/186-standoff-corps-before-city.md)。本次不修改遊戲執行邏輯。
 
+## 2026-11-14：城上攻擊與射擊硬直
+
+最新程式`wlgame-cao-fire-r1`接回登城後同拍攻擊及發射成功圖號／硬直，契約見[spec159](../spec/159-tactical-command-movement-order.md)。
+[正常滑鼠](../../workplace/scratch/ui-windows-20261104/cao-fire-remake-gui.json)69個功能／同步檢查點、16圖通過，含重複同步。
+流程含曹操第一劇本宣戰呂布、編夏侯淵、停手行軍、途中存讀檔、自然在椎陽入戰、改線、登城、突擊與退卻返回。
+登城210→216拍指標不動，主將X28→34、Goal保持(42,32,4)；
+[實際畫面](../../workplace/scratch/ui-windows-20261104/cao-fire-remake-scale-wall.png)已目視單兵、城牆、側欄及底列指令。
+[正式證據](../../workplace/scratch/ui-windows-20261104/cao-fire-evidence.json)前156拍96槽27欄位／腳本及剩餘點數全等，
+槽87同至162拍、完整RNG同至165拍，成本8192 bytes同至158拍。
+第157拍槽87原稱受擊已證實為射箭成功硬直；槽66 StepXY／點數差異仍在，第159拍成本起不同。
+[來源收據](../../workplace/scratch/ui-windows-20261104/cao-fire-integration.json)保存輸入及限制。
+GUI抽樣不代證原版同拍畫面、許昌留守、完整飛道具命中、架梯、整場戰果或手機操作。
+
 ## 2026-11-13：登城首拍與高層讀取
 
-最新程式`wlgame-cao-climb-r1`將純Z成功移動改成逐層升降，契約見[spec36續片](../spec/36-ground-planes-and-climbing.md)。
+前輪程式`wlgame-cao-climb-r1`將純Z成功移動改成逐層升降，契約見[spec36續片](../spec/36-ground-planes-and-climbing.md)。
 [正常滑鼠](../../workplace/scratch/ui-windows-20261104/cao-climb-remake-gui.json)69個功能／同步檢查點、16圖通過，含重複同步。
 曹操第一劇本宣戰呂布、編夏侯淵、停手行軍、途中存讀檔、自然在椎陽入戰、改線、登城、突擊及退卻返回。
 登城197→203拍指標不動，主將X19→25、Goal保持(42,32,4)；[實際畫面](../../workplace/scratch/ui-windows-20261104/cao-climb-remake-scale-wall.png)已目視城牆、單兵、側欄及底列指令。
 [正式證據](../../workplace/scratch/ui-windows-20261104/cao-climb-evidence.json)前156拍96槽27欄位／RNG／腳本及剩餘點數全等，
-成本同至157拍；下一差異為157拍受擊／疲勞／命令／目標及RNG。
+成本同至157拍；當時157拍槽87硬直等差異，已由上方11/14續片證實為發射成功產生。
 [來源收據](../../workplace/scratch/ui-windows-20261104/cao-climb-integration.json)保存既有垂直碰撞限制；下降無本輪原版動態抽樣，
 不代證整場畫面、許昌留守、完整戰果、架梯／投射物或手機GUI。
 

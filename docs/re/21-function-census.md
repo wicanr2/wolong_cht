@@ -207,8 +207,11 @@ T2 那 18 支記在 [`69`](69-t2-cross-reference.md)。）
 | `sub_103E6`／`sub_1054D`／`sub_1059B` | `10401`／`10592`／`105E4` | `call cs:word_1036D` | T4 |
 | `sub_15FAA` | `15FDC` | `call word ptr [bx+6056h]` | T4 |
 | `sub_1E9C1` | `1E9F9` | `call word ptr [bx-15F3h]` | T4 |
-| `sub_1ACD6` | `1ACF6` | `call cs:funcs_1ACF6[di]` | T3 |
 | `sub_1BFF2` | `1C006` | `call word ptr [bx-3FB8h]` | T1 |
+
+2026-11-14射擊目標表回填：`sub_1ACD6`的原始呼叫定位仍為`1ACF6`，
+`funcs_1ACF6`標籤對應表本體`1AD01`，四個word為`1AD09`／`1AD12`／`1AD1B`／`1AD24`。
+已證實為四方向GoalXY調整，原始bytes、條件與本片界線見[spec159](../spec/159-tactical-command-movement-order.md)。
 
 `word_181A6`／`word_181A8` 這一組**已解，靜態就夠**（見
 [`26-list-window-engine.md`](26-list-window-engine.md) §3.1）：

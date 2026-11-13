@@ -10,12 +10,6 @@ const (
 
 	// specialProjectilePower 是 `sub_1AD7F` 的 CH=0x20。
 	specialProjectilePower = 0x20
-
-	// arrowRange 仍是 remake 對遠距鎖定範圍的取捨；原版是由
-	// `sub_1ACA4` 的方向／距離分支與鎖定路徑共同決定，尚未抽成一個
-	// 單一的曼哈頓射程常數。實際發射節奏則使用兵記錄 +0x13 的 raw
-	// 8／6 冷卻值，不能用畫面幀取模代替。
-	arrowRange = 20
 )
 
 // hitByArrow 是**飛道具**的傷害（原版 `sub_1B97E`）。
@@ -104,6 +98,7 @@ func (b *Battle) applyHit(e *Soldier, damage int) bool {
 
 	// 原版受擊同時設 +0x02 bit 4、面向歸零、+0x00 bit 6，
 	// 以及 `+0x01` 的硬直計時（docs/spec/63）。
+	e.HitGeneral = false
 	e.Hurt = true
 	e.Facing = West
 	e.Swapped = true
@@ -174,9 +169,8 @@ func saturatingByteAdd(a, b int) int {
 // shoot 讓弓兵放一箭。
 func (b *Battle) shoot(side, k int, e *Soldier) {
 	s := &b.Sides[side].Soldiers[k]
-	distance := abs(s.X-e.X) + abs(s.Y-e.Y)
-	if distance > arrowRange {
-		return
+	if s.Z <= e.Z {
+		b.setArcherAimGoal(s, e)
 	}
 	if !projectileReady(s) {
 		return
@@ -217,6 +211,7 @@ func (b *Battle) launchNormalProjectile(side int, s, e *Soldier) {
 		return
 	}
 	direction := attackDirection(s.X, s.Y, e.X, e.Y)
+	s.Facing = direction
 	z := s.Z + 1
 	b.emitSFX(SFXNormalLaunch)
 	b.projectiles = append(b.projectiles, projectile{
@@ -229,7 +224,7 @@ func (b *Battle) launchNormalProjectile(side int, s, e *Soldier) {
 	})
 	// sub_1AD2D 成功配置 +0x1400 區的投射物後才寫入 8；配置失敗時
 	// 原版不改冷卻。remake 的 slice 沒有 32-slot 上限，故在 append 後寫入。
-	s.ProjectileCooldown = 8
+	s.finishProjectileLaunch(8)
 }
 
 // shootSpecial 重現 `sub_1AD7F` 的 CH=0x20 分支。
@@ -250,6 +245,7 @@ func (b *Battle) launchSpecialProjectile(side int, s, e *Soldier) {
 		return
 	}
 	direction := attackDirection(s.X, s.Y, e.X, e.Y)
+	s.Facing = direction
 	x, y := s.X, s.Y
 	switch direction {
 	case West:
@@ -275,7 +271,7 @@ func (b *Battle) launchSpecialProjectile(side int, s, e *Soldier) {
 		heightFP: (s.Z + 1) << 8, velocityFP: -0x100,
 	})
 	// sub_1AD7F 成功配置後寫入兵記錄 +0x13=6。
-	s.ProjectileCooldown = 6
+	s.finishProjectileLaunch(6)
 }
 
 // specialAttackAvailable 對應 `sub_1AC55` 的 raw `+0x1E` 比較；
@@ -289,7 +285,7 @@ func specialAttackAvailable(s, e *Soldier) bool {
 func attackDirection(x, y, tx, ty int) int {
 	dx, dy := abs(x-tx), abs(y-ty)
 	if dx >= dy {
-		if x > tx {
+		if x >= tx {
 			return West
 		}
 		return East
@@ -492,6 +488,7 @@ func (b *Battle) hitGeneral(attacker *Soldier, g *Soldier) bool {
 			return false
 		}
 	}
+	g.HitGeneral = false
 	g.Hurt, g.Swapped, g.Facing = true, true, West
 	g.Stun = HitStunFrames
 	dmg := attacker.Power >> generalDamageShift
@@ -503,4 +500,43 @@ func (b *Battle) hitGeneral(attacker *Soldier, g *Soldier) bool {
 		g.HP = GeneralMinHP
 	}
 	return true
+}
+
+// setArcherAimGoal 對應1ACD6的四方向目標調整，不改中繼點。
+func (b *Battle) setArcherAimGoal(s, e *Soldier) {
+	x, y := e.X, e.Y
+	margin := 10
+	if dz := e.Z - s.Z; dz >= 0 {
+		margin += dz
+	} else {
+		margin = 0
+	}
+	switch attackDirection(s.X, s.Y, e.X, e.Y) {
+	case West:
+		if x <= 54 {
+			x = (x + margin) & 255
+		}
+	case North:
+		if y <= 54 {
+			y = (y + margin) & 255
+		}
+	case East:
+		if x >= 10 {
+			x = (x - margin) & 255
+		}
+	case South:
+		if y >= 10 {
+			y = (y - margin) & 255
+		}
+	}
+	s.GoalX, s.GoalY = x, y
+}
+
+// finishProjectileLaunch 對應普通／特殊發射的共同成功出口。
+func (s *Soldier) finishProjectileLaunch(cooldown uint8) {
+	s.Swapped = true
+	s.Hurt = false
+	s.HitGeneral = true
+	s.Stun = 2
+	s.ProjectileCooldown = cooldown
 }

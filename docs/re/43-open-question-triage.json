@@ -13547,15 +13547,15 @@
     {
       "file": "docs/spec/36-ground-planes-and-climbing.md",
       "item": "命令 6 為什麼擋高平面橫移",
-      "status": "命令碼 6 是什麼沒對過",
+      "status": "命令6的入口已由2026-11-14 spec159定位為1AB39城上攻擊；1B215高平面橫移限制與完整下城流程尚未同狀態驗收",
       "section": "4. 未解",
       "domain": "其他",
       "verdict": "靜態",
       "occurrence": 0,
-      "id": "oq-715a71a910eccfd2d574",
+      "id": "oq-f1beec9d621b42486c14",
       "classification": "merge-target",
       "github_issue": 16,
-      "reason": "戰術移動批次、中間目標與 HP 更新時序，併入 Issue #16。"
+      "reason": "命令6入口已定位；高平面橫移限制與完整下城流程仍併入Issue #16，本列不形成新工作。"
     },
     {
       "file": "docs/spec/36-ground-planes-and-climbing.md",

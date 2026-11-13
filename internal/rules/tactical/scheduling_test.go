@@ -6,7 +6,7 @@ func TestTargetChangeRefreshesAttackPath(t *testing.T) {
 	for side := 0; side < 2; side++ {
 		for _, kind := range []Kind{Cavalry, Archer, Infantry} {
 			for _, order := range []Command{Attack, Charge, Guard} {
-				b := NewBattle(flatField(), SyntheticFormations(), &fixedRand{}, 0)
+				b := NewBattle(flatField(), SyntheticFormations(), &fixedRand{seq: []int{0}}, 0)
 				s := &b.Sides[side].Soldiers[1]
 				*s = Soldier{Alive: true, Kind: kind, X: 45, Y: 27, Target: 0,
 					Cmd: order, Next: order, Stamina: 28, StepX: 45, StepY: 16, StepZ: 3}

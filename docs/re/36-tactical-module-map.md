@@ -225,5 +225,5 @@ sub_1C39C:  cx = 510h / ah = 0 / call sub_1D9D1     ; 擦 → 再 call sub_1075B
 | `sub_1D66A` | 257 | 繪圖底層最大的一支 |
 | `sub_1A1C5` | 211 | 指令層第二大 |
 | ~~`sub_1A426` 的 20 支~~ | — | **✅ 已解**：那是腳本 VM 的 19 個 opcode，見 [`11`](11-tactical-battle.md) §3.5 |
-| `sub_1ACD6` 的 `funcs_1ACF6` | — | 四支 9 B 的目標已定位，表本身還沒印出來 |
+| ~~`sub_1ACD6` 的 `funcs_1ACF6`~~ | — | 2026-11-14已由1AD01四個word定位為1AD09／1AD12／1AD1B／1AD24；四方向GoalXY調整見[spec159](../spec/159-tactical-command-movement-order.md)，保留原始標籤 |
 | `sub_1BFF2` 的 `[bx-3FB8h]` | — | [`21`](21-function-census.md) §7 仍未攤開 |

@@ -81,7 +81,8 @@ const (
 	Retreat  Command = 5 // 退卻：不可打斷
 
 	// 內部狀態，腳本不會下達（docs/re/11 §5.8b）。
-	Holding Command = 7 // 陣形已就位
+	wallAttack Command = 6
+	Holding    Command = 7 // 陣形已就位
 )
 
 func (c Command) String() string {
@@ -201,14 +202,14 @@ type Soldier struct {
 	// 打大將時的命中率與傷害都看它。
 	Power int
 
-	// HitGeneral 是「這一擊打在大將身上」（原版 `+0x02` 的 bit 3，
+	// HitGeneral 保留既有名稱，表示攻擊圖號（原版 `+0x02` 的 bit 3，
 	// `sub_1B6BC` 結尾 `or byte ptr [si+2], 8`）——圖號會換一張。
 	HitGeneral bool
 
-	// Stun 是挨打之後的硬直計時（原版 `+0x01`，docs/spec/63）。
+	// Stun 是動作硬直計時；受擊或發射成功都可設2（原版+0x01，spec159）。
 	//
-	// 大於 0 的那幾幀，這個兵**不移動也不攻擊**；歸零那一幀才清掉
-	// `Hurt`。原版 `sub_1B618` 命中時寫 2，配上同時設的「這一幀不動」
+	// 大於0時跳過移動批次；命令批次仍可處理射擊。歸零時清Hurt及HitGeneral。
+	// 原版sub_1B618命中時寫2，配上同時設的「這一幀不動」
 	// 旗標（docs/spec/62），一共是三幀站著不動。
 	Stun int
 

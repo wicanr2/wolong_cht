@@ -396,7 +396,7 @@
 | [`docs/spec/156-desktop-preferences.md`](spec/156-desktop-preferences.md) | 156 — 桌面偏好跨次啟動保存 | CONFORMED（2026-09-08，正式 AppImage 正常設定與重啟通過）。 | 2026-09-08 |
 | [`docs/spec/157-battle-script-comparisons.md`](spec/157-battle-script-comparisons.md) | 157 — 戰術 AI 分支比較方向勘誤 | CONFORMED。原版指令、單項隔離重播、正式兩條野戰重播及攻城回歸已通過。 | 2026-09-08 |
 | [`docs/spec/158-delegated-leader-mix.md`](spec/158-delegated-leader-mix.md) | 158 — 委任將領混合值保留原統率 | CONFORMED。IDA 原始指令、dosgolem 12 組狀態對照與固定 seed 2 長流程回歸均通過。 | 2026-09-08 |
-| [`docs/spec/159-tactical-command-movement-order.md`](spec/159-tactical-command-movement-order.md) | 159 — 戰術命令批次與移動體力順序 | READY。原始指令與既有 dosgolem 追蹤支持本節的窄排程修正。 | 2026-09-08 |
+| [`docs/spec/159-tactical-command-movement-order.md`](spec/159-tactical-command-movement-order.md) | 159 — 戰術命令批次與移動體力順序 | READY。原始指令與既有 dosgolem 追蹤支持本節的窄排程修正。 | 2026-11-14 |
 | [`docs/spec/160-rng-consumption-alignment.md`](spec/160-rng-consumption-alignment.md) | 160 — 亂數消費順序對齊：逐次比「誰取了第幾個數」 | READY。 | 2026-09-09 |
 | [`docs/spec/161-liubei-idle-longrun-parity.md`](spec/161-liubei-idle-longrun-parity.md) | 161 — 劉備不作為長時間對拍：把玩家這個變因拿掉，以子刻為單位比 | DRAFT。 | 2026-09-09 |
 | [`docs/spec/162-city-cursor-from-save.md`](spec/162-city-cursor-from-save.md) | 162 — 載入存檔要還原據點巡迴游標（word_10D1E） | CONFORMED。 | 2026-09-09 |
