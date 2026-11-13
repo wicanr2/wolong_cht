@@ -715,7 +715,7 @@ func TestClimbFacingFollowsTileParityEvenWhenBlocked(t *testing.T) {
 				s.Z, s.StepZ, s.OnWall = 4, 0, true
 			}
 			beforeZ := s.Z
-			// 遠層同伴保留既有佔位閘，只驗面向更新在失敗之前。
+			// 上爬以實際頭格及拒換旗標阻擋；下降沿既有平面閘。
 			plane := PlaneHigh
 			if !up {
 				plane = PlaneLow
@@ -724,7 +724,10 @@ func TestClimbFacingFollowsTileParityEvenWhenBlocked(t *testing.T) {
 			if !ok {
 				t.Fatal("合成門格應有查詢平面")
 			}
-			b.Sides[0].Soldiers[2] = Soldier{Alive: true, Kind: Infantry, X: s.X, Y: s.Y, Z: z}
+			if up {
+				z = s.Z + 2
+			}
+			b.Sides[0].Soldiers[2] = Soldier{Alive: true, Kind: Infantry, X: s.X, Y: s.Y, Z: z, Swapped: true}
 			if b.tryClimb(0, 1) || s.Z != beforeZ {
 				t.Fatal("被保留的門／佔位閘擋下時不得移動")
 			}

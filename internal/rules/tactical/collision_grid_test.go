@@ -7,6 +7,119 @@ import (
 	"testing"
 )
 
+func TestClimbHeadCellReadsOneLayerIncludingTopBody(t *testing.T) {
+	g := &collisionGrid{}
+	g.drawSlot(2, 20, 30, 3, PlaneHigh)
+	if g.atLayer(20, 30, 2) != -1 || g.at(20, 30, 2) != 2 {
+		t.Fatal("頭格查詢不可連帶查更高一格")
+	}
+	g.drawSlot(3, 21, 30, 6, PlaneHigh)
+	if g.atLayer(21, 30, 7) != 3 || g.atLayer(21, 30, 8) != -1 || g.atLayer(21, 30, -1) != -1 {
+		t.Fatal("第7層保留上半身，第8層及負層拒絕")
+	}
+	if g.atLayer(Width, 30, 1) != -1 {
+		t.Fatal("格座標越界須安全返回")
+	}
+}
+
+func climbHeadFixture(side, player int, stored bool, otherZ int, enemy bool) *Battle {
+	f, _ := tiledField(32)
+	f.Retile(32, Height/2, brokenGateDelta)
+	b := NewBattle(f, SyntheticFormations(), &fixedRand{seq: []int{0}}, 0)
+	b.PlayerSide = player
+	b.Advantage[0] = Even
+	b.Sides[side].Soldiers[1] = Soldier{Alive: true, Kind: Infantry, HP: 200, Power: 32,
+		X: 32, Y: Height / 2, StepZ: 4, Cmd: ScaleWal, Next: ScaleWal, Target: -1}
+	otherSide := side
+	if enemy {
+		otherSide = 1 - side
+	}
+	b.Sides[otherSide].Soldiers[2] = Soldier{Alive: true, Kind: Infantry, HP: 100, Power: 10,
+		X: 32, Y: Height / 2, Z: otherZ, PlaneHigh: PlaneHighElevated, OnWall: true,
+		StepZ: 4, Cmd: ScaleWal, Next: ScaleWal, Target: -1}
+	if stored {
+		b.initUnitCollision()
+	}
+	return b
+}
+
+func TestClimbHeadCellSkipsRemoteSoldierAndTracksCurrentZ(t *testing.T) {
+	for side := 0; side < 2; side++ {
+		for player := 0; player < 2; player++ {
+			for _, stored := range []bool{false, true} {
+				b := climbHeadFixture(side, player, stored, 3, false)
+				s, other := &b.Sides[side].Soldiers[1], &b.Sides[side].Soldiers[2]
+				if !b.tryClimb(side, 1) || s.Z != 1 || s.StepZ != 4 || s.PlaneHigh != PlaneHighElevated {
+					t.Fatalf("Z2空、遠層Z3／4有兵仍可升到1，side%d player%d stored%v：%+v", side, player, stored, *s)
+				}
+				other.Swapped = true
+				b.drawUnitCollision(side, 1)
+				if b.tryClimb(side, 1) || s.Z != 1 {
+					t.Fatal("第二次須查新頭格Z3，禁止換位的兵應阻擋")
+				}
+			}
+		}
+	}
+}
+
+func TestClimbHeadCellRecognizesTwoCellBody(t *testing.T) {
+	for _, stored := range []bool{false, true} {
+		for _, z := range []int{1, 2} {
+			b := climbHeadFixture(1, 1, stored, z, false)
+			s, other := &b.Sides[1].Soldiers[1], &b.Sides[1].Soldiers[2]
+			other.Swapped = true
+			if side, k := b.climbHeadOccupant(s); side != 1 || k != 2 {
+				t.Fatalf("Z%d單兵的身體須覆蓋Z2頭格，stored%v：%d/%d", z, stored, side, k)
+			}
+			if b.tryClimb(1, 1) || s.Z != 0 {
+				t.Fatal("真正頭格被拒換單兵佔用時不得升層")
+			}
+		}
+	}
+	b := climbHeadFixture(0, 0, true, 2, false)
+	b.Sides[0].Soldiers[2].Alive = false
+	if _, k := b.climbHeadOccupant(&b.Sides[0].Soldiers[1]); k != 2 {
+		t.Fatal("正式查詢應讀持續格表，不依Alive重建")
+	}
+	b = climbHeadFixture(0, 0, false, 7, false)
+	b.Sides[0].Soldiers[1].Z = 6
+	if _, k := b.climbHeadOccupant(&b.Sides[0].Soldiers[1]); k != -1 {
+		t.Fatal("無表fallback也須拒絕第8層查詢")
+	}
+}
+
+func TestClimbHeadCellCollisionReturnsWithoutExtraAscent(t *testing.T) {
+	for side := 0; side < 2; side++ {
+		for player := 0; player < 2; player++ {
+			for _, stored := range []bool{false, true} {
+				for _, enemy := range []bool{false, true} {
+					b := climbHeadFixture(side, player, stored, 2, enemy)
+					s := &b.Sides[side].Soldiers[1]
+					otherSide := side
+					if enemy {
+						otherSide = 1 - side
+					}
+					other := &b.Sides[otherSide].Soldiers[2]
+					if !b.tryClimb(side, 1) {
+						t.Fatal("上爬撞兵應回傳共用處理成功")
+					}
+					if enemy {
+						if s.Z != 0 || !s.HitGeneral || other.HP != 100 {
+							t.Fatal("固定亂數未命中仍應結束碰撞，不得升層")
+						}
+						b.rng = &fixedRand{seq: []int{64}}
+						if !b.tryClimb(side, 1) || s.Z != 0 || other.HP >= 100 {
+							t.Fatal("命中時沿共用傷害入口，仍不額外升層")
+						}
+					} else if s.Z != 2 || s.PlaneHigh != PlaneHighElevated || other.Z != 0 || other.PlaneHigh != PlaneHighGround || !other.Swapped {
+						t.Fatal("友兵換位後直接返回，不得再由Z2升成3")
+					}
+				}
+			}
+		}
+	}
+}
+
 func TestCollisionGridAgainstOriginalOpeningReceipt(t *testing.T) {
 	const root = "../../../workplace/six-fixes-20260908/original-collision/"
 	data, err := os.ReadFile(root + "tick-0001.json")

@@ -110,6 +110,14 @@ func (g *collisionGrid) at(x, y, z int) int {
 	return int(v) - 1
 }
 
+// atLayer 只讀一個物理格；Z7仍可能保存Z6單兵的上半身。
+func (g *collisionGrid) atLayer(x, y, z int) int {
+	if !inBounds(x, y) || z < 0 || z >= len(g.cells)/0x1000 {
+		return -1
+	}
+	return int(g.cells[z*0x1000+y*Width+x]) - 1
+}
+
 // swapSlots 對應 sub_1B732 的格內容與原格指標交換。
 func (g *collisionGrid) swapSlots(a, b, currentA, currentB int) {
 	if a < 0 || b < 0 || a >= len(g.old) || b >= len(g.old) {

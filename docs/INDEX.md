@@ -529,7 +529,7 @@
 | [`docs/spec/33-squad-selection.md`](spec/33-squad-selection.md) | 33 — 底列六格是選部隊，不是第二套命令列 | CONFORMED。 | 2026-08-18 |
 | [`docs/spec/34-speed-steps.md`](spec/34-speed-steps.md) | 34 — 兩個速度設定：五檔、各檔的實際節奏 | CONFORMED。 | 2026-08-16 |
 | [`docs/spec/35-strategy-minimap.md`](spec/35-strategy-minimap.md) | 35 — 縮小地圖的據點標記與視野框 | CONFORMED。 | 2026-08-16 |
-| [`docs/spec/36-ground-planes-and-climbing.md`](spec/36-ground-planes-and-climbing.md) | 36 — 兩個平面的地面圖、導航位元與登城 | CONFORMED，限已列片段。 | 2026-11-13 |
+| [`docs/spec/36-ground-planes-and-climbing.md`](spec/36-ground-planes-and-climbing.md) | 36 — 兩個平面的地面圖、導航位元與登城 | CONFORMED，限已列片段。 | 2026-11-14 |
 | [`docs/spec/37-tactical-player-controls.md`](spec/37-tactical-player-controls.md) | 37 — 戰術畫面的玩家操作：陣形選單與陣形線 | CONFORMED。 | 2026-08-16 |
 | [`docs/spec/38-list-windows.md`](spec/38-list-windows.md) | 38 — 一覽表：視窗幾何、欄位與逐列格式 | CONFORMED。 | 2026-08-16 |
 | [`docs/spec/39-march-order-menu.md`](spec/39-march-order-menu.md) | 39 — 行軍指示的三選一：戰鬥指揮／委任／解體 | CONFORMED。 | 2026-08-16 |

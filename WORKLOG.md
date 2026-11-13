@@ -1555,3 +1555,18 @@
 - 收尾通過嚴格未解、1143列分流、過期斷言及資產deny-list與正對照。只更新完整導航限制一列的指紋與理由，保留evidence-only分類。索引仍有65個歷史本機缺失連結；引用掃描352筆既有缺失、323個唯一引用，與HEAD同工具比較新增0。缺席census.tsv的符號層未執行，不宣稱全庫全綠。
 - 官方tools/check.sh --docs初次容器轉接誤用含斜線的shell alias，入口失敗並暫時清空生成未解表。已保留失敗日誌，以唯讀Python轉接腳本掛到容器內既有wrapper位置，重生並核對1143列後乾淨重跑；主機wrapper未改，沒有在主機跑工作負載。官方入口仍因上述既有索引／引用缺件回傳1，補充檢查與差量通過，未當成產品缺陷。
 - 兩檔來源覆蓋包、102份證據、原版輸入與既有IDA匯出SHA核對一致，UID/GID1000:1000，root-owned及誤建.md目錄0。本輪容器已結束移除，沒有重建image或動其他專案資源。[收尾核對](workplace/scratch/ui-windows-20261104/cao-route157-final-checks.json)保存範圍；依既有授權commit並push，提交與遠端核對另存本機repo-route157-update-20261114.json。
+
+## 2026-11-14：上爬頭格與撞兵成功返回
+
+- 接續Issue #16第160拍槽71／85差異。開工工作樹乾淨，主機gh核對Issue仍OPEN，本地verify通過。命中並載入復古remake、規格閘門與文件職責路由；依AGENTS由唯讀子代理核對頭格與碰撞出口，不授權改檔、建置、測試或提交。沿用既有Go／Ebiten image與原版dosgolem，不重建工具鏈。
+- 新原版64筆觀測保存物理柱、BX、頭格操作數與單兵前後記錄。固定seed1與正常曹操輸入不變，182筆主觀測及101筆命令收據與前輪逐byte相同，第64／88步既有診斷保留。159拍槽71原Z0、柱值72／72／0／96／96／0／0；城頂Z3／4的槽95不在當次頭格Z2。原版經1B1AB／1B0FD升Z1，160拍再升Z2，Go卻因城頂佔位失敗，稍後才被槽85換走。
+- IDA9.4既有bytes證實1B0F4先將BX加1000h，1B18A再讀上方1000h，合計是原Z+2單格。原水平查詢會讀兩格，不能只把anyoneAt參數改Z+2。單格查詢讀持續格表；無表的合成呼叫才按腳層／上半身比對。typed格表八層保留Z7、拒絕Z8，不以collisionCell的腳格z<7閘誤擋上半身。
+- 第一候選只改查詢，全軍相同至161拍。相同新觀測亦證實161拍71查到96後走1B533／1B59E失敗；85查到72後經1B598／1B732換位，Z0→2、平面0→16，再由1B113直接CF0返回，不再Z++。保留第一候選query-only快照，再將這條已證實撞兵出口列入DRAFT。第二候選沿用既有水平單兵碰撞分支，前165拍27欄位／RNG／腳本／成本／點數全等。
+- [審查收據](workplace/scratch/ui-windows-20261104/cao-head160-review.json)核對原版主串流、頭格、成功升層、換位CF與原指令；獨立審查補無表fallback八層界線及原共用入口bytes，spec36由DRAFT列READY後才接正式來源。正式抽出collideWithUnit與collisionOwner共用既有分支，水平語意不改；上爬頭格有單兵時直接回傳共用處理結果。下降、GroundLevel、未破門及結構物碰撞仍保留，不宣稱完整垂直CF或原版Z7別名已還原。
+- [七套件冷測／vet／建置](workplace/scratch/ui-windows-20261104/cao-head160-tests.log)通過。回歸涵蓋遠層不擋、Z0查2／Z1查3、兩格身高、Z7／8、持續表不按Alive重建、兩側與PlayerSide映射、友軍換位不多升層，以及敵軍命中／未命中均結束碰撞。舊面向失敗測試的遠層fixture改成真正頭格及拒換旗標，下降舊路徑仍由既有測試覆蓋。
+- 敵軍測試初次誤把固定亂數0視為命中，第二次又忽略Advantage零值是Disadvantaged，導致新命中斷言失敗。兩份失敗log保留；依既有命中公式與枚舉，明設中立Even，再分別用0／64驗未命中／命中，沒有改正式傷害規則或弱化斷言。重複失敗時回查驗證路由，將其分類為fixture前提錯誤。
+- [正式證據](workplace/scratch/ui-windows-20261104/cao-head160-evidence.json)核對前165拍96槽27欄位／RNG／腳本、8192-byte成本與剩餘點數全等，主串流與候選逐byte相同。首次166拍鎖敵、RNG與後段狀態仍不同，不改seed、平移拍點或擴入本片。[來源收據](workplace/scratch/ui-windows-20261104/cao-head160-integration.json)封存四檔來源覆蓋包、binary、輸入及實際證據數；本輪只重用兩份原始IDA匯出，未重開或宣稱重驗缺席DB。
+- [正常滑鼠](workplace/scratch/ui-windows-20261104/cao-head160-remake-gui.json)69個功能／同步檢查點、16圖通過，含重複同步。曹操第一劇本宣戰呂布、編夏侯淵、停手行軍、途中存讀檔、自然在椎陽入戰、改線、登城、突擊與退卻返回。登城208→214拍指標不動，主將X27→33、Goal保持(42,32,4)；已目視單兵、城牆、側欄及底列指令。GUI腳本date欄沿繼承常數11/13保留，輪次依本節11/14記錄，該欄不作日期parity證據。不代證原版同拍像素、許昌留守、完整戰果、投射物／架梯或手機GUI。
+- [回填表](workplace/scratch/ui-windows-20261104/cao-head160-backlinks.json)連回re11／63、spec134／159及戰鬥機制；spec36本片CONFORMED，整體Issue #16仍未完成，未寫入或關閉Issue。原版資料、IDA匯出、binary與畫面留本機，不作Release。
+- 收尾通過嚴格未解、1143列分流、過期斷言與資產deny-list及正對照。只更新完整導航限制列的指紋與理由，保留evidence-only分類；官方tools/check.sh --docs在既有索引／引用缺件處回傳1。65個索引缺失、352筆／323唯一引用均與HEAD同工具比較新增0，缺席census.tsv的符號層未執行，不宣稱全庫全綠。沿用唯讀容器Python轉接，主機wrapper未改。
+- 四檔來源覆蓋包、87份證據、原版輸入與兩份既有IDA匯出SHA核對一致，UID/GID1000:1000，root-owned及誤建.md目錄0。本輪容器已結束移除，沒有重建image或動其他專案資源。[收尾核對](workplace/scratch/ui-windows-20261104/cao-head160-final-checks.json)保存結果；依既有授權commit並push，提交與遠端核對另存本機repo-head160-update-20261114.json。

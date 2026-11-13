@@ -612,21 +612,7 @@ func (b *Battle) tryMove(side, k, x, y, z int) (handled, walled bool) {
 	// **自我修改碼**寫進去的（`byte_1B562`／`byte_1B56A`，由 `sub_19A33`
 	// 依雙方的編號範圍填）——這是本作第四處自我修改碼。
 	if side2, k2 := b.anyoneAt(x, y, z); k2 >= 0 {
-		// 0001B548–0001B557：大將陣形／退卻直接走平面與換位分支。
-		if s.IsGeneral() && (s.Cmd == Form || s.Cmd == Retreat) {
-			return b.swapWith(side, k, side2, k2), false
-		}
-		if side2 != side {
-			e := &b.Sides[side2].Soldiers[k2]
-			// 大將走 `sub_1B6BC`，其餘敵人走 `sub_1B618`。
-			if e.Alive {
-				b.attackCollision(side, s, e)
-			}
-			// 原版 0001B5B5 / 0001B065：CF=0 結束該拍，不繼續試 Y/Z。
-			// true 表示本次處理完成，不保證座標改變（spec/159）。
-			return true, false
-		}
-		return b.swapWith(side, k, side2, k2), false
+		return b.collideWithUnit(side, k, side2, k2), false
 	}
 	// 1B228–1B23E：水平升降同時調整中繼高度，保持相對Z差。
 	s.StepZ += z - s.Z
@@ -637,7 +623,7 @@ func (b *Battle) tryMove(side, k, x, y, z int) (handled, walled bool) {
 
 // tryClimb 在門格按StepZ方向逐層升降（sub_1B0D3／sub_1B116，spec36）。
 // 面向在碰撞前依圖塊奇偶更新；成功不改StepZ，上爬立即設高平面，下降至Z0才清。
-// 目前保留GroundLevel與目標平面佔位閘；原版相鄰物理層查詢及CF仍有界。
+// 上爬查原Z+2單格，撞兵返回共用處理結果；下降與GroundLevel閘仍有界。
 func (b *Battle) tryClimb(side, k int) bool {
 	s := &b.Sides[side].Soldiers[k]
 	if !s.CanClimb() || !b.Field.IsGateCell(s.X, s.Y) {
@@ -673,9 +659,14 @@ func (b *Battle) tryClimb(side, k int) bool {
 	if !ok {
 		return false
 	}
-	// 沿用目標平面佔位閘；不等同原版只查相鄰物理層（spec36續片）。
-	// **自己不算**：低平面與高平面同高時，站著的就是自己。
-	if side2, k2 := b.anyoneAt(s.X, s.Y, lv); k2 >= 0 && !(side2 == side && k2 == k) {
+	// 1B0F4與1B18A合計查原Z+2；不能改用水平兩格查詢。
+	if up {
+		if side2, k2 := b.climbHeadOccupant(s); k2 >= 0 {
+			// 1B113：碰撞成功可能只是換位／攻擊，不再額外Z+1。
+			return b.collideWithUnit(side, k, side2, k2)
+		}
+	} else if side2, k2 := b.anyoneAt(s.X, s.Y, lv); k2 >= 0 && !(side2 == side && k2 == k) {
+		// 下降保留既有平面查詢，未由本片代證。
 		return false
 	}
 	if up {
@@ -750,20 +741,62 @@ func (b *Battle) swapWith(side, k, side2, k2 int) bool {
 // anyoneAt 回傳站在那一格的兵（側別與索引），沒有人回 (0, −1)。
 func (b *Battle) anyoneAt(x, y, z int) (int, int) {
 	if b.unitCollision != nil {
-		id := b.unitCollision.at(x, y, z)
-		if id < 0 || id >= 2*SoldiersOnFoot {
-			return 0, -1
-		}
-		if id < SoldiersOnFoot {
-			return b.PlayerSide, id
-		}
-		return 1 - b.PlayerSide, id - SoldiersOnFoot
+		return b.collisionOwner(b.unitCollision.at(x, y, z))
 	}
 	for i := range b.Sides {
 		for k := range b.Sides[i].Soldiers {
 			s := &b.Sides[i].Soldiers[k]
 			if s.Alive && s.X == x && s.Y == y && s.Z == z {
 				return i, k
+			}
+		}
+	}
+	return 0, -1
+}
+
+// collideWithUnit 對應1B533；水平移動與上爬共用同一單兵碰撞入口。
+func (b *Battle) collideWithUnit(side, k, side2, k2 int) bool {
+	s := &b.Sides[side].Soldiers[k]
+	// 0001B548–0001B557：大將陣形／退卻直接走平面與換位分支。
+	if s.IsGeneral() && (s.Cmd == Form || s.Cmd == Retreat) {
+		return b.swapWith(side, k, side2, k2)
+	}
+	if side2 != side {
+		e := &b.Sides[side2].Soldiers[k2]
+		// 大將走sub_1B6BC，其餘敵人走sub_1B618。
+		if e.Alive {
+			b.attackCollision(side, s, e)
+		}
+		// 1B5B5的CF0表示處理完畢，不保證座標改變。
+		return true
+	}
+	return b.swapWith(side, k, side2, k2)
+}
+
+func (b *Battle) collisionOwner(id int) (int, int) {
+	if id < 0 || id >= 2*SoldiersOnFoot {
+		return 0, -1
+	}
+	if id < SoldiersOnFoot {
+		return b.PlayerSide, id
+	}
+	return 1 - b.PlayerSide, id - SoldiersOnFoot
+}
+
+func (b *Battle) climbHeadOccupant(s *Soldier) (int, int) {
+	head := s.Z + 2
+	if head < 0 || head >= 8 {
+		return 0, -1
+	}
+	if b.unitCollision != nil {
+		return b.collisionOwner(b.unitCollision.atLayer(s.X, s.Y, head))
+	}
+	// 未開始Step的合成呼叫才按兩格身高查詢；正式遊戲讀持續格表。
+	for side := range b.Sides {
+		for k := range b.Sides[side].Soldiers {
+			other := &b.Sides[side].Soldiers[k]
+			if other.Alive && other.X == s.X && other.Y == s.Y && (other.Z == head || other.Z+1 == head) {
+				return side, k
 			}
 		}
 	}
