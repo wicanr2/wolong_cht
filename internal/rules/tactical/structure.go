@@ -348,6 +348,7 @@ func (b *Battle) breakRow(y int) {
 			continue
 		}
 		s.Broken, s.Durability = true, 0
+		b.clearStructureCosts(s)
 		delta := brokenWallDelta
 		if s.Kind == KindGate {
 			delta = brokenGateDelta
@@ -384,6 +385,7 @@ func (b *Battle) SortieBreaksWalls() {
 			continue
 		}
 		s.Broken, s.Durability = true, 0
+		b.clearStructureCosts(s)
 		for r := 0; r < s.Run; r++ {
 			b.Field.Retile(s.X, s.Y+r, brokenWallDelta)
 		}
@@ -395,4 +397,16 @@ func structureName(kind int) string {
 		return "門"
 	}
 	return "城壁"
+}
+
+// clearStructureCosts 對應1B87F，逐格只清低平面，即使該格已被單兵覆寫。
+func (b *Battle) clearStructureCosts(s *Structure) {
+	if b.unitCollision == nil {
+		return
+	}
+	for n := 0; n < s.Run; n++ {
+		if index, ok := costCell(s.X, s.Y+n, PlaneLow); ok {
+			b.unitCollision.cost[index] = 0
+		}
+	}
 }

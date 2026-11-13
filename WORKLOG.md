@@ -1486,3 +1486,17 @@
 - 首次比較誤讀仍在寫入的原版觀測，停在KeyError140；改讀事先凍結的相同182筆參考，收尾另核對新原版逐byte相同，沒有平移拍點或重擲。IDA技能安裝連結指向官方工具專案，初次容器僅掛codex目錄無法解連結；補正唯讀掛載後載入正式技能與工具文件，沿用已驗證py312-v1，沒有另建image。這些是驗證環境問題，未改玩家程式繞過。
 - [正式證據](workplace/scratch/ui-windows-20261104/cao-waypoint-evidence.json)、[回填表](workplace/scratch/ui-windows-20261104/cao-waypoint-backlinks.json)及[來源收據](workplace/scratch/ui-windows-20261104/cao-waypoint-integration.json)保存三檔來源覆蓋包、binary、原版輸入與實際證據數。spec159本片CONFORMED、整體仍READY；未寫入或關閉Issue。原版資料、IDA、binary與截圖留本機，不作Release。
 - 收尾通過索引582份文件／135條斷言、嚴格未解及1143列分流、過期斷言與資產deny-list及正對照。生成索引只有日期由11/12更新11/13，輔助腳本最初把日期也當內容凍結；核對差量後只容許日期更新，全部證據列與分流不變。引用掃描維持原有204筆歷史缺件、新增0，缺席census.tsv的歷史符號層未執行。來源覆蓋包、原版輸入及IDA資料庫SHA核對一致，UID/GID1000:1000，root-owned與誤建.md目錄0；本輪容器均結束移除，未動其他專案資源。[收尾核對](workplace/scratch/ui-windows-20261104/cao-waypoint-final-checks.json)保存範圍。依既有授權commit並push，遠端核對另存本機repo-waypoint-update-20261113.json。
+
+## 2026-11-13：雙平面尋路成本與結構物生命週期
+
+- 接續Issue #16，開工工作樹乾淨，GitHub Issue仍OPEN，本地verify通過。載入復古remake、規格閘門、IDA9.4與RE回填路由，沿用既有Go／Ebiten及IDA py312-v1。依專案AGENTS規則由唯讀子代理核對成本與候選契約，未授權其編輯、測試、清理或提交。
+- 工作區仍有前輪來源與JSON收據，但原始JSONL、指令、seed及截圖等檔案已缺席。首次準備及啟動因輸入缺失退出；隨後依已保存的輸入與來源重建，指令SHA6491b1…c6561、seed SHA262447…54fb7完全吻合。新原版182筆移除新增penalty欄後SHA仍為3c7e3f…9350d，原始來源SHA也相同。[重建核對](workplace/scratch/ui-windows-20261104/cao-cost-restoration.json)保存結果；另保留[純文字指令](workplace/scratch/ui-windows-20261104/cao-cost-original-input.txt)、seed產生器及重建腳本，不因原始收據缺席改用推測。
+- IDA9.4新匯出閉合19D6C／19DE8低平面城壁100／門50、1B2AE重畫清舊+1F、1B2CD按目前+1E寫8、1B3F6移除按目前平面、1B4E3退卻立即移除及1B87F破城逐格清低平面。換位只交換舊格、不交換舊成本平面，也不即時重建表。原始名稱、bytes、位址與DB身分保留在[spec134](docs/spec/134-pathfind-wave-order.md)，正式資料庫未改名或回寫。
+- 第一候選提前計入單兵成本，第一拍50格不同；保留該版，再按原版首次移動批次才寫8的相位訂正。獨立審查補出退卻只改Alive、後續存活單位迴圈不會清理，以及inBounds漏掉結構物0／63邊框兩處接縫。補證、專項測試及候選全表核對後DRAFT才列READY，再接正式來源。
+- 正式在既有碰撞記錄保存8192-byte成本及每槽舊成本平面。內部搜尋帶平面取成本，公開XY回呼介面保留；死亡動畫結束、退卻、普通破城與守方出擊共用清除入口。單兵活動邊界、導航／回溯、時間、存檔、UI及force補丁規則沒有另改。未經Step的舊合成呼叫使用一次性同序暫時表，不作正常玩家路徑替代。
+- [七套件冷測／vet／建置](workplace/scratch/ui-windows-20261104/cao-cost-tests.log)通過。新測試涵蓋初始化相位、結構成本、重畫歷史／重疊清零、舊／目前平面、換位、破城與出擊、邊框、退卻出口及搜尋平面回呼。舊座標重建算法經回呼型別適配、誤用舊平面移除的兩個負對照，皆因實際斷言被拒絕，沒有以編譯失敗充數。
+- [正式證據](workplace/scratch/ui-windows-20261104/cao-cost-evidence.json)前153拍每拍8192-byte成本及96槽剩餘點數全等，149拍槽55完整五點相同，補回(42,34)。加入唯讀路徑觀測後主串流SHA不變。27項單兵欄位／完整RNG及腳本仍限151拍，152拍槽87的HighTerrain、154拍成本與點數差異保留，不宣稱全部路徑、原始旗標或完整戰果一致。
+- [正常滑鼠](workplace/scratch/ui-windows-20261104/cao-cost-remake-gui.json)69個功能／同步檢查點、16圖通過，含重複同步。曹操第一劇本宣戰呂布、編夏侯淵、停手行軍、途中存讀檔、自然在椎陽入戰、改線、登城、突擊與主動退卻返回。登城187→193拍指標不動、主將X10→16、Goal保持(42,32,4)；已目視單兵、城牆與原版喊話。沒有直入戰場或強制勝負，不代證許昌留守、全部死亡補兵、架梯／投射物或手機GUI。
+- [回填表](workplace/scratch/ui-windows-20261104/cao-cost-backlinks.json)連回re11、re63、spec36、spec159及戰鬥機制；spec134本片CONFORMED，整體#16仍未完成，沒有寫入或關閉Issue。七檔來源覆蓋包、binary、實際證據數與原版輸入見[來源收據](workplace/scratch/ui-windows-20261104/cao-cost-integration.json)。原版資料、IDA、binary及畫面留本機，不作Release。
+- 收尾完成索引生成582份文件／135條斷言，嚴格未解及1143列分流、過期斷言與資產deny-list及正對照通過。未解表初次改寫未含索引辨識詞，仍存在的完整映射限制被漏收；已明寫「尚未建立」並只更新該列指紋與理由，保留分類，不重設全表。官方索引檢查仍回傳1，[同工具差量](workplace/scratch/ui-windows-20261104/cao-cost-doc-index-delta.json)確認修改前後均為65個歷史本機缺失連結，新增0。引用掃描同為352筆既有缺失、新增0；歷史census.tsv缺席的符號層未執行，不宣稱全庫檢查全綠。
+- 七檔來源覆蓋包、91份證據、原版輸入與IDA資料庫SHA一致，UID/GID1000:1000，root-owned及誤建.md目錄0。本輪容器已結束移除，沒有重建image或清理其他專案資源。[收尾核對](workplace/scratch/ui-windows-20261104/cao-cost-final-checks.json)保存範圍；依既有授權commit並push，提交與遠端核對另存本機repo-cost-update-20261113.json。

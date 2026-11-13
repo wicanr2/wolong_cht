@@ -33,7 +33,7 @@ func TestCollisionGridAgainstOriginalOpeningReceipt(t *testing.T) {
 	var g collisionGrid
 	for i := 0; i < 96; i++ {
 		u := raw[i*32 : (i+1)*32]
-		g.drawSlot(i, int(u[6]), int(u[8]), int(u[10]))
+		g.drawSlot(i, int(u[6]), int(u[8]), int(u[10]), int(u[30])>>4)
 	}
 	for i := 0; i < 8192; i++ {
 		if g.cells[i] != want[i]&127 {
@@ -44,12 +44,12 @@ func TestCollisionGridAgainstOriginalOpeningReceipt(t *testing.T) {
 
 func TestCollisionGridOverlappingDrawAndClear(t *testing.T) {
 	var g collisionGrid
-	g.drawSlot(3, 1, 38, 0)
-	g.drawSlot(8, 1, 38, 0)
+	g.drawSlot(3, 1, 38, 0, PlaneLow)
+	g.drawSlot(8, 1, 38, 0, PlaneLow)
 	if got := g.at(1, 38, 0); got != 8 {
 		t.Fatalf("重疊重畫取槽 %d，want 8", got)
 	}
-	g.drawSlot(3, 2, 38, 0)
+	g.drawSlot(3, 2, 38, 0, PlaneLow)
 	if got := g.at(1, 38, 0); got != -1 {
 		t.Fatalf("原格應清空，got %d", got)
 	}
@@ -60,8 +60,8 @@ func TestCollisionGridOverlappingDrawAndClear(t *testing.T) {
 
 func TestCollisionGridSwapPreservesOriginalUpperLayerAsymmetry(t *testing.T) {
 	var g collisionGrid
-	g.drawSlot(8, 1, 38, 0)
-	g.drawSlot(20, 1, 37, 0)
+	g.drawSlot(8, 1, 38, 0, PlaneLow)
+	g.drawSlot(20, 1, 37, 0, PlaneLow)
 	a, _ := collisionCell(1, 38, 0)
 	b, _ := collisionCell(1, 37, 0)
 	g.swapSlots(8, 20, a, b)

@@ -89,7 +89,7 @@ func (b *Battle) stepDeaths() {
 		if d.FramesLeft--; d.FramesLeft > 0 {
 			out = append(out, d)
 		} else if b.unitCollision != nil && d.Slot >= 0 {
-			b.unitCollision.clearSlot(b.collisionSlot(d.Side, d.Slot))
+			b.clearUnitCollision(d.Side, d.Slot)
 		}
 	}
 	b.deaths = out

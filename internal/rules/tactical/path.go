@@ -18,12 +18,8 @@ package tactical
 // ＝ 128 byte，正好是每個兵那塊 `0x1800 + 兵編號 × 128` 的大小（§5.8k）。
 // 兩邊對得上，這條路徑才走得完。
 //
-// ⭐ **那張表是「有沒有兵站著」，不是地形。**
-//
-// `sub_1BBA6` 先把它歸零，之後由移動落定的 `sub_1B240` 維護：
-// 舊格寫 0、新格寫 8（透過 `word_1D2FA` 加 `0x9000` 的位移，
-// 也就是 `word_1D2FE` 的開頭，docs/re/63 §1）。
-// 所以尋路會**繞開有兵的格子**，繞路的代價是 8 格。
+// 額外成本包含單兵8、城壁100與門50，分低／高兩個平面。
+// 建場、逐兵重畫／移除及破城維護同一張表，不由目前兵座標重建（spec/134）。
 
 // MaxWaypoints 是一條路徑最多幾個轉彎點（原版 `mov cl, 40h`）。
 const MaxWaypoints = 64
@@ -45,6 +41,9 @@ type Point struct {
 // 原版從 `es:[bx+2000h]` 讀一個 byte 加上去，值是「這一格有兵 ＝ 8」（見上）。
 // **能不能走是導航位元決定的，不是這裡**——這裡只影響繞不繞路。
 type Penalty func(x, y int) int
+
+// planePenalty 是正式單兵使用的兩平面成本，舊XY介面由包裝器保留。
+type planePenalty func(x, y, plane int) int
 
 // pathNode 是擴散時每一格的狀態。
 type pathNode struct {
@@ -109,6 +108,15 @@ func (f *Field) FindPathForPlanesForcing(from, to Point, startPlane, goalPlane i
 
 func (f *Field) findPathForPlanes(from, to Point, startPlane, goalPlane int,
 	climb bool, penalty Penalty, force func(x, y int) bool) []Point {
+	var cost planePenalty
+	if penalty != nil {
+		cost = func(x, y, _ int) int { return penalty(x, y) }
+	}
+	return f.findPathForPlaneCosts(from, to, startPlane, goalPlane, climb, cost, force)
+}
+
+func (f *Field) findPathForPlaneCosts(from, to Point, startPlane, goalPlane int,
+	climb bool, penalty planePenalty, force func(x, y int) bool) []Point {
 	if !inBounds(from.X, from.Y) || !inBounds(to.X, to.Y) {
 		return nil
 	}
@@ -120,7 +128,7 @@ func (f *Field) findPathForPlanes(from, to Point, startPlane, goalPlane int,
 		return nil
 	}
 	if penalty == nil {
-		penalty = func(int, int) int { return 0 }
+		penalty = func(int, int, int) int { return 0 }
 	}
 
 	// 節點是 (格, 平面)。原版就是這樣走的：位址的 bit 12 是平面，
@@ -180,7 +188,7 @@ func (f *Field) findPathForPlanes(from, to Point, startPlane, goalPlane int,
 				}
 				// `add ax, dx`：新成本 ＝ **波數** ＋ 那一格的成本。
 				// 平面切換的高度差走 extra（原版是另一支的加法）。
-				nodes[n] = pathNode{cost: wave + extra + penalty(nx, ny), from: cur}
+				nodes[n] = pathNode{cost: wave + extra + penalty(nx, ny, np), from: cur}
 				queue = append(queue, n)
 			}
 			for _, d := range navSteps {

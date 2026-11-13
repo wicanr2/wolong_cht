@@ -293,6 +293,7 @@ func (b *Battle) doRetreat(side, k int) {
 	s.GoalX, s.GoalY, s.GoalZ = edge, retreatY, 0
 	if s.X == edge {
 		s.Alive = false
+		b.clearUnitCollision(side, k)
 		// ⭐ 走到畫面外的兵**算生還**（原版 `sub_1B4B8` 的 `ah = 0`
 		// 那條路加一，docs/spec/65）。戰死的走同一支但不加。
 		b.Sides[side].Escaped[k/PerSquad]++
@@ -457,29 +458,28 @@ func (b *Battle) faceLockedTarget(side int, s *Soldier) {
 	}
 }
 
-// occupancyCost 是尋路的額外成本：**有兵站著的格子加 8**。
-//
-// 原版把它存在另一張表（`word_1D2FE`），移動落定時舊格寫 0、新格寫 8，
-// 尋路擴散時 `mov al, es:[bx+2000h]` 讀出來加進波數
-// （docs/re/63 §1、docs/re/11 §5.15）。**這不是「不能走」，是「繞得過就繞」。**
-//
-// 回傳的是一個查表函式：一次掃完 96 個兵建表，不要每查一格掃一次——
-// 尋路一次會查上千格，逐格掃會讓無頭模擬慢一個數量級。
-func (b *Battle) occupancyCost() Penalty {
-	var occupied [Height][Width]bool
-	for i := range b.Sides {
-		for k := range b.Sides[i].Soldiers {
-			s := &b.Sides[i].Soldiers[k]
-			if s.Alive && s.X >= 0 && s.X < Width && s.Y >= 0 && s.Y < Height {
-				occupied[s.Y][s.X] = true
+// occupancyCost 讀取保留重畫歷史的雙平面成本（spec/134）。
+// 正常Step已初始化表；未經Step的合成呼叫一次建立同序暫時表。
+func (b *Battle) occupancyCost() planePenalty {
+	g := b.unitCollision
+	if g == nil {
+		g = &collisionGrid{}
+		g.seedStructureCosts(b.Structures)
+		for _, side := range [2]int{b.PlayerSide, 1 - b.PlayerSide} {
+			for k := range b.Sides[side].Soldiers {
+				s := &b.Sides[side].Soldiers[k]
+				if s.Alive {
+					g.drawSlot(b.collisionSlot(side, k), s.X, s.Y, s.Z, int(s.planeHigh())>>4)
+				}
 			}
 		}
 	}
-	return func(x, y int) int {
-		if x < 0 || x >= Width || y < 0 || y >= Height || !occupied[y][x] {
+	return func(x, y, plane int) int {
+		index, ok := costCell(x, y, plane)
+		if !ok {
 			return 0
 		}
-		return occupiedPenalty
+		return int(g.cost[index])
 	}
 }
 
@@ -528,13 +528,13 @@ func (b *Battle) computePath(side, k int) {
 		goalPlane = PlaneHigh
 	}
 	occupied := b.occupancyCost()
-	pts := b.Field.FindPathForPlanes(from, to, startPlane, goalPlane, s.CanClimb(), occupied)
+	pts := b.Field.findPathForPlaneCosts(from, to, startPlane, goalPlane, s.CanClimb(), occupied, nil)
 	if len(pts) == 0 {
 		// 地形走不通 → 改成「可以拆的就穿過去」。兵會走到那一格前面
 		// 撞上去，`tryMove` 把它算成一次耐久損傷，撞穿了地形就通了。
 		// 沒有這一步的話，攻城時攻方會整團卡在打不壞的城體前面。
-		pts = b.Field.FindPathForPlanesForcing(from, to, startPlane, goalPlane, s.CanClimb(),
-			func(x, y int) int { return b.breachCost(x, y) + occupied(x, y) },
+		pts = b.Field.findPathForPlaneCosts(from, to, startPlane, goalPlane, s.CanClimb(),
+			func(x, y, plane int) int { return b.breachCost(x, y) + occupied(x, y, plane) },
 			b.breakableAt)
 	}
 	if len(pts) == 0 {

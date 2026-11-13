@@ -21,7 +21,15 @@
 
 ## 2026-11-13：登城首拍與高層讀取
 
-最新程式`wlgame-cao-waypoint-r1`補回換鎖敵時的路徑刷新，契約見[spec159鎖敵續片](../spec/159-tactical-command-movement-order.md)。
+最新程式`wlgame-cao-cost-r1`接入雙平面成本生命週期，契約見[spec134續片](../spec/134-pathfind-wave-order.md)。
+[正常滑鼠](../../workplace/scratch/ui-windows-20261104/cao-cost-remake-gui.json)69個功能／同步檢查點、16圖通過，含重複同步。
+正常曹操第一劇本宣戰呂布、編夏侯淵、停手行軍、途中存讀檔、自然在椎陽入戰、改線、登城、突擊及主動退卻返回。
+登城187→193拍指標不動，主將X10→16，Goal保持(42,32,4)；[實際畫面](../../workplace/scratch/ui-windows-20261104/cao-cost-remake-scale-wall.png)已目視單兵、城牆及原版喊話。
+[規則證據](../../workplace/scratch/ui-windows-20261104/cao-cost-evidence.json)前153拍雙平面成本8192 bytes及96槽剩餘點數全等，
+149拍槽55五點完整重現。27項單兵欄位／RNG及腳本仍限151拍，152拍HighTerrain及154拍成本／點數仍有差異。
+[來源收據](../../workplace/scratch/ui-windows-20261104/cao-cost-integration.json)保存實作與界線，不代證整場同拍畫面、許昌留守、全部死亡補兵、架梯／投射物或手機GUI。
+
+前輪程式`wlgame-cao-waypoint-r1`補回換鎖敵時的路徑刷新，契約見[spec159鎖敵續片](../spec/159-tactical-command-movement-order.md)。
 [正常滑鼠](../../workplace/scratch/ui-windows-20261104/cao-waypoint-remake-gui.json)69個功能／同步檢查點、16圖通過，含重複同步。
 曹操開局宣戰呂布、編夏侯淵、停手行軍、途中存讀檔，自然在椎陽入戰後改線、登城、突擊及主動退卻返回。
 登城190→196拍滑鼠未動，主將X11→17，Goal保持(42,32,4)；[實際畫面](../../workplace/scratch/ui-windows-20261104/cao-waypoint-remake-scale-wall.png)已目視核對。

@@ -14860,15 +14860,15 @@
     {
       "file": "docs/spec/134-pathfind-wave-order.md",
       "item": "完整導航與佔用成本的語意映射",
-      "status": "2026-11-12經spec36列號修正後，低平面4096個原始byte全等，舊586格殘差已消除；高平面仍有455個byte不同，尚未建立語意映射。先前26格成本差異未由本片重驗，語意映射仍保留限制；不由此開啟全表重寫或宣稱全場parity",
+      "status": "2026-11-13雙平面成本按主要生命週期接線，前153拍8192 bytes全等；第154拍起仍有差異。低平面導航4096 bytes的既有全等不變，高平面仍有60-byte殘差。尚未建立完整戰況與全部地形的語意映射，不由本片宣稱全場parity",
       "section": "未解與限制",
       "domain": "其他",
       "verdict": "靜態",
       "occurrence": 0,
-      "id": "oq-213a4c12558ed8fa0ffb",
+      "id": "oq-ae040b66af603f6308fb",
       "classification": "evidence-only",
       "github_issue": null,
-      "reason": "spec36已消除低平面錯列殘差；高平面與成本映射仍保留證據限制，不由本片新開全表重寫。"
+      "reason": "保留完整導航與後段戰況的證據邊界；成本窄片已驗證，玩家排程工作沿Issue #16另列，本列不形成新工作。"
     }
   ]
 }

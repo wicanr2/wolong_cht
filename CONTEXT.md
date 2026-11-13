@@ -252,6 +252,7 @@ GPU最多兩頁快取，其他季節、液晶、未選頁與讀圖失敗沿原�
 
 | 日期／目前程式 | 最近驗證 | 狀態 | 交付物 |
 |---|---|---|---|
+| 2026-11-13；wlgame-cao-cost-r1 | 前153拍每拍8192-byte成本及96槽剩餘點數全等，149拍槽55完整五點相同；27項單兵欄位／RNG／腳本限151拍；七套件冷測／vet、兩負對照、正常GUI69點／16圖通過 | 原版雙平面成本按建場、重畫、換位、死亡／退卻與破城維護，不再從當前士兵位置重建。前輪缺失原始收據已按指令／seed／182筆觀測雜湊完整重生。152拍HighTerrain及154拍成本／點數仍不同 | [spec134續片](docs/spec/134-pathfind-wave-order.md)、[收據](workplace/scratch/ui-windows-20261104/cao-cost-integration.json) |
 | 2026-11-13；wlgame-cao-waypoint-r1 | 前151拍96槽27欄位／RNG／腳本吻合；七套件冷測／vet、舊錯版負對照、正常GUI69點／16圖通過 | 換鎖敵時要求兵種動作刷新中繼點並清舊路，同敵人保留路徑。額外點數比較仍見150／151拍槽55不同，成本隔離可重現原版五點；152拍地形旗標仍不同 | [spec159鎖敵續片](docs/spec/159-tactical-command-movement-order.md)、[成本邊界](docs/spec/134-pathfind-wave-order.md)、[收據](workplace/scratch/ui-windows-20261104/cao-waypoint-integration.json) |
 | 2026-11-13；wlgame-cao-impact-r1 | 前149拍96槽27欄位／RNG／腳本吻合；第146拍96兵移動後六欄相同；七套件冷測／vet、兩錯版負對照、正常GUI69點／16圖通過 | 水平撞牆結束當拍並排尋路，守方免傷仍處理碰撞，查詢前更新嘗試面向。實際登城下令後停手六拍持續前進。第150拍槽54的StepXY仍不同 | [spec159本片](docs/spec/159-tactical-command-movement-order.md)、[收據](workplace/scratch/ui-windows-20261104/cao-impact-integration.json) |
 | 2026-11-13；wlgame-cao-route-r1 | 前146拍96槽27欄位／RNG／腳本吻合；七套件冷測／vet、舊錯版負對照、正常GUI69點／16圖通過 | 登城繞路保留接令目標列，重接命令才初始化；實際滑鼠下登城令後停手六拍仍前進且目標不漂移。第147拍移動、鎖敵與旗標仍有界 | [spec36續片](docs/spec/36-ground-planes-and-climbing.md)、[收據](workplace/scratch/ui-windows-20261104/cao-route-integration.json) |
