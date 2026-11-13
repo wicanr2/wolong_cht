@@ -79,6 +79,10 @@ if !s.CanClimb() || !b.Field.IsGateCell(s.X, s.Y) ||
 
 ## 3. 演算法
 
+2026-11-13面向與升降續片：`1B0F1`／`1B132`在查詢前按圖塊奇偶設定面向，打門也用該面向。
+成功由`1B0FD`／`1B13E`每次升降一層，詳見[spec36](36-ground-planes-and-climbing.md)。
+本片沒有把remake既有打門、GroundLevel及遠層佔位閘升格為完整相鄰物理層／CF一致。
+
 ```
 tryClimb：
     不能爬的兵種 或 腳下不是門格   → 失敗

@@ -601,6 +601,7 @@ func TestClimbIntoUnbrokenGateHitsIt(t *testing.T) {
 	s.Kind = Infantry
 	s.X, s.Y, s.Z = g.X, g.Y, 0
 	s.Facing = East // 朝城，不走「一撞歸零」那條捷徑
+	s.StepZ = 4
 	before := g.Durability
 
 	if b.tryClimb(AttackerSide, 0) {

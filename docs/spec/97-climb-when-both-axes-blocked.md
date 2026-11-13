@@ -16,6 +16,9 @@
 
 ## 1. 原版做什麼
 
+2026-11-13純Z續片：[spec36](36-ground-planes-and-climbing.md)補齊`1B0FD`／`1B13E`每次只升降一層。
+本文件的X／Y失敗才嘗試Z條件保留；成功不代表一次抵達牆頂，也不依OnWall自動反向。
+
 ```asm
 0001AF69  mov ah, 1                    ; ah ＝「這一幀完全沒動」
 0001AF6E  al = [si+6]                  ; 目前 X

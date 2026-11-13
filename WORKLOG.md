@@ -1512,3 +1512,16 @@
 - [正常滑鼠](workplace/scratch/ui-windows-20261104/cao-terrain-remake-gui.json)69個功能／同步檢查點、16圖通過。曹操第一劇本宣戰呂布、編夏侯淵、停手行軍、途中存讀檔、自然在椎陽入戰、改線、登城、突擊及退卻返回。登城210→216拍指標不動，主將X28→34、Goal保持(42,32,4)；已目視城牆、單兵與側欄指令。不代證許昌留守、整場同拍畫面、架梯／投射物或手機GUI。
 - [回填表](workplace/scratch/ui-windows-20261104/cao-terrain-backlinks.json)與[來源收據](workplace/scratch/ui-windows-20261104/cao-terrain-integration.json)保存兩檔來源覆蓋包、binary、原版輸入與實際證據數。spec62本片CONFORMED，整體Issue #16仍未完成，未寫入或關閉Issue。原版資料、IDA、binary及畫面留本機，不作Release。
 - 收尾通過嚴格未解、1143列分流、過期斷言、資產deny-list及正對照。索引生成582份文件／135條斷言，官方檢查仍因65個歷史本機缺失連結回傳1；同工具與HEAD比對新增0。引用掃描352筆既有缺失、新增0，缺席census.tsv的符號層未執行。兩檔來源覆蓋包、64份證據、原版輸入及IDA資料庫SHA一致，UID/GID1000:1000，root-owned及誤建.md目錄0；本輪容器均結束移除，沒有重建image或清理其他專案資源。[收尾核對](workplace/scratch/ui-windows-20261104/cao-terrain-final-checks.json)保存結果。依既有授權commit並push，遠端核對另存本機repo-terrain-update-20261113.json。
+
+## 2026-11-13：登城嘗試面向與逐層升降
+
+- 接續Issue #16第153拍槽87 Z1／Z4差異。開工工作樹乾淨，主機gh核對Issue仍OPEN，本地verify通過。載入復古remake、spec閘門、RE回填與文件職責路由，依AGENTS規則由唯讀子代理核對既有IDA輸出及候選；未授權其修改、測試、清理或提交。
+- 原指令1B0FD每次Z+1、1B103立即設高平面；1B13E每次Z−1、1B144–1B14A到Z0才清平面。方向依Z／StepZ，StepZ不寫；1B0F1／1B132在查詢前按圖塊奇偶寫面向。重用ground-20261112的IDA9.4原指令與bytes，歷史DB身分c2d996…d9aaf已在spec36保存，但獨立DB檔現已缺席；本輪不稱重驗缺席DB，也不另開IDA或改名。
+- 同曹操正常輸入、固定seed1補取槽87的純Z嘗試與成功出口。182筆主觀測及101筆命令收據逐byte不變，兩筆既有第64／88步診斷保留。tick152–155上方查詢皆空，之後四次Z0→1→2→3→4、StepZ保持4，第一層起平面16。[審查收據](workplace/scratch/ui-windows-20261104/cao-climb-review.json)保存原版身分與逐次輸出；本正常重播沒有下降，不宣稱下降動態對拍完成。
+- 第一候選產生器以全檔字串替換誤碰breachCost，編譯即因回傳型別不符退出。已保留失敗來源／log，限制替換於tryClimb函式範圍後乾淨重跑；正式來源尚未接線，沒有產品程式繞過。獨立審查另指出面向在失敗前更新、查詢目標平面按方向選擇，不能說失敗路徑完全不變；spec36先明列影響與既有遠層佔位限制，再由DRAFT列READY。
+- 正式只接純Z嘗試面向與每次±1的成功轉移，等高不自動反向，上爬立刻設高平面、下降至0才清。既有未破門、GroundLevel及遠層佔位閘保留，不猜補相鄰物理層碰撞或CF。StepZ、XY、重畫入口、時間、存檔與工具列不改。原始資料經typed Field與單兵Z由既有isoview呈現，不另補畫面位移。
+- [七套件冷測／vet／建置](workplace/scratch/ui-windows-20261104/cao-climb-tests.log)通過。舊測試固定一次到牆頂、再呼叫自動下牆，已依原指令改成完整逐層上下及平面時機；未破門fixture補上實際中繼高度。奇偶門在未破／佔位失敗時仍更新面向，兵種與非門閘保留；舊錯版被兩條實際斷言拒絕。
+- [正式證據](workplace/scratch/ui-windows-20261104/cao-climb-evidence.json)前156拍96槽27欄位、完整RNG／腳本及剩餘點數全等，成本8192 bytes同至157拍；正式主串流與候選SHA相同。157拍起槽66中繼目標及槽87受擊／疲勞／命令／目標與RNG不同，158拍成本不同，沒有重擲或平移拍點，不代證整場戰果。
+- [正常滑鼠](workplace/scratch/ui-windows-20261104/cao-climb-remake-gui.json)69個功能／同步檢查點、16圖通過，曹操第一劇本宣戰呂布、編夏侯淵、停手行軍、途中存讀檔、自然在椎陽入戰、改線、登城、突擊及退卻返回。登城197→203拍指標不動、主將X19→25、Goal保持(42,32,4)；已目視城牆、單兵、側欄及底列指令。不代證原版同拍畫面、許昌留守、下降動態、完整戰果、架梯／投射物或手機GUI。
+- [回填表](workplace/scratch/ui-windows-20261104/cao-climb-backlinks.json)連回re11／63、spec97／98／159／134／62及戰鬥機制；[來源收據](workplace/scratch/ui-windows-20261104/cao-climb-integration.json)保存三檔來源覆蓋包、binary、輸入與實際證據數。spec36本片CONFORMED，整體Issue #16仍未完成，沒有寫入或關閉Issue。原版資料、IDA匯出、binary與畫面留本機，不作Release。
+- 收尾通過嚴格未解、1143列分流、過期斷言及資產deny-list與正對照。索引生成582份文件／135條斷言，官方檢查仍因65個歷史本機缺失連結回傳1，與HEAD同工具比較新增0；引用掃描352筆既有缺失、新增0，缺席census.tsv的符號層未執行。三檔來源覆蓋包、71份證據、原版輸入及現存IDA匯出SHA核對一致，未稱重驗缺席DB。UID/GID1000:1000，root-owned及誤建.md目錄0；本輪容器均結束移除，沒有重建image或動其他專案資源。[收尾核對](workplace/scratch/ui-windows-20261104/cao-climb-final-checks.json)保存範圍；依既有授權commit並push，遠端核對另存本機repo-climb-update-20261113.json。

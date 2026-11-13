@@ -21,7 +21,16 @@
 
 ## 2026-11-13：登城首拍與高層讀取
 
-最新程式`wlgame-cao-terrain-r1`補齊門圖塊地形旗標排除，契約見[spec62續片](../spec/62-swapped-unit-skips-its-turn.md)。
+最新程式`wlgame-cao-climb-r1`將純Z成功移動改成逐層升降，契約見[spec36續片](../spec/36-ground-planes-and-climbing.md)。
+[正常滑鼠](../../workplace/scratch/ui-windows-20261104/cao-climb-remake-gui.json)69個功能／同步檢查點、16圖通過，含重複同步。
+曹操第一劇本宣戰呂布、編夏侯淵、停手行軍、途中存讀檔、自然在椎陽入戰、改線、登城、突擊及退卻返回。
+登城197→203拍指標不動，主將X19→25、Goal保持(42,32,4)；[實際畫面](../../workplace/scratch/ui-windows-20261104/cao-climb-remake-scale-wall.png)已目視城牆、單兵、側欄及底列指令。
+[正式證據](../../workplace/scratch/ui-windows-20261104/cao-climb-evidence.json)前156拍96槽27欄位／RNG／腳本及剩餘點數全等，
+成本同至157拍；下一差異為157拍受擊／疲勞／命令／目標及RNG。
+[來源收據](../../workplace/scratch/ui-windows-20261104/cao-climb-integration.json)保存既有垂直碰撞限制；下降無本輪原版動態抽樣，
+不代證整場畫面、許昌留守、完整戰果、架梯／投射物或手機GUI。
+
+前輪程式`wlgame-cao-terrain-r1`補齊門圖塊地形旗標排除，契約見[spec62續片](../spec/62-swapped-unit-skips-its-turn.md)。
 [正常滑鼠](../../workplace/scratch/ui-windows-20261104/cao-terrain-remake-gui.json)69個功能／同步檢查點、16圖通過，含重複同步。
 曹操第一劇本宣戰呂布、編夏侯淵、停手行軍、途中存讀檔、自然在椎陽入戰、改線、登城、突擊及退卻返回。
 登城210→216拍指標不動，主將X28→34，Goal保持(42,32,4)；[實際畫面](../../workplace/scratch/ui-windows-20261104/cao-terrain-remake-scale-wall.png)已目視城牆、單兵及側欄指令。

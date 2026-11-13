@@ -652,7 +652,8 @@ func TestClimbOnlyAtGateCells(t *testing.T) {
 
 	s := &b.Sides[AttackerSide].Soldiers[0]
 	s.Kind = Infantry
-	s.X, s.Y, s.Z, s.OnWall = 32, gateY, 4, false
+	s.X, s.Y, s.Z, s.OnWall = 32, gateY, 0, false
+	s.StepZ = 4
 
 	// ★ 門還沒破：上不去。這一格是門（bit 3 有設），擋下來的是 0xF8 那一關。
 	if b.tryClimb(AttackerSide, 0) {
@@ -667,22 +668,28 @@ func TestClimbOnlyAtGateCells(t *testing.T) {
 	if !ok {
 		t.Fatal("門格的高平面應該有地面（跟旁邊的牆頂同高）")
 	}
-	if !b.tryClimb(AttackerSide, 0) {
-		t.Fatal("撞開之後步兵應該爬得上去")
+	s.StepZ = top
+	for z := 1; z <= top; z++ {
+		if !b.tryClimb(AttackerSide, 0) || s.Z != z || !s.OnWall || s.PlaneHigh != PlaneHighElevated || s.StepZ != top {
+			t.Fatalf("每次只上一層並保留目標，預期Z%d／StepZ%d：%+v", z, top, *s)
+		}
 	}
-	if !s.OnWall || s.Z != top {
-		t.Errorf("爬上去之後 OnWall=%v Z=%d，預期 true／%d", s.OnWall, s.Z, top)
+	if b.tryClimb(AttackerSide, 0) || s.Z != top {
+		t.Fatal("已達中繼高度不可因OnWall為true就自動下牆")
 	}
-	if !b.tryClimb(AttackerSide, 0) {
-		t.Error("站在牆頂的門格上應該下得來")
-	}
-	if s.OnWall {
-		t.Error("下來之後 OnWall 還是 true")
+	s.StepZ = 0
+	for z := top - 1; z >= 0; z-- {
+		if !b.tryClimb(AttackerSide, 0) || s.Z != z || s.OnWall != (z > 0) || s.StepZ != 0 || s.X != 32 || s.Y != gateY {
+			t.Fatalf("下降每次一層，到Z0才清平面，預期Z%d：%+v", z, *s)
+		}
+		if s.PlaneHigh != PlaneHighGround && z == 0 || s.PlaneHigh != PlaneHighElevated && z > 0 {
+			t.Fatalf("下降Z%d的原始平面錯誤：%#x", z, s.PlaneHigh)
+		}
 	}
 
 	// 騎馬與大將不做 Z 移動。
 	for _, kind := range []Kind{Cavalry, General} {
-		s.Kind, s.OnWall, s.Z = kind, false, 4
+		s.Kind, s.OnWall, s.Z, s.StepZ = kind, false, 0, top
 		if b.tryClimb(AttackerSide, 0) {
 			t.Errorf("%v 不該爬得上城牆", kind)
 		}
@@ -693,6 +700,42 @@ func TestClimbOnlyAtGateCells(t *testing.T) {
 	s.X, s.Y = 32, gateY-1
 	if b.tryClimb(AttackerSide, 0) {
 		t.Error("城壁那一格不該爬得上去")
+	}
+}
+
+func TestClimbFacingFollowsTileParityEvenWhenBlocked(t *testing.T) {
+	for _, tile := range []byte{0xF0, 0xF1, 0xF8, 0xF9} {
+		for _, up := range []bool{true, false} {
+			f, _ := tiledField(32)
+			f.Retile(32, Height/2, int(tile)-int(f.Tile(32, Height/2)))
+			b := NewBattle(f, SyntheticFormations(), nil, 0)
+			s := &b.Sides[0].Soldiers[1]
+			*s = Soldier{Alive: true, Kind: Infantry, X: 32, Y: Height / 2, Z: 0, StepZ: 4, Facing: North}
+			if !up {
+				s.Z, s.StepZ, s.OnWall = 4, 0, true
+			}
+			beforeZ := s.Z
+			// 遠層同伴保留既有佔位閘，只驗面向更新在失敗之前。
+			plane := PlaneHigh
+			if !up {
+				plane = PlaneLow
+			}
+			z, ok := f.GroundLevel(s.X, s.Y, plane)
+			if !ok {
+				t.Fatal("合成門格應有查詢平面")
+			}
+			b.Sides[0].Soldiers[2] = Soldier{Alive: true, Kind: Infantry, X: s.X, Y: s.Y, Z: z}
+			if b.tryClimb(0, 1) || s.Z != beforeZ {
+				t.Fatal("被保留的門／佔位閘擋下時不得移動")
+			}
+			want := int(tile & 1)
+			if up {
+				want ^= 1
+			}
+			if s.Facing != want<<1 {
+				t.Fatalf("圖塊%02X往上%v失敗時Facing=%d，預期%d", tile, up, s.Facing, want<<1)
+			}
+		}
 	}
 }
 

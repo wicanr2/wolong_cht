@@ -49,6 +49,9 @@
 [來源收據](../../workplace/scratch/ui-windows-20261104/cao-terrain-integration.json)保存兩檔來源、binary、輸入及證據雜湊。
 不宣稱完整戰果、所有地形、許昌留守、架梯／投射物或手機GUI完成。
 
+2026-11-13純Z後續：`1B0FD`逐層上升已由[spec36續片](36-ground-planes-and-climbing.md)接線，
+前156拍逐兵／RNG相同。上述153拍Z1／Z4是旗標片當時的界線，目前首次差異為157拍受擊／命令及RNG。
+
 ### 2026-11-12：換位的中繼高度與地形旗標續片
 
 **狀態：CONFORMED，限本片。** 舊文的被換位跳過機制保留。
