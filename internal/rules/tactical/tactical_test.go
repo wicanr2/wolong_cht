@@ -381,6 +381,62 @@ func TestRawPlaneHighAndTerrainFlag(t *testing.T) {
 	}
 }
 
+func TestHighTerrainExcludesSpecialTiles(t *testing.T) {
+	for _, tc := range []struct {
+		tile   byte
+		height int
+		want   bool
+	}{{0xEF, 4, true}, {0xF0, 4, false}, {0xFD, 5, false}, {0xFF, 7, false}, {0xEE, 3, false}} {
+		var heights [256]int
+		heights[tc.tile] = tc.height
+		tiles := make([][]byte, Height)
+		for y := range tiles {
+			tiles[y] = make([]byte, Width)
+		}
+		tiles[20][10] = tc.tile
+		f := NewFieldFromTiles(tiles, &heights, 0)
+		if got := f.HighTerrain(10, 20); got != tc.want {
+			t.Fatalf("圖塊%02X高度%d的地形旗標=%v，應為%v", tc.tile, tc.height, got, tc.want)
+		}
+	}
+	for _, height := range []int{3, 4, 5} {
+		f := NewField(nil, 0)
+		f.setCell(10, 20, height)
+		if f.HighTerrain(10, 20) != (height >= 4) {
+			t.Fatalf("無圖塊合成戰場高度%d的既有判定改變", height)
+		}
+	}
+}
+
+func TestHighTerrainSpecialTileAtInitAndRedraw(t *testing.T) {
+	var heights [256]int
+	heights[0xEF], heights[0xFD] = 4, 5
+	tiles := make([][]byte, Height)
+	for y := range tiles {
+		tiles[y] = make([]byte, Width)
+	}
+	tiles[20][10], tiles[20][11] = 0xEF, 0xFD
+	f := NewFieldFromTiles(tiles, &heights, 0)
+	b := NewBattle(f, SyntheticFormations(), nil, 0)
+	s := &b.Sides[1].Soldiers[39]
+	*s = Soldier{Alive: true, X: 11, Y: 20, HighTerrain: true}
+	b.initUnitCollision()
+	if s.HighTerrain {
+		t.Fatal("初始化時特殊圖塊須清地形旗標")
+	}
+	s.X = 10
+	b.drawUnitCollision(1, 39)
+	if !s.HighTerrain {
+		t.Fatal("普通高度4圖塊重畫須設旗標")
+	}
+	s.X = 11
+	s.Swapped, s.Stun = true, 2
+	b.drawUnitCollision(1, 39)
+	if s.HighTerrain {
+		t.Fatal("換位或硬直停留也須在重畫點清特殊圖塊旗標")
+	}
+}
+
 func TestSpecialProjectileUsesPlaneHighAndMaxAxisDistance(t *testing.T) {
 	attacker := &Soldier{Kind: Infantry, X: 10, Y: 20, Z: 2,
 		PlaneHigh: PlaneHighElevated}

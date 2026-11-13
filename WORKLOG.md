@@ -1500,3 +1500,15 @@
 - [回填表](workplace/scratch/ui-windows-20261104/cao-cost-backlinks.json)連回re11、re63、spec36、spec159及戰鬥機制；spec134本片CONFORMED，整體#16仍未完成，沒有寫入或關閉Issue。七檔來源覆蓋包、binary、實際證據數與原版輸入見[來源收據](workplace/scratch/ui-windows-20261104/cao-cost-integration.json)。原版資料、IDA、binary及畫面留本機，不作Release。
 - 收尾完成索引生成582份文件／135條斷言，嚴格未解及1143列分流、過期斷言與資產deny-list及正對照通過。未解表初次改寫未含索引辨識詞，仍存在的完整映射限制被漏收；已明寫「尚未建立」並只更新該列指紋與理由，保留分類，不重設全表。官方索引檢查仍回傳1，[同工具差量](workplace/scratch/ui-windows-20261104/cao-cost-doc-index-delta.json)確認修改前後均為65個歷史本機缺失連結，新增0。引用掃描同為352筆既有缺失、新增0；歷史census.tsv缺席的符號層未執行，不宣稱全庫檢查全綠。
 - 七檔來源覆蓋包、91份證據、原版輸入與IDA資料庫SHA一致，UID/GID1000:1000，root-owned及誤建.md目錄0。本輪容器已結束移除，沒有重建image或清理其他專案資源。[收尾核對](workplace/scratch/ui-windows-20261104/cao-cost-final-checks.json)保存範圍；依既有授權commit並push，提交與遠端核對另存本機repo-cost-update-20261113.json。
+
+## 2026-11-13：門圖塊排除高地形旗標
+
+- 接續Issue #16第152拍槽87差異。工作樹乾淨，主機gh核對Issue仍OPEN，本地verify通過。載入復古remake、spec閘門、IDA9.4、RE回填與文件職責路由；依AGENTS規則由唯讀子代理核對既有原指令與候選，不授權其修改、測試、清理或提交。
+- 原版1B2E1／1B2E4先排除圖塊0xF0–0xFF，只有其他圖塊才判定義高度≥4。Go只看高度，將(45,38)的0xFD／高度5誤標HighTerrain。重用前片IDA9.4原指令、bytes及固定DB雜湊，不重開IDA或改符號。
+- 同正常曹操輸入、固定seed1補取槽87於150–154拍的重畫觀測。182筆主觀測SHA58ff27…979f0及101筆命令收據與前片完全相同。tick151重畫、boundary152前實讀FD／高度5，依序經1B2E1、1B300、1B303清bit1。[審查收據](workplace/scratch/ui-windows-20261104/cao-terrain-review.json)保存動態與靜態身分。
+- 收據核對首次要求101步皆無錯，實際前片早有第64步框外右鍵未改畫面及第88步有界runto未到指定常式兩筆診斷。核對命令收據逐byte相同後改驗既有診斷集合，保留原輸入與拍點，不稱該兩步被遊戲接受；之後自然入戰及完整固定觀測重現。屬驗證腳本假設過強，未改正式遊戲繞過。
+- spec62由DRAFT經原指令、動態分支及唯讀候選審查列READY後，只在共用Field.HighTerrain補圖塊上限閘。初始化與逐兵重畫沿原入口，合成戰場保留高度判定；重畫時機、換位、平面、登城高度、速度與存檔不改。re11、spec62舊高度摘要、spec134／159目前界線及戰鬥機制同步回填。
+- [七套件冷測／vet／建置](workplace/scratch/ui-windows-20261104/cao-terrain-tests.log)通過；回歸涵蓋EF／F0邊界、FD高度5、FF、低高度、合成高度及初始化／重畫。舊程式實際被兩條斷言拒絕。[正式證據](workplace/scratch/ui-windows-20261104/cao-terrain-evidence.json)前152拍96槽27欄位、完整RNG及腳本相同；前153拍成本與剩餘點數界線不變。首次差異改為153拍槽87 Z原版1、Go4，154拍成本／點數仍不同，不在本片猜補登城動作。
+- [正常滑鼠](workplace/scratch/ui-windows-20261104/cao-terrain-remake-gui.json)69個功能／同步檢查點、16圖通過。曹操第一劇本宣戰呂布、編夏侯淵、停手行軍、途中存讀檔、自然在椎陽入戰、改線、登城、突擊及退卻返回。登城210→216拍指標不動，主將X28→34、Goal保持(42,32,4)；已目視城牆、單兵與側欄指令。不代證許昌留守、整場同拍畫面、架梯／投射物或手機GUI。
+- [回填表](workplace/scratch/ui-windows-20261104/cao-terrain-backlinks.json)與[來源收據](workplace/scratch/ui-windows-20261104/cao-terrain-integration.json)保存兩檔來源覆蓋包、binary、原版輸入與實際證據數。spec62本片CONFORMED，整體Issue #16仍未完成，未寫入或關閉Issue。原版資料、IDA、binary及畫面留本機，不作Release。
+- 收尾通過嚴格未解、1143列分流、過期斷言、資產deny-list及正對照。索引生成582份文件／135條斷言，官方檢查仍因65個歷史本機缺失連結回傳1；同工具與HEAD比對新增0。引用掃描352筆既有缺失、新增0，缺席census.tsv的符號層未執行。兩檔來源覆蓋包、64份證據、原版輸入及IDA資料庫SHA一致，UID/GID1000:1000，root-owned及誤建.md目錄0；本輪容器均結束移除，沒有重建image或清理其他專案資源。[收尾核對](workplace/scratch/ui-windows-20261104/cao-terrain-final-checks.json)保存結果。依既有授權commit並push，遠端核對另存本機repo-terrain-update-20261113.json。

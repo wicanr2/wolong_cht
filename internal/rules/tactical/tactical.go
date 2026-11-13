@@ -171,8 +171,8 @@ type Soldier struct {
 	// 上下**（docs/re/63 §4）。
 	OnWall bool
 
-	// HighTerrain 是原版 +0x00 bit 1。`sub_1B240` 依目前圖塊堆疊高度
-	// 是否至少 4 層設定它，鎖敵與換位都會讀這個旗標。
+	// HighTerrain 是原版 +0x00 bit 1。`sub_1B240` 先排除圖塊≥0xF0，
+	// 再依堆疊高度是否至少4層設定它，鎖敵會讀這個旗標。
 	HighTerrain bool
 
 	// Climbing 是早期 remake API 留下的相容欄位。新 runtime 以 PlaneHigh
@@ -309,8 +309,8 @@ type Field struct {
 // NewField 從每格的堆疊高度建一張戰場。
 //
 // stack[y][x] 是那一格的圖塊堆疊層數（0–7）：**堆疊的部分是實心的**，
-// 兵站在它上面。堆疊 ≥ 4 的格子原版會給站上去的兵設一個旗標
-// （docs/re/11 §4.3），在攻城圖上那些格子構成城牆。
+// 兵站在它上面。合成戰場以堆疊≥4設定高地形旗標；有原始圖塊時
+// 另排除圖塊≥0xF0（docs/spec/62）。
 func NewField(stack [][]int, gateX int) *Field {
 	f := &Field{gateX: gateX}
 	for y := 0; y < Height && y < len(stack); y++ {
@@ -444,8 +444,11 @@ func (f *Field) StandLevel(x, y int) int {
 }
 
 // HighTerrain 對應原版 `sub_1B240` 對 +0x00 bit 1 的設定：
-// 目前格子的堆疊高度至少 4 層。
+// 原始圖塊低於0xF0且堆疊高度至少4層；合成戰場只判高度（spec/62）。
 func (f *Field) HighTerrain(x, y int) bool {
+	if f.HasTiles() && f.Tile(x, y) >= gateTile {
+		return false
+	}
 	return f.StandLevel(x, y) >= 4
 }
 

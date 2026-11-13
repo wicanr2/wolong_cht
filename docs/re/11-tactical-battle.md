@@ -459,7 +459,11 @@ sub di, 7000h
 
 7 × 4,096 ＝ 28,672 ＝ `ds:0D2FA` 的大小，**完全吻合**。
 
-### 4.3 ⭐ 堆疊高度 ≥ 4 ＝ 站在高處
+### 4.3 高地形旗標：先排除特殊圖塊，再判高度
+
+2026-11-13圖塊閘勘誤：圖塊低於0xF0且定義高度≥4才設bit1。
+原始定位`1B2E1`／`1B2E4`先排除0xF0–0xFF；門格即使高度5也清旗標。
+輸入KI.EXE、IDA Pro9.4 DOS/V linear與同拍觀測見[spec62續片](../spec/62-swapped-unit-skips-its-turn.md)。
 
 ```asm
 ; sub_1B240：單位移動後
@@ -469,7 +473,9 @@ mov ds, cs:word_1D302
 shl bx,1 ×3 / mov al, [bx]             ; 堆疊高度
 cmp al, 4 / jb .clear
 or byte ptr [si], 2                    ; ★ 單位旗標 bit 1
+jmp .done
 .clear: and byte ptr [si], 0FDh
+.done:
 ```
 
 把 214 張戰場依「堆疊高度 ≥ 4」上色，形狀自己說話
@@ -1007,7 +1013,7 @@ Step由舊繞路(45,16)改(5,26)，路徑游標／點數2/4歸零。
 
 鎖敵的 **64 格懲罰**不是所有平面不同都無條件套用：`sub_1A85B` 逐字節比較
 目前與候選的 `+0x1E`。目前平面較高時，只有候選兵的 `+0x00 bit 1`（`sub_1B240`
-依圖塊堆疊至少 4 層設定的 `HighTerrain`）才加 `0x40`；目前平面不高於候選時，
+先排除圖塊≥0xF0、再依堆疊至少4層設定的 `HighTerrain`）才加 `0x40`；目前平面不高於候選時，
 只有目前兵種 `+0x04 <= 0x12` 且候選平面非 `0` 才加 `0x40`。remake 的
 `targetPlanePenalty` 已照這個分支實作；`Climbing` 僅保留為未經 `Place` 的舊測試
 相容欄位，不再冒充 raw 欄位名稱。

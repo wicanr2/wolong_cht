@@ -555,7 +555,7 @@
 | [`docs/spec/59-battle-opening-orders.md`](spec/59-battle-opening-orders.md) | 59 — 開場的常令：腳本那一側不要先下「攻擊」 | CONFORMED。 | 2026-08-18 |
 | [`docs/spec/60-battle-talk-duration.md`](spec/60-battle-talk-duration.md) | 60 — 戰場對白顯示多久：60 個 tick，每側各一個 | CONFORMED。 | 2026-08-18 |
 | [`docs/spec/61-soldier-initial-hp-from-morale.md`](spec/61-soldier-initial-hp-from-morale.md) | 61 — 兵的開場體力 ＝ 軍團士氣 | CONFORMED。 | 2026-08-18 |
-| [`docs/spec/62-swapped-unit-skips-its-turn.md`](spec/62-swapped-unit-skips-its-turn.md) | 62 — 被換位的兵，這一幀不動 | CONFORMED。 | 2026-08-18 |
+| [`docs/spec/62-swapped-unit-skips-its-turn.md`](spec/62-swapped-unit-skips-its-turn.md) | 62 — 被換位的兵，這一幀不動 | CONFORMED，限既有換位及門圖塊地形旗標片段。 | 2026-11-13 |
 | [`docs/spec/63-hit-stun.md`](spec/63-hit-stun.md) | 63 — 被打中的兵有硬直：當幀 ＋ 之後兩幀都不動 | CONFORMED。 | 2026-08-18 |
 | [`docs/spec/64-capital-relocation-report.md`](spec/64-capital-relocation-report.md) | 64 — 遷都之後說什麼：自國君主下令，他國要有外交官才報得回來 | CONFORMED。 | 2026-08-18 |
 | [`docs/spec/65-retreated-soldiers-survive.md`](spec/65-retreated-soldiers-survive.md) | 65 — 退到畫面外的兵算生還，不算戰死 | CONFORMED。 | 2026-08-18 |
