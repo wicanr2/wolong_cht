@@ -52,8 +52,8 @@ type Side struct {
 	// 「Σ（各隊存活 ＋ 各隊待機）」，退場的兵跟著軍團回去。
 	// 戰死的走同一支移除常式但 `ah = 1`，不加。
 	//
-	// ⚠ **不能加進 `Remaining()`**——那個是勝負判定用的「還補得出兵嗎」，
-	// 把離場的加回去，戰鬥就永遠打不完（§1.1）。
+	// 離場生還只進 Survivors；Remaining 保留「場上＋待機」供腳本查詢。
+	// 勝負另讀移動批次的場上計數（docs/spec/141）。
 	Escaped [Squads]int
 
 	// Reserve[k] 是第 k 隊還在畫面外待機的兵數。
@@ -182,13 +182,10 @@ func (s *Side) Fresh() int {
 	return n
 }
 
-// Remaining 回傳這一側的總戰力：場上的 ＋ 待機的。
-// **兩邊都歸零才算補不出兵**（說明書 4.1 的勝負條件）。
 // Survivors 是**打完之後跟著軍團回去**的兵數：場上還站著的、
 // 還在待機的，加上退到畫面外的（docs/spec/65）。
 //
-// 與 `Remaining()` 的差別只有最後一項，而那一項正是「退卻」與
-// 「戰死」的分界——兩者在畫面上都是離場，帳卻不一樣。
+// 與 `Remaining()` 的差別是離場生還；勝負另用移動批次的場上計數。
 func (s *Side) Survivors() int {
 	n := s.Remaining()
 	for _, e := range s.Escaped {
@@ -197,6 +194,7 @@ func (s *Side) Survivors() int {
 	return n
 }
 
+// Remaining 回傳場上與待機兵數，供兵力／腳本查詢；不等於勝負計數。
 func (s *Side) Remaining() int {
 	n := s.Alive()
 	for _, r := range s.Reserve {
@@ -689,9 +687,12 @@ func (b *Battle) Step() {
 	// 0001ADDD：命令批次的新請求可同拍消化；移動中的請求等下一拍。
 	// 仍維持每拍兩筆 FIFO 預算（docs/spec/159）。
 	b.drainPathQueue()
+	var present [2]int
 	for _, i := range [2]int{b.PlayerSide, 1 - b.PlayerSide} {
 		for k := range b.Sides[i].Soldiers {
 			if b.Sides[i].Soldiers[k].Alive {
+				// 1AE29只數進入在場分支的單兵，補兵分支當拍不計入。
+				present[i]++
 				b.updateSoldierMovement(i, k)
 				b.drawUnitCollision(i, k)
 			}
@@ -708,12 +709,12 @@ func (b *Battle) Step() {
 	// ⭐ 隊長不在場是**每幀重新施加**的，與原版 `sub_1A6FA` 尾端呼叫
 	// `sub_1A754`／`sub_1A785` 的位置相同（docs/spec/128）。
 	b.applySquadLeaderGone()
-	b.checkVictory()
+	b.checkVictory(present)
 }
 
 // checkVictory 重現 `sub_1A6FA` 的三條出口。**順序照原版**：
 // 退卻的倒數排在「補不出兵」那兩條之前（docs/re/11 §5.9）。
-func (b *Battle) checkVictory() {
+func (b *Battle) checkVictory(present [2]int) {
 	// ① 全軍退卻之後的 120 拍倒數（docs/spec/141）。
 	//
 	// ⚠ 正常打完不會走到這裡——退卻的兵通常八拍就走完，由下面那條
@@ -729,9 +730,9 @@ func (b *Battle) checkVictory() {
 			return
 		}
 	}
-	// ②③ 任一側補不出兵就結束。
-	for i := range b.Sides {
-		if b.Sides[i].Remaining() == 0 {
+	// ②③ 1A727先查玩家，再查對方；待機與生還不進場上計數。
+	for _, i := range [2]int{b.PlayerSide, 1 - b.PlayerSide} {
+		if present[i] == 0 {
 			b.Done, b.Winner = true, 1-i
 			b.Log = append(b.Log, sideName(1-i)+"勝：對方補不出兵了")
 			return
@@ -774,6 +775,10 @@ func (b *Battle) drainSiegeGeneral() {
 // reinforce 讓待機的兵補進場（說明書 4.1 的輸送帶）。
 func (b *Battle) reinforce() {
 	for i := range b.Sides {
+		// 1B43E只停止全軍撤退的一側；待機兵保留供戰後結算。
+		if b.endPhase == i+1 {
+			continue
+		}
 		s := &b.Sides[i]
 		for k := 0; k < Squads; k++ {
 			if s.Reserve[k] == 0 {

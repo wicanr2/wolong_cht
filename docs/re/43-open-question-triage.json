@@ -9437,32 +9437,6 @@
       "reason": "目前列只保留原版證據邊界，未命中現行玩家路徑、規則或交付 Issue；若影響範圍改變，先建立新 Issue 再調整分類。"
     },
     {
-      "file": "docs/spec/141-retreat-countdown.md",
-      "item": "退卻中要不要補兵",
-      "status": "原版下令之後場上八拍歸零、**沒有補兵進場**；remake 的 `reinforce()` 會補（補進來的兵下一幀被 `applySquadLeaderGone` 改成退卻）。兩邊最後都會結束，但**中途的場上人數不同**，沒有逐拍對過",
-      "section": "5. 未解",
-      "domain": "其他",
-      "verdict": "靜態",
-      "occurrence": 0,
-      "id": "oq-3324e4d941d2df488ae4",
-      "classification": "merge-target",
-      "github_issue": 18,
-      "reason": "戰後結果、世界離場與多種結束方式，併入 Issue #18。"
-    },
-    {
-      "file": "docs/spec/141-retreat-countdown.md",
-      "item": "`word_1D31C` 的兩個 byte",
-      "status": "量到開場是 48／48（＝六隊 × 八人），[`../re/11`](../re/11-tactical-battle.md) §5.9 寫的是「含畫面外待機的」。**兩種讀法都還沒有直接證據**，這一份只用到「它歸零時結束」這一點",
-      "section": "5. 未解",
-      "domain": "其他",
-      "verdict": "靜態",
-      "occurrence": 0,
-      "id": "oq-07f2724d4d186d3c5df0",
-      "classification": "merge-target",
-      "github_issue": 12,
-      "reason": "畫面對拍 gate、群組覆蓋或 32 組門檻，併入 Issue #12。"
-    },
-    {
       "file": "docs/spec/142-personnel-dismiss-flow.md",
       "item": "任命的「已經有人」訊息參數",
       "status": "原版 `push ax`（`ah = 0FFh`、`al` ＝ 武將編號）＋ `push bx`（**據點記錄位址**，直接位址式）。remake 直接代名字字串，**沒有走 formatter 的位址式**（[`../re/79`](../re/79-talk-marker-handlers.md) §2）",

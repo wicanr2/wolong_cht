@@ -252,6 +252,7 @@ GPU最多兩頁快取，其他季節、液晶、未選頁與讀圖失敗沿原�
 
 | 日期／目前程式 | 最近驗證 | 狀態 | 交付物 |
 |---|---|---|---|
+| 2026-11-14；wlgame-cao-retreat-finish-r1 | 正常原版停手到底1476拍與typed重播的勝方、12隊生還數、兩將體力相同；41套件冷測／vet、五類負對照；正常滑鼠71點／17圖，自然戰果後返回大地圖 | 全軍撤退只停該側補兵，待機保留；勝負使用移動批次場上計數並按玩家／對方檢查。消除舊實作多等103拍。GUI有下令，725拍收尾，與原版停手樣本分開；全程狀態／動畫與完整世界出口仍有界 | [spec141](docs/spec/141-retreat-countdown.md)、[戰果收據](workplace/scratch/ui-windows-20261104/cao-retreat-after-comparison.json)、[正常GUI](workplace/scratch/ui-windows-20261104/cao-retreat-finish-remake-gui.json) |
 | 2026-11-14；wlgame-cao-hit-order-r1 | 23個原版受控樣本、雙PlayerSide映射46次比較全等；七套件冷測／vet、五類負對照、正常GUI69點／16圖通過；正常前195拍全項相同 | 接通持續格／上半身命中、固定槽順序、大將姿勢箭傷、0功率與byte溢位、箭傷死亡旗標及延後隊長通知。受控RAM樣本與正常流程分開；196拍PathQueued、中間繪製與完整戰果仍有界 | [spec159](docs/spec/159-tactical-command-movement-order.md)、[收據](workplace/scratch/ui-windows-20261104/cao-hit-order-integration.json) |
 | 2026-11-14；wlgame-cao-flight187-r1 | 前195拍96槽27欄位／RNG／腳本／8192-byte成本／剩餘點數全等；46組投射物快照1472槽活動狀態、234筆活動記錄各8欄全等；七套件冷測／vet、三類負對照、正常GUI69點／16圖通過 | 修正固定點高度上限回寫、命令後／移動前更新飛行，187拍同槽可重發。196拍首次僅PathQueued不同，成本至229／點數212／腳本215／RNG240相同。完整命中、固定槽排序及戰果保留 | [spec159](docs/spec/159-tactical-command-movement-order.md)、[收據](workplace/scratch/ui-windows-20261104/cao-flight187-integration.json) |
 | 2026-11-14；wlgame-cao-180-r1 | 前186拍96槽27欄位／RNG／腳本、成本8192 bytes及剩餘點數全等；七套件冷測／vet、兩類負對照、正常GUI69點／16圖通過 | 修正爬升途中重算的高層中繼高度、水平先撞兵再判地形。187拍首次投射物成功旗標不同；RNG／成本同至187、點數至190、腳本至215。完整投射物釋放與戰果保留 | [spec134](docs/spec/134-pathfind-wave-order.md)、[spec36](docs/spec/36-ground-planes-and-climbing.md)、[收據](workplace/scratch/ui-windows-20261104/cao-180-integration.json) |
@@ -1092,6 +1093,15 @@ DOSBox-X 那條路**不刪**：它是這一條的正對照，而且 PC-98 版只
 ---
 
 ## 6. 已被推翻的斷言
+
+### 2026-11-14：全軍撤退仍補兵、勝負包含待機兵
+
+`1B43E–1B443`明確排除全軍撤退的那一側補兵；個別撤退與隊長死亡不受這個閘限制。
+`1ADCF`清零、`1AE29→1AEA9`只累計移動批次的在場分支，待機與離場生還不進勝負計數。
+原版正常椎陽攻城在1476拍退出時，玩家場上0、待機仍有552兵，否定舊re11「含畫面外待機」說法。
+舊Go持續補兵且用Remaining判勝負，拖至1579拍；正式修正後本樣本1476拍收尾，兩側兵力及大將體力相同。
+原倒數測試的前提也一併改成真正退不出去的硬直。證據、保留的時序界線與正式抽驗見
+[spec141續片](docs/spec/141-retreat-countdown.md)，不據此宣稱全程動畫或完整世界出口一致。
 
 ### 2026-11-13：腳本城防查詢與守陣角色
 

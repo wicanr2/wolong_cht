@@ -64,7 +64,7 @@ remake 兩條路分開了。
 | 生還計數 | `internal/rules/tactical/battle.go` 的 `Side.Escaped [Squads]int` |
 | 加一 | `soldier.go` `doRetreat`：走到 `edge` 那一步 |
 | 打完的兵力 | `Battle.Result()` 用 `Side.Survivors()` ＝ 場上 ＋ 待機 ＋ 生還 |
-| **勝負判定不動** | `checkVictory` 仍用 `Remaining()` ＝ 場上 ＋ 待機（§1.1）|
+| 勝負判定 | 2026-11-14依[spec141](141-retreat-countdown.md)訂正為移動批次的場上計數；待機與生還不進勝負計數 |
 
 ## 4. 驗證
 

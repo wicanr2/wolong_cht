@@ -7,7 +7,7 @@
 
 現行工作與狀態由 GitHub [Issues](https://github.com/wicanr2/wolong_cht/issues) 管理；
 本地 [`docs/worklist.json`](../worklist.json) 與 `tools/worklist.py verify` 只作輔助。
-1147 列不是同數量的獨立 backlog；可執行項目已由完成的 Issue #28 分流，證據／歷史項目留在本索引。
+1145 列不是同數量的獨立 backlog；可執行項目已由完成的 Issue #28 分流，證據／歷史項目留在本索引。
 
 - 日期：2026-11-14
 - 產生工具：`tools/re_open_questions.py`
@@ -22,7 +22,7 @@
 
 ## 0. ⚠ 這個數字在量什麼
 
-**1141 列分布在 464 份文件，平均每份 2.5 列。**
+**1139 列分布在 463 份文件，平均每份 2.5 列。**
 
 ⭐ **所以它比較接近「文件有多少份」，不是「原版還有多少沒解」。**
 每寫一份新文件就帶進約三列自己的未解——而 `check.sh --strict` 還會
@@ -50,8 +50,8 @@
 | 程式碼理解 | 319 | 312 | 6 | 1 |
 | 驗收 | 246 | 220 | 26 | 0 |
 | 外部資料 | 6 | 5 | 1 | 0 |
-| 其他 | 539 | 515 | 23 | 1 |
-| **合計** | **1141** | 1078 | 60 | 3 |
+| 其他 | 537 | 513 | 23 | 1 |
+| **合計** | **1139** | 1076 | 60 | 3 |
 
 ⚠ **這是列數，不是獨立問題數。** 索引檔的「現況」欄是別的文件的摘要，同一個缺口在那份文件自己的未解表裡還有一列——這類共 **0** 列（另有少數只是提到「未解」兩個字的圖例列）。
 
@@ -59,7 +59,7 @@
 
 | 來源目錄 | 列數 |
 |---|---:|
-| `docs/spec/` | 496 |
+| `docs/spec/` | 494 |
 | `docs/re/` | 319 |
 | `docs/playtest/` | 246 |
 | `docs/release/` | 26 |
@@ -696,7 +696,7 @@
 | [`reference/04-first-survey.md`](../reference/04-first-survey.md) | 不要憑「同一份專案應該用同一個編譯器」外推——**`KI.EXE` 的編譯器未解。 | （散句） | 靜態 | evidence-only | — |
 | [`reference/05-eten-font-provenance.md`](../reference/05-eten-font-provenance.md) | `END_S13/S14/S15` 是中文版加的結局段 | S13／S14 是字型。**`END_S15` 仍未解** | 靜態 | evidence-only | — |
 
-## 2.6 其他（539 條）
+## 2.6 其他（537 條）
 
 | 出處 | 缺口 | 現況 | 裁決 | 分流 | Issue |
 |---|---|---|---|---|---|
@@ -824,8 +824,6 @@
 | [`spec/139-ai-decision-trace.md`](../spec/139-ai-decision-trace.md) | 更長的窗口 | 原版跑過六月之後 AI 開打，戰術畫面會停住策略時鐘 | 靜態 | merge-target | [#12](https://github.com/wicanr2/wolong_cht/issues/12) |
 | [`spec/139-ai-decision-trace.md`](../spec/139-ai-decision-trace.md) | `⛔ until:` 的中途判定 | 已修（`../playtest/78` §4）：只在主迴圈閒置點取樣 | 靜態 | evidence-only | — |
 | [`spec/140-status-message-box.md`](../spec/140-status-message-box.md) | 樣式 `1Eh` 是什麼 | `sub_189A4` 把它傳給 `sub_189DE` 當 `ah`。**只知道 0 ＝ 擦除、非 0 ＝ 畫**，`1Eh` 這個值本身沒解（一般訊息框傳的也是 `1Eh`） | 靜態 | evidence-only | — |
-| [`spec/141-retreat-countdown.md`](../spec/141-retreat-countdown.md) | 退卻中要不要補兵 | 原版下令之後場上八拍歸零、**沒有補兵進場**；remake 的 `reinforce()` 會補（補進來的兵下一幀被 `applySquadLeaderGone` 改成退卻）。兩邊最後都會結束，但**中途的場上人數不同**，沒有逐拍對過 | 靜態 | merge-target | [#18](https://github.com/wicanr2/wolong_cht/issues/18) |
-| [`spec/141-retreat-countdown.md`](../spec/141-retreat-countdown.md) | `word_1D31C` 的兩個 byte | 量到開場是 48／48（＝六隊 × 八人），`../re/11` §5.9 寫的是「含畫面外待機的」。**兩種讀法都還沒有直接證據**，這一份只用到「它歸零時結束」這一點 | 靜態 | merge-target | [#12](https://github.com/wicanr2/wolong_cht/issues/12) |
 | [`spec/142-personnel-dismiss-flow.md`](../spec/142-personnel-dismiss-flow.md) | 任命的「已經有人」訊息參數 | 原版 `push ax`（`ah = 0FFh`、`al` ＝ 武將編號）＋ `push bx`（**據點記錄位址**，直接位址式）。remake 直接代名字字串，**沒有走 formatter 的位址式**（`../re/79` §2） | 靜態 | merge-target | [#22](https://github.com/wicanr2/wolong_cht/issues/22) |
 | [`spec/143-general-duty-field.md`](../spec/143-general-duty-field.md) | `sub_13771` 讀 `+0x17` 的那個分支 | 只知道是每小時處理裡的一支，判斷後 `sub_137F5` 挑人；分支語意未解 | 靜態 | evidence-only | — |
 | [`spec/143-general-duty-field.md`](../spec/143-general-duty-field.md) | `+0x17` 有沒有第六個值 | 字串表只有 6 項而第 6 項要靠 bit 6 算出來，所以存得下的上限是 4；沒有反證 | 靜態 | evidence-only | — |
