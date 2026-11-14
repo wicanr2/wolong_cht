@@ -484,16 +484,17 @@ func (v *View) buildDisplayList(b *tactical.Battle) []battleDisplayEntry {
 		// 圖號已經是「這一側這一幀該用哪一張」，直接走人物那條路。
 		for _, d := range b.Deaths() {
 			col, row := isoProjectOriginal(d.X, d.Y, d.Z)
+			d.Side = b.Role(d.Side)
 			raw := deathDisplaySource(d)
 			entries, order = v.appendTallDisplayUnits(entries, order, col, row,
 				d.X, d.Y, d.Z, raw)
 		}
 		for side := range b.Sides {
 			for i := range b.Sides[side].Soldiers {
-				s := &b.Sides[side].Soldiers[i]
-				if !s.Alive {
+				if !b.Sides[side].Soldiers[i].Alive {
 					continue
 				}
+				s := b.DrawnSoldier(side, i)
 				col, row := isoProjectOriginal(s.X, s.Y, s.Z)
 				flags := int(s.PoseStep) & battle.PoseFlagStep
 				if s.HitGeneral {
@@ -503,7 +504,7 @@ func (v *View) buildDisplayList(b *tactical.Battle) []battleDisplayEntry {
 					flags |= battle.PoseFlagFront
 				}
 				n := battle.SpriteFor(int(s.Kind), s.Facing, flags)
-				raw := battle.CombinedSourceTerrainTiles + side*battle.UnitsPerSide + n*2
+				raw := battle.CombinedSourceTerrainTiles + b.Role(side)*battle.UnitsPerSide + n*2
 				entries, order = v.appendTallDisplayUnits(entries, order, col, row,
 					s.X, s.Y, s.Z, raw)
 			}

@@ -1,5 +1,18 @@
 # 125：正常滑鼠出兵、城兵攻陷與玩家攻方戰術
 
+## 2026-11-15：人物登錄相位與真正倒地畫面
+
+程式`wlgame-cao-pose-r1`，SHA-256 `1a23f1b9a3f75ab714ec42df84f0d97d7e1ac9b90b97d440d8e4fc212bcac937`。
+[正常GUI補抓](../../workplace/scratch/ui-windows-20261104/cao-pose-r2-remake-gui.json)79個功能／同步點、22圖通過。
+曹操第一劇本宣戰呂布、編夏侯淵、停手行軍、途中存讀檔、椎陽自然攻城、改線／登城／突擊後，
+使用正常設定的最低戰術速度補抓，277–281拍的擷取前後邊界逐張相同，玩家槽13倒地3→2→1→清除。
+全程滑鼠不動、快轉關閉；[核對收據](../../workplace/scratch/ui-windows-20261104/cao-pose-r2-death-capture.json)另存，
+已目視277／279拍畫面。之後正常快轉，720拍自然敗退返回世界，戰術5580／5700人、體力41／220；戰報仍預設關閉。
+首稿抓圖固定延遲0.25秒，五圖跨多個節拍，保留首稿而不作連續動畫證據。這是取樣工具問題，未改戰術速度公式。
+[原版／正式人物登錄](../../workplace/scratch/ui-windows-20261104/cao-pose-formal-comparison.json)前228拍21,888筆raw及XYZ全等。
+首次差異229拍槽90，與GUI下戰術指令的流程分開；完整像素、受擊圖號正常樣本、特殊投射物及守方動態驗收仍有界。
+詳[spec159](../spec/159-tactical-command-movement-order.md)，不以GUI圖片聲稱原版同拍像素一致。
+
 ## 2026-11-14：倒地與清除順序抽驗
 
 程式`wlgame-cao-death-r1`，SHA-256 `d647a2f62fff50eaf77ab03c70ed6d5df1adaf4e26aa6f5ae7acf1825284296d`。

@@ -1,5 +1,57 @@
 # 159 — 戰術命令批次與移動體力順序
 
+## 2026-11-15：人物登錄姿態與下一拍相位（CONFORMED，限本片）
+
+本輪核對正常曹操第一劇本對呂布入戰的人物圖號。現行PoseStep在移動後已翻轉，
+UI直接讀取會顯示下一張圖；同拍較晚發生的受擊／換位也可能覆蓋已登錄的姿態與位置。
+原版`1B355`以目前面向、+02狀態與玩家／對方角色登錄圖形，`1B35B`才翻轉相位。
+`1B4AF`補兵亦呼叫同一重畫入口。既有IDA Pro9.4 DOS/V linear證據：
+[重畫原指令](../../workplace/scratch/ui-windows-20261104/swap-redraw-20261112/ida-probe.json)、
+[補兵原指令](../../workplace/scratch/ui-windows-20261104/retreat-finish-20261114/ida-probe.json)。
+輸入KI.EXE SHA-256 `fffeba985231cda4d636e93d10f598470b1f691d00275e4aa38e285893d43868`。
+兩份匯出SHA-256依序為`9f01359ccde7c0f103877660e9c05cf8808df3080d6bacd71780bf38bcb880e7`、
+`f1c09578cbb7cb1d1e81e025bbb5c78e10dc508f224accc3966bd304cee923de`。
+對應一次性DB SHA-256依序為`1a217870ca1a7ed5cba51c4d04110c4ba5bb83246af2db4453bbc9c72c41f25a`、
+`0a1fcb27f9d0d48efbc7c476226f2d50ad45dd05123ebe91bb305e8f03da3f47`。
+兩份probe均確認739函式、UID/GID1000；只沿用既有證據，未改DB或再開逐行研究。
+既有原始名稱、bytes與位址保留；先觀測並審查可丟棄候選，再進正式規則。
+
+候選契約：每名兵登錄時保存位置、兵種、面向與姿態，UI讀登錄值，規則仍讀執行中PoseStep。
+同拍已登錄後才受擊／換位者維持原登錄值至下次重畫；Pending死亡沿最後登錄姿態，沒有登錄才用受傷前值。
+新兵重畫先登錄相位0，再翻成1，不能漏翻。圖形側色取原版角色，不直接使用Go攻守側號。
+驗收包括正常入戰的實際raw圖號／座標、原版同初態前綴、受擊／換位／補兵與兩玩家側回歸，
+及正常GUI停手動畫、存讀檔、自然收尾。戰略存檔格式不變，登錄值只活在戰術記憶體。
+完整顯示格像素合成、特殊投射物與195拍後全規則差異仍沿既有Issues，不由本片外推。
+
+[原版觀測](../../workplace/scratch/ui-windows-20261104/cao-pose-draws.jsonl)取1B355實際CX與當時單兵記錄，
+正常103步輸入、242筆完整邊界、seed1與前輪逐byte相同，64／88既有診斷保留。
+[候選比較](../../workplace/scratch/ui-windows-20261104/cao-pose-candidate-comparison.json)確認前195拍18,720筆登錄的raw與XYZ全等。
+舊呈現18,720筆raw不同，另有X154、Y265、Z13筆不同；這些位置差由當拍稍後換位造成，非步速調整。
+原版兩軍均已正常涵蓋大將／騎馬／弓兵／步兵；原版玩家守方配色的動態樣本未由此代證，角色常數有靜態證據。
+倒地Pending保留上一登錄值，首次倒地處理時改用死者目前位置；不讓前次顯示位置覆蓋正式屍體位置。
+出生1B4AF呼叫1B240，原指令確認登錄0後翻1；驗收須補正常槽序與回歸，不用出生幾何限制掩蓋相位。
+候選審查確認變更不提前／延後規則PoseStep、不改亂數或時間基準；僅新兵補回原版已有的翻位。
+以上窄契約經證據審查列READY後，才接入正式來源。
+[正式比較](../../workplace/scratch/ui-windows-20261104/cao-pose-formal-comparison.json)延伸至前228拍21,888筆raw／XYZ全等。
+[涵蓋範圍](../../workplace/scratch/ui-windows-20261104/cao-pose-coverage-228.json)包含914筆略過移動、1,635筆高處、58筆發射攻擊姿勢／硬直。
+該段沒有受擊圖號，受擊分支只由原指令與回歸支持，不以四兵種筆數代證。
+[240拍完整窗口](../../workplace/scratch/ui-windows-20261104/cao-pose-full-window.json)23,040兵次共10欄差異，
+首次在229拍槽90的raw與X，另有230–232拍槽90及240拍槽74／90。此處不再擴張RE，完整移動排程仍沿Issue #16。
+195拍後的規則旗標／佇列與呈現圖號是不同範圍，不能由228拍的圖號一致聲稱規則全一致。
+[死亡邊界](../../workplace/scratch/ui-windows-20261104/cao-pose-death-fixtures-comparison.json)84次仍全等；
+另逐筆核對[84次規則相位](../../workplace/scratch/ui-windows-20261104/cao-pose-death-phase-comparison.json)，包含新兵出生1、下拍0。
+41個正式來源套件冷測、全範圍vet與建置、六類突變拒絕通過。正常停手前240拍逐byte保留，終點仍1476拍。
+[正常GUI補抓](../../workplace/scratch/ui-windows-20261104/cao-pose-r2-remake-gui.json)79個功能／同步點、22圖通過。
+透過正常設定改最低戰術速度，277–281拍逐張記錄擷取前後邊界，皆在同一戰術拍。
+[影像取樣核對](../../workplace/scratch/ui-windows-20261104/cao-pose-r2-death-capture.json)確認玩家槽13倒地3→2→1→清除，
+指標固定、快轉關閉；720拍自然收尾返回可操作大地圖，戰報仍關閉。
+首版抓圖工具固定等0.25秒，跨244／247／251／254／258拍，不能證明連續倒地，故保留首稿而另補抓。
+正式來源與輸入／收據SHA見[整合收據](../../workplace/scratch/ui-windows-20261104/cao-pose-integration.json)。
+本片CONFORMED，範圍限人物登錄語意與所述樣本，不外推特殊投射物、完整像素合成或守方正常玩家驗收。
+
+
+
+
 2026-11-14倒地續片：`1AE00`沿單兵槽序遞減，已輪過才遭擊倒者不在拍末提早減計時。
 `1B3E3`於清除時才釋放原兩層，該槽當拍跳過補兵。近戰／飛行致死共用4拍與旗標初始化，
 呈現保留首次倒地處理前的姿態。原版84次受控觀測與正式驗收見[spec68](68-death-animation.md)，完整中間繪製及守方色彩仍有界。

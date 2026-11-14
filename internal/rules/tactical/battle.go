@@ -238,6 +238,8 @@ func computeAdvantage(mine, theirs int) Advantage {
 // Battle 是一場進行中的戰術戰鬥。
 type Battle struct {
 	unitCollision *collisionGrid
+	drawn         [2][SoldiersOnFoot]SoldierDrawing
+	drawnValid    [2]uint64
 	Field         *Field
 	// PlayerSide 是玩家在哪一側（0 攻／1 守）。**原版的 side 0 永遠是玩家**，
 	// remake 的 Sides[0] 固定是攻方，所以要另外記——見 SetPlayerSide。
@@ -293,9 +295,8 @@ type Battle struct {
 	// projectiles 是飛在空中的箭。原版是一張 32 筆的表（docs/re/11 §5.1）。
 	projectiles []projectile
 
-	// deaths 是正在播的倒地動畫。它**不參與規則**——原版把「在場」
-	// 那個位元清掉了，所以那四幀不擋路、不被打、不算場上人數
-	// （docs/spec/68 §1.2）。
+	// deaths 是倒地暫態。單兵已不算活兵，但持續格保留到清除，
+	// 清除當拍也不補兵（docs/spec/68）。
 	deaths []Death
 
 	// sfx 是這一輪要送給音源 TSR 的效果碼。原版走 INT 61h `AH=0x05`、
@@ -704,6 +705,7 @@ func (b *Battle) Step() {
 				present[i]++
 				b.updateSoldierMovement(i, k)
 				b.drawUnitCollision(i, k)
+				b.recordSoldierDrawing(i, k, true)
 			} else if b.stepDeath(i, k) {
 				deathsHandled[i] |= 1 << uint(k)
 			}
@@ -821,6 +823,8 @@ func (b *Battle) reinforceExcept(blocked [2]uint64) {
 				s.Soldiers[j].StepX, s.Soldiers[j].StepY = x, y
 				s.Reserve[k]--
 				b.drawUnitCollision(i, j)
+				b.recordSoldierDrawing(i, j, false)
+				s.Soldiers[j].PoseStep ^= 1
 				break
 			}
 		}

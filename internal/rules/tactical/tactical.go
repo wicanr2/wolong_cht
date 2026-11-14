@@ -509,3 +509,41 @@ func abs(v int) int {
 
 // receiveTargetOrder 對應1A8E5／1A8E8；不以在場與否過濾命令欄位。
 func (s *Soldier) receiveTargetOrder(c Command) { s.Next = c; s.TargetRefresh = true }
+
+// SoldierDrawing 是單兵最後一次登錄的畫面狀態，不包含下一拍的規則欄位。
+type SoldierDrawing struct {
+	X, Y, Z          int
+	Kind             Kind
+	Facing           int
+	PoseStep         uint8
+	Hurt, HitGeneral bool
+}
+
+func drawingOf(s *Soldier) SoldierDrawing {
+	return SoldierDrawing{s.X, s.Y, s.Z, s.Kind, s.Facing, s.PoseStep, s.Hurt, s.HitGeneral}
+}
+
+// DrawnSoldier 讀最後登錄值；尚未登錄的開場與合成戰場使用目前值。
+func (b *Battle) DrawnSoldier(side, k int) SoldierDrawing {
+	if b == nil || side < 0 || side >= 2 || k < 0 || k >= SoldiersOnFoot {
+		return SoldierDrawing{}
+	}
+	if b.drawnValid[side]&(1<<uint(k)) != 0 {
+		return b.drawn[side][k]
+	}
+	return drawingOf(&b.Sides[side].Soldiers[k])
+}
+
+// moved表示updateSoldierMovement已為規則翻相位；登錄取翻轉前值。
+func (b *Battle) recordSoldierDrawing(side, k int, moved bool) {
+	s := &b.Sides[side].Soldiers[k]
+	if !s.Alive {
+		return
+	}
+	d := drawingOf(s)
+	if moved {
+		d.PoseStep ^= 1
+	}
+	b.drawn[side][k] = d
+	b.drawnValid[side] |= 1 << uint(k)
+}

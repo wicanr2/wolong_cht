@@ -79,7 +79,13 @@ func (b *Battle) addDeath(s *Soldier, side int, before deathPose) {
 			break
 		}
 	}
-	b.deaths = append(b.deaths, Death{Side: side, Slot: slot, X: s.X, Y: s.Y, Z: s.Z,
+	x, y, z := s.X, s.Y, s.Z
+	if slot >= 0 && b.drawnValid[side]&(1<<uint(slot)) != 0 {
+		d := b.drawn[side][slot]
+		x, y, z = d.X, d.Y, d.Z
+		before = deathPose{d.Facing, d.PoseStep, d.Hurt, d.HitGeneral}
+	}
+	b.deaths = append(b.deaths, Death{Side: side, Slot: slot, X: x, Y: y, Z: z,
 		Kind: s.Kind, FramesLeft: DeathFrames, Pending: true, BeforeFacing: before.facing, BeforeStep: before.step, BeforeHurt: before.hurt, BeforeHitGeneral: before.hitGeneral})
 }
 
@@ -96,6 +102,10 @@ func (b *Battle) stepDeath(side, k int) bool {
 func (b *Battle) advanceDeath(i int) bool {
 	d := &b.deaths[i]
 	d.FramesLeft--
+	if d.Pending && d.Side >= 0 && d.Side < 2 && d.Slot >= 0 && d.Slot < SoldiersOnFoot {
+		s := &b.Sides[d.Side].Soldiers[d.Slot]
+		d.X, d.Y, d.Z = s.X, s.Y, s.Z
+	}
 	d.Pending = false
 	if d.Side >= 0 && d.Side < len(b.Sides) && d.Slot >= 0 && d.Slot < SoldiersOnFoot {
 		b.Sides[d.Side].Soldiers[d.Slot].Stun = d.FramesLeft

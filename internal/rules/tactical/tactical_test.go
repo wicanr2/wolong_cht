@@ -1513,3 +1513,72 @@ func TestStepReappliesSquadLeaderGone(t *testing.T) {
 		t.Errorf("跑完一幀之後隊員的命令是 %v，應為退卻", member.Cmd)
 	}
 }
+
+func TestSoldierDrawingFreezesPreFlipPoseAndLateChanges(t *testing.T) {
+	for player := 0; player < 2; player++ {
+		b := newTestBattle(flatField())
+		b.SetPlayerSide(player)
+		holdRetreatCountdownUnits(b)
+		target := &b.Sides[player].Soldiers[1]
+		target.Facing = East
+		target.PoseStep = 0
+		target.Hurt = false
+		target.HitGeneral = false
+		b.Step()
+		d := b.DrawnSoldier(player, 1)
+		if d.PoseStep != 0 || target.PoseStep != 1 {
+			t.Fatal("登錄先於下一拍相位翻轉")
+		}
+		target.X++
+		target.Facing = South
+		target.Hurt = true
+		target.HitGeneral = true
+		if b.DrawnSoldier(player, 1) != d {
+			t.Fatal("同拍稍後受擊／換位不得覆寫已登錄畫面")
+		}
+		b.Step()
+		after := b.DrawnSoldier(player, 1)
+		if after.X != target.X || !after.Hurt || !after.HitGeneral || after.PoseStep != 1 {
+			t.Fatal("下一次重畫才更新位置與受擊／攻擊圖號")
+		}
+	}
+}
+func TestReplacementDrawingStartsAtZeroThenFlipsRuntime(t *testing.T) {
+	for side := 0; side < 2; side++ {
+		b := newTestBattle(flatField())
+		holdRetreatCountdownUnits(b)
+		b.Sides[side].Soldiers[1].Alive = false
+		b.Sides[side].Reserve[0] = 1
+		b.reinforce()
+		s := &b.Sides[side].Soldiers[1]
+		d := b.DrawnSoldier(side, 1)
+		if !s.Alive || s.PoseStep != 1 || d.PoseStep != 0 {
+			t.Fatal("1B4AF須重畫相位0後翻為1")
+		}
+		s.Stun = 255
+		b.Step()
+		if b.DrawnSoldier(side, 1).PoseStep != 1 || s.PoseStep != 0 {
+			t.Fatal("新兵下一拍不能重畫相同相位")
+		}
+	}
+}
+func TestPendingDeathUsesLastDrawingThenCurrentDeathPosition(t *testing.T) {
+	b := newTestBattle(flatField())
+	holdRetreatCountdownUnits(b)
+	b.Step()
+	s := &b.Sides[0].Soldiers[1]
+	old := b.DrawnSoldier(0, 1)
+	s.X++
+	s.Facing = South
+	s.Hurt = true
+	b.applyLethalForTest(s)
+	d := b.Deaths()[0]
+	if d.X != old.X || d.Y != old.Y || d.BeforeStep != old.PoseStep || d.BeforeFacing != old.Facing || d.BeforeHurt != old.Hurt {
+		t.Fatal("Pending應維持真正已登錄的姿態／位置")
+	}
+	b.Step()
+	d = b.Deaths()[0]
+	if d.Pending || d.X != s.X || d.Y != s.Y {
+		t.Fatal("輪到倒地時必須改用死者目前位置")
+	}
+}

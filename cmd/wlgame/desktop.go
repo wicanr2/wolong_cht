@@ -426,6 +426,7 @@ func (s *desktopGame) writeTrace() {
 				"leaderStamina":  b.Sides[side].Soldiers[0].Stamina,
 				"fastForward":    g.battleFastForward,
 				"alive":          [2]int{b.Sides[0].Alive(), b.Sides[1].Alive()},
+				"deaths":         b.Deaths(),
 				"survivors":      [2]int{b.Sides[0].Survivors(), b.Sides[1].Survivors()},
 				"generalHP":      [2]int{b.Sides[0].Soldiers[0].HP, b.Sides[1].Soldiers[0].HP},
 			}

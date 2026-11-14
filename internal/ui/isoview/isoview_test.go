@@ -412,3 +412,45 @@ func TestDisplayHeightIncludesObjectsSoSoldiersDrawWhole(t *testing.T) {
 		t.Errorf("起始深度 ＝ %d，物件不該影響它", got)
 	}
 }
+
+func TestDisplayUsesRegisteredPoseAndPlayerRoleColor(t *testing.T) {
+	for player := 0; player < 2; player++ {
+		stack := make([][]int, 64)
+		for y := range stack {
+			stack[y] = make([]int, 64)
+		}
+		b := tactical.NewBattle(tactical.NewField(stack, 0), tactical.SyntheticFormations(), nil, 0)
+		b.SetPlayerSide(player)
+		for side := 0; side < 2; side++ {
+			x := 5 + side*48
+			b.Sides[side].Soldiers[0] = tactical.Soldier{Alive: true, HP: 200, Kind: tactical.General, Cmd: tactical.Holding, Next: tactical.Holding, Stun: 255, X: x, Y: 32, Target: -1}
+			b.Sides[side].Soldiers[1] = tactical.Soldier{Alive: true, HP: 100, Kind: tactical.Infantry, Cmd: tactical.Holding, Next: tactical.Holding, Stun: 255, X: x, Y: 20, Facing: tactical.East, Target: -1}
+		}
+		b.Step()
+		v := &View{}
+		before := v.buildDisplayList(b)
+		if len(before) != 8 {
+			t.Fatal("前提：四兵各有上下兩個繪製單位")
+		}
+		for side := 0; side < 2; side++ {
+			want := 308
+			if side != player {
+				want += 180
+			}
+			if before[side*4+3].raw != want {
+				t.Fatalf("player%d side%d：登錄相位0、步兵向東raw應%d，實際%d", player, side, want, before[side*4+3].raw)
+			}
+			s := &b.Sides[side].Soldiers[1]
+			s.X++
+			s.Facing = tactical.South
+			s.Hurt = true
+			s.PoseStep ^= 1
+		}
+		after := v.buildDisplayList(b)
+		for i := range before {
+			if before[i] != after[i] {
+				t.Fatal("呈現層不得改讀稍後被修改的執行中欄位")
+			}
+		}
+	}
+}
