@@ -90,13 +90,14 @@ func realField(t *testing.T, lib *battle.Library, n int) *Field {
 }
 
 // 地面層要與機器碼演算法算出來的一樣（docs/re/63 §2）：
-// 低平面幾乎全是層 0，高平面（牆頂）正規化後只有一個高度。
+// 低平面幾乎全是層0；高平面只有保留方向的格共用正規化高度，異高格仍保留高度。
 func TestGroundPlanesMatchRawAlgorithm(t *testing.T) {
 	lib := realLib(t)
 	for _, n := range []int{0, 5, 20} {
 		f := realField(t, lib, n)
 		lowHist := map[int]int{}
 		highHist := map[int]int{}
+		connectedHigh := map[int]int{}
 		gates := 0
 		for y := 0; y < Height; y++ {
 			for x := 0; x < Width; x++ {
@@ -105,6 +106,9 @@ func TestGroundPlanesMatchRawAlgorithm(t *testing.T) {
 				}
 				if lv, ok := f.GroundLevel(x, y, PlaneHigh); ok {
 					highHist[lv]++
+					if f.nav[PlaneHigh][y][x]&0xF0 != 0 {
+						connectedHigh[lv]++
+					}
 				}
 				if f.IsGateCell(x, y) {
 					gates++
@@ -115,9 +119,8 @@ func TestGroundPlanesMatchRawAlgorithm(t *testing.T) {
 		if lowHist[0] < 2000 {
 			t.Errorf("戰場 %d：低平面平地只有 %d 格，太少", n, lowHist[0])
 		}
-		if len(highHist) != 1 {
-			t.Errorf("戰場 %d：高平面有 %d 種高度 %v，正規化之後應該只剩一種",
-				n, len(highHist), highHist)
+		if len(connectedHigh) != 1 {
+			t.Errorf("戰場%d：保留導航方向的高層應共用一種高度，得到%v", n, connectedHigh)
 		}
 		if gates == 0 {
 			t.Errorf("戰場 %d 是攻城圖，卻一個門格都沒有", n)
@@ -126,19 +129,26 @@ func TestGroundPlanesMatchRawAlgorithm(t *testing.T) {
 	}
 }
 
-// 牆頂只有 4 或 5 兩個可能（`sub_1BBA6` 的多數決）。
-func TestHighPlaneIsNormalisedToOneLevel(t *testing.T) {
+// 保留方向的高層只用4或5；1BC18保留的其他高度不得被當成無地面。
+func TestHighPlaneDirectionsUseNormalizedLevel(t *testing.T) {
 	lib := realLib(t)
 	for _, n := range []int{0, 5, 20} {
 		f := realField(t, lib, n)
 		for y := 0; y < Height; y++ {
 			for x := 0; x < Width; x++ {
 				lv, ok := f.GroundLevel(x, y, PlaneHigh)
-				if ok && lv != 4 && lv != 5 {
+				if ok && f.nav[PlaneHigh][y][x]&0xF0 != 0 && lv != 4 && lv != 5 {
 					t.Fatalf("戰場 %d (%d,%d) 高平面 ＝ %d，只能是 4 或 5", n, x, y, lv)
 				}
 			}
 		}
+	}
+}
+
+func TestRealFieldRetainsNonNavigableHeightSix(t *testing.T) {
+	f := realField(t, realLib(t), 0)
+	if lv, ok := f.GroundLevel(34, 4, PlaneHigh); !ok || lv != 6 || f.nav[PlaneHigh][4][34] != 0 {
+		t.Fatal("戰場0的(34,4)高度6須保留，但沒有導航方向")
 	}
 }
 
@@ -255,5 +265,126 @@ func TestBreakingWallOpensCorridor(t *testing.T) {
 				t.Errorf("戰場 %d：打壞之後 (%d,%d) 還擋著", n, x, y)
 			}
 		}
+	}
+}
+
+func TestHighPlaneNormalizationKeepsHeightAndUsesByteGateVote(t *testing.T) {
+	for _, tc := range []struct {
+		name      string
+		low, high int
+		want      int8
+	}{
+		{"no gates", 0, 0, 4}, {"lower", 2, 1, 4}, {"tie", 1, 1, 4}, {"higher", 1, 2, 5},
+		{"lower byte wraps", 256, 1, 5}, {"higher byte wraps", 1, 256, 4},
+	} {
+		t.Run(tc.name, func(t *testing.T) {
+			f := flatField()
+			for i := 0; i < tc.low+tc.high; i++ {
+				x, y := i%64, i/64
+				lv := int8(4)
+				if i >= tc.low {
+					lv = 5
+				}
+				f.lvl[PlaneHigh][y][x] = lv
+				f.nav[PlaneHigh][y][x] = navGate | navLeft
+			}
+			f.lvl[PlaneHigh][60][60] = 4
+			f.nav[PlaneHigh][60][60] = 0xF0
+			f.lvl[PlaneHigh][60][61] = 5
+			f.nav[PlaneHigh][60][61] = 0xF0
+			f.lvl[PlaneHigh][60][62] = 5
+			f.nav[PlaneHigh][60][62] = 0xF0
+			f.normaliseHighPlane()
+			for i := 0; i < tc.low+tc.high; i++ {
+				x, y := i%64, i/64
+				if f.lvl[PlaneHigh][y][x] != tc.want || f.nav[PlaneHigh][y][x] != navGate|navLeft {
+					t.Fatal("門格只依byte票數選4／5，保留導航旗標")
+				}
+			}
+			for x, lv := range map[int]int8{60: 4, 61: 5, 62: 5} {
+				wantFlags := uint8(0)
+				if lv == tc.want {
+					wantFlags = 0xF0
+				}
+				if f.lvl[PlaneHigh][60][x] != lv || f.nav[PlaneHigh][60][x] != wantFlags {
+					t.Fatal("異高只清旗標，不得把高度當成無地面")
+				}
+			}
+		})
+	}
+}
+func TestHighPlaneAxisRefusalDoesNotQueueBeforeAnotherAxisSucceeds(t *testing.T) {
+	cases := []struct {
+		name           string
+		tile           byte
+		level          int8
+		head           bool
+		cmd            Command
+		allowed, queue bool
+	}{
+		{"height mismatch", 0x28, 5, false, Holding, false, false},
+		{"matching height", 0xEF, 4, false, Holding, true, false},
+		{"broken gate allowed", 0xF8, 4, false, Holding, true, false},
+		{"missing ground still queues", 0x28, noLevel, false, Holding, false, true},
+		{"head terrain still queues", 0x28, 4, true, Holding, false, true},
+	}
+	for tile := 0xF0; tile <= 0xF7; tile++ {
+		cases = append(cases, struct {
+			name           string
+			tile           byte
+			level          int8
+			head           bool
+			cmd            Command
+			allowed, queue bool
+		}{"intact gate", byte(tile), 4, false, Holding, false, false})
+	}
+	for tile := 0xF8; tile <= 0xFF; tile++ {
+		cases = append(cases, struct {
+			name           string
+			tile           byte
+			level          int8
+			head           bool
+			cmd            Command
+			allowed, queue bool
+		}{"Cmd6 broken gate", byte(tile), 4, false, wallAttack, false, false})
+	}
+	for player := 0; player < 2; player++ {
+		for _, tc := range cases {
+			b := newTestBattle(flatField())
+			b.SetPlayerSide(player)
+			holdRetreatCountdownUnits(b)
+			f := b.Field
+			f.tiles = make([][]byte, 64)
+			for y := range f.tiles {
+				f.tiles[y] = make([]byte, 64)
+			}
+			f.lvl[PlaneHigh][32][21] = tc.level
+			f.lvl[PlaneHigh][33][20] = 4
+			f.tiles[32][21] = tc.tile
+			f.solid[5][32][21] = tc.head
+			target := &b.Sides[player].Soldiers[1]
+			*target = Soldier{Alive: true, HP: 100, Kind: Infantry, X: 20, Y: 32, Z: 4, PlaneHigh: 16, OnWall: true,
+				StepX: 21, StepY: 33, StepZ: 4, GoalX: 21, GoalY: 33, GoalZ: 4, Cmd: tc.cmd, Next: tc.cmd, Target: -1, Stamina: 128}
+			b.Step()
+			wantX, wantY := 20, 33
+			if tc.allowed {
+				wantX, wantY = 21, 32
+			}
+			if target.X != wantX || target.Y != wantY || target.PathQueued != tc.queue {
+				t.Fatalf("player%d %s tile%X：位置(%d,%d)、排隊%v；應(%d,%d)、%v", player, tc.name, tc.tile, target.X, target.Y, target.PathQueued, wantX, wantY, tc.queue)
+			}
+		}
+	}
+}
+func TestHighPlaneAllAxesRefusedQueuesOnce(t *testing.T) {
+	b := newTestBattle(flatField())
+	holdRetreatCountdownUnits(b)
+	b.Field.lvl[PlaneHigh][32][21] = 5
+	b.Field.lvl[PlaneHigh][33][20] = 5
+	s := &b.Sides[0].Soldiers[1]
+	*s = Soldier{Alive: true, HP: 100, Kind: Infantry, X: 20, Y: 32, Z: 4, PlaneHigh: 16, OnWall: true, StepX: 21, StepY: 33, StepZ: 4, GoalX: 21, GoalY: 33, Cmd: Holding, Next: Holding, Target: -1, Stamina: 128}
+	b.Step()
+	if s.X != 20 || s.Y != 32 || !s.PathQueued || b.paths.n != 1 {
+		t.Fatal("所有軸都拒絕時，才由共用出口排一次尋路")
 	}
 }

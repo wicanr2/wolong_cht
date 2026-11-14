@@ -1,5 +1,10 @@
 # 36 — 兩個平面的地面圖、導航位元與登城
 
+2026-11-15正規化與水平拒絕續片：已依`1BBF5–1BC1C`保留異高非門格高度，只清導航方向，票同選4。
+`1B21D`不立即入隊；其他軸仍可走。正常156拍完整導航8192 bytes已同，舊60差與196拍額外排隊一併消除，
+240拍96槽27欄位／RNG、23,040筆人物圖號／XYZ全等；腳本仍從216拍不同。
+原始輸入、匯出與動態範圍見[spec159](159-tactical-command-movement-order.md)，不外推全部214戰場與完整下城／結構碰撞。
+
 ## 2026-11-14：水平碰撞先於地形與高度（CONFORMED，限本片）
 
 延伸正常原版至240拍後，185拍槽91／95的首次差異仍屬城上移動。
@@ -441,7 +446,7 @@ clc / retn                            ; ≥ 0xF8 才成功
 | 方式 | 內容 |
 |---|---|
 | 單元測試 | `TestGroundPlanesMatchRawAlgorithm`：拿原版 `BATTLE.MAP`／`BATTLE.MDL` 的戰場 0／5／20，低平面分佈與高平面分佈要等於機器碼演算法算出來的 |
-| 單元測試 | `TestHighPlaneIsNormalisedToOneLevel`：牆頂正規化後只有一個高度 |
+| 單元測試 | `TestHighPlaneDirectionsUseNormalizedLevel`：只有保留導航方向的格共用4或5；異高仍保留 |
 | 單元測試 | `TestOnlyGateCellsAllowClimb`：門格能上下、城壁格不能 |
 | 單元測試 | `TestNavBitsFollowLevelRules`：低平面連通一定 `|Δ| ≤ 1` |
 | 單元測試 | `TestSiegeWallBlocksUntilBroken`：尋路穿得過城門那一列（地面層表是打壞後的樣子），但通行層擋著 |

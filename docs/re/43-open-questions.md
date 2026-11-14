@@ -22,7 +22,7 @@
 
 ## 0. ⚠ 這個數字在量什麼
 
-**1138 列分布在 463 份文件，平均每份 2.5 列。**
+**1138 列分布在 464 份文件，平均每份 2.5 列。**
 
 ⭐ **所以它比較接近「文件有多少份」，不是「原版還有多少沒解」。**
 每寫一份新文件就帶進約三列自己的未解——而 `check.sh --strict` 還會
@@ -48,10 +48,10 @@
 | 規則正確性 | 11 | 7 | 3 | 1 |
 | 資料保存 | 20 | 19 | 1 | 0 |
 | 程式碼理解 | 319 | 312 | 6 | 1 |
-| 驗收 | 246 | 220 | 26 | 0 |
+| 驗收 | 245 | 220 | 25 | 0 |
 | 外部資料 | 6 | 5 | 1 | 0 |
-| 其他 | 536 | 512 | 23 | 1 |
-| **合計** | **1138** | 1075 | 60 | 3 |
+| 其他 | 537 | 513 | 23 | 1 |
+| **合計** | **1138** | 1076 | 59 | 3 |
 
 ⚠ **這是列數，不是獨立問題數。** 索引檔的「現況」欄是別的文件的摘要，同一個缺口在那份文件自己的未解表裡還有一列——這類共 **0** 列（另有少數只是提到「未解」兩個字的圖例列）。
 
@@ -59,9 +59,9 @@
 
 | 來源目錄 | 列數 |
 |---|---:|
-| `docs/spec/` | 493 |
+| `docs/spec/` | 494 |
 | `docs/re/` | 319 |
-| `docs/playtest/` | 246 |
+| `docs/playtest/` | 245 |
 | `docs/release/` | 26 |
 | `docs/formats/` | 20 |
 | `docs/mechanics/` | 11 |
@@ -434,7 +434,7 @@
 | [`re/99-c-hourly-update-restoration.md`](../re/99-c-hourly-update-restoration.md) | 正常玩家日期流、硬體等待與長程 | 未驗證，one-hour 直接入口不取代玩家垂直鏈 | 靜態 | evidence-only | — |
 | [`re/99-c-hourly-update-restoration.md`](../re/99-c-hourly-update-restoration.md) | C 機器碼匹配 | spec/255 已判手寫組語，C 機器碼匹配不可行；整檔匹配仍由組語基準提供 | 靜態 | merge-target | [#25](https://github.com/wicanr2/wolong_cht/issues/25) |
 
-## 2.4 驗收（246 條）
+## 2.4 驗收（245 條）
 
 | 出處 | 缺口 | 現況 | 裁決 | 分流 | Issue |
 |---|---|---|---|---|---|
@@ -512,7 +512,6 @@
 | [`playtest/29-strategy-minimap-markers.md`](../playtest/29-strategy-minimap-markers.md) | 視野框的美術 | 原版在 `word_10D4C`，尺寸沒從程式碼讀到 | 靜態 | evidence-only | — |
 | [`playtest/29-strategy-minimap-markers.md`](../playtest/29-strategy-minimap-markers.md) | 點地圖區（熱區 `0x16`） | 原版做什麼沒讀 | 靜態 | evidence-only | — |
 | [`playtest/30-ground-planes-implemented.md`](../playtest/30-ground-planes-implemented.md) | 一幀能有幾個兵撞牆 | 原版沒量過。前排寬度決定破牆速度，而破牆速度決定攻城打不打得下來 | 靜態 | evidence-only | — |
-| [`playtest/30-ground-planes-implemented.md`](../playtest/30-ground-planes-implemented.md) | 高平面的橫向移動沒有實測 | 守方站到牆頂的情境還沒跑過 | 實測 | evidence-only | — |
 | [`playtest/31-parity-inventory.md`](../playtest/31-parity-inventory.md) | 勢力一覽的欄位 | 沒有逐欄比對 | 靜態 | merge-target | [#12](https://github.com/wicanr2/wolong_cht/issues/12) |
 | [`playtest/31-parity-inventory.md`](../playtest/31-parity-inventory.md) | 「委任」那一格的顏色 | 實錄影格上看起來是紅字，但影片是壓縮過的、也沒有機器碼證據。remake 先畫成一般色（`../spec/38`） | 靜態 | merge-target | [#12](https://github.com/wicanr2/wolong_cht/issues/12) |
 | [`playtest/32-talk-layout-fit.md`](../playtest/32-talk-layout-fit.md) | 變數的實際長度分布 | 這一輪用固定三全形替身。人名多半是 2–3 全形、地名 2–3，但**軍團名與勢力名沒有逐一量過** | 靜態 | evidence-only | — |
@@ -696,7 +695,7 @@
 | [`reference/04-first-survey.md`](../reference/04-first-survey.md) | 不要憑「同一份專案應該用同一個編譯器」外推——**`KI.EXE` 的編譯器未解。 | （散句） | 靜態 | evidence-only | — |
 | [`reference/05-eten-font-provenance.md`](../reference/05-eten-font-provenance.md) | `END_S13/S14/S15` 是中文版加的結局段 | S13／S14 是字型。**`END_S15` 仍未解** | 靜態 | evidence-only | — |
 
-## 2.6 其他（536 條）
+## 2.6 其他（537 條）
 
 | 出處 | 缺口 | 現況 | 裁決 | 分流 | Issue |
 |---|---|---|---|---|---|
@@ -851,6 +850,7 @@
 | [`spec/154-mouse-cursor.md`](../spec/154-mouse-cursor.md) | 遊玩端的自繪 | 等 §4 定案 | 靜態 | evidence-only | — |
 | [`spec/155-desktop-launcher-input.md`](../spec/155-desktop-launcher-input.md) | 戰後結算與地圖捲動仍待補強；Windows／macOS 原生操作未驗收。 | （未解小節內文） | 靜態 | actionable | [#2](https://github.com/wicanr2/wolong_cht/issues/2) |
 | [`spec/156-desktop-preferences.md`](../spec/156-desktop-preferences.md) | 無阻擋實作的偏好語意缺口；Windows／macOS 原生設定路徑與操作由人工驗收。 | （未解小節內文） | 靜態 | merge-target | [#2](https://github.com/wicanr2/wolong_cht/issues/2) |
+| [`spec/159-tactical-command-movement-order.md`](../spec/159-tactical-command-movement-order.md) | 完整戰術移動排程與後段動畫 | 正常240拍27欄位／RNG與人物圖號／XYZ一致，但腳本PC／wait／cond從216拍不同，後段與全部戰場尚未對齊；沿既有Issue #16，不建立獨立新目標 | 靜態 | actionable | [#16](https://github.com/wicanr2/wolong_cht/issues/16) |
 | [`spec/160-rng-consumption-alignment.md`](../spec/160-rng-consumption-alignment.md) | `14060` 屬於哪一支、取數做什麼用 | 只知道在 `sub_13EFD` 底下，12 次／36 小時的節奏還沒對到機制 | 靜態 | merge-target | [#10](https://github.com/wicanr2/wolong_cht/issues/10) |
 | [`spec/160-rng-consumption-alignment.md`](../spec/160-rng-consumption-alignment.md) | 開戰期的消費端清單 | 還沒統計；閒置期的四個位址不足以涵蓋 | 靜態 | merge-target | [#10](https://github.com/wicanr2/wolong_cht/issues/10) |
 | [`spec/160-rng-consumption-alignment.md`](../spec/160-rng-consumption-alignment.md) | remake 的呼叫點與原版位址的對照表 | 要邊比邊建，沒有現成的 | 靜態 | merge-target | [#10](https://github.com/wicanr2/wolong_cht/issues/10) |

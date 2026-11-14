@@ -190,41 +190,29 @@ func (f *Field) cellGround(x, y int) (int, int) {
 	return h, noGround
 }
 
-// normaliseHighPlane 是 `sub_1BBA6` 尾端正規化的既有近似。
-//
-// 原版只統計門格，在高度4與5間選擇；高度不同的非門格只清導航旗標，
-// 保留高度低3位（1BC18）。這裡仍清除地面，尚未完全對齊，見spec36續片。
+// normaliseHighPlane 對應1BBD3–1BC1C：只數門格，以byte票數選4／5，票同選4。
+// 異高非門格只清導航旗標，保留高度，供水平拒絕出口辨認（spec159）。
 func (f *Field) normaliseHighPlane() {
-	// 既有實作取高度的多數，合成戰場允許其他高度；不能據此推論原版全表相同。
-	count := map[int8]int{}
+	var low, high uint8
 	for y := 0; y < Height; y++ {
 		for x := 0; x < Width; x++ {
-			// 原版只統計**門格**（`test al, 8`）：牆頂那些格子沒有 bit 3。
 			if f.nav[PlaneHigh][y][x]&navGate == 0 {
 				continue
 			}
-			if lv := f.lvl[PlaneHigh][y][x]; lv != noLevel {
-				count[lv]++
+			level := int(f.lvl[PlaneHigh][y][x])
+			if level < 0 {
+				level = 0
+			}
+			if level <= 4 {
+				low++
+			} else {
+				high++
 			}
 		}
 	}
-	if len(count) == 0 {
-		for y := 0; y < Height; y++ {
-			for x := 0; x < Width; x++ {
-				if lv := f.lvl[PlaneHigh][y][x]; lv != noLevel {
-					count[lv]++
-				}
-			}
-		}
-	}
-	if len(count) == 0 {
-		return
-	}
-	want, best := int8(noLevel), -1
-	for lv, n := range count {
-		if n > best || (n == best && lv < want) {
-			want, best = lv, n
-		}
+	want := int8(4)
+	if high > low {
+		want = 5
 	}
 	for y := 0; y < Height; y++ {
 		for x := 0; x < Width; x++ {
@@ -235,7 +223,7 @@ func (f *Field) normaliseHighPlane() {
 				f.lvl[PlaneHigh][y][x] = want
 				continue
 			}
-			f.lvl[PlaneHigh][y][x] = noLevel
+			// 1BC18只清DH的導航旗標，DL中的高度保留。
 			f.nav[PlaneHigh][y][x] = 0
 		}
 	}

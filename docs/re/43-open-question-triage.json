@@ -1,7 +1,7 @@
 {
   "schema": "wolong-re-open-question-triage/1",
   "generated_by": "tools/re_triage.py",
-  "generated_on": "2026-11-12",
+  "generated_on": "2026-11-15",
   "source": "tools/re_open_questions.py",
   "source_note": "每列以來源檔、章節、內容、狀態與 occurrence 固定指紋；內容變動必須重新稽核。",
   "classification_policy": {
@@ -1515,19 +1515,6 @@
       "verdict": "靜態",
       "occurrence": 0,
       "id": "oq-30f8575384645004b725",
-      "classification": "evidence-only",
-      "github_issue": null,
-      "reason": "目前列只保留原版證據邊界，未命中現行玩家路徑、規則或交付 Issue；若影響範圍改變，先建立新 Issue 再調整分類。"
-    },
-    {
-      "file": "docs/playtest/30-ground-planes-implemented.md",
-      "item": "高平面的橫向移動沒有實測",
-      "status": "守方站到牆頂的情境還沒跑過",
-      "section": "5. 未解",
-      "domain": "驗收",
-      "verdict": "實測",
-      "occurrence": 0,
-      "id": "oq-e376f20bf3c1ac19a1b7",
       "classification": "evidence-only",
       "github_issue": null,
       "reason": "目前列只保留原版證據邊界，未命中現行玩家路徑、規則或交付 Issue；若影響範圍改變，先建立新 Issue 再調整分類。"
@@ -14804,6 +14791,19 @@
       "classification": "evidence-only",
       "github_issue": null,
       "reason": "飛行高度回寫與更新位置已接線；完整導航、命中與後段戰況仍沿Issue #16保留，本列不形成新工作。"
+    },
+    {
+      "file": "docs/spec/159-tactical-command-movement-order.md",
+      "item": "完整戰術移動排程與後段動畫",
+      "status": "正常240拍27欄位／RNG與人物圖號／XYZ一致，但腳本PC／wait／cond從216拍不同，後段與全部戰場尚未對齊；沿既有Issue #16，不建立獨立新目標",
+      "section": "未解",
+      "domain": "其他",
+      "verdict": "靜態",
+      "occurrence": 0,
+      "id": "oq-b724f57dfe8624e01f45",
+      "classification": "actionable",
+      "github_issue": 16,
+      "reason": "原版正常樣本證實240拍單兵／人物接線，腳本216拍後與完整排程仍屬既有Issue #16；顯式登記同一範圍，不另開工作。"
     }
   ]
 }

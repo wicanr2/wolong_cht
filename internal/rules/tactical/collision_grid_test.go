@@ -255,7 +255,7 @@ func TestWallBatchCommand6GateGuardFollowsUnitCollision(t *testing.T) {
 		cmd                  Command
 		handled, walled      bool
 	}{
-		{true, true, false, wallAttack, false, true},
+		{true, true, false, wallAttack, false, false},
 		{true, false, false, wallAttack, true, false},
 		{true, true, false, Attack, true, false},
 		{false, true, false, wallAttack, true, false},

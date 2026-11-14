@@ -617,11 +617,12 @@ func (b *Battle) tryMove(side, k, x, y, z int) (handled, walled bool) {
 	}
 	if s.Plane() == PlaneHigh {
 		// 高平面要高度完全相等，而且未破的門橫向穿不過去。
+		// 1B21D只拒絕此軸，不能冒充1B221的立即尋路請求。
 		if lv != s.Z || b.Field.GateBlocksHighPlane(x, y) {
 			if b.hitStructure(side, s.Facing, x, y) {
 				return true, true
 			}
-			return false, true
+			return false, false
 		}
 		z = lv
 	} else {
@@ -636,7 +637,7 @@ func (b *Battle) tryMove(side, k, x, y, z int) (handled, walled bool) {
 	}
 	// 1B215：僅高平面命令6進入已破門格時阻擋；先處理佔位者。
 	if s.Plane() == PlaneHigh && s.Cmd == wallAttack && b.Field.HasTiles() && b.Field.Tile(x, y) >= gateSolid {
-		return false, true
+		return false, false
 	}
 	// 1B228–1B23E：水平升降同時調整中繼高度，保持相對Z差。
 	s.StepZ += z - s.Z

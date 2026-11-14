@@ -1,5 +1,9 @@
 # 30 — 兩個平面的地面圖接上規則層：攻方終於會打城牆了
 
+2026-11-15回填：當年的高平面未實測已由正常曹操對呂布樣本補證，範圍與限制見
+[spec159](../spec/159-tactical-command-movement-order.md)。舊「正規化後只剩一種高度」測試已更正為只查保留導航方向的格。
+以下當時的耐久／戰果數字維持歷史記錄，不當成目前完成率。
+
 **狀態：通過。** 地形模型與登城接上規則層並有測試：
 [`28`](28-siege-breach-measurement.md) 量到的是「一次都沒碰到城壁」，
 這一輪變成「480 點傷害、最低那一段只剩 20 耐久」。
@@ -64,7 +68,7 @@
 | 測試 | 釘住什麼 |
 |---|---|
 | `TestGroundPlanesMatchRawAlgorithm` | 三張圖的低／高平面分佈與門格數 |
-| `TestHighPlaneIsNormalisedToOneLevel` | 牆頂正規化後只剩一個高度 |
+| `TestHighPlaneDirectionsUseNormalizedLevel` | 只有保留導航方向的格共用高度；異高仍保留 |
 | `TestOnlyGateCellsAllowClimb` | 門格能上下、城壁格不能 |
 | `TestNavBitsFollowLevelRules` | 低平面連通一定 `|Δ| ≤ 1` |
 | `TestSiegeWallBlocksUntilBroken` | 尋路穿得過城門那一列，但通行層擋著 |
@@ -81,6 +85,6 @@
 | 項目 | 現況 |
 |---|---|
 | 一幀能有幾個兵撞牆 | 原版沒量過。前排寬度決定破牆速度，而破牆速度決定攻城打不打得下來 |
-| 高平面的橫向移動沒有實測 | 守方站到牆頂的情境還沒跑過 |
+| ~~高平面的橫向移動沒有實測~~ | 2026-11-15正常曹操對呂布樣本已觀察守軍在高層移動與高度拒絕，240拍人物／單兵核對見[spec159](../spec/159-tactical-command-movement-order.md)；其他場景不由此代證 |
 
 
