@@ -1,5 +1,11 @@
 # 11 — 戰術戰鬥：模組結構與戰場資料模型
 
+2026-11-14命中續片，已證實並接線：`1B94B–1B963`固定槽升序；`1B97E–1B9B8`目前格先判地形、再按持續單兵編號與存在旗標命中。
+`1B9EB–1B9F3`的大將姿勢位元為0只消耗箭，為1傷害除4且HP至少1，不套近戰命令免疫。
+`1BA17–1BA21`死亡只保PathQueued、硬直4，不在投射物批次立即通知隊員退卻；`1BAFC`功率維持byte溢位，0功率不自滅。
+同[既有IDA Pro9.4 DOS/V linear匯出](../../workplace/scratch/ui-windows-20261104/flight187-20261114/ida-probe.json)，輸入／推論等級及
+[23案受控比較](../../workplace/scratch/ui-windows-20261104/cao-hit-order-evidence.json)見[spec159](../spec/159-tactical-command-movement-order.md)，不外推完整戰鬥或中間繪製。
+
 2026-11-14投射物續片，已證實並接線：`1BA96`將固定點高度高byte上限5寫回，保留小數；
 `1BA6A–1BA89`只夾本拍位移，速度仍用原值減14h。正常158、185–187拍均先1B941飛行，再到1ADC8移動。
 Go已把飛行更新移至命令後／單兵移動前，避免把飛行前後快照混比。

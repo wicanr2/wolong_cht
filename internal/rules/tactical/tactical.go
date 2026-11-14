@@ -152,7 +152,7 @@ type Soldier struct {
 
 	// PoseStep 是原版兵記錄 +0x02 bit 0。主迴圈每次更新後翻轉它；
 	// 除了人物走路圖，也會被特殊投射物拿來選 raw 0x214／0x215。
-	// 它是呈現／暫態欄位，不影響戰鬥規則與存檔。
+	// 大將受箭傷也讀此位元（1B9EB）；它是執行中欄位，不寫入戰略存檔。
 	PoseStep uint8
 
 	// ProjectileCooldown 對應原版兵記錄 +0x13。sub_1AD2D 成功發射

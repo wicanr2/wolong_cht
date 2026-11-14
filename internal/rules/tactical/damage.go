@@ -1,5 +1,7 @@
 package tactical
 
+import "sort"
+
 // 傷害與飛道具。公式出自 `sub_1B97E`（命中）與 `sub_1BAB7`（威力隨高度變化），
 // 見 docs/re/11 §5.3–§5.5。
 
@@ -17,14 +19,17 @@ const (
 // 與近戰的差別只有一條：**目標是步兵就右移兩位**
 // （`cmp byte ptr [bx+4], 36h / jz` → `shr al,1` × 2）。
 // 大將也吃這個減傷，但要多一個條件（`test byte ptr [bx+2], 1`）。
-func (b *Battle) hitByArrow(from int, e *Soldier, power int) {
+func (b *Battle) hitByArrow(from int, e *Soldier, power int) bool {
 	if e == nil || !e.Alive {
-		return
+		return false
 	}
-	if e.Kind == Infantry && power > 0 {
+	if e.IsGeneral() && e.PoseStep&1 == 0 {
+		return false
+	}
+	if e.Kind == Infantry || e.IsGeneral() {
 		power /= InfantryArrowDivisor
 	}
-	b.projectileHit(e, power)
+	return b.projectileHit(e, power)
 }
 
 // InfantryArrowDivisor 是步兵挨箭的減傷倍數。
@@ -91,7 +96,9 @@ func (b *Battle) attackCollision(side int, attacker, e *Soldier) bool {
 }
 
 // applyHit 是一般命中後的共用受擊／扣血流程。
-func (b *Battle) applyHit(e *Soldier, damage int) bool {
+func (b *Battle) applyHit(e *Soldier, damage int) bool { return b.applyDamage(e, damage, true) }
+
+func (b *Battle) applyDamage(e *Soldier, damage int, notifyLeader bool) bool {
 	if e == nil || !e.Alive {
 		return false
 	}
@@ -125,7 +132,9 @@ func (b *Battle) applyHit(e *Soldier, damage int) bool {
 	// 倒地那四幀只是畫面（docs/spec/68）。記在這裡而不是留在 Soldiers 裡，
 	// 是因為原版把「在場」位元清掉了——它不擋路也不算場上人數。
 	b.addDeathFor(e)
-	b.squadLeaderGoneFor(e)
+	if notifyLeader {
+		b.squadLeaderGoneFor(e)
+	}
 	return true
 }
 
@@ -143,7 +152,12 @@ func (b *Battle) squadLeaderGoneFor(e *Soldier) {
 }
 
 func (b *Battle) projectileHit(e *Soldier, damage int) bool {
-	return b.applyHit(e, damage)
+	hit := b.applyDamage(e, damage, false)
+	if hit && !e.Alive {
+		e.TargetRefresh, e.Swapped, e.MoveFlag, e.HighTerrain = false, false, false, false
+		e.Stun = DeathFrames
+	}
+	return hit
 }
 
 // attackerAdvantage 把原版唯一的 byte_1D31E 轉成攻擊者一側的結果。
@@ -306,21 +320,43 @@ func attackDirection(x, y, tx, ty int) int {
 }
 
 // stepProjectiles 重現 `sub_1B941` 的投射物順序：先檢查目前格，再移動，
-// 最後套用 `sub_1BAB7` 的高度威力變化。
+// 最後套用 `sub_1BAB7` 的高度威力變化。固定槽升序；中間清旗標繪製見spec159限制。
 func (b *Battle) stepProjectiles() {
+	sort.SliceStable(b.projectiles, func(i, j int) bool {
+		a, c := b.projectiles[i], b.projectiles[j]
+		if a.slotOwned != c.slotOwned {
+			return a.slotOwned
+		}
+		return a.slotOwned && a.slot < c.slot
+	})
+	g := b.unitCollision
+	if g == nil {
+		g = &collisionGrid{}
+		for _, side := range [2]int{b.PlayerSide, 1 - b.PlayerSide} {
+			for k, s := range b.Sides[side].Soldiers {
+				if s.Alive {
+					g.drawSlot(b.collisionSlot(side, k), s.X, s.Y, s.Z, int(s.planeHigh())>>4)
+				}
+			}
+		}
+	}
 	live := b.projectiles[:0]
 	for _, p := range b.projectiles {
-		// 原版 `sub_1B97E` 先讀目前的 +0x10；命中或撞到障礙時
-		// 都不應先把飛道具移到下一格。
-		if hitSoldier := b.soldierAt(1-p.side, p.x, p.y, p.z); hitSoldier != nil {
-			b.emitSFX(SFXProjectileHit)
-			b.hitByArrow(p.side, hitSoldier, p.power)
-			continue
-		}
 		if b.projectileBlocked(p) {
 			continue
 		}
-		if !b.advanceProjectile(&p) || p.power <= 0 {
+		cell := p.gridIndex
+		side, k := b.collisionOwner(g.atLayer(cell%Width, cell/Width%Height, cell/(Width*Height)))
+		if k >= 0 && side != p.side {
+			e := &b.Sides[side].Soldiers[k]
+			if e.Alive {
+				if b.hitByArrow(p.side, e, p.power) {
+					b.emitSFX(SFXProjectileHit)
+				}
+				continue
+			}
+		}
+		if !b.advanceProjectile(&p) {
 			continue
 		}
 		live = append(live, p)
@@ -369,16 +405,19 @@ func (b *Battle) advanceProjectile(p *projectile) bool {
 			p.power += q + 1
 		}
 	}
+	p.power &= 0xff
 	return true
 }
 
 func (b *Battle) projectileBlocked(p projectile) bool {
-	if !inBounds(p.x, p.y) || p.z < 0 || p.z >= Levels {
+	if p.gridIndex < 0 || p.gridIndex >= Levels*Width*Height {
 		return true
 	}
-	// `es:[+0x10] >= 0x80` 是原版的障礙判定。Field.solid 是 remake
-	// 對 BATTLE.MAP 堆疊層的同一個可查詢表示；空氣層不應被當成障礙。
-	return b.Field != nil && b.Field.solid[p.z][p.y][p.x]
+	x, y, z := p.gridIndex%Width, p.gridIndex/Width%Height, p.gridIndex/(Width*Height)
+	if !inBounds(x, y) {
+		return true
+	}
+	return b.Field != nil && b.Field.solid[z][y][x]
 }
 
 func projectileGridIndex(x, y, z int) int {
@@ -422,18 +461,6 @@ func normalProjectileVelocity(b *Battle, s, e *Soldier) int {
 		jitter = b.rng.Next() & 3
 	}
 	return (base + jitter) * 0x14
-}
-
-// soldierAt 回傳某一側站在那一格的兵。**誤傷自己人不判定**——
-// 原版是用兵編號的區間分陣營（0x01–0x2F 對 0x30–0x5F）。
-func (b *Battle) soldierAt(side, x, y, z int) *Soldier {
-	for k := range b.Sides[side].Soldiers {
-		s := &b.Sides[side].Soldiers[k]
-		if s.Alive && s.X == x && s.Y == y && s.Z == z {
-			return s
-		}
-	}
-	return nil
 }
 
 func sign(v int) int {

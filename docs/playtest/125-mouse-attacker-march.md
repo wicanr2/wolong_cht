@@ -1,5 +1,15 @@
 # 125：正常滑鼠出兵、城兵攻陷與玩家攻方戰術
 
+## 2026-11-14：持續格命中與同拍多箭抽驗
+
+最新程式`wlgame-cao-hit-order-r1`，SHA-256 `3e6b8040288770fe9c1a95a4267ff1ae17ae71ae1f1d29b1768d3e89bf4ecea4`。
+[正常滑鼠](../../workplace/scratch/ui-windows-20261104/cao-hit-order-remake-gui.json)69個功能／同步檢查點、16圖通過，含重複同步。
+流程含曹操第一劇本宣戰呂布、編夏侯淵、停手行軍、途中存讀檔、自然在椎陽入戰、改線、登城、突擊及退卻返回。
+登城196→202拍指標不動，主將X16→22，Goal保持(42,32,4)。[實際畫面](../../workplace/scratch/ui-windows-20261104/cao-hit-order-remake-scale-wall.png)已目視單兵、城牆、側欄及底列指令。
+[獨立常式證據](../../workplace/scratch/ui-windows-20261104/cao-hit-order-evidence.json)23案、雙PlayerSide映射46次全等，但受控RAM擺位不當作正常玩家路徑。
+正常前195拍全項相同，196拍僅PathQueued差異仍保留；七套件冷測／vet／建置及五類負對照通過。
+原版另一射手命中分支、完整倒地計時、中間繪製、同拍像素、許昌防守、整場戰果及手機GUI不由本片代證。
+
 ## 2026-11-14：射箭高度與移動前飛行更新抽驗
 
 最新程式`wlgame-cao-flight187-r1`，SHA-256 `403a177f786fcfbe8ee19510ef55ee42acd863afe0afc665a21ee3611dc82727`。

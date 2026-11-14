@@ -163,7 +163,8 @@ func TestWallBatchProjectileSlotsAndFailedLaunch(t *testing.T) {
 			t.Fatal("雙側同編號使用獨立槽")
 		}
 		for i := range b.projectiles {
-			b.projectiles[i].power = 0
+			b.projectiles[i].heightFP = 0
+			b.projectiles[i].velocityFP = -0x100
 		}
 		b.stepProjectiles()
 		if len(b.projectiles) != 0 {
@@ -269,6 +270,176 @@ func TestProjectileResolvesHitBeforeMovement(t *testing.T) {
 		if s.HP != 93 || s.X != 20 || s.Y != 20 || !s.Hurt || len(b.projectiles) != 0 {
 			t.Fatalf("飛行須在士兵走離前命中並阻止當拍移動，player%d：%+v", player, *s)
 		}
+	}
+}
+
+func newProjectileHitTestBattle(player, targetSide int) (*Battle, *Soldier, projectile) {
+	b := NewBattle(flatField(), SyntheticFormations(), nil, 0)
+	b.PlayerSide = player
+	s := &b.Sides[targetSide].Soldiers[1]
+	*s = Soldier{Alive: true, Kind: Infantry, HP: 100, X: 20, Y: 20, Z: 2, Facing: East, Cmd: Guard, Next: Attack, Target: -1}
+	b.initUnitCollision()
+	source := 1 - targetSide
+	p := projectile{side: source, slotOwned: true, slot: b.Role(source)*16 + 6, x: 20, y: 20, z: 2, heightFP: 2 << 8, power: 28, direction: East, gridIndex: projectileGridIndex(20, 20, 2)}
+	return b, s, p
+}
+
+func TestProjectilePersistentGridCollision(t *testing.T) {
+	for player := 0; player < 2; player++ {
+		for side := 0; side < 2; side++ {
+			for _, name := range []string{"feet", "upper", "stale", "empty", "terrain", "invalid", "dead", "friendly", "grid_index"} {
+				b, s, p := newProjectileHitTestBattle(player, side)
+				wantHP, wantArrows := 93, 0
+				switch name {
+				case "upper":
+					p.z = 3
+					p.heightFP = 3 << 8
+					p.gridIndex = projectileGridIndex(20, 20, 3)
+				case "stale":
+					s.X, s.Y = 30, 30
+				case "empty":
+					b.unitCollision.cells = [8 * 0x1000]byte{}
+					wantHP, wantArrows = 100, 1
+				case "terrain":
+					b.Field.solid[2][20][20] = true
+					wantHP = 100
+				case "invalid":
+					b.unitCollision.cells[p.gridIndex] = 97
+					wantHP, wantArrows = 100, 1
+				case "dead":
+					s.Alive = false
+					s.HP = 0
+					wantHP, wantArrows = 0, 1
+				case "friendly":
+					p.side = side
+					p.slot = b.Role(side)*16 + 6
+					wantHP, wantArrows = 100, 1
+				case "grid_index":
+					p.x, p.y = 30, 30
+				}
+				b.projectiles = []projectile{p}
+				b.stepProjectiles()
+				if s.HP != wantHP || len(b.projectiles) != wantArrows {
+					t.Fatalf("%s player%d side%d：hp%d arrows%d", name, player, side, s.HP, len(b.projectiles))
+				}
+			}
+		}
+	}
+}
+
+func TestProjectileGeneralPoseAndDamageBoundary(t *testing.T) {
+	for player := 0; player < 2; player++ {
+		for side := 0; side < 2; side++ {
+			for _, cmd := range []Command{Holding, Form, Retreat} {
+				for pose := 0; pose < 2; pose++ {
+					b, s, p := newProjectileHitTestBattle(player, side)
+					s.Kind = General
+					s.Cmd, s.Next = cmd, cmd
+					s.PoseStep = uint8(pose)
+					b.projectiles = []projectile{p}
+					b.stepProjectiles()
+					sounds := b.TakeSoundEffects()
+					if len(b.projectiles) != 0 {
+						t.Fatal("大將免傷也會消耗箭")
+					}
+					if pose == 0 {
+						if s.HP != 100 || s.Hurt || s.Stun != 0 || len(sounds) != 0 {
+							t.Fatal("姿勢位元0只消耗箭，不受傷／硬直／音效")
+						}
+					} else if s.HP != 93 || !s.Hurt || s.Stun != 2 || len(sounds) != 1 || sounds[0] != SFXProjectileHit {
+						t.Fatal("姿勢位元1傷害除4，不套近戰命令免疫")
+					}
+				}
+			}
+		}
+	}
+	b, s, p := newProjectileHitTestBattle(0, 1)
+	s.Kind = General
+	s.PoseStep = 1
+	s.HP = 5
+	b.projectiles = []projectile{p}
+	b.stepProjectiles()
+	if s.HP != 1 || !s.Alive {
+		t.Fatal("大將箭傷最低留1")
+	}
+}
+
+func TestProjectileZeroPowerAndByteWrap(t *testing.T) {
+	b, s, p := newProjectileHitTestBattle(0, 1)
+	p.power = 0
+	b.projectiles = []projectile{p}
+	b.stepProjectiles()
+	if s.HP != 100 || !s.Hurt || s.Stun != 2 || len(b.projectiles) != 0 || len(b.TakeSoundEffects()) != 1 {
+		t.Fatal("功率0命中仍會硬直、受擊與發聲")
+	}
+	b, _, p = newProjectileHitTestBattle(0, 1)
+	b.unitCollision.cells = [8 * 0x1000]byte{}
+	p.power = 0
+	b.projectiles = []projectile{p}
+	b.stepProjectiles()
+	if len(b.projectiles) != 1 || b.projectiles[0].power != 0 {
+		t.Fatal("空格中的功率0箭不自滅")
+	}
+	b.projectiles[0].power = 255
+	b.projectiles[0].z = 3
+	b.projectiles[0].heightFP = 3 << 8
+	b.projectiles[0].velocityFP = -0x100
+	b.projectiles[0].gridIndex = projectileGridIndex(21, 20, 3)
+	b.stepProjectiles()
+	if len(b.projectiles) != 1 || b.projectiles[0].power != 63 {
+		t.Fatal("下降255+64須保留byte溢位為63")
+	}
+}
+
+func TestProjectileFixedSlotOrderSkipsDeadTarget(t *testing.T) {
+	for _, lethalFirst := range []bool{false, true} {
+		b, s, p := newProjectileHitTestBattle(0, 1)
+		s.Kind = Archer
+		s.HP = 5
+		late, early := p, p
+		late.slot, early.slot = 9, 2
+		late.power, early.power = 9, 4
+		want := 0
+		if lethalFirst {
+			late.power, early.power = 4, 9
+			want = 1
+		}
+		b.projectiles = []projectile{late, early}
+		b.stepProjectiles()
+		if s.Alive || s.HP != 0 || len(b.projectiles) != want {
+			t.Fatal("須依槽2→9處理，不能依發射先後")
+		}
+		if want == 1 && b.projectiles[0].slot != 9 {
+			t.Fatal("先箭擊殺後，後箭應略過已死記錄並繼續飛行")
+		}
+	}
+}
+
+func TestProjectileDeathFlagsAndDeferredLeaderNotice(t *testing.T) {
+	b := NewBattle(flatField(), SyntheticFormations(), nil, 0)
+	s := &b.Sides[1].Soldiers[0]
+	*s = Soldier{Alive: true, Kind: Archer, HP: 5, X: 20, Y: 20, Z: 2, Cmd: Guard, Next: Attack, PathQueued: true, Target: -1}
+	follower := &b.Sides[1].Soldiers[1]
+	*follower = Soldier{Alive: true, Kind: Infantry, HP: 99, X: 32, Y: 32, Z: 2, Cmd: Guard, Next: Guard, Target: -1}
+	b.initUnitCollision()
+	s.TargetRefresh, s.MoveFlag, s.HighTerrain = true, true, true
+	b.projectiles = []projectile{{side: 0, slotOwned: true, slot: 0, x: 20, y: 20, z: 2, heightFP: 2 << 8, power: 9, direction: East, gridIndex: projectileGridIndex(20, 20, 2)}}
+	b.stepProjectiles()
+	if s.Alive || s.HP != 0 || s.Stun != DeathFrames || !s.PathQueued || s.TargetRefresh || s.MoveFlag || s.HighTerrain || s.Swapped {
+		t.Fatal("箭傷死亡只保留PathQueued，硬直4")
+	}
+	if follower.Next != Guard {
+		t.Fatal("飛行批次不能提前通知隊員退卻")
+	}
+	b.applySquadLeaderGone()
+	if follower.Next != Retreat {
+		t.Fatal("後續既有隊長檢查仍須通知退卻")
+	}
+	*s = Soldier{Alive: true, Kind: Archer, HP: 5}
+	follower.Next = Guard
+	b.applyHit(s, 9)
+	if follower.Next != Retreat {
+		t.Fatal("近戰共用入口既有隊長通知不變")
 	}
 }
 

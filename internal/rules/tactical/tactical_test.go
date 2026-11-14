@@ -378,17 +378,13 @@ func TestSpecialProjectileUsesCH20AndFallsVertically(t *testing.T) {
 	if attacker.ProjectileCooldown != 6 {
 		t.Fatalf("sub_1AD7F 成功後 +0x13 應為 6，got %d", attacker.ProjectileCooldown)
 	}
-	for i := 0; i < 2; i++ {
-		b.stepProjectiles()
-		if target.HP != MaxHP {
-			t.Fatalf("第 %d 幀提前命中：HP=%d", i+1, target.HP)
-		}
+	b.stepProjectiles()
+	if target.HP != MaxHP {
+		t.Fatalf("第一幀仍在上半身上方，不應命中：HP=%d", target.HP)
 	}
 	b.stepProjectiles()
-	expectedPower := specialProjectilePower
-	for i := 0; i < 2; i++ {
-		expectedPower += expectedPower>>2 + 1 // sub_1BAB7 的兩次下降加成
-	}
+	// 下降一層後，下一次更新即命中上半身。
+	expectedPower := specialProjectilePower + (specialProjectilePower >> 2) + 1
 	if target.HP != MaxHP-expectedPower/InfantryArrowDivisor {
 		t.Fatalf("CH=0x20 垂直效果傷害=%d，應為 %d", MaxHP-target.HP,
 			expectedPower/InfantryArrowDivisor)
@@ -450,7 +446,8 @@ func TestProjectileCooldownMatchesRawLaunchBranches(t *testing.T) {
 	if len(b.projectiles) != 1 || shooter.ProjectileCooldown != 0 {
 		t.Fatal("冷卻歸零仍須等對應槽釋放")
 	}
-	b.projectiles[0].power = 0
+	b.projectiles[0].heightFP = 0
+	b.projectiles[0].velocityFP = -0x100
 	b.stepProjectiles()
 	b.shoot(0, 1, target)
 	if len(b.projectiles) != 1 || shooter.ProjectileCooldown != 8 {
@@ -458,7 +455,8 @@ func TestProjectileCooldownMatchesRawLaunchBranches(t *testing.T) {
 	}
 
 	shooter.ProjectileCooldown = 0
-	b.projectiles[0].power = 0
+	b.projectiles[0].heightFP = 0
+	b.projectiles[0].velocityFP = -0x100
 	b.stepProjectiles()
 	shooter.Z = 2
 	target.X, target.Y, target.Z = 11, 20, 1

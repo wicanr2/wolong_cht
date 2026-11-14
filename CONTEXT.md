@@ -252,6 +252,7 @@ GPU最多兩頁快取，其他季節、液晶、未選頁與讀圖失敗沿原�
 
 | 日期／目前程式 | 最近驗證 | 狀態 | 交付物 |
 |---|---|---|---|
+| 2026-11-14；wlgame-cao-hit-order-r1 | 23個原版受控樣本、雙PlayerSide映射46次比較全等；七套件冷測／vet、五類負對照、正常GUI69點／16圖通過；正常前195拍全項相同 | 接通持續格／上半身命中、固定槽順序、大將姿勢箭傷、0功率與byte溢位、箭傷死亡旗標及延後隊長通知。受控RAM樣本與正常流程分開；196拍PathQueued、中間繪製與完整戰果仍有界 | [spec159](docs/spec/159-tactical-command-movement-order.md)、[收據](workplace/scratch/ui-windows-20261104/cao-hit-order-integration.json) |
 | 2026-11-14；wlgame-cao-flight187-r1 | 前195拍96槽27欄位／RNG／腳本／8192-byte成本／剩餘點數全等；46組投射物快照1472槽活動狀態、234筆活動記錄各8欄全等；七套件冷測／vet、三類負對照、正常GUI69點／16圖通過 | 修正固定點高度上限回寫、命令後／移動前更新飛行，187拍同槽可重發。196拍首次僅PathQueued不同，成本至229／點數212／腳本215／RNG240相同。完整命中、固定槽排序及戰果保留 | [spec159](docs/spec/159-tactical-command-movement-order.md)、[收據](workplace/scratch/ui-windows-20261104/cao-flight187-integration.json) |
 | 2026-11-14；wlgame-cao-180-r1 | 前186拍96槽27欄位／RNG／腳本、成本8192 bytes及剩餘點數全等；七套件冷測／vet、兩類負對照、正常GUI69點／16圖通過 | 修正爬升途中重算的高層中繼高度、水平先撞兵再判地形。187拍首次投射物成功旗標不同；RNG／成本同至187、點數至190、腳本至215。完整投射物釋放與戰果保留 | [spec134](docs/spec/134-pathfind-wave-order.md)、[spec36](docs/spec/36-ground-planes-and-climbing.md)、[收據](workplace/scratch/ui-windows-20261104/cao-180-integration.json) |
 | 2026-11-14；wlgame-cao-wall-batch-r1 | 前179拍96槽27欄位／RNG／腳本、成本8192 bytes與剩餘點數全等；七套件冷測／vet、六類負對照、正常GUI69點／16圖通過 | 合併修正換位平面、Cmd6門格、下降單格碰撞、搜尋根、固定投射物槽與普通箭出生格。180拍首次單兵／成本不同，RNG／腳本／點數同至180；普通下降與Cmd6門格限原指令及回歸，完整戰果保留 | [spec36](docs/spec/36-ground-planes-and-climbing.md)、[spec159](docs/spec/159-tactical-command-movement-order.md)、[收據](workplace/scratch/ui-windows-20261104/cao-wall-batch-integration.json) |
