@@ -6,6 +6,41 @@ import (
 	"testing"
 )
 
+func TestPendingDeathPreservesLivingPoseThenUsesOriginalDeathSource(t *testing.T) {
+	for side := 0; side < 2; side++ {
+		for _, kind := range []tactical.Kind{tactical.Cavalry, tactical.Archer, tactical.Infantry} {
+			b := &tactical.Battle{}
+			b.Sides[side].Soldiers[0] = tactical.Soldier{Alive: true, Kind: kind, X: 20, Y: 32,
+				Facing: tactical.East, PoseStep: 1, Hurt: true}
+			v := &View{}
+			living := v.buildDisplayList(b)
+			if len(living) != 2 {
+				t.Fatal("前提：人物應有上下兩個繪製單位")
+			}
+			d := tactical.Death{Side: side, Kind: kind, Pending: true, FramesLeft: 4,
+				BeforeFacing: tactical.East, BeforeStep: 1, BeforeHurt: true}
+			if deathDisplaySource(d) != living[1].raw || deathDisplaySource(d)+1 != living[0].raw {
+				t.Fatal("尚未輪到倒地處理，不得提早換成倒地圖")
+			}
+			d.Pending, d.FramesLeft = false, 3
+			// 原版1B3AE的raw圖號，兩側各三組，非由helper本身計算預期。
+			want := 360 + side*180
+			if kind == tactical.Archer {
+				want += 4
+			} else if kind == tactical.Infantry {
+				want += 8
+			}
+			if deathDisplaySource(d) != want {
+				t.Fatal("首次倒地圖號不符原版")
+			}
+			d.FramesLeft = 2
+			if deathDisplaySource(d) != want+2 {
+				t.Fatal("倒地後段應切下一組原版圖號")
+			}
+		}
+	}
+}
+
 func TestDynamicObjectsUseOriginalY(t *testing.T) {
 	for _, cam := range [][2]int{{36, 14}, {35, 14}, {36, 15}, {35, 15}} {
 		v := &View{camWorldX: cam[0], camWorldY: cam[1]}

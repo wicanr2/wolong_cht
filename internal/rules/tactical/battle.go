@@ -696,6 +696,7 @@ func (b *Battle) Step() {
 	b.drainSiegeGeneral()
 	b.drainPathQueue()
 	var present [2]int
+	var deathsHandled [2]uint64
 	for _, i := range [2]int{b.PlayerSide, 1 - b.PlayerSide} {
 		for k := range b.Sides[i].Soldiers {
 			if b.Sides[i].Soldiers[k].Alive {
@@ -703,11 +704,12 @@ func (b *Battle) Step() {
 				present[i]++
 				b.updateSoldierMovement(i, k)
 				b.drawUnitCollision(i, k)
+			} else if b.stepDeath(i, k) {
+				deathsHandled[i] |= 1 << uint(k)
 			}
 		}
 	}
-	b.stepDeaths()
-	b.reinforce()
+	b.reinforceExcept(deathsHandled)
 
 	b.Advantage[0] = computeAdvantage(b.Sides[0].Fresh(), b.Sides[1].Fresh())
 	b.Advantage[1] = computeAdvantage(b.Sides[1].Fresh(), b.Sides[0].Fresh())
@@ -779,7 +781,9 @@ func (b *Battle) drainSiegeGeneral() {
 }
 
 // reinforce 讓待機的兵補進場（說明書 4.1 的輸送帶）。
-func (b *Battle) reinforce() {
+func (b *Battle) reinforce() { b.reinforceExcept([2]uint64{}) }
+
+func (b *Battle) reinforceExcept(blocked [2]uint64) {
 	for i := range b.Sides {
 		// 1B43E只停止全軍撤退的一側；待機兵保留供戰後結算。
 		if b.endPhase == i+1 {
@@ -791,7 +795,7 @@ func (b *Battle) reinforce() {
 				continue
 			}
 			for j := k * PerSquad; j < (k+1)*PerSquad; j++ {
-				if s.Soldiers[j].Alive {
+				if blocked[i]&(1<<uint(j)) != 0 || s.Soldiers[j].Alive {
 					continue
 				}
 				if b.unitDying(i, j) {

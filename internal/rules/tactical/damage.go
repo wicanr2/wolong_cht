@@ -16,7 +16,7 @@ const (
 
 // hitByArrow 是**飛道具**的傷害（原版 `sub_1B97E`）。
 //
-// 與近戰的差別只有一條：**目標是步兵就右移兩位**
+// 目標為步兵時傷害右移兩位；大將另有姿態與最低體力閘。
 // （`cmp byte ptr [bx+4], 36h / jz` → `shr al,1` × 2）。
 // 大將也吃這個減傷，但要多一個條件（`test byte ptr [bx+2], 1`）。
 func (b *Battle) hitByArrow(from int, e *Soldier, power int) bool {
@@ -103,6 +103,7 @@ func (b *Battle) applyDamage(e *Soldier, damage int, notifyLeader bool) bool {
 		return false
 	}
 
+	before := snapshotDeathPose(e)
 	// 原版受擊同時設 +0x02 bit 4、面向歸零、+0x00 bit 6，
 	// 以及 `+0x01` 的硬直計時（docs/spec/63）。
 	e.HitGeneral = false
@@ -127,11 +128,7 @@ func (b *Battle) applyDamage(e *Soldier, damage int, notifyLeader bool) bool {
 		e.HP = GeneralMinHP
 		return true
 	}
-	e.HP = 0
-	e.Alive = false
-	// 倒地那四幀只是畫面（docs/spec/68）。記在這裡而不是留在 Soldiers 裡，
-	// 是因為原版把「在場」位元清掉了——它不擋路也不算場上人數。
-	b.addDeathFor(e)
+	b.beginDeath(e, before)
 	if notifyLeader {
 		b.squadLeaderGoneFor(e)
 	}
@@ -152,12 +149,7 @@ func (b *Battle) squadLeaderGoneFor(e *Soldier) {
 }
 
 func (b *Battle) projectileHit(e *Soldier, damage int) bool {
-	hit := b.applyDamage(e, damage, false)
-	if hit && !e.Alive {
-		e.TargetRefresh, e.Swapped, e.MoveFlag, e.HighTerrain = false, false, false, false
-		e.Stun = DeathFrames
-	}
-	return hit
+	return b.applyDamage(e, damage, false)
 }
 
 // attackerAdvantage 把原版唯一的 byte_1D31E 轉成攻擊者一側的結果。

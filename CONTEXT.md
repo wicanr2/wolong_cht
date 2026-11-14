@@ -250,8 +250,13 @@ GPU最多兩頁快取，其他季節、液晶、未選頁與讀圖失敗沿原�
 本輪停止於這段抽樣；後續命令／移動與HP時序、投射物、架梯及完整結果仍沿Issues #13／#16／#24，
 高平面導航與成本限制保留，不宣稱全部角色、手機GUI或整場戰鬥已一致。
 
+2026-11-14勘誤：倒地不等於物理格已空。原版1B3E3於計時歸零才清上下兩層，
+1AE00按死者本身槽序遞減；不能在整批末尾統一減計時或於清除當拍補兵。
+舊spec68「不擋路」由Alive外推，已依原指令與84次受控觀測回填；完整碰撞差異不由此一併關閉。
+
 | 日期／目前程式 | 最近驗證 | 狀態 | 交付物 |
 |---|---|---|---|
+| 2026-11-14；wlgame-cao-death-r1 | 14案84次原版受控比較全等；41套件冷測／vet、六類負對照；正常滑鼠71點／17圖，自然收尾返回 | 倒地沿單兵槽序推進，已輪過者等下拍；保留受傷前姿態至首次倒地處理。兩層佔位清除後下一拍才補兵。GUI826拍，完整像素、守方色彩、出生幾何與世界結算仍有界 | [spec68](docs/spec/68-death-animation.md)、[整合收據](workplace/scratch/ui-windows-20261104/cao-death-integration.json)、[正常GUI](workplace/scratch/ui-windows-20261104/cao-death-remake-gui.json) |
 | 2026-11-14；wlgame-cao-retreat-order-r1 | 12個原版受控樣本24階段全等；正常1471–1476拍我方288兵次11欄相同、終點1476拍；41套件冷測／vet、八類負對照；正常滑鼠71點／17圖、自然收尾返回 | 撤退先交六隊長、再傳隊員，拒絕重複全軍令；首次固定出口Goal／Step並入尋路佇列，保留舊命令。大將先檢查門檻再扣體力。完整旗標／敵方後段／動畫仍有界 | [spec141](docs/spec/141-retreat-countdown.md)、[窗口收據](workplace/scratch/ui-windows-20261104/cao-retreat-order-after-window.json)、[正常GUI](workplace/scratch/ui-windows-20261104/cao-retreat-order-remake-gui.json) |
 | 2026-11-14；wlgame-cao-retreat-finish-r1 | 正常原版停手到底1476拍與typed重播的勝方、12隊生還數、兩將體力相同；41套件冷測／vet、五類負對照；正常滑鼠71點／17圖，自然戰果後返回大地圖 | 全軍撤退只停該側補兵，待機保留；勝負使用移動批次場上計數並按玩家／對方檢查。消除舊實作多等103拍。GUI有下令，725拍收尾，與原版停手樣本分開；全程狀態／動畫與完整世界出口仍有界 | [spec141](docs/spec/141-retreat-countdown.md)、[戰果收據](workplace/scratch/ui-windows-20261104/cao-retreat-after-comparison.json)、[正常GUI](workplace/scratch/ui-windows-20261104/cao-retreat-finish-remake-gui.json) |
 | 2026-11-14；wlgame-cao-hit-order-r1 | 23個原版受控樣本、雙PlayerSide映射46次比較全等；七套件冷測／vet、五類負對照、正常GUI69點／16圖通過；正常前195拍全項相同 | 接通持續格／上半身命中、固定槽順序、大將姿勢箭傷、0功率與byte溢位、箭傷死亡旗標及延後隊長通知。受控RAM樣本與正常流程分開；196拍PathQueued、中間繪製與完整戰果仍有界 | [spec159](docs/spec/159-tactical-command-movement-order.md)、[收據](workplace/scratch/ui-windows-20261104/cao-hit-order-integration.json) |

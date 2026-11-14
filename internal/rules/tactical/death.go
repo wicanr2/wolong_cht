@@ -21,11 +21,15 @@ const (
 
 // Death 是一筆倒地動畫。位置固定，只有計時在走。
 type Death struct {
-	Slot       int
-	Side       int
-	X, Y, Z    int
-	Kind       Kind
-	FramesLeft int
+	Slot                         int
+	Side                         int
+	X, Y, Z                      int
+	Kind                         Kind
+	FramesLeft                   int
+	Pending                      bool
+	BeforeFacing                 int
+	BeforeStep                   uint8
+	BeforeHurt, BeforeHitGeneral bool
 }
 
 // Sprite 是這一幀該畫哪一張。
@@ -64,7 +68,7 @@ func (b *Battle) Deaths() []Death {
 }
 
 // addDeath 在兵離場的同一處記一筆。
-func (b *Battle) addDeath(s *Soldier, side int) {
+func (b *Battle) addDeath(s *Soldier, side int, before deathPose) {
 	if b == nil || s == nil {
 		return
 	}
@@ -76,31 +80,67 @@ func (b *Battle) addDeath(s *Soldier, side int) {
 		}
 	}
 	b.deaths = append(b.deaths, Death{Side: side, Slot: slot, X: s.X, Y: s.Y, Z: s.Z,
-		Kind: s.Kind, FramesLeft: DeathFrames})
+		Kind: s.Kind, FramesLeft: DeathFrames, Pending: true, BeforeFacing: before.facing, BeforeStep: before.step, BeforeHurt: before.hurt, BeforeHitGeneral: before.hitGeneral})
 }
 
-// stepDeaths 每幀遞減，歸零就刪掉。
-func (b *Battle) stepDeaths() {
-	if b == nil || len(b.deaths) == 0 {
-		return
-	}
-	out := b.deaths[:0]
-	for _, d := range b.deaths {
-		if d.FramesLeft--; d.FramesLeft > 0 {
-			out = append(out, d)
-		} else if b.unitCollision != nil && d.Slot >= 0 {
-			b.clearUnitCollision(d.Side, d.Slot)
+// stepDeath只推進輪到的單兵，已輪過後才被擊倒者等下一拍。
+func (b *Battle) stepDeath(side, k int) bool {
+	for i, d := range b.deaths {
+		if d.Side == side && d.Slot == k {
+			b.advanceDeath(i)
+			return true
 		}
 	}
-	b.deaths = out
+	return false
+}
+func (b *Battle) advanceDeath(i int) bool {
+	d := &b.deaths[i]
+	d.FramesLeft--
+	d.Pending = false
+	if d.Side >= 0 && d.Side < len(b.Sides) && d.Slot >= 0 && d.Slot < SoldiersOnFoot {
+		b.Sides[d.Side].Soldiers[d.Slot].Stun = d.FramesLeft
+	}
+	if d.FramesLeft > 0 {
+		return false
+	}
+	if b.unitCollision != nil && d.Slot >= 0 {
+		b.clearUnitCollision(d.Side, d.Slot)
+	}
+	b.deaths = append(b.deaths[:i], b.deaths[i+1:]...)
+	return true
+}
+
+// stepDeaths供獨立動畫測試逐拍使用；正式Step沿單兵槽序呼叫stepDeath。
+func (b *Battle) stepDeaths() {
+	for i := 0; i < len(b.deaths); {
+		if !b.advanceDeath(i) {
+			i++
+		}
+	}
+}
+
+type deathPose struct {
+	facing           int
+	step             uint8
+	hurt, hitGeneral bool
+}
+
+func snapshotDeathPose(s *Soldier) deathPose {
+	return deathPose{int(s.Facing), uint8(s.PoseStep), s.Hurt, s.HitGeneral}
+}
+func (b *Battle) beginDeath(s *Soldier, before deathPose) {
+	s.HP, s.Alive = 0, false
+	s.TargetRefresh, s.Swapped, s.MoveFlag, s.HighTerrain = false, false, false, false
+	s.Stun = DeathFrames
+	b.addDeathFor(s, before)
 }
 
 // addDeathFor 從指標回查是哪一側的兵。投射物那條路只拿得到指標。
-func (b *Battle) addDeathFor(e *Soldier) {
+func (b *Battle) addDeathFor(e *Soldier, before deathPose) {
 	for side := range b.Sides {
 		for k := range b.Sides[side].Soldiers {
 			if &b.Sides[side].Soldiers[k] == e {
-				b.addDeath(e, side)
+				b.addDeath(e, side, before)
 				return
 			}
 		}
@@ -109,6 +149,5 @@ func (b *Battle) addDeathFor(e *Soldier) {
 
 // applyLethalForTest 走與致命傷同一條收尾路徑，給測試用。
 func (b *Battle) applyLethalForTest(s *Soldier) {
-	s.HP, s.Alive = 0, false
-	b.addDeathFor(s)
+	b.beginDeath(s, snapshotDeathPose(s))
 }

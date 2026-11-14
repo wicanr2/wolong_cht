@@ -1,5 +1,17 @@
 # 125：正常滑鼠出兵、城兵攻陷與玩家攻方戰術
 
+## 2026-11-14：倒地與清除順序抽驗
+
+程式`wlgame-cao-death-r1`，SHA-256 `d647a2f62fff50eaf77ab03c70ed6d5df1adaf4e26aa6f5ae7acf1825284296d`。
+[正常滑鼠](../../workplace/scratch/ui-windows-20261104/cao-death-remake-gui.json)71個功能／同步點、17圖通過。
+第一劇本曹操宣戰呂布、編夏侯淵、停手行軍、途中存讀檔，椎陽自然攻城，改線、登城、突擊及快轉後停手。
+826拍自然收尾，戰術Outcome為5530／5550人、體力0／220；世界結算顯示5520／5520，沿既有Issue #18保留，未改世界扣兵規則。
+已返回可操作地圖，戰報預設關閉。已目視登城與返回地圖；快轉畫面只顯示原有龍紋背景，不能用來證明倒地像素。
+[14案84次原版受控比較](../../workplace/scratch/ui-windows-20261104/cao-death-after-fixtures-comparison.json)
+另驗倒地圖號、槽序、兩層清除與下一拍補兵；受控RAM擺位不稱正常玩家擺位。
+呈現測試核對待處理姿態與正式倒地來源；尚無原版同拍bitmap像素證據，詳[spec68](../spec/68-death-animation.md)。
+正式停手重播保留1476拍終點及前240拍收據，這條不含GUI戰術下令。
+
 ## 2026-11-14：撤退傳令與初動
 
 程式`wlgame-cao-retreat-order-r1`，SHA-256 `e57c806f9d81c3c796e094ca63024f84d12bca4e7f0a9e478e29d8593f4741c2`。

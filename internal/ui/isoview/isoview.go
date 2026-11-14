@@ -484,7 +484,7 @@ func (v *View) buildDisplayList(b *tactical.Battle) []battleDisplayEntry {
 		// 圖號已經是「這一側這一幀該用哪一張」，直接走人物那條路。
 		for _, d := range b.Deaths() {
 			col, row := isoProjectOriginal(d.X, d.Y, d.Z)
-			raw := battle.CombinedSourceTerrainTiles + d.Sprite()*2
+			raw := deathDisplaySource(d)
 			entries, order = v.appendTallDisplayUnits(entries, order, col, row,
 				d.X, d.Y, d.Z, raw)
 		}
@@ -889,3 +889,18 @@ func (v *View) Camera() (x, y int) { return v.camWorldX, v.camWorldY }
 
 // Field 是這一張戰場的編號。
 func (v *View) Field() int { return v.field }
+
+func deathDisplaySource(d tactical.Death) int {
+	if !d.Pending {
+		return battle.CombinedSourceTerrainTiles + d.Sprite()*2
+	}
+	flags := int(d.BeforeStep) & battle.PoseFlagStep
+	if d.BeforeHitGeneral {
+		flags |= battle.PoseFlagHitGeneral
+	}
+	if d.BeforeHurt {
+		flags |= battle.PoseFlagFront
+	}
+	n := battle.SpriteFor(int(d.Kind), d.BeforeFacing, flags)
+	return battle.CombinedSourceTerrainTiles + d.Side*battle.UnitsPerSide + n*2
+}
