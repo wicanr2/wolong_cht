@@ -165,7 +165,11 @@ func (s *Script) exec(b *Battle, op, par, arg int) {
 	case opQTheirs:
 		s.cond = minCommand(&b.Sides[1-side])
 	case opQAdv:
-		s.cond = int(b.Advantage[side])
+		// 1A564讀玩家角色的全域值，並以腳本側上次移動餘力覆蓋。
+		s.cond = int(b.Advantage[b.PlayerSide])
+		if b.freshCounts[side] <= 0x20 {
+			s.cond = int(Advantaged)
+		}
 	case opQRand:
 		n := arg
 		if n == 0 {

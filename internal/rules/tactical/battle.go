@@ -235,12 +235,24 @@ func computeAdvantage(mine, theirs int) Advantage {
 	return a
 }
 
+func oppositeAdvantage(a Advantage) Advantage {
+	if a == Even {
+		return Even
+	}
+	if a == Advantaged {
+		return Disadvantaged
+	}
+	return Advantaged
+}
+
 // Battle 是一場進行中的戰術戰鬥。
 type Battle struct {
 	unitCollision *collisionGrid
-	drawn         [2][SoldiersOnFoot]SoldierDrawing
-	drawnValid    [2]uint64
-	Field         *Field
+	// 上次移動批次的餘力兵數；首次移動結束前尚未有效。
+	freshCounts [2]int
+	drawn       [2][SoldiersOnFoot]SoldierDrawing
+	drawnValid  [2]uint64
+	Field       *Field
 	// PlayerSide 是玩家在哪一側（0 攻／1 守）。**原版的 side 0 永遠是玩家**，
 	// remake 的 Sides[0] 固定是攻方，所以要另外記——見 SetPlayerSide。
 	PlayerSide int
@@ -421,7 +433,7 @@ func NewBattle(f *Field, forms *Formations, rng Rand, cityWall int) *Battle {
 // **玩家／腳本**不是攻方／守方——`word_1D33C`（玩家）＝ X 5、
 // `word_1D33E`（腳本）＝ X 58。
 //
-// remake 的 `Sides[0]` 固定是攻方（城壁、突擊、優勢度的判定都靠這個），
+// remake 的 `Sides[0]` 固定是攻方（城壁與突擊的判定靠這個），
 // 所以玩家守城時要把陣形原點與鏡射這兩樣換過來，其餘不動。
 //
 // 攻城時戰場另外會轉 180 度（docs/spec/56），兩件事合起來才對得上原版：
@@ -697,6 +709,7 @@ func (b *Battle) Step() {
 	b.drainSiegeGeneral()
 	b.drainPathQueue()
 	var present [2]int
+	var fresh [2]int
 	var deathsHandled [2]uint64
 	for _, i := range [2]int{b.PlayerSide, 1 - b.PlayerSide} {
 		for k := range b.Sides[i].Soldiers {
@@ -706,6 +719,9 @@ func (b *Battle) Step() {
 				b.updateSoldierMovement(i, k)
 				b.drawUnitCollision(i, k)
 				b.recordSoldierDrawing(i, k, true)
+				if b.Sides[i].Soldiers[k].Stamina != 0 {
+					fresh[i]++
+				}
 			} else if b.stepDeath(i, k) {
 				deathsHandled[i] |= 1 << uint(k)
 			}
@@ -713,8 +729,10 @@ func (b *Battle) Step() {
 	}
 	b.reinforceExcept(deathsHandled)
 
-	b.Advantage[0] = computeAdvantage(b.Sides[0].Fresh(), b.Sides[1].Fresh())
-	b.Advantage[1] = computeAdvantage(b.Sides[1].Fresh(), b.Sides[0].Fresh())
+	b.freshCounts = fresh
+	playerAdvantage := computeAdvantage(fresh[b.PlayerSide], fresh[1-b.PlayerSide])
+	b.Advantage[b.PlayerSide] = playerAdvantage
+	b.Advantage[1-b.PlayerSide] = oppositeAdvantage(playerAdvantage)
 
 	// ⭐ 隊長不在場是**每幀重新施加**的，與原版 `sub_1A6FA` 尾端呼叫
 	// `sub_1A754`／`sub_1A785` 的位置相同（docs/spec/128）。

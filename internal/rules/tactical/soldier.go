@@ -74,9 +74,22 @@ func (b *Battle) updateSoldierCommand(side, k int) {
 	b.lockOnNearest(side, k)
 	previous := s.Cmd
 	changed := s.applyNewOrder()
+	// 1A93A先將舊GoalXY放入AX；其他1AA2C入口保留舊／新命令。
+	if s.Cmd == Form && k%PerSquad == 0 {
+		if s.GoalX != s.GoalY {
+			s.StepZ = 0
+		}
+	} else if changed && (s.Cmd == Form || k%PerSquad == 0 && (s.Cmd == Guard || s.Cmd == Holding)) {
+		s.StepZ = 0
+	}
 
 	switch s.Cmd {
 	case Form:
+		if changed && k%PerSquad == 0 {
+			for j := k + 1; j < k+PerSquad; j++ {
+				b.Sides[side].Soldiers[j].receiveTargetOrder(Form)
+			}
+		}
 		b.doFormation(side, k)
 	case Attack, Charge:
 		b.doAttack(side, k)
@@ -142,12 +155,12 @@ func (b *Battle) updateSoldierMovement(side, k int) {
 // **所以恢復是有移動成本的，不是下令就補。**
 func (b *Battle) doFormation(side, k int) {
 	s := &b.Sides[side].Soldiers[k]
+	// 1A93A先判舊GoalXY，1AA2C之後才重算陣形目標。
+	if k%PerSquad == 0 && s.Cmd == Form && s.X == s.GoalX && s.Y == s.GoalY {
+		s.Cmd, s.Next = Holding, Holding
+	}
 	if b.walkToFormation(side, k) {
 		s.Stamina = StaminaFull
-		// 隊長 sub_1A92E 才改 7；隊員直接走 sub_1AA2C（spec/159）。
-		if k%PerSquad == 0 {
-			s.Cmd, s.Next = Holding, Holding
-		}
 	}
 }
 

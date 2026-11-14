@@ -152,20 +152,13 @@ func (b *Battle) projectileHit(e *Soldier, damage int) bool {
 	return b.applyDamage(e, damage, false)
 }
 
-// attackerAdvantage 把原版唯一的 byte_1D31E 轉成攻擊者一側的結果。
-// `Advantage[0]` 是原版的全域結果；另一側正好相反。
+// attackerAdvantage讀Go攻方的映射值，另一側使用同一條反轉規則。
+// 原版全域值在Advantage[PlayerSide]，不對兩側各重算一次偏差7。
 func (b *Battle) attackerAdvantage(side int) Advantage {
-	global := b.Advantage[0]
-	if global == Even {
-		return Even
-	}
 	if side == 0 {
-		return global
+		return b.Advantage[0]
 	}
-	if global == Advantaged {
-		return Disadvantaged
-	}
-	return Advantaged
+	return oppositeAdvantage(b.Advantage[0])
 }
 
 func saturatingByteAdd(a, b int) int {
