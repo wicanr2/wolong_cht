@@ -27,6 +27,54 @@ func flatField() *Field {
 	return NewField(stack, 0)
 }
 
+func TestWallBatchPathRootPreferenceAndFallback(t *testing.T) {
+	f := flatField()
+	f.nav = [2][Height][Width]uint8{}
+	goal := Point{X: 20, Y: 20}
+	f.nav[PlaneLow][20][20] = navLeft
+	f.nav[PlaneHigh][20][19] = navRight
+	f.nav[PlaneHigh][20][21] = navLeft
+	if p, plane, ok := f.soldierPathGoal(goal, true); !ok || p.X != 21 || plane != PlaneHigh {
+		t.Fatal("高層右鄰優先於左鄰與低層目標")
+	}
+	f.nav[PlaneHigh][20][20] = navUp
+	if p, plane, ok := f.soldierPathGoal(goal, true); !ok || p != goal || plane != PlaneHigh {
+		t.Fatal("高層目標格優先")
+	}
+	if p, plane, ok := f.soldierPathGoal(goal, false); !ok || p != goal || plane != PlaneLow {
+		t.Fatal("不可爬或退卻時只選低層")
+	}
+	f.nav[PlaneHigh] = [Height][Width]uint8{}
+	if p, plane, ok := f.soldierPathGoal(goal, true); !ok || p != goal || plane != PlaneLow {
+		t.Fatal("高層無根須回低層")
+	}
+	f.nav[PlaneLow] = [Height][Width]uint8{}
+	if _, _, ok := f.soldierPathGoal(goal, true); ok {
+		t.Fatal("無方向位元時不得建立搜尋根")
+	}
+	f.nav[PlaneLow][20][0] = navRight
+	if _, _, ok := f.soldierPathGoal(Point{X: 1, Y: 20}, false); ok {
+		t.Fatal("typed場地不讀第0欄越界別名")
+	}
+
+	f, _ = tiledField(32)
+	b := NewBattle(f, SyntheticFormations(), &fixedRand{seq: []int{0}}, 0)
+	s := &b.Sides[0].Soldiers[1]
+	*s = Soldier{Alive: true, Kind: Infantry, X: 32, Y: 30, Z: 4, OnWall: true, PlaneHigh: PlaneHighElevated, Cmd: ScaleWal, GoalX: 25, GoalY: 32, GoalZ: 0}
+	b.computePath(0, 1)
+	if s.Path == nil || s.GoalX != 25 || s.GoalY != 32 || s.GoalZ != 0 {
+		t.Fatal("城上士兵須能選低層搜尋根，保留命令目標")
+	}
+	for _, cmd := range []Command{ScaleWal, Retreat} {
+		f.nav = [2][Height][Width]uint8{}
+		s.Cmd = cmd
+		b.computePath(0, 1)
+		if s.Path != nil || s.StepX != s.X || s.StepY != s.Y || s.StepZ != s.Z {
+			t.Fatal("無根須清路並保持原地中繼點")
+		}
+	}
+}
+
 // walledField 是一張攻城用的戰場：中間一道 X ＝ 32 的城牆（堆疊 4 層），
 // 只有 gateX 那一格是通的。
 func walledField(gateX int) *Field {
@@ -350,15 +398,23 @@ func TestProjectileCooldownMatchesRawLaunchBranches(t *testing.T) {
 		}
 	}
 	b.shoot(0, 1, target)
-	if len(b.projectiles) != 2 || shooter.ProjectileCooldown != 8 {
-		t.Fatalf("冷卻歸零後應再次發射普通投射物：count=%d cooldown=%d", len(b.projectiles), shooter.ProjectileCooldown)
+	if len(b.projectiles) != 1 || shooter.ProjectileCooldown != 0 {
+		t.Fatal("冷卻歸零仍須等對應槽釋放")
+	}
+	b.projectiles[0].power = 0
+	b.stepProjectiles()
+	b.shoot(0, 1, target)
+	if len(b.projectiles) != 1 || shooter.ProjectileCooldown != 8 {
+		t.Fatal("槽釋放後可再次發射普通箭")
 	}
 
 	shooter.ProjectileCooldown = 0
+	b.projectiles[0].power = 0
+	b.stepProjectiles()
 	shooter.Z = 2
 	target.X, target.Y, target.Z = 11, 20, 1
 	b.shoot(0, 1, target)
-	if len(b.projectiles) != 3 || !b.projectiles[2].special || shooter.ProjectileCooldown != 6 {
+	if len(b.projectiles) != 1 || !b.projectiles[0].special || shooter.ProjectileCooldown != 6 {
 		t.Fatalf("sub_1AD7F 成功後投射物／冷卻錯誤：%+v cooldown=%d", b.projectiles, shooter.ProjectileCooldown)
 	}
 }
@@ -715,7 +771,7 @@ func TestClimbFacingFollowsTileParityEvenWhenBlocked(t *testing.T) {
 				s.Z, s.StepZ, s.OnWall = 4, 0, true
 			}
 			beforeZ := s.Z
-			// 上爬以實際頭格及拒換旗標阻擋；下降沿既有平面閘。
+			// 上爬用Z+2頭格、下降用Z−1腳格及拒換旗標阻擋。
 			plane := PlaneHigh
 			if !up {
 				plane = PlaneLow
@@ -726,6 +782,8 @@ func TestClimbFacingFollowsTileParityEvenWhenBlocked(t *testing.T) {
 			}
 			if up {
 				z = s.Z + 2
+			} else {
+				z = s.Z - 1
 			}
 			b.Sides[0].Soldiers[2] = Soldier{Alive: true, Kind: Infantry, X: s.X, Y: s.Y, Z: z, Swapped: true}
 			if b.tryClimb(0, 1) || s.Z != beforeZ {

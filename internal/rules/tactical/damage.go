@@ -213,17 +213,22 @@ func (b *Battle) launchNormalProjectile(side int, s, e *Soldier) {
 	direction := attackDirection(s.X, s.Y, e.X, e.Y)
 	s.Facing = direction
 	z := s.Z + 1
+	velocity := normalProjectileVelocity(b, s, e)
+	slot, owned := b.projectileSlot(side, s)
+	if owned && b.projectileSlotBusy(slot) {
+		return
+	}
 	b.emitSFX(SFXNormalLaunch)
 	b.projectiles = append(b.projectiles, projectile{
-		side: side, x: stepProjectileX(s.X, direction), y: stepProjectileY(s.Y, direction), z: z,
+		slot: slot, slotOwned: owned, side: side, x: s.X, y: s.Y, z: z,
 		tx: e.X, ty: e.Y, tz: e.Z, power: arrowPower,
-		direction: direction, gridIndex: projectileGridIndex(stepProjectileX(s.X, direction), stepProjectileY(s.Y, direction), z),
-		previousGridIndex: projectileGridIndex(stepProjectileX(s.X, direction), stepProjectileY(s.Y, direction), z),
-		previousX:         stepProjectileX(s.X, direction), previousY: stepProjectileY(s.Y, direction), previousZ: z,
-		heightFP: z << 8, velocityFP: normalProjectileVelocity(b, s, e),
+		direction: direction, gridIndex: projectileGridIndex(s.X, s.Y, z),
+		previousGridIndex: projectileGridIndex(s.X, s.Y, z),
+		previousX:         s.X, previousY: s.Y, previousZ: z,
+		heightFP: z << 8, velocityFP: velocity,
 	})
 	// sub_1AD2D 成功配置 +0x1400 區的投射物後才寫入 8；配置失敗時
-	// 原版不改冷卻。remake 的 slice 沒有 32-slot 上限，故在 append 後寫入。
+	// 原版不改冷卻；普通與特殊投射物共用該兵對應的固定槽。
 	s.finishProjectileLaunch(8)
 }
 
@@ -260,9 +265,13 @@ func (b *Battle) launchSpecialProjectile(side int, s, e *Soldier) {
 	if !inBounds(x, y) {
 		return
 	}
+	slot, owned := b.projectileSlot(side, s)
+	if owned && b.projectileSlotBusy(slot) {
+		return
+	}
 	b.emitSFX(SFXSpecialLaunch)
 	b.projectiles = append(b.projectiles, projectile{
-		side: side, x: x, y: y, z: s.Z + 1,
+		slot: slot, slotOwned: owned, side: side, x: x, y: y, z: s.Z + 1,
 		tx: e.X, ty: e.Y, tz: e.Z, power: specialProjectilePower,
 		special: true, specialFrame: s.PoseStep & 1, direction: direction | 0x80,
 		gridIndex:         projectileGridIndex(x, y, s.Z+1),
@@ -539,4 +548,21 @@ func (s *Soldier) finishProjectileLaunch(cooldown uint8) {
 	s.HitGeneral = true
 	s.Stun = 2
 	s.ProjectileCooldown = cooldown
+}
+
+func (b *Battle) projectileSlot(side int, s *Soldier) (int, bool) {
+	for k := range b.Sides[side].Soldiers {
+		if &b.Sides[side].Soldiers[k] == s {
+			return b.Role(side)*16 + k%16, true
+		}
+	}
+	return 0, false
+}
+func (b *Battle) projectileSlotBusy(slot int) bool {
+	for _, p := range b.projectiles {
+		if p.slotOwned && p.slot == slot {
+			return true
+		}
+	}
+	return false
 }

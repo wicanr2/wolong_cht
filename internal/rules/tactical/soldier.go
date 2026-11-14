@@ -530,11 +530,9 @@ func (b *Battle) computePath(side, k int) {
 	s.StepX, s.StepY, s.StepZ = s.X, s.Y, s.Z
 	from, to := Point{X: s.X, Y: s.Y}, Point{X: s.GoalX, Y: s.GoalY}
 	startPlane := s.Plane()
-	goalPlane := PlaneLow
-	if startPlane == PlaneHigh {
-		goalPlane = PlaneHigh
-	} else if high, ok := b.Field.GroundLevel(s.GoalX, s.GoalY, PlaneHigh); ok && s.GoalZ == high {
-		goalPlane = PlaneHigh
+	to, goalPlane, ok := b.Field.soldierPathGoal(to, s.CanClimb() && s.Cmd != Retreat)
+	if !ok {
+		return
 	}
 	occupied := b.occupancyCost()
 	pts := b.Field.findPathForPlaneCosts(from, to, startPlane, goalPlane, s.CanClimb(), occupied, nil)
@@ -614,6 +612,10 @@ func (b *Battle) tryMove(side, k, x, y, z int) (handled, walled bool) {
 	if side2, k2 := b.anyoneAt(x, y, z); k2 >= 0 {
 		return b.collideWithUnit(side, k, side2, k2), false
 	}
+	// 1B215：僅高平面命令6進入已破門格時阻擋；先處理佔位者。
+	if s.Plane() == PlaneHigh && s.Cmd == wallAttack && b.Field.HasTiles() && b.Field.Tile(x, y) >= gateSolid {
+		return false, true
+	}
 	// 1B228–1B23E：水平升降同時調整中繼高度，保持相對Z差。
 	s.StepZ += z - s.Z
 	s.X, s.Y, s.Z = x, y, z
@@ -623,7 +625,7 @@ func (b *Battle) tryMove(side, k, x, y, z int) (handled, walled bool) {
 
 // tryClimb 在門格按StepZ方向逐層升降（sub_1B0D3／sub_1B116，spec36）。
 // 面向在碰撞前依圖塊奇偶更新；成功不改StepZ，上爬立即設高平面，下降至Z0才清。
-// 上爬查原Z+2單格，撞兵返回共用處理結果；下降與GroundLevel閘仍有界。
+// 上爬查原Z+2、下降查Z−1單格，撞兵返回共用處理結果；GroundLevel閘仍有界。
 func (b *Battle) tryClimb(side, k int) bool {
 	s := &b.Sides[side].Soldiers[k]
 	if !s.CanClimb() || !b.Field.IsGateCell(s.X, s.Y) {
@@ -655,7 +657,7 @@ func (b *Battle) tryClimb(side, k int) bool {
 	if !up {
 		other = PlaneLow
 	}
-	lv, ok := b.Field.GroundLevel(s.X, s.Y, other)
+	_, ok := b.Field.GroundLevel(s.X, s.Y, other)
 	if !ok {
 		return false
 	}
@@ -665,9 +667,8 @@ func (b *Battle) tryClimb(side, k int) bool {
 			// 1B113：碰撞成功可能只是換位／攻擊，不再額外Z+1。
 			return b.collideWithUnit(side, k, side2, k2)
 		}
-	} else if side2, k2 := b.anyoneAt(s.X, s.Y, lv); k2 >= 0 && !(side2 == side && k2 == k) {
-		// 下降保留既有平面查詢，未由本片代證。
-		return false
+	} else if side2, k2 := b.unitAtLayer(s.X, s.Y, s.Z-1); k2 >= 0 {
+		return b.collideWithUnit(side, k, side2, k2)
 	}
 	if up {
 		s.Z++
@@ -728,6 +729,7 @@ func (b *Battle) swapWith(side, k, side2, k2 int) bool {
 		}
 	}
 	me.PlaneHigh, other.PlaneHigh = other.PlaneHigh, me.PlaneHigh
+	me.OnWall, other.OnWall = other.OnWall, me.OnWall
 	// 1B783–1B795：雙方均在低平面且至少一人Z非零，才交換中繼高度。
 	if me.PlaneHigh == PlaneHighGround && other.PlaneHigh == PlaneHighGround && (me.Z != 0 || other.Z != 0) {
 		me.StepZ, other.StepZ = other.StepZ, me.StepZ
@@ -754,7 +756,7 @@ func (b *Battle) anyoneAt(x, y, z int) (int, int) {
 	return 0, -1
 }
 
-// collideWithUnit 對應1B533；水平移動與上爬共用同一單兵碰撞入口。
+// collideWithUnit 對應1B533；水平移動與升降共用同一單兵碰撞入口。
 func (b *Battle) collideWithUnit(side, k, side2, k2 int) bool {
 	s := &b.Sides[side].Soldiers[k]
 	// 0001B548–0001B557：大將陣形／退卻直接走平面與換位分支。
@@ -783,22 +785,39 @@ func (b *Battle) collisionOwner(id int) (int, int) {
 	return 1 - b.PlayerSide, id - SoldiersOnFoot
 }
 
-func (b *Battle) climbHeadOccupant(s *Soldier) (int, int) {
-	head := s.Z + 2
-	if head < 0 || head >= 8 {
+func (b *Battle) climbHeadOccupant(s *Soldier) (int, int) { return b.unitAtLayer(s.X, s.Y, s.Z+2) }
+
+func (b *Battle) unitAtLayer(x, y, head int) (int, int) {
+	if !inBounds(x, y) || head < 0 || head >= 8 {
 		return 0, -1
 	}
 	if b.unitCollision != nil {
-		return b.collisionOwner(b.unitCollision.atLayer(s.X, s.Y, head))
+		return b.collisionOwner(b.unitCollision.atLayer(x, y, head))
 	}
 	// 未開始Step的合成呼叫才按兩格身高查詢；正式遊戲讀持續格表。
 	for side := range b.Sides {
 		for k := range b.Sides[side].Soldiers {
 			other := &b.Sides[side].Soldiers[k]
-			if other.Alive && other.X == s.X && other.Y == s.Y && (other.Z == head || other.Z+1 == head) {
+			if other.Alive && other.X == x && other.Y == y && (other.Z == head || other.Z+1 == head) {
 				return side, k
 			}
 		}
 	}
 	return 0, -1
+}
+
+func (f *Field) soldierPathGoal(goal Point, preferHigh bool) (Point, int, bool) {
+	planes := []int{PlaneLow}
+	if preferHigh {
+		planes = []int{PlaneHigh, PlaneLow}
+	}
+	for _, plane := range planes {
+		for _, dx := range []int{0, 1, -1} {
+			x, y := goal.X+dx, goal.Y
+			if inBounds(x, y) && f.nav[plane][y][x]&0xf0 != 0 {
+				return Point{X: x, Y: y}, plane, true
+			}
+		}
+	}
+	return goal, PlaneLow, false
 }

@@ -1570,3 +1570,14 @@
 - [回填表](workplace/scratch/ui-windows-20261104/cao-head160-backlinks.json)連回re11／63、spec134／159及戰鬥機制；spec36本片CONFORMED，整體Issue #16仍未完成，未寫入或關閉Issue。原版資料、IDA匯出、binary與畫面留本機，不作Release。
 - 收尾通過嚴格未解、1143列分流、過期斷言與資產deny-list及正對照。只更新完整導航限制列的指紋與理由，保留evidence-only分類；官方tools/check.sh --docs在既有索引／引用缺件處回傳1。65個索引缺失、352筆／323唯一引用均與HEAD同工具比較新增0，缺席census.tsv的符號層未執行，不宣稱全庫全綠。沿用唯讀容器Python轉接，主機wrapper未改。
 - 四檔來源覆蓋包、87份證據、原版輸入與兩份既有IDA匯出SHA核對一致，UID/GID1000:1000，root-owned及誤建.md目錄0。本輪容器已結束移除，沒有重建image或動其他專案資源。[收尾核對](workplace/scratch/ui-windows-20261104/cao-head160-final-checks.json)保存結果；依既有授權commit並push，提交與遠端核對另存本機repo-head160-update-20261114.json。
+
+## 2026-11-14：城上移動、搜尋根與射箭批次還原
+
+- 依使用者「機制與原版一樣」「加速完成」合併六項接縫；先DRAFT、原指令與候選審查、READY，再接正式規則。
+- 修正換位OnWall別名、Cmd6高層破門格橫移、下降Z−1單格與共用碰撞返回、原版搜尋根選擇、同側k%16固定投射物槽、普通箭出生格。時間、工具列與戰略存檔格式不改。
+- 新dosgolem正常原版主182筆與命令101筆逐byte不變，既有64／88診斷保留。配置器以既有IDA9.4 image匯出，原始名稱／bytes／輸入SHA保留；工作區沿既有workplace/scratch/ui-windows-20261104。
+- 正式前179拍96槽27欄位、完整RNG／腳本、8192-byte成本與剩餘點數全等，首差180；RNG／腳本／點數仍同至180。不再為此前綴另開微切片。
+- 七套件冷測、vet、建置、六類舊錯版負對照與正常滑鼠69個功能／同步檢查點、16圖通過，含重複同步。曹操宣戰呂布、編成、停手行軍、途中存讀檔、自然入戰、改線、登城、突擊、退卻返回均抽驗。
+- 普通下降／Cmd6破門格分支未由正常樣本動態代證；原版邊界別名、未破門／結構物完整先後、投射物完整釋放／命中、戰果與手機GUI保留。Issue #16維持開啟。
+- 六檔來源包、原版輸入、工具／收據與binary雜湊見[整合收據](workplace/scratch/ui-windows-20261104/cao-wall-batch-integration.json)。僅提交來源與文件，素材／本機輸出不加入Git。
+- 文件檢查與已知歷史缺檔基線分開核對；Git提交、push與Docker／擁有權清理結果保存於本機repo-wall-batch-update-20261114.json。

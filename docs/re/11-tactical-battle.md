@@ -1,5 +1,13 @@
 # 11 — 戰術戰鬥：模組結構與戰場資料模型
 
+2026-11-14批次接線，已證實：`1B76F–1B780`交換平面時須同步Go的OnWall；`1B215`只拒絕Cmd6在高平面進入F8以上門格。
+下降`1B15D`查Z−1單格，撞兵沿`1B533`後直接返回。`1BD94–1BDD1`搜尋根依高／低層及目標、右鄰、左鄰選擇。
+`1B8AA–1B8C1`以同側k%16配置固定投射物槽，普通／特殊共用；普通箭出生於射手XY，Z+1，下一次更新才移動。
+工具／輸入身分沿[spec36](../spec/36-ground-planes-and-climbing.md)與[spec159](../spec/159-tactical-command-movement-order.md)，
+新配置器[原指令／bytes](../../workplace/scratch/ui-windows-20261104/alloc-batch-20261114/ida-probe.json)為IDA Pro9.4 DOS/V linear，未改原名。
+[正式證據](../../workplace/scratch/ui-windows-20261104/cao-wall-batch-evidence.json)前179拍全軍／RNG／腳本／成本／剩餘點數一致；180拍仍有差異。
+普通下降、Cmd6破門格橫移未由正常樣本動態代證，完整投射物生命週期與戰果保留。
+
 **狀態：模組骨架、戰場資料模型、核心移動／命中／傷害規則已大致解出並接入測試；
 正常玩家已可由遭遇選單進入攻城戰術畫面並送出攻擊命令；正常真實攻城的狀態層結算與 GUI 回戰略接縫也已通過。
 投射物的兩條發射分支、來源圖號與發射冷卻已由最新 IDA 證據接線；GUI 戰後勝負訊息、

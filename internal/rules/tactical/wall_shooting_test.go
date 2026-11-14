@@ -87,7 +87,7 @@ func TestWallShootingSameCellKeepsNativeWestDirection(t *testing.T) {
 	*s = Soldier{Alive: true, Kind: Archer, X: 20, Y: 20}
 	e := Soldier{Alive: true, X: 20, Y: 20}
 	b.shoot(0, 1, &e)
-	if s.Facing != West || s.GoalX != 30 || s.GoalY != 20 || len(b.projectiles) != 1 || b.projectiles[0].x != 19 {
+	if s.Facing != West || s.GoalX != 30 || s.GoalY != 20 || len(b.projectiles) != 1 || b.projectiles[0].x != 20 {
 		t.Fatal("同格瞄準及普通箭須沿原版西向分支")
 	}
 }
@@ -117,10 +117,88 @@ func TestWallShootingSuccessPoseAndCooldown(t *testing.T) {
 				t.Fatal("冷卻呼叫只遞減，不重發、不提前清攻擊圖號")
 			}
 			b.shoot(0, 1, e)
-			if len(b.projectiles) != 2 || s.ProjectileCooldown != 8 {
-				t.Fatal("距離39仍可在冷卻結束後發普通箭，不套額外20射程")
+			if len(b.projectiles) != 1 || s.ProjectileCooldown != 0 {
+				t.Fatal("冷卻結束仍須等待自己的投射物槽釋放")
 			}
 		}
+	}
+}
+
+func TestWallBatchProjectileSlotsAndFailedLaunch(t *testing.T) {
+	for player := 0; player < 2; player++ {
+		b := NewBattle(flatField(), SyntheticFormations(), &fixedRand{seq: []int{0}}, 0)
+		b.PlayerSide = player
+		e := Soldier{Alive: true, X: 40, Y: 20}
+		for side := 0; side < 2; side++ {
+			for _, k := range []int{6, 22, 38} {
+				s := &b.Sides[side].Soldiers[k]
+				*s = Soldier{Alive: true, Kind: Archer, X: 20, Y: 20, Z: 4, Facing: West, PoseStep: 1, Hurt: true, Stun: 9}
+				slot, owned := b.projectileSlot(side, s)
+				if !owned || slot != b.Role(side)*16+6 {
+					t.Fatal("槽位須依玩家／腳本角色及側內k%16")
+				}
+				rng := b.rng.(*fixedRand)
+				n := rng.i
+				b.TakeSoundEffects()
+				b.launchNormalProjectile(side, s, &e)
+				if rng.i != n+1 || s.Facing != East {
+					t.Fatal("普通箭失敗前也須更新面向與取亂數")
+				}
+				if k == 6 {
+					if s.ProjectileCooldown != 8 || s.Stun != 2 || !s.Swapped || len(b.TakeSoundEffects()) != 1 {
+						t.Fatal("空槽應成功發射")
+					}
+				} else {
+					if s.ProjectileCooldown != 0 || s.Stun != 9 || !s.Hurt || s.Swapped || s.HitGeneral || len(b.TakeSoundEffects()) != 0 {
+						t.Fatal("共槽被佔時不得設定成功旗標／硬直／冷卻或音效")
+					}
+					b.launchSpecialProjectile(side, s, &e)
+					if rng.i != n+1 || s.ProjectileCooldown != 0 || len(b.TakeSoundEffects()) != 0 {
+						t.Fatal("特殊投射物共槽且不消耗普通箭亂數")
+					}
+				}
+			}
+		}
+		if len(b.projectiles) != 2 {
+			t.Fatal("雙側同編號使用獨立槽")
+		}
+		for i := range b.projectiles {
+			b.projectiles[i].power = 0
+		}
+		b.stepProjectiles()
+		if len(b.projectiles) != 0 {
+			t.Fatal("沿既有更新入口移除投射物")
+		}
+		b.launchSpecialProjectile(0, &b.Sides[0].Soldiers[22], &e)
+		if len(b.projectiles) != 1 || b.Sides[0].Soldiers[22].ProjectileCooldown != 6 {
+			t.Fatal("釋放後普通槽可由特殊投射物重用")
+		}
+	}
+}
+
+func TestWallBatchNormalProjectileBirthAndFirstStep(t *testing.T) {
+	b := NewBattle(flatField(), SyntheticFormations(), &fixedRand{seq: []int{0}}, 0)
+	s := &b.Sides[0].Soldiers[6]
+	*s = Soldier{Alive: true, Kind: Archer, X: 20, Y: 20, Z: 4}
+	e := Soldier{Alive: true, X: 40, Y: 20, Z: 4}
+	b.launchNormalProjectile(0, s, &e)
+	if len(b.projectiles) != 1 {
+		t.Fatal("應發射普通箭")
+	}
+	p := b.projectiles[0]
+	if p.x != 20 || p.y != 20 || p.z != 5 || p.previousX != 20 || p.gridIndex != projectileGridIndex(20, 20, 5) {
+		t.Fatal("普通箭須出生於射手XY與Z+1")
+	}
+	b.stepProjectiles()
+	if len(b.projectiles) != 1 || b.projectiles[0].x != 21 || b.projectiles[0].previousX != 20 {
+		t.Fatal("下一次投射物更新才走第一格")
+	}
+	c := &b.Sides[0].Soldiers[7]
+	*c = *s
+	c.ProjectileCooldown = 0
+	b.launchSpecialProjectile(0, c, &e)
+	if len(b.projectiles) != 2 || !b.projectiles[1].special || b.projectiles[1].x != 21 || b.projectiles[1].y != 20 {
+		t.Fatal("特殊投射物仍出生於相鄰格")
 	}
 }
 

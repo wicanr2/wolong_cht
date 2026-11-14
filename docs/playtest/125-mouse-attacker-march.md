@@ -1,5 +1,16 @@
 # 125：正常滑鼠出兵、城兵攻陷與玩家攻方戰術
 
+## 2026-11-14：城上移動、搜尋根與射箭合併抽驗
+
+最新程式`wlgame-cao-wall-batch-r1`，SHA-256 `5b4099616d2554e64c7d00a6f83ffdd323982956758ab6929e2449edcb98f6b9`。
+[正常滑鼠](../../workplace/scratch/ui-windows-20261104/cao-wall-batch-remake-gui.json)69個功能／同步檢查點、16圖通過，含重複同步。
+曹操第一劇本宣戰呂布、編夏侯淵、停手行軍、途中存讀檔、自然在椎陽入戰、改線、登城、突擊與退卻返回。
+登城192→198拍指標不動，主將X15→21、Goal保持(42,32,4)；[實際畫面](../../workplace/scratch/ui-windows-20261104/cao-wall-batch-remake-scale-wall.png)已目視單兵、城牆、側欄與底列指令。
+[正式證據](../../workplace/scratch/ui-windows-20261104/cao-wall-batch-evidence.json)前179拍全軍27欄位／RNG／腳本、8192-byte成本與剩餘點數一致，
+180拍首次單兵／成本差異。原版182筆主觀測、101筆命令收據不變，保留第64／88步診斷。
+七套件冷測／vet／建置及六類負對照通過。這是機制前綴與正常操作抽樣，未宣稱整場、原版同拍像素、許昌留守或手機GUI。
+來源／原指令與GUI雜湊見[整合收據](../../workplace/scratch/ui-windows-20261104/cao-wall-batch-integration.json)，契約見spec36／spec159。
+
 **狀態：remake正常玩家路徑抽驗通過。** 城兵分支63項、駐城軍團分支67項。
 原版同狀態碰撞與亂數矩陣仍未驗證，不關閉Issue #30。
 

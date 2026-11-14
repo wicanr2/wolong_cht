@@ -185,3 +185,99 @@ func TestCollisionGridSwapPreservesOriginalUpperLayerAsymmetry(t *testing.T) {
 		t.Fatal("未交換原格指標")
 	}
 }
+
+func TestWallBatchSwapKeepsPlaneAliasesTogether(t *testing.T) {
+	for side := 0; side < 2; side++ {
+		b := climbHeadFixture(side, 1-side, true, 2, false)
+		if !b.swapWith(side, 1, side, 2) {
+			t.Fatal("跨平面步兵應可換位")
+		}
+		a, c := &b.Sides[side].Soldiers[1], &b.Sides[side].Soldiers[2]
+		if a.Plane() != PlaneHigh || a.PlaneHigh != PlaneHighElevated || !a.OnWall || c.Plane() != PlaneLow || c.PlaneHigh != PlaneHighGround || c.OnWall {
+			t.Fatalf("換位後平面別名不一致：%+v / %+v", *a, *c)
+		}
+	}
+}
+
+func TestWallBatchDescentUsesFootCellAndSharedCollision(t *testing.T) {
+	for side := 0; side < 2; side++ {
+		for player := 0; player < 2; player++ {
+			for _, stored := range []bool{false, true} {
+				for _, enemy := range []bool{false, true} {
+					b := climbHeadFixture(side, player, false, 2, enemy)
+					s := &b.Sides[side].Soldiers[1]
+					s.Z, s.StepZ, s.OnWall, s.PlaneHigh = 4, 0, true, PlaneHighElevated
+					if stored {
+						b.initUnitCollision()
+					}
+					otherSide := side
+					if enemy {
+						otherSide = 1 - side
+					}
+					other := &b.Sides[otherSide].Soldiers[2]
+					if !b.tryClimb(side, 1) {
+						t.Fatal("下降碰撞須回傳共用處理結果")
+					}
+					if enemy {
+						if s.Z != 4 || !s.HitGeneral {
+							t.Fatal("下降攻擊後不得再減Z")
+						}
+					} else if s.Z != 2 || other.Z != 4 || !other.Swapped {
+						t.Fatal("下降換位後不得再減Z")
+					}
+				}
+				b := climbHeadFixture(side, player, false, 0, false)
+				s := &b.Sides[side].Soldiers[1]
+				s.Z, s.StepZ, s.OnWall, s.PlaneHigh = 4, 0, true, PlaneHighElevated
+				b.Sides[side].Soldiers[2].Swapped = true
+				if stored {
+					b.initUnitCollision()
+				}
+				if !b.tryClimb(side, 1) || s.Z != 3 {
+					t.Fatal("Z3腳格空時，遠處Z0／1單兵不阻擋下降")
+				}
+			}
+		}
+	}
+	b := climbHeadFixture(0, 0, false, 3, false)
+	s := &b.Sides[0].Soldiers[1]
+	s.Z, s.StepZ, s.OnWall, s.PlaneHigh = 4, 0, true, PlaneHighElevated
+	b.Sides[0].Soldiers[2].Swapped = true
+	b.initUnitCollision()
+	if b.tryClimb(0, 1) || s.Z != 4 {
+		t.Fatal("腳格佔位拒換時不得下降")
+	}
+}
+
+func TestWallBatchCommand6GateGuardFollowsUnitCollision(t *testing.T) {
+	for _, tc := range []struct {
+		high, gate, occupied bool
+		cmd                  Command
+		handled, walled      bool
+	}{
+		{true, true, false, wallAttack, false, true},
+		{true, false, false, wallAttack, true, false},
+		{true, true, false, Attack, true, false},
+		{false, true, false, wallAttack, true, false},
+		{true, true, true, wallAttack, true, false},
+	} {
+		f, _ := tiledField(32)
+		f.Retile(32, Height/2, brokenGateDelta)
+		b := NewBattle(f, SyntheticFormations(), &fixedRand{seq: []int{0}}, 0)
+		s := &b.Sides[0].Soldiers[1]
+		*s = Soldier{Alive: true, Kind: Infantry, X: 32, Y: Height/2 - 1, Z: 4, StepZ: 4, Cmd: tc.cmd, OnWall: tc.high, PlaneHigh: PlaneHighElevated}
+		if !tc.high {
+			s.Z, s.StepZ, s.PlaneHigh = 0, 0, PlaneHighGround
+		}
+		if !tc.gate {
+			f.tiles[Height/2][32] = 0
+		}
+		if tc.occupied {
+			b.Sides[0].Soldiers[2] = Soldier{Alive: true, Kind: Infantry, X: 32, Y: Height / 2, Z: 4, OnWall: true, PlaneHigh: PlaneHighElevated}
+		}
+		h, w := b.tryMove(0, 1, 32, Height/2, s.Z)
+		if h != tc.handled || w != tc.walled {
+			t.Fatalf("門格／平面／命令／撞兵優先不符：%+v，得到%v/%v", tc, h, w)
+		}
+	}
+}

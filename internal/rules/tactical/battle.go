@@ -317,6 +317,9 @@ type Battle struct {
 }
 
 type projectile struct {
+	// 原版玩家／腳本角色各16槽，同側單兵k%16共用。
+	slot       int
+	slotOwned  bool
 	side       int // 誰射的
 	x, y, z    int
 	tx, ty, tz int
