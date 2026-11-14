@@ -631,11 +631,16 @@ func (b *Battle) Order(side, squad int, c Command) {
 	} else if c != Retreat {
 		// 退卻是被動觸發的（受傷、大將不支），不該變成常令。
 		b.Sides[side].Standing = c
-	} else if b.endPhase == 0 {
-		// ⭐ 全軍退卻走 `sub_1A8F6`，那一支開頭就 `cmp byte_1D349, 0 /
-		// jz` ——**已經有一側在退卻就不再記第二次**，然後把階段寫成
-		// 「退卻的那一側 ＋ 1」（docs/spec/135 §1）。
+	} else {
+		// 1A8F6只向六隊長排令；已有人全軍退卻時整次拒絕。
+		if b.endPhase != 0 {
+			return
+		}
 		b.endPhase = side + 1
+		for k := 0; k < SoldiersOnFoot; k += PerSquad {
+			b.Sides[side].Soldiers[k].Next = Retreat
+		}
+		return
 	}
 	for i := lo; i < hi; i++ {
 		if b.Sides[side].Soldiers[i].Alive {
@@ -686,6 +691,9 @@ func (b *Battle) Step() {
 	b.stepProjectiles()
 	// 0001ADDD：命令批次的新請求可同拍消化；移動中的請求等下一拍。
 	// 仍維持每拍兩筆 FIFO 預算（docs/spec/159）。
+	// 1ADDA：移動入口先檢查50體力門檻，再扣攻城大將體力。
+	b.checkGeneralRetreat()
+	b.drainSiegeGeneral()
 	b.drainPathQueue()
 	var present [2]int
 	for _, i := range [2]int{b.PlayerSide, 1 - b.PlayerSide} {
@@ -704,8 +712,6 @@ func (b *Battle) Step() {
 	b.Advantage[0] = computeAdvantage(b.Sides[0].Fresh(), b.Sides[1].Fresh())
 	b.Advantage[1] = computeAdvantage(b.Sides[1].Fresh(), b.Sides[0].Fresh())
 
-	b.drainSiegeGeneral()
-	b.checkGeneralRetreat()
 	// ⭐ 隊長不在場是**每幀重新施加**的，與原版 `sub_1A6FA` 尾端呼叫
 	// `sub_1A754`／`sub_1A785` 的位置相同（docs/spec/128）。
 	b.applySquadLeaderGone()
@@ -742,16 +748,16 @@ func (b *Battle) checkVictory(present [2]int) {
 
 // checkGeneralRetreat 重現 `sub_1AE56`：大將體力低於 50 → 全軍退卻。
 func (b *Battle) checkGeneralRetreat() {
-	for i := range b.Sides {
+	for _, i := range [2]int{b.PlayerSide, 1 - b.PlayerSide} {
 		g := &b.Sides[i].Soldiers[0]
 		if !g.Alive || g.HP >= GeneralRetreatHP {
 			continue
 		}
-		if g.Cmd == Retreat {
-			continue
-		}
+		previous := b.endPhase
 		b.Order(i, -1, Retreat)
-		b.Log = append(b.Log, sideName(i)+"的大將體力不支，全軍退卻")
+		if previous == 0 {
+			b.Log = append(b.Log, sideName(i)+"的大將體力不支，全軍退卻")
+		}
 	}
 }
 

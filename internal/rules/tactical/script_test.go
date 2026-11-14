@@ -75,7 +75,7 @@ func TestScriptUnsignedInclusiveBranch(t *testing.T) {
 				s.Step(b)
 				s.Step(b)
 				s.Step(b)
-				if retreat := b.Sides[side].Soldiers[1].Next == Retreat; retreat != tc.jump {
+				if retreat := b.endPhase == side+1 && b.Sides[side].Soldiers[0].Next == Retreat; retreat != tc.jump {
 					t.Fatalf("原版分支跳躍=%v，實際退卻=%v", tc.jump, retreat)
 				}
 			})
@@ -99,7 +99,8 @@ func runQuery(b *Battle, side int, op, arg, want int) bool {
 	s.Step(b) // 查詢
 	s.Step(b) // 分支
 	s.Step(b) // 目標處
-	return b.Sides[side].Soldiers[1].Next == Retreat
+	// 全軍令先到隊長，隊員由下一次隊長命令處理傳達。
+	return b.endPhase == side+1 && b.Sides[side].Soldiers[0].Next == Retreat
 }
 
 // 指令 4 查的是**敵方**選的陣形編號（`byte_1D346` 是玩家在選單上點的那一格，

@@ -1,5 +1,50 @@
 # 141 — 全軍退卻之後的 120 拍倒數
 
+## 2026-11-14：撤退傳令與首次出口初始化（CONFORMED，限本片）
+
+接續上一片已完成的停止補兵，核對六隊長傳令、重複全軍退卻拒絕、大將檢查與首次移動。
+原版`1A8F6–1A92D`只寫六隊長Next，已有退卻旗標就整次拒絕；
+`1A9D0–1A9FA`由新退卻隊長傳給七隊員，`1AAED–1AB38`首次保存舊命令到Next，
+並同時初始化Goal、Step及路徑；繼續退卻時只查出口，不每拍改Y或清路。
+原版`1ADDA→1AE56`在尋路出隊與移動前先檢查體力門檻，再扣攻城大將體力。
+已有[正常1476拍收據](../../workplace/scratch/ui-windows-20261104/cao-assault-original.jsonl)
+顯示1472拍Cmd5／Next7，Step已指出口；目前Go仍有一拍與Next差異。
+本片先用受控門檻樣本及typed候選審查，不因終點拍數相同就忽略中間機制。
+戰略存檔及玩家指令不改，正常GUI與原版常式受控樣本分開驗證。
+
+輸入`KI.EXE`、dosgolem與位址空間身分沿下片。IDA Pro9.4新匯出為
+[傳令／退卻](../../workplace/scratch/ui-windows-20261104/retreat-command-20261114/ida-probe.json)
+SHA-256 `a08e1ea4b0efebbb382d78b3f021d58cc9c5ed799bcdd73f59c8e5fbe0cf5125`，
+DB SHA-256 `fca6e416d46cbb758b1afd93952268ed36bd86f34200adae999d7d67c39df047`；
+[隊長傳令](../../workplace/scratch/ui-windows-20261104/retreat-handlers-20261114/ida-probe.json)
+SHA-256 `8674162db14236f5c460ee9a36610aaff3379cbbc2ef77a8e55eb66f2e9b73c9`，
+DB SHA-256 `bcafb8c7093c2e52f367ed54892b7a79562e48c9096564f9245824659cfecfb9`。
+兩份probe均739函式、UID/GID1000，原始檔唯讀，未改正式DB。
+
+[12案24階段受控比較](../../workplace/scratch/ui-windows-20261104/cao-retreat-order-candidate-fixtures-comparison.json)
+全等，涵蓋49／50／51體力、雙方低體力、已有退卻旗標、攻守換位、野戰不扣與門檻檢查後扣體力。
+fixture從正常241拍的1AE56快照restore，只改RAM；分別停1ADDD與下一次1ADC8，不能當正常玩家擺位。
+首階段比較全96槽HP／Cmd／Next及旗標、倒數；次階段只比進入退卻記錄的命令、位置、Goal／Step。
+`1AB21`亦須呼叫既有requestPath去重入隊，沿[spec120](120-pathfind-request-queue.md)及re80契約。
+typed候選的正常1471–1476拍，玩家48兵共288兵次的11個命令／位置／目標欄位吻合，終點仍1476拍。
+既有PathQueued、退場MoveFlag及敵方後段差異不由這11欄代證；停止線維持完整動畫／世界出口之外。
+首次初始化保存舊命令、固定出口Y及直接Step，取代spec94每拍重設Goal／按路徑終點清路的舊推論。
+原指令、受控候選與正常撤退窗口審查足以列READY，正式接線後仍須冷測、正常滑鼠及負對照。
+
+[正式24階段比較](../../workplace/scratch/ui-windows-20261104/cao-retreat-order-after-fixtures-comparison.json)全等，
+含234筆退卻記錄的PathQueued與TargetRefresh；受控Go Rand固定0，原版快照seed1，
+門檻／傳令／出口規則本身不取亂數。對話變體、原版繪圖／音效呼叫及後續亂數不在這組常式比較內。
+[正式窗口](../../workplace/scratch/ui-windows-20261104/cao-retreat-order-after-window.json)288兵次11欄全等，
+原版及typed重播終點仍1476拍，6000／6000人、體力49／220；正常240拍前綴逐byte不變。
+41個正式來源套件冷測、全範圍vet、建置與八類突變拒絕通過。
+原腳本查詢測試改從已收到全軍令的隊長及退卻階段觀察分支，未改比較方向、常數或查詢公式。
+
+[正常滑鼠](../../workplace/scratch/ui-windows-20261104/cao-retreat-order-remake-gui.json)71個功能／同步點、17圖通過。
+第一劇本曹操宣戰呂布、編夏侯淵、行軍途中存讀檔、自然椎陽攻城、改線／登城／突擊／原有快轉後停手，
+725拍自然收尾並返回大地圖。GUI輸入另行記錄，不與原版停手樣本混比戰果。
+程式`wlgame-cao-retreat-order-r1` SHA-256 `e57c806f9d81c3c796e094ca63024f84d12bca4e7f0a9e478e29d8593f4741c2`。
+本片CONFORMED，完整動畫、195拍後的單兵狀態、退場旗標與完整世界出口仍保留；Issue #16／#18未關閉。
+
 ## 2026-11-14：撤退停止補兵與場上計數（CONFORMED，限本片）
 
 玩家可見問題：曹操第一劇本對呂布、椎陽攻城停手到底，原版1476拍收尾，

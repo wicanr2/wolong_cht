@@ -452,9 +452,9 @@ func TestRetreatKeepsItsDetour(t *testing.T) {
 		t.Error("通往出口的繞路被清掉了——算好的路永遠用不到")
 	}
 
-	// 攻擊時算的舊路（終點不是出口）：要清掉，否則兵會留在敵陣附近。
+	// 首次從攻擊轉退卻時才清掉舊路，不以每拍的路徑終點判斷。
 	s.Path = &Waypoints{pts: []Point{{X: 30, Y: 29}, {X: 40, Y: 29}}}
-	b.doRetreat(0, 0)
+	b.beginRetreat(0, 0, Attack)
 	if s.Path.Len() != 0 {
 		t.Error("舊的攻擊繞路沒有被清掉")
 	}

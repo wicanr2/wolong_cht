@@ -72,6 +72,7 @@ func (b *Battle) updateSoldier(side, k int) {
 func (b *Battle) updateSoldierCommand(side, k int) {
 	s := &b.Sides[side].Soldiers[k]
 	b.lockOnNearest(side, k)
+	previous := s.Cmd
 	changed := s.applyNewOrder()
 
 	switch s.Cmd {
@@ -84,6 +85,9 @@ func (b *Battle) updateSoldierCommand(side, k int) {
 	case Guard:
 		b.doGuard(side, k)
 	case Retreat:
+		if changed {
+			b.beginRetreat(side, k, previous)
+		}
 		b.doRetreat(side, k)
 	case Holding:
 		// 隊長命令7仍走1AA2C，重算陣形並在原位補餘力；隊員分派為retn。
@@ -269,36 +273,47 @@ func (b *Battle) doGuard(side, k int) {
 // 說明書 4.1：「兵士が戦闘して敵にやられると、**画面外に退却**し，
 // 待機中の兵が出陣します」。原版 `sub_1AAED` 會把出口寫成
 // X=1／62、Y 夾在 0x10..0x2F，Z 固定為 0。
+// beginRetreat重現1A9D0／1AAED首次接令；Next暫存舊命令，退卻不能取消。
+func (b *Battle) beginRetreat(side, k int, previous Command) {
+	if previous == Retreat {
+		return
+	}
+	sd := &b.Sides[side]
+	s := &sd.Soldiers[k]
+	if k%PerSquad == 0 {
+		for j := k + 1; j < k+PerSquad; j++ {
+			sd.Soldiers[j].TargetRefresh = true
+			if sd.Soldiers[j].Cmd != Retreat {
+				sd.Soldiers[j].Next = Retreat
+			}
+		}
+	}
+	edge := MinCoord
+	if sd.Mirror {
+		edge = MaxCoord
+	}
+	y := s.Y
+	if y < 0x10 {
+		y = 0x10
+	}
+	if y > 0x2f {
+		y = 0x2f
+	}
+	s.Cmd, s.Next = Retreat, previous
+	s.GoalX, s.GoalY, s.GoalZ = edge, y, 0
+	s.StepX, s.StepY, s.StepZ = edge, y, 0
+	s.Path = nil
+	// 1AB21沿用去重尋路佇列，命令批次排入後可在同拍出隊。
+	b.requestPath(side, k)
+}
+
+// doRetreat繼續使用首次接令的出口與路徑，只檢查是否已到邊界。
 func (b *Battle) doRetreat(side, k int) {
 	s := &b.Sides[side].Soldiers[k]
 	edge := MinCoord
 	if b.Sides[side].Mirror {
 		edge = MaxCoord
 	}
-	// 退卻是新的、固定朝向側邊的出口；若兵在受傷前已經有攻擊繞路點，
-	// 那個點可能把它留在城門／敵陣附近。`applyNewOrder` 通常會清掉路徑，
-	// 但已經處於退卻命令的兵也可能從受擊或隊長連鎖進入這裡，所以在出口
-	// 再判一次。
-	//
-	// ⚠ **只清「不是通往出口的那條路」**（docs/spec/94）。這裡本來是
-	// 每一幀無條件清掉，而一幀之內的順序是 doRetreat → moveToward（用路）
-	// → 走不動 → replan（算路）——清除在最前面，於是算好的繞路點
-	// **下一幀開頭就被丟掉**，兵永遠只朝終點直線推。配上「退卻中的同伴
-	// 不能對調」（sub_1B732 的閘），一整排就鎖死，攻城戰永遠不會結束。
-	//
-	// 判準不能用「目標相等」：退卻目標的 Y 是 clamp(s.Y)，會跟著兵走，
-	// 繞路一走 Y 就又被清掉了。
-	if p, ok := s.Path.Last(); !ok || p.X != edge {
-		s.Path = nil
-	}
-	retreatY := s.Y
-	if retreatY < 0x10 {
-		retreatY = 0x10
-	}
-	if retreatY > 0x2F {
-		retreatY = 0x2F
-	}
-	s.GoalX, s.GoalY, s.GoalZ = edge, retreatY, 0
 	if s.X == edge {
 		s.Alive = false
 		b.clearUnitCollision(side, k)

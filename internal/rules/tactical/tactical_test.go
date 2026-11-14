@@ -333,8 +333,11 @@ func TestGeneralRetreatOrdersWholeSide(t *testing.T) {
 	b.Sides[0].Soldiers[0].HP = GeneralRetreatHP - 1
 	b.checkGeneralRetreat()
 	for k := range b.Sides[0].Soldiers {
-		if s := &b.Sides[0].Soldiers[k]; s.Alive && s.Next != Retreat {
-			t.Fatalf("第 %d 個兵的命令是 %v，應為退卻", k, s.Next)
+		b.updateSoldierCommand(0, k)
+	}
+	for k := range b.Sides[0].Soldiers {
+		if s := &b.Sides[0].Soldiers[k]; s.Alive && s.Cmd != Retreat {
+			t.Fatalf("第 %d 個兵的命令是 %v，應為退卻", k, s.Cmd)
 		}
 	}
 }
@@ -878,9 +881,9 @@ func TestRetreatCannotBeInterrupted(t *testing.T) {
 func TestRetreatDropsOldPath(t *testing.T) {
 	b := newTestBattle(flatField())
 	s := &b.Sides[0].Soldiers[1]
-	s.Cmd, s.Next = Retreat, Retreat
+	s.Cmd, s.Next = Guard, Retreat
 	s.Path = &Waypoints{pts: []Point{{X: 20, Y: 20}}}
-	b.doRetreat(0, 1)
+	b.updateSoldierCommand(0, 1)
 	if s.Path != nil {
 		t.Fatal("退卻仍保留舊繞路點")
 	}
@@ -890,6 +893,7 @@ func TestRetreatUsesOriginalExitTarget(t *testing.T) {
 	b := newTestBattle(flatField())
 	low := &b.Sides[0].Soldiers[1]
 	*low = Soldier{Alive: true, Cmd: Retreat, Next: Retreat, X: 20, Y: 5, Z: 3}
+	b.beginRetreat(0, 1, Guard)
 	b.doRetreat(0, 1)
 	if low.GoalX != 1 || low.GoalY != 0x10 || low.GoalZ != 0 {
 		t.Fatalf("低處退卻目標錯誤：%d,%d,%d", low.GoalX, low.GoalY, low.GoalZ)
@@ -897,6 +901,7 @@ func TestRetreatUsesOriginalExitTarget(t *testing.T) {
 
 	high := &b.Sides[1].Soldiers[1]
 	*high = Soldier{Alive: true, Cmd: Retreat, Next: Retreat, X: 20, Y: 60, Z: 3}
+	b.beginRetreat(1, 1, Guard)
 	b.doRetreat(1, 1)
 	if high.GoalX != 0x3E || high.GoalY != 0x2F || high.GoalZ != 0 {
 		t.Fatalf("高處退卻目標錯誤：%d,%d,%d", high.GoalX, high.GoalY, high.GoalZ)
@@ -1504,7 +1509,7 @@ func TestStepReappliesSquadLeaderGone(t *testing.T) {
 	member := &b.Sides[0].Soldiers[PerSquad+1]
 	member.Alive, member.Cmd, member.Next = true, Form, Form
 	b.Step()
-	if member.Next != Retreat {
-		t.Errorf("跑完一幀之後隊員的命令是 %v，應為退卻", member.Next)
+	if member.Cmd != Retreat {
+		t.Errorf("跑完一幀之後隊員的命令是 %v，應為退卻", member.Cmd)
 	}
 }

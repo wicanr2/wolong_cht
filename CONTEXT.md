@@ -252,6 +252,7 @@ GPU最多兩頁快取，其他季節、液晶、未選頁與讀圖失敗沿原�
 
 | 日期／目前程式 | 最近驗證 | 狀態 | 交付物 |
 |---|---|---|---|
+| 2026-11-14；wlgame-cao-retreat-order-r1 | 12個原版受控樣本24階段全等；正常1471–1476拍我方288兵次11欄相同、終點1476拍；41套件冷測／vet、八類負對照；正常滑鼠71點／17圖、自然收尾返回 | 撤退先交六隊長、再傳隊員，拒絕重複全軍令；首次固定出口Goal／Step並入尋路佇列，保留舊命令。大將先檢查門檻再扣體力。完整旗標／敵方後段／動畫仍有界 | [spec141](docs/spec/141-retreat-countdown.md)、[窗口收據](workplace/scratch/ui-windows-20261104/cao-retreat-order-after-window.json)、[正常GUI](workplace/scratch/ui-windows-20261104/cao-retreat-order-remake-gui.json) |
 | 2026-11-14；wlgame-cao-retreat-finish-r1 | 正常原版停手到底1476拍與typed重播的勝方、12隊生還數、兩將體力相同；41套件冷測／vet、五類負對照；正常滑鼠71點／17圖，自然戰果後返回大地圖 | 全軍撤退只停該側補兵，待機保留；勝負使用移動批次場上計數並按玩家／對方檢查。消除舊實作多等103拍。GUI有下令，725拍收尾，與原版停手樣本分開；全程狀態／動畫與完整世界出口仍有界 | [spec141](docs/spec/141-retreat-countdown.md)、[戰果收據](workplace/scratch/ui-windows-20261104/cao-retreat-after-comparison.json)、[正常GUI](workplace/scratch/ui-windows-20261104/cao-retreat-finish-remake-gui.json) |
 | 2026-11-14；wlgame-cao-hit-order-r1 | 23個原版受控樣本、雙PlayerSide映射46次比較全等；七套件冷測／vet、五類負對照、正常GUI69點／16圖通過；正常前195拍全項相同 | 接通持續格／上半身命中、固定槽順序、大將姿勢箭傷、0功率與byte溢位、箭傷死亡旗標及延後隊長通知。受控RAM樣本與正常流程分開；196拍PathQueued、中間繪製與完整戰果仍有界 | [spec159](docs/spec/159-tactical-command-movement-order.md)、[收據](workplace/scratch/ui-windows-20261104/cao-hit-order-integration.json) |
 | 2026-11-14；wlgame-cao-flight187-r1 | 前195拍96槽27欄位／RNG／腳本／8192-byte成本／剩餘點數全等；46組投射物快照1472槽活動狀態、234筆活動記錄各8欄全等；七套件冷測／vet、三類負對照、正常GUI69點／16圖通過 | 修正固定點高度上限回寫、命令後／移動前更新飛行，187拍同槽可重發。196拍首次僅PathQueued不同，成本至229／點數212／腳本215／RNG240相同。完整命中、固定槽排序及戰果保留 | [spec159](docs/spec/159-tactical-command-movement-order.md)、[收據](workplace/scratch/ui-windows-20261104/cao-flight187-integration.json) |
@@ -1093,6 +1094,13 @@ DOSBox-X 那條路**不刪**：它是這一條的正對照，而且 PC-98 版只
 ---
 
 ## 6. 已被推翻的斷言
+
+### 2026-11-14：退卻每拍重設出口、全軍令直接寫所有隊員
+
+`1AAED`只在首次接令保存舊命令、初始化Goal／Step及清路入隊；繼續退卻只查出口，Y不跟著繞路改變。
+`1A8F6`只排六隊長Next且拒絕第二次全軍令，`1A9D0`再傳隊員。舊Go直接改全部Next，並持續重設Goal／按終點清路，已依原指令勘誤。
+`1ADDA→1AE56`亦證實先檢查體力再扣攻城體力，不能用舊終點1476拍相同掩蓋初動時序差異。
+來源與12案24階段、正常撤退窗口及有界驗收見[spec141續片](docs/spec/141-retreat-countdown.md)。
 
 ### 2026-11-14：全軍撤退仍補兵、勝負包含待機兵
 

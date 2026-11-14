@@ -175,3 +175,106 @@ func TestStepCountsOnlyUnitsEnteringMovementBatch(t *testing.T) {
 		t.Fatal("補兵分支當拍不進場上計數，不得改用補完後的Alive")
 	}
 }
+
+func TestGlobalRetreatQueuesOnlySixLeadersAndRejectsRepeat(t *testing.T) {
+	for side := 0; side < 2; side++ {
+		b := newTestBattle(flatField())
+		for i := range b.Sides {
+			for k := range b.Sides[i].Soldiers {
+				b.Sides[i].Soldiers[k].Cmd, b.Sides[i].Soldiers[k].Next = Guard, Guard
+			}
+		}
+		b.Sides[side].Soldiers[PerSquad].Alive = false
+		b.Order(side, -1, Retreat)
+		for k, s := range b.Sides[side].Soldiers {
+			want := Guard
+			if k%PerSquad == 0 {
+				want = Retreat
+			}
+			if s.Cmd != Guard || s.Next != want {
+				t.Fatalf("side%d slot%d：全軍令應只寫六個隊長Next", side, k)
+			}
+		}
+		before := b.Sides
+		b.Order(1-side, -1, Retreat)
+		for i := range b.Sides {
+			for k, s := range b.Sides[i].Soldiers {
+				if s.Next != before[i].Soldiers[k].Next {
+					t.Fatal("第二次全軍撤退應整次拒絕，不得改另一側命令")
+				}
+			}
+		}
+		if b.endPhase != side+1 {
+			t.Fatal("第二次撤退不得改變退卻側")
+		}
+	}
+}
+
+func TestRetreatInitializesStepAndPreservesPreviousCommand(t *testing.T) {
+	for player := 0; player < 2; player++ {
+		for side := 0; side < 2; side++ {
+			for _, k := range []int{0, 1} {
+				b := newTestBattle(flatField())
+				b.SetPlayerSide(player)
+				s := &b.Sides[side].Soldiers[k]
+				*s = Soldier{Alive: true, X: 20, Y: 5, Z: 3, Cmd: Guard, Next: Retreat,
+					Target: -1, Path: &Waypoints{pts: []Point{{X: 30, Y: 20}}}}
+				b.updateSoldierCommand(side, k)
+				edge := MinCoord
+				if b.Role(side) == 1 {
+					edge = MaxCoord
+				}
+				if s.Cmd != Retreat || s.Next != Guard || s.GoalX != edge || s.GoalY != 16 || s.GoalZ != 0 ||
+					s.StepX != edge || s.StepY != 16 || s.StepZ != 0 || s.Path != nil || !s.PathQueued {
+					t.Fatalf("player%d side%d slot%d：首次退卻未保存舊命令及出口／尋路請求", player, side, k)
+				}
+				if k == 0 {
+					for j := 1; j < PerSquad; j++ {
+						if b.Sides[side].Soldiers[j].Next != Retreat || !b.Sides[side].Soldiers[j].TargetRefresh {
+							t.Fatal("新退卻隊長須向七隊員傳令並要求目標刷新")
+						}
+					}
+				}
+				// 繞路後Y改變，仍保留接令時的出口Y與正在消費的中繼點。
+				s.Y, s.StepX, s.StepY = 20, 19, 20
+				s.Path = &Waypoints{pts: []Point{{X: edge, Y: 16}}}
+				path := s.Path
+				b.updateSoldierCommand(side, k)
+				if s.GoalY != 16 || s.StepX != 19 || s.StepY != 20 || s.Path != path || s.Next != Guard {
+					t.Fatal("持續退卻不得重設出口、中繼點、舊命令或路徑")
+				}
+			}
+		}
+	}
+}
+
+func TestGeneralRetreatChecksBeforeSiegeDrainAndAfterCommands(t *testing.T) {
+	f, _ := tiledField(32)
+	b := newTestBattle(f)
+	b.Sides[0].Soldiers[0].HP = GeneralRetreatHP
+	b.Sides[1].Soldiers[0].HP = 100
+	b.siegeTick = SiegeDrainInterval - 1
+	b.Step()
+	if b.Sides[0].Soldiers[0].HP != 49 || b.endPhase != 0 {
+		t.Fatal("體力50先過門檻檢查，再扣成49，當拍尚未全軍退卻")
+	}
+	b.Step()
+	if b.endPhase != 1 || b.Sides[0].Soldiers[0].Cmd == Retreat {
+		t.Fatal("下一拍移動前才下令；已完成的命令批次不能提早再跑")
+	}
+	b.Step()
+	if b.Sides[0].Soldiers[0].Cmd != Retreat {
+		t.Fatal("再下一次命令批次應開始退卻")
+	}
+	for player := 0; player < 2; player++ {
+		b := newTestBattle(flatField())
+		b.SetPlayerSide(player)
+		for side := range b.Sides {
+			b.Sides[side].Soldiers[0].HP = 49
+		}
+		b.checkGeneralRetreat()
+		if b.endPhase != player+1 {
+			t.Fatal("雙方體力皆低時，須先受理玩家角色的全軍退卻")
+		}
+	}
+}

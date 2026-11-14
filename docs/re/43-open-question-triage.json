@@ -14754,19 +14754,6 @@
       "reason": "目前列只保留原版證據邊界，未命中現行玩家路徑、規則或交付 Issue；若影響範圍改變，先建立新 Issue 再調整分類。"
     },
     {
-      "file": "docs/spec/94-retreat-path-not-cleared-every-frame.md",
-      "item": "攻方大將體力歸零卻還在",
-      "status": "`drainSiegeGeneral` 會扣到 0，而 `docs/re/11` §5.16 說戰鬥傷害最低留 1。攻城計時器要不要也留 1，沒有讀出來",
-      "section": "6. 未解",
-      "domain": "其他",
-      "verdict": "靜態",
-      "occurrence": 0,
-      "id": "oq-0bc32fd2f67d5d985a0e",
-      "classification": "evidence-only",
-      "github_issue": null,
-      "reason": "目前列只保留原版證據邊界，未命中現行玩家路徑、規則或交付 Issue；若影響範圍改變，先建立新 Issue 再調整分類。"
-    },
-    {
       "file": "docs/spec/95-spawn-height-uses-ground-plane.md",
       "item": "原版擺兵寫進 `[si+0Ah]` 的是哪一個表",
       "status": "沒讀出來。remake 這一版是靠內部一致性定的（§2），不是照抄",
