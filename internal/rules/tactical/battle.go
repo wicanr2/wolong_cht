@@ -684,6 +684,8 @@ func (b *Battle) Step() {
 			}
 		}
 	}
+	// 1B941在1ADC8移動入口前完成飛行，命中須先於當拍單兵移動。
+	b.stepProjectiles()
 	// 0001ADDD：命令批次的新請求可同拍消化；移動中的請求等下一拍。
 	// 仍維持每拍兩筆 FIFO 預算（docs/spec/159）。
 	b.drainPathQueue()
@@ -695,7 +697,6 @@ func (b *Battle) Step() {
 			}
 		}
 	}
-	b.stepProjectiles()
 	b.stepDeaths()
 	b.reinforce()
 

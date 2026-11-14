@@ -352,6 +352,8 @@ func (b *Battle) advanceProjectile(p *projectile) bool {
 	p.z = p.heightFP >> 8
 	if p.z > Levels-2 {
 		p.z = Levels - 2
+		// 1BA96寫回高度高byte；只夾顯示Z會讓固定點高度繼續累積。
+		p.heightFP = p.z<<8 | p.heightFP&0xff
 	}
 	p.gridIndex = projectileGridIndex(p.x, p.y, p.z)
 	if b.projectileBlocked(*p) {

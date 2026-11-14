@@ -202,6 +202,76 @@ func TestWallBatchNormalProjectileBirthAndFirstStep(t *testing.T) {
 	}
 }
 
+func TestProjectileHeightCapWritesBackFixedPoint(t *testing.T) {
+	b := NewBattle(flatField(), SyntheticFormations(), nil, 0)
+	for _, fraction := range []int{0, 0xe0, 0xff} {
+		p := projectile{x: 20, y: 20, z: 5, heightFP: 5<<8 | fraction, velocityFP: 0x180, power: 28, direction: 0x80}
+		if !b.advanceProjectile(&p) || p.z != 5 || p.heightFP != 5<<8|fraction {
+			t.Fatal("1BA96須保留高度小數並寫回上限，不能只改顯示Z")
+		}
+		if p.velocityFP != 0x16c {
+			t.Fatal("只夾本拍位移，保存速度仍由原值減14h")
+		}
+		p.velocityFP = -0x180
+		if !b.advanceProjectile(&p) || p.heightFP != 4<<8|fraction || p.velocityFP != -0x194 {
+			t.Fatal("負速度也只夾本拍位移")
+		}
+	}
+}
+
+func TestProjectileNativeSlotReleaseAfterLanding(t *testing.T) {
+	b := NewBattle(flatField(), SyntheticFormations(), &fixedRand{seq: []int{2}}, 0)
+	s := &b.Sides[1].Soldiers[38]
+	*s = Soldier{Alive: true, Kind: Archer, HP: 200, X: 44, Y: 25, Z: 4}
+	e := Soldier{Alive: true, Kind: Infantry, HP: 200, X: 5, Y: 24}
+	b.launchNormalProjectile(1, s, &e)
+	if len(b.projectiles) != 1 || b.projectiles[0].slot != 22 || b.projectiles[0].velocityFP != 340 {
+		t.Fatal("原版158拍槽22的發射條件不符")
+	}
+	for n := 0; n < 28; n++ {
+		b.stepProjectiles()
+	}
+	if len(b.projectiles) != 1 {
+		t.Fatal("原版185拍仍在飛行")
+	}
+	p := b.projectiles[0]
+	if p.x != 16 || p.y != 25 || p.z != 0 || p.heightFP != 204 || p.velocityFP != -220 || p.power != 92 {
+		t.Fatalf("原版185拍飛行記錄不同：%+v", p)
+	}
+	s.ProjectileCooldown = 0
+	b.shoot(1, 38, &e)
+	if len(b.projectiles) != 1 || s.ProjectileCooldown != 0 {
+		t.Fatal("落地前仍須等待固定槽釋放")
+	}
+	b.stepProjectiles()
+	if len(b.projectiles) != 0 {
+		t.Fatal("原版186拍落地須於同次更新釋放槽22")
+	}
+	b.shoot(1, 38, &e)
+	if len(b.projectiles) != 1 || s.ProjectileCooldown != 8 {
+		t.Fatal("原版187拍可由同一槽正常重發")
+	}
+}
+
+func TestProjectileResolvesHitBeforeMovement(t *testing.T) {
+	for player := 0; player < 2; player++ {
+		b := NewBattle(flatField(), SyntheticFormations(), &fixedRand{seq: []int{0}}, 0)
+		b.PlayerSide = player
+		for side := range b.Sides {
+			x := 3 + side*50
+			b.Sides[side].Soldiers[0] = Soldier{Alive: true, Kind: General, HP: 200, Stamina: 128, X: x, Y: 10, StepX: x, StepY: 10, Cmd: Duel, Next: Duel, Target: -1}
+		}
+		s := &b.Sides[0].Soldiers[1]
+		*s = Soldier{Alive: true, Kind: Infantry, HP: 100, Stamina: 128, X: 20, Y: 20, StepX: 21, StepY: 20, Cmd: Holding, Next: Holding, Target: -1}
+		b.Sides[1].Soldiers[1] = Soldier{Alive: true, Kind: Infantry, HP: 100, X: 40, Y: 40, StepX: 40, StepY: 40, Cmd: Holding, Next: Holding, Target: -1}
+		b.projectiles = []projectile{{side: 1, x: 20, y: 20, z: 0, heightFP: 0, velocityFP: 0, power: 28, direction: West, gridIndex: projectileGridIndex(20, 20, 0)}}
+		b.Step()
+		if s.HP != 93 || s.X != 20 || s.Y != 20 || !s.Hurt || len(b.projectiles) != 0 {
+			t.Fatalf("飛行須在士兵走離前命中並阻止當拍移動，player%d：%+v", player, *s)
+		}
+	}
+}
+
 func TestWallShootingAttackPoseClearingConsumers(t *testing.T) {
 	b := NewBattle(flatField(), SyntheticFormations(), &fixedRand{seq: []int{0}}, 0)
 	s := &b.Sides[0].Soldiers[1]

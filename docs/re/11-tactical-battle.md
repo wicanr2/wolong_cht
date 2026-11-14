@@ -1,5 +1,11 @@
 # 11 — 戰術戰鬥：模組結構與戰場資料模型
 
+2026-11-14投射物續片，已證實並接線：`1BA96`將固定點高度高byte上限5寫回，保留小數；
+`1BA6A–1BA89`只夾本拍位移，速度仍用原值減14h。正常158、185–187拍均先1B941飛行，再到1ADC8移動。
+Go已把飛行更新移至命令後／單兵移動前，避免把飛行前後快照混比。
+新[IDA Pro9.4 DOS/V linear原指令](../../workplace/scratch/ui-windows-20261104/flight187-20261114/ida-probe.json)、輸入／DB雜湊及[46組同邊界槽位證據](../../workplace/scratch/ui-windows-20261104/cao-flight187-evidence.json)
+由[spec159](../spec/159-tactical-command-movement-order.md)保存；前195拍全軍一致，完整命中／固定槽排序及中間繪製仍有界。
+
 2026-11-14城上移動續片，已證實：`1AEFF–1AF19`重算高平面路徑時以目前格導航低3位覆寫StepZ，不能停在途中Z。
 `1B1B5–1B1D1`水平先以原Z查腳格／上一格單兵，再判地形／高度；碰撞返回不補做位移。
 原指令與新正常179／184拍證據見[spec134](../spec/134-pathfind-wave-order.md)及[spec36](../spec/36-ground-planes-and-climbing.md)。
