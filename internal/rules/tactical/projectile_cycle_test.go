@@ -6,6 +6,53 @@ import (
 	"testing"
 )
 
+// 1AC6E–1AC8D writes GoalXY before the plane/range checks and 1AD7F.
+// This also applies when the launch later fails due to cooldown or a busy slot.
+func TestSpecialAttackRefreshesGoalBeforeLaunch(t *testing.T) {
+	for player := 0; player < 2; player++ {
+		for side := 0; side < 2; side++ {
+			for _, refresh := range []bool{false, true} {
+				for _, state := range []string{"free", "cooldown", "occupied"} {
+					t.Run(fmt.Sprintf("player%d-side%d-refresh%t-%s", player, side, refresh, state), func(t *testing.T) {
+						b := NewBattle(flatField(), SyntheticFormations(), &fixedRand{seq: []int{0}}, 0)
+						b.PlayerSide = player
+						path := &Waypoints{pts: []Point{{X: 12, Y: 13}}}
+						s := &b.Sides[side].Soldiers[1]
+						*s = Soldier{Alive: true, Kind: Infantry, X: 40, Y: 30, Z: 4,
+							GoalX: 37, GoalY: 29, GoalZ: 6, StepX: 12, StepY: 13, StepZ: 4,
+							PlaneHigh: PlaneHighElevated, Target: 1, TargetRefresh: refresh,
+							Path: path, PoseStep: 1, Stun: 9}
+						b.Sides[1-side].Soldiers[1] = Soldier{Alive: true, Kind: Infantry, X: 38, Y: 30}
+						if state == "cooldown" {
+							s.ProjectileCooldown = 1
+						} else if state == "occupied" {
+							b.projectiles = []projectile{{slotOwned: true, slot: b.Role(side)*16 + 1}}
+						}
+						b.doAttackAction(side, 1)
+						if s.GoalX != 38 || s.GoalY != 30 || s.GoalZ != 6 {
+							t.Fatal("special branch must refresh GoalXY and preserve GoalZ")
+						}
+						if refresh {
+							if s.StepX != 38 || s.StepY != 30 || s.StepZ != 0 || s.Path != nil || s.TargetRefresh {
+								t.Fatal("target refresh must copy StepXYZ and clear the old path")
+							}
+						} else if s.StepX != 12 || s.StepY != 13 || s.StepZ != 4 || s.Path != path {
+							t.Fatal("ordinary goal refresh must preserve Step and Path")
+						}
+						if state == "free" {
+							if len(b.projectiles) != 1 || !b.projectiles[0].special || s.ProjectileCooldown != 6 || s.Stun != 2 {
+								t.Fatal("free special launch must retain its existing timing")
+							}
+						} else if s.ProjectileCooldown != 0 || s.Stun != 9 || len(b.TakeSoundEffects()) != 0 {
+							t.Fatal("rejected launch must not enter its success branch")
+						}
+					})
+				}
+			}
+		}
+	}
+}
+
 // These literal trajectories were measured from DOS/V KI.EXE with dosgolem,
 // calling 1AD2D/1AD7F then 1B941 until removal. See spec159's complete-cycle
 // receipt for binary identity, seed, input matrix and the independent comparison.

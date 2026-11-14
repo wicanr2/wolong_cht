@@ -427,8 +427,23 @@ func (s *desktopGame) writeTrace() {
 				"fastForward":    g.battleFastForward,
 				"alive":          [2]int{b.Sides[0].Alive(), b.Sides[1].Alive()},
 				"deaths":         b.Deaths(),
+				"projectiles":    b.Projectiles(),
 				"survivors":      [2]int{b.Sides[0].Survivors(), b.Sides[1].Survivors()},
 				"generalHP":      [2]int{b.Sides[0].Soldiers[0].HP, b.Sides[1].Soldiers[0].HP},
+			}
+			if g.view != nil {
+				x, y := g.view.Camera()
+				v["battle"].(map[string]any)["camera"] = [2]int{x, y}
+				positions := make([][3]int, 0)
+				for _, p := range b.Projectiles() {
+					x, y, visible := g.view.ScreenPos(0, 0, p.X, p.Y, p.Z)
+					shown := 0
+					if visible {
+						shown = 1
+					}
+					positions = append(positions, [3]int{x, y, shown})
+				}
+				v["battle"].(map[string]any)["projectileScreen"] = positions
 			}
 			if b.Done {
 				v["battleOutcome"] = b.Result()

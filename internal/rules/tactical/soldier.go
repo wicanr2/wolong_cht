@@ -209,11 +209,12 @@ func (b *Battle) doAttackAction(side, k int) {
 		b.shoot(side, k, e)
 		return
 	}
+	s.GoalX, s.GoalY = e.X, e.Y
 	if specialAttackAvailable(s, e) {
 		b.shootSpecial(side, k, e)
 		return
 	}
-	s.GoalX, s.GoalY, s.GoalZ = e.X, e.Y, e.Z
+	s.GoalZ = e.Z
 	if abs(s.X-e.X)+abs(s.Y-e.Y) <= 1 && s.Z == e.Z {
 		b.attackCollision(side, s, e)
 	}
