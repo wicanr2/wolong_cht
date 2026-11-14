@@ -1,5 +1,10 @@
 # 159 — 戰術命令批次與移動體力順序
 
+2026-11-14移動續片：高層出隊`1AEFF–1AF19`初始化StepZ、水平`1B1B5–1B1D1`先處理單兵，
+正式契約見[spec134](134-pathfind-wave-order.md)與[spec36](36-ground-planes-and-climbing.md)。
+[新240拍比較](../../workplace/scratch/ui-windows-20261104/cao-180-after-scope.json)同至186拍，187拍槽86首次發射成功旗標／硬直／冷卻不同；
+完整固定槽釋放及飛行仍保留，不把該差異猜成新增射程或冷卻規則。
+
 **狀態：READY。原始指令與既有 dosgolem 追蹤支持本節的窄排程修正。**
 
 - 日期：2026-11-14；以下保留2026-09-08起的各片證據。

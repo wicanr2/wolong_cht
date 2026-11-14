@@ -75,6 +75,55 @@ func TestWallBatchPathRootPreferenceAndFallback(t *testing.T) {
 	}
 }
 
+func TestHighPlanePathReinitializesWallHeight(t *testing.T) {
+	for _, z := range []int{0, 2, 4, 6} {
+		for _, high := range []bool{false, true} {
+			f, _ := tiledField(32)
+			f.Retile(32, Height/2, brokenGateDelta)
+			b := NewBattle(f, SyntheticFormations(), &fixedRand{seq: []int{0}}, 0)
+			s := &b.Sides[0].Soldiers[1]
+			*s = Soldier{Alive: true, Kind: Infantry, X: 32, Y: Height / 2, Z: z, OnWall: high, Cmd: ScaleWal,
+				GoalX: 32, GoalY: 30, GoalZ: 4, StepZ: 6, Target: -1}
+			if high {
+				s.PlaneHigh = PlaneHighElevated
+			}
+			if !high {
+				f.nav = [2][Height][Width]uint8{}
+			}
+			b.computePath(0, 1)
+			want := z
+			if high {
+				want = 4
+			}
+			if s.StepZ != want || s.GoalX != 32 || s.GoalY != 30 || s.GoalZ != 4 {
+				t.Fatalf("途中重算須依平面初始化高度，z%d high%v：%+v", z, high, *s)
+			}
+			if high && s.Path == nil {
+				t.Fatal("真實門格應能找到牆頂路徑")
+			}
+			if high && z == 2 {
+				if !b.tryClimb(0, 1) || s.Z != 3 {
+					t.Fatal("重算後仍須按中繼高度繼續上爬")
+				}
+			}
+			// 搜尋根不存在時也要保留初始化高度，不回到半途Z。
+			f.nav = [2][Height][Width]uint8{}
+			s.Z = z
+			b.computePath(0, 1)
+			if s.Path != nil || s.StepZ != want {
+				t.Fatal("無根返回不可撤銷高平面中繼高度")
+			}
+		}
+	}
+	b := NewBattle(flatField(), SyntheticFormations(), nil, 0)
+	s := &b.Sides[0].Soldiers[1]
+	*s = Soldier{Alive: true, Kind: Infantry, X: 20, Y: 20, Z: 2, OnWall: true, PlaneHigh: PlaneHighElevated, GoalX: 25, GoalY: 25}
+	b.computePath(0, 1)
+	if s.StepZ != 0 {
+		t.Fatal("typed高層缺席時packed導航byte為0")
+	}
+}
+
 // walledField 是一張攻城用的戰場：中間一道 X ＝ 32 的城牆（堆疊 4 層），
 // 只有 gateX 那一格是通的。
 func walledField(gateX int) *Field {

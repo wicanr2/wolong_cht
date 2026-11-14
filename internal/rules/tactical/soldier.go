@@ -528,6 +528,13 @@ func (b *Battle) computePath(side, k int) {
 	s := &b.Sides[side].Soldiers[k]
 	s.Path = nil
 	s.StepX, s.StepY, s.StepZ = s.X, s.Y, s.Z
+	// 1AEFF–1AF19：高層用當前格導航高度，途中重算不能停在半空。
+	if s.Plane() == PlaneHigh {
+		s.StepZ = 0
+		if z, ok := b.Field.GroundLevel(s.X, s.Y, PlaneHigh); ok {
+			s.StepZ = z & 7
+		}
+	}
 	from, to := Point{X: s.X, Y: s.Y}, Point{X: s.GoalX, Y: s.GoalY}
 	startPlane := s.Plane()
 	to, goalPlane, ok := b.Field.soldierPathGoal(to, s.CanClimb() && s.Cmd != Retreat)
@@ -560,6 +567,17 @@ func (b *Battle) tryMove(side, k, x, y, z int) (handled, walled bool) {
 	s.HitGeneral = false
 	if !inBounds(x, y) {
 		return false, true
+	}
+	// 有人擋著 → 走碰撞處理（`loc_1B533`）。**敵我分兩條路**：
+	//
+	//	敵人擋路 → 打他（`loc_1B5A1` → `sub_1B618`），自己不動
+	//	自己人擋路 → **兩個對調位置**（`loc_1B56D` → `sub_1B732`）
+	//
+	// 分敵我那一行是 `cmp di, <立即值>`，而那個立即值是
+	// **自我修改碼**寫進去的（`byte_1B562`／`byte_1B56A`，由 `sub_19A33`
+	// 依雙方的編號範圍填）——這是本作第四處自我修改碼。
+	if side2, k2 := b.anyoneAt(x, y, s.Z); k2 >= 0 {
+		return b.collideWithUnit(side, k, side2, k2), false
 	}
 	// 水平跨格照 `sub_1B1B1`（docs/re/63 §5）：讀**自己所在平面**的
 	// 地面層，沒有地面就是撞到牆；有地面就把 Z 同步一層。
@@ -600,17 +618,6 @@ func (b *Battle) tryMove(side, k, x, y, z int) (handled, walled bool) {
 		default:
 			z = s.Z
 		}
-	}
-	// 有人擋著 → 走碰撞處理（`loc_1B533`）。**敵我分兩條路**：
-	//
-	//	敵人擋路 → 打他（`loc_1B5A1` → `sub_1B618`），自己不動
-	//	自己人擋路 → **兩個對調位置**（`loc_1B56D` → `sub_1B732`）
-	//
-	// 分敵我那一行是 `cmp di, <立即值>`，而那個立即值是
-	// **自我修改碼**寫進去的（`byte_1B562`／`byte_1B56A`，由 `sub_19A33`
-	// 依雙方的編號範圍填）——這是本作第四處自我修改碼。
-	if side2, k2 := b.anyoneAt(x, y, z); k2 >= 0 {
-		return b.collideWithUnit(side, k, side2, k2), false
 	}
 	// 1B215：僅高平面命令6進入已破門格時阻擋；先處理佔位者。
 	if s.Plane() == PlaneHigh && s.Cmd == wallAttack && b.Field.HasTiles() && b.Field.Tile(x, y) >= gateSolid {
@@ -745,12 +752,12 @@ func (b *Battle) anyoneAt(x, y, z int) (int, int) {
 	if b.unitCollision != nil {
 		return b.collisionOwner(b.unitCollision.at(x, y, z))
 	}
-	for i := range b.Sides {
-		for k := range b.Sides[i].Soldiers {
-			s := &b.Sides[i].Soldiers[k]
-			if s.Alive && s.X == x && s.Y == y && s.Z == z {
-				return i, k
-			}
+	if _, ok := collisionCell(x, y, z); !ok {
+		return 0, -1
+	}
+	for _, layer := range [2]int{z, z + 1} {
+		if side, k := b.unitAtLayer(x, y, layer); k >= 0 {
+			return side, k
 		}
 	}
 	return 0, -1

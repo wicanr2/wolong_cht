@@ -281,3 +281,62 @@ func TestWallBatchCommand6GateGuardFollowsUnitCollision(t *testing.T) {
 		}
 	}
 }
+
+func TestHorizontalCollisionPrecedesTerrainAtOriginalHeight(t *testing.T) {
+	for side := 0; side < 2; side++ {
+		for player := 0; player < 2; player++ {
+			for _, stored := range []bool{false, true} {
+				for _, kind := range []string{"friend", "refuses", "enemy", "lower_body", "no_ground"} {
+					f, _ := tiledField(32)
+					f.Retile(32, Height/2, brokenGateDelta)
+					b := NewBattle(f, SyntheticFormations(), &fixedRand{seq: []int{64}}, 0)
+					b.PlayerSide = player
+					b.Advantage[0] = Even
+					s := &b.Sides[side].Soldiers[1]
+					*s = Soldier{Alive: true, Kind: Infantry, HP: 200, Power: 32, X: 31, Y: Height / 2, Z: 3, StepZ: 4, OnWall: true, PlaneHigh: PlaneHighElevated, Cmd: ScaleWal, Target: -1}
+					otherSide := side
+					if kind == "enemy" {
+						otherSide = 1 - side
+					}
+					e := &b.Sides[otherSide].Soldiers[2]
+					*e = Soldier{Alive: true, Kind: Infantry, HP: 100, X: 32, Y: Height / 2, Z: 4, StepZ: 4, OnWall: true, PlaneHigh: PlaneHighElevated, Cmd: ScaleWal, Target: -1}
+					if kind == "lower_body" {
+						e.Z = 2
+					}
+					if kind == "refuses" {
+						e.Swapped = true
+					}
+					if kind == "no_ground" {
+						f.lvl[PlaneHigh][Height/2][32] = noLevel
+					}
+					// 即使上一物理格同時有地形，單兵低7位也優先。
+					f.solid[4][Height/2][32] = true
+					if stored {
+						b.initUnitCollision()
+					}
+					handled, walled := b.tryMove(side, 1, 32, Height/2, 3)
+					if walled {
+						t.Fatal("撞兵不可先判成地形阻擋")
+					}
+					if kind == "refuses" {
+						if handled || s.X != 31 || s.Z != 3 {
+							t.Fatal("友兵拒換須保留原位置")
+						}
+					} else if kind == "enemy" {
+						if !handled || s.X != 31 || s.Z != 3 || e.HP >= 100 {
+							t.Fatal("先攻擊敵兵，不附加位移或高度調整")
+						}
+					} else {
+						want := 4
+						if kind == "lower_body" {
+							want = 2
+						}
+						if !handled || s.X != 32 || s.Z != want || e.X != 31 || e.Z != 3 {
+							t.Fatal("以原高度查兩格身高，換位後直接返回")
+						}
+					}
+				}
+			}
+		}
+	}
+}
