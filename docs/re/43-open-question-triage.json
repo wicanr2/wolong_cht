@@ -300,12 +300,12 @@
     {
       "file": "docs/mechanics/30-combat.md",
       "item": "原版投射物的圖形與動畫",
-      "status": "`BATTLE.SCH` 裡的圖形沒對出來，目前畫的是側別標記",
+      "status": "圖號已對到BATTLE.SCH；72案完整常式與呈現入口已驗。正常玩家特殊觸發、完整遮擋像素仍沿Issue #24，見spec159",
       "section": "還沒解的",
       "domain": "規則正確性",
       "verdict": "靜態",
       "occurrence": 0,
-      "id": "oq-c04b3735346e34883cae",
+      "id": "oq-8f48dee83bfa149c32de",
       "classification": "actionable",
       "github_issue": 24,
       "reason": "BATTLE.SCH 投射物、動畫幀或命中時序，併入 Issue #24。"

@@ -75,7 +75,7 @@
 |---|---|---|---|---|---|
 | [`mechanics/15-realtime.md`](../mechanics/15-realtime.md) | `sub_10A65` 的內插演算法 | 只影響畫面 | 靜態 | evidence-only | — |
 | [`mechanics/15-realtime.md`](../mechanics/15-realtime.md) | 最高速那一檔在原版實機上是多少 | 機器相依，要實測才有數字；只影響手感調校 | 實測 | evidence-only | — |
-| [`mechanics/30-combat.md`](../mechanics/30-combat.md) | 原版投射物的圖形與動畫 | `BATTLE.SCH` 裡的圖形沒對出來，目前畫的是側別標記 | 靜態 | actionable | [#24](https://github.com/wicanr2/wolong_cht/issues/24) |
+| [`mechanics/30-combat.md`](../mechanics/30-combat.md) | 原版投射物的圖形與動畫 | 圖號已對到BATTLE.SCH；72案完整常式與呈現入口已驗。正常玩家特殊觸發、完整遮擋像素仍沿Issue #24，見spec159 | 靜態 | actionable | [#24](https://github.com/wicanr2/wolong_cht/issues/24) |
 | [`mechanics/30-combat.md`](../mechanics/30-combat.md) | 少數戰術腳本與 `BATTLE` 資料欄位 | 十九個指令已全讀，剩的是資料側的殘留欄位 | 靜態 | evidence-only | — |
 | [`mechanics/30-combat.md`](../mechanics/30-combat.md) | 原版被擋住之後怎麼處理 | remake 每 30 幀可重算一次（`replanInterval`）是**已標記的 remake 差異**，不是缺口；缺口只有「原版被擋住之後怎麼處理」這一條沒讀 | 靜態 | evidence-only | — |
 | [`mechanics/60-personnel.md`](../mechanics/60-personnel.md) | 武將 `+0` 旗標的 bit 0 | 只出現一次（劇本三的張衛），**兩版都沒有讀取端**。⭐ 「PC-98 版才用的位元」這條假說 **2026-09-04 排除了**：PC-98 的 `KI.EXE` 早就進 IDA，掃遮罩 `01` 的結果與 DOS/V **同構**（各三處 `test byte ptr [si], 1`，位址帶相同），而三處… | 兩版對照 | evidence-only | — |

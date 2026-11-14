@@ -1,5 +1,44 @@
 # 159 — 戰術命令批次與移動體力順序
 
+## 2026-11-15：普通與特殊投射物完整常式流程（CONFORMED，限受控樣本）
+
+沿既有發射、固定槽與命中契約補完整生命週期驗證，正式規則未改。
+原版輸入為DOS/V KI.EXE，SHA-256 `fffeba985231cda4d636e93d10f598470b1f691d00275e4aa38e285893d43868`；
+dosgolem版本、seed、工具、正式來源及收據雜湊見[整合收據](../../workplace/scratch/ui-windows-20261104/cao-projectile-cycle-integration.json)。
+既有IDA Pro9.4 DOS/V linear `1AD2D–1ADB5`、`1B8AA–1B940`、`1B941–1BB0F`原始名稱與bytes保留，
+此次沿用[發射匯出](../../workplace/scratch/ui-windows-20261104/fire-20261114/ida-probe.json)、
+[配置匯出](../../workplace/scratch/ui-windows-20261104/alloc-batch-20261114/ida-probe.json)及
+[飛行匯出](../../workplace/scratch/ui-windows-20261104/flight187-20261114/ida-probe.json)，未重開資料庫。
+
+正常曹操對呂布輸入前綴到240拍後的`1B941`存於記憶體，每案restore同一份狀態。
+只改單兵、投射物及物理格RAM，固定相同258-byte seed；以原版目前CS與`IDAIn`呼叫發射及更新常式。
+這是隔離常式測試，不是正常玩家擺位、完整戰術tick或整場勝負證據。
+[72案輸入](../../workplace/scratch/ui-windows-20261104/cao-projectile-cycle-cases.json)涵蓋原版兩側、四方向、
+普通圖號及特殊兩種相位，各有空地落下、命中身體、撞地形三種結尾。
+普通箭例為射手(30,30,4)、目標距離8／高度4；特殊例為相鄰目標／高度0。
+發射之後只重複`1B941`，兵士的硬直與冷卻消費端不在本測試內。
+
+已證實，限上述輸入與原指令：
+
+- 普通圖號為`0210h／0211h`，特殊為`0214h／0215h`。特殊圖號取發射時的兵士姿勢低位，飛行途中保留，沒有自行交替。
+- 普通箭保留射手XY、Z+1；特殊移到面向相鄰格，只有高度下降。高度上限回寫保留小數，威力隨整數層變更。
+- 本例普通空地第18次更新消失、命中第9次、撞障礙第2次；特殊分別為第6、5、1次。這些是此組輸入的結果，不能當成固定存活時間。
+- `1BAB7`每次清舊登錄位置，存活才以目前座標登錄。最後一次只有清除，沒有殘留圖號。
+- 發射與命中音效請求為普通12、特殊10、命中11；空地消失與撞地形沒有額外請求。只核對請求碼，不宣稱波形或硬體播放時序一致。
+
+[原版逐次收據](../../workplace/scratch/ui-windows-20261104/cao-projectile-cycle-native.jsonl)共496筆，
+以正式規則來源對兩種PlayerSide映射重播，共992筆。
+[比較結果](../../workplace/scratch/ui-windows-20261104/cao-projectile-cycle-comparison.json)差異0，
+涵蓋活動槽、XYZ、固定點高度／速度、威力、方向、圖號、單兵旗標／體力／命令／冷卻、完整RNG及音效碼集合。
+原版352次登錄與424次清除的時點／位置一併核對；未比對無效槽的殘存bytes。
+呈現端以實際`ProjectileSourceIndex`核對848筆活動view，取用實際BATTLE.SCH四個對應單位336、337、340、341，
+沒有用自行計算的圖號代替正式入口，也沒有把素材索引檢查稱為完整戰場像素對拍。
+
+新增[原版軌跡回歸測試](../../internal/rules/tactical/projectile_cycle_test.go)，固定逐次量得的高度、速度、威力與消失邊界。
+三套件冷測／vet及實際素材測試通過；重力、特殊相位、普通出生格、特殊水平移動四類負對照均被拒絕。
+本片只增加測試，遊戲binary與正常GUI沿前輪`wlgame-cao-route229-r1`，未重跑GUI或更動存檔。
+正常玩家流程中的特殊投射物觸發、完整遮擋像素、腳本216拍後及其他場景仍未驗收，Issue #24／#16保持開啟。
+
 ## 2026-11-15：高平面拒絕與尋路請求（CONFORMED，限本片）
 
 前片首差229拍槽90圖號／X，較早196拍已有槽86額外PathQueued。
