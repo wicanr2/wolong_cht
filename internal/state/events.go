@@ -646,6 +646,11 @@ func (w *World) cooperationTerms(source, invader, target int) (response, amount 
 		response = 2
 	}
 	value := friendToTarget & 0x7F
+	// sub_13712:1372E–13734：交戰值先歸零，再判門檻與計價。
+	// 不能把高交友值的交戰關係誤算成免費協力。
+	if friendToTarget < 0x80 {
+		value = 0
+	}
 	if value < 0x28+w.Factions[source].Aggression*2 {
 		response = 2
 	}

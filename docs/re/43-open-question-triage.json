@@ -364,16 +364,16 @@
     },
     {
       "file": "docs/mechanics/70-ai.md",
-      "item": "「拉玩家合攻一個對玩家友善的對象」的**意圖**（§1.2 末）",
-      "status": "機制已照抄，意圖無證據。要定案得靠實機長跑統計，不是反組譯",
+      "item": "協力第④b道閘的正常外交視窗連續流程",
+      "status": "角色及有向關係已定位，條件常式已對拍；原版正常玩家視窗仍待抽驗，依Issue #26",
       "section": "未解",
       "domain": "規則正確性",
       "verdict": "靜態",
       "occurrence": 0,
-      "id": "oq-c5700f35d366033bcb31",
+      "id": "oq-2a0a3256805a153d1655",
       "classification": "actionable",
       "github_issue": 26,
-      "reason": "協力／協同進攻的 ④b gate 或 Friendship 門檻，併入 Issue #26。"
+      "reason": "條件與角色方向已補證；正常原版外交視窗連續流程仍依Issue #26。"
     },
     {
       "file": "docs/mechanics/70-ai.md",
