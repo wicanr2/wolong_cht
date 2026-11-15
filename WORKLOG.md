@@ -1947,3 +1947,8 @@
 - 六份較早文件回填，re74已解項移出未解表，triage1136→1135；spec159保留更廣地形與排程的原Issue #16邊界。依使用者抽驗要求，本輪戰鬥動畫目標的兩項餘項均閉合，不延伸成全遊戲或所有場景完成。文件差分、回填負對照、來源與UID／Docker清理由收尾收據驗證。
 - 文件嚴格抽取、1135列分流、過期斷言與資產deny-list通過。索引及check.sh仍因既有65個歷史本機連結而回1，對HEAD差分確認0個新增；幽靈掃描352筆、323個不重複引用與基線相同，IDA符號層因既有census.tsv缺檔而未跑。首次移除re74已解表列後，工具把留在未解標題下的完成說明又當成一列；將該節正確改為抽驗範圍，保留已解證據及無缺口註記後重跑通過，未降低檢查規則。
 - [正式比較](workplace/scratch/ui-windows-20261104/cao-duel-matrix-comparison.json)、[本機對照](workplace/scratch/ui-windows-20261104/cao-duel-matrix-review.html)、[收據](workplace/scratch/ui-windows-20261104/cao-duel-matrix-integration.json)及[完成稽核](workplace/scratch/ui-windows-20261104/cao-duel-matrix-goal-audit.json)留本機。沿既有授權commit／push，沒有發布原版素材或建立Release。
+
+## 2026-11-15：全滑鼠與原版操作的範圍釐清
+
+- 使用者重申操作體驗須接近原版。核對mechanics10與spec266／267，原版戰略介面已有純滑鼠證據；停用的是早期remake新增的鍵盤捷徑，不能把全滑鼠本身列為原版差異。spec266已訂正此分類，原版入口、左右鍵與上下推動反白維持，工具列提供可選入口。
+- 本輪僅修正文義，未修改正式程式或操作。沿既有授權commit／push。AI途中留守仍在核對原版控制流，尚無READY新規則，不依未證實的暫存器假設修改正式AI。
