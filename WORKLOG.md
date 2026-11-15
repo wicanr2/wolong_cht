@@ -1806,3 +1806,16 @@
 - 驗證工具修正：COM自動分析把效果程式碼列為資料，加入一次性probe的明示解碼，確認bytes不變並保留原名稱；第一次延伸區間超過已知helper返回點而失敗，保存log後以原始C3與IDA函式結尾訂正範圍。候選產生器初次替換條件碰到兩處呼叫，收緊錨點後重跑；試聽前版第一次誤用已更新root來源，保存失敗材料，改用735bff3及雜湊核對的舊來源，最後與凍結的舊序列逐筆相同。均列工具問題，未列遊戲缺陷。
 - [spec159](docs/spec/159-tactical-command-movement-order.md)、[正式證據](workplace/scratch/ui-windows-20261104/cao-sfx677-evidence.json)、[本機試聽](workplace/scratch/ui-windows-20261104/cao-sfx677-audio-review.html)與[整合收據](workplace/scratch/ui-windows-20261104/cao-sfx677-integration.json)保存10份來源、工具、輸入、seed及產物雜湊；前輪650份凍結產物未改。正常攻守GUI沒有重跑，本輪改離線音效生成，播放程式未改。完整UI像素、原版守方同狀態動態、播放佇列／優先度沿既有Issues，目標保持active。依既有授權commit與push，不建立Release，原素材及衍生音檔不入Git。
 - 收尾：1138列分流、596份文件過期斷言及1909個追蹤檔素材檢查通過。官方文件入口仍止於65個既有失效連結，新增0；幽靈引用352筆／323種同基線，歷史census.tsv符號層未執行。六個試聽頁內嵌WAV與來源全等；10份來源、前輪650份與本輪產物雜湊、root-owned檔／md目錄檢查、Docker清理與提交／遠端main核對保存於整合收據。
+
+
+## 2026-11-15：逐拍聲音請求、原碼優先度與單聲部
+
+- 前輪a79def7已推送，本輪接續相同動畫目標。沿remake／spec閘門及平台規格停止線路由，主機gh認證後唯讀核對Issue #24仍OPEN，沒有寫入或關閉遠端Issue。
+- 直接在原版KI102F5–1030E提供前碼／請求碼0–18及flags0／1／4／5／255，共1805組，核對接受／拒絕與前碼。716次既有正常戰鬥請求再搭配預先固定busy輸入重播，與typed閘相同；這不是自然TSR wall-clock。COM效果常式的18種鏈長及一組Delay0倒數256亦全等，不重做ISR或硬體時序。
+- 候選保留單拍全部有序請求，下一Step丟棄未消費拍，桌面每Step後取走，快速／無聲路徑不累積跨拍歷史。Bank接受原碼優先度，忙碌時只拒絕數值較大的新碼，相同碼重新起音；只持有一個效果聲部，音樂獨立。OFF／靜音關閉現有聲部，音量同時套用；原始SOUND.DAT鏈長決定busy，不用OGG殘響長度代替。
+- 發現首次player建立可能耗時，忙碌期限改由建立完成後計算，並以延遲factory回歸釘住。六類錯版負對照、六套件冷測、1805閘／716受控busy／19鏈長、公開Take完整716次及677拍主要規則逐byte不變後，READY才接正式。正式同樣全部通過，vet及桌面建置通過，未改存檔／音檔metadata格式。
+- 正式wlgame-cao-sfxprio-r1開啟實際三個OGG與原始時序資料，正常曹操第一劇本對呂布經宣戰、夏侯淵編成、停手行軍、途中存讀、自然攻城、改線／登城／突擊、小地圖與返回世界，97點／25圖通過。248／251／255／260／262／266／267／268拍八張接受擷取前後同拍、指標固定、快轉關閉，13張跨拍拒絕重抓；已目視248拍。758拍自然敗退，兵力5580／5680、HP39／214；GUI下令不同，不稱原版677拍同輸入戰果。戰報維持關閉。
+- 實際player煙霧及正常GUI均由按44100Hz讀取的容器FIFO音訊端擷取，正常GUI串流164.27秒、非靜音且無非有限取樣值。完整串流只留雜湊／統計，有聲抽樣最多352800 bytes。不是人耳、實體音效卡或原版波形確認；忙碌秒數保留既定hardware-spec approximation，未提供原資料的獨立Bank以OGG播放狀態fallback，明確不作原版時序聲明。
+- 驗證工具修正：忽略metadata的錯版因now變數未用而先編譯失敗，保存首次來源／log後補保留變數，最後以行為失敗才計負對照。首次ALSA null端沒有實時等待，短測寫出440860672-byte診斷；確認擁有權、記雜湊並保存1MiB前綴後移除全檔，改為有界且按採樣率讀取的FIFO端重跑，未調遊戲速度或等待期限。
+- [spec159](docs/spec/159-tactical-command-movement-order.md)、[正式證據](workplace/scratch/ui-windows-20261104/cao-sfxprio-evidence.json)、[本機遊戲抽驗](workplace/scratch/ui-windows-20261104/cao-sfxprio-game-review.html)及[整合收據](workplace/scratch/ui-windows-20261104/cao-sfxprio-integration.json)保存16份來源、binary、輸入／seed、工具及產物雜湊；前輪124份凍結產物未改。完整UI像素、原版守方同狀態動態與其他場面沿既有Issues，目標保持active。原素材及衍生音訊／截圖只留本機，依既有授權commit、push，不建立Release。
+- 收尾：1138列分流、596份文件過期斷言及1911個追蹤檔素材檢查通過。官方文件入口仍止於65個既有失效連結，新增0；幽靈引用352筆／323種同基線，歷史census.tsv符號層未執行。八張PNG與三個OGG內嵌資料全等；16份來源、前輪124份與本輪產物雜湊、root-owned檔／md目錄檢查、Docker清理與提交／遠端main核對保存於整合收據。

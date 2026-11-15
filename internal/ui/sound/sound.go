@@ -8,12 +8,14 @@ package sound
 import (
 	"bytes"
 	"fmt"
+	gameaudio "github.com/wicanr2/wolong_cht/internal/audio"
 	"math"
 	"os"
 	"path/filepath"
 	"sort"
 	"strings"
 	"sync"
+	"time"
 
 	"github.com/hajimehoshi/ebiten/v2/audio"
 	"github.com/hajimehoshi/ebiten/v2/audio/vorbis"
@@ -23,7 +25,21 @@ const sampleRate = 44100
 
 // Bank 是一組音檔。零值可以直接用（等於「沒有音檔」，全部呼叫變成 no-op），
 // 所以呼叫端不必到處判斷 nil。
+type effectVoice interface {
+	Play()
+	Pause()
+	Close() error
+	IsPlaying() bool
+	SetVolume(float64)
+}
 type Bank struct {
+	effect          effectVoice
+	effectCode      int
+	effectUntil     time.Time
+	effectDurations map[int]time.Duration
+	effectFactory   func([]byte) (effectVoice, error)
+	effectNow       func() time.Time
+
 	dir     string
 	music   []string // 曲名（不含副檔名），排序過
 	effects map[int]string
@@ -80,6 +96,9 @@ func (b *Bank) SetSilent(on bool) {
 	b.mu.Lock()
 	defer b.mu.Unlock()
 	b.silent = on
+	if on {
+		b.stopEffectLocked()
+	}
 	if on && b.player != nil {
 		b.player.Pause()
 		_ = b.player.Close()
@@ -103,6 +122,9 @@ func (b *Bank) SetEnabled(on bool) {
 	b.mu.Lock()
 	defer b.mu.Unlock()
 	b.enabled = on
+	if !on {
+		b.stopEffectLocked()
+	}
 	if !on && b.player != nil {
 		b.player.Pause()
 	} else if on && b.player != nil {
@@ -142,6 +164,9 @@ func (b *Bank) SetLevel(n int) {
 	b.mu.Lock()
 	defer b.mu.Unlock()
 	b.level = n
+	if b.effect != nil {
+		b.effect.SetVolume(LevelGain(n))
+	}
 	if b.player != nil {
 		b.player.SetVolume(LevelGain(n))
 	}
@@ -211,28 +236,105 @@ func (b *Bank) StopMusic() {
 	}
 }
 
-// PlayEffect 放一個音效。音效很短，每次建一個 player 播完就丟——
-// 原版同時也只有三個 2-operator 通道可用，重疊本來就有限。
+// SetEffectTimings從原始SOUND.DAT取得鏈長，不以OGG殘響推定busy。
+// 遊戲adapter在啟動時提供；不寫入設定、存檔或音檔metadata。
+func (b *Bank) SetEffectTimings(data []byte) error {
+	if b == nil {
+		return nil
+	}
+	effects, err := gameaudio.Effects(data)
+	if err != nil {
+		return err
+	}
+	durations := make(map[int]time.Duration, len(effects))
+	for id := range effects {
+		d, err := gameaudio.EffectDuration(effects, id)
+		if err != nil {
+			return err
+		}
+		durations[id] = d
+	}
+	b.mu.Lock()
+	defer b.mu.Unlock()
+	b.effectDurations = durations
+	return nil
+}
+
+// allowEffect對應KI102F5：相同或較高優先度可打斷，忙碌時拒絕較低優先度。
+func allowEffect(last, code int, busy bool) bool { return code <= last || !busy }
+func (b *Bank) stopEffectLocked() {
+	if b.effect != nil {
+		b.effect.Pause()
+		_ = b.effect.Close()
+		b.effect = nil
+	}
+	b.effectUntil = time.Time{}
+}
+func (b *Bank) createEffectPlayer(raw []byte) (effectVoice, error) {
+	stream, err := vorbis.DecodeF32(bytes.NewReader(raw))
+	if err != nil {
+		return nil, err
+	}
+	player, err := b.context().NewPlayerF32(stream)
+	if err != nil {
+		b.initErr = err
+	}
+	return player, err
+}
+
+// PlayEffect依原版優先度選單一效果聲部，接受時停止舊聲並重新起音。
+// 未提供原始時序的獨立Bank以OGG播放狀態fallback，不作原版時序聲明。
 func (b *Bank) PlayEffect(id int) {
-	if b == nil || !b.enabled || b.initErr != nil || b.Silent() {
+	if b == nil {
+		return
+	}
+	b.mu.Lock()
+	defer b.mu.Unlock()
+	if !b.enabled || b.initErr != nil || b.silent || id < 0 || id > 255 {
+		return
+	}
+	if id == 0 {
+		b.stopEffectLocked()
+		b.effectCode = 0
 		return
 	}
 	name, ok := b.effects[id]
 	if !ok {
 		return
 	}
+	clock := b.effectNow
+	if clock == nil {
+		clock = time.Now
+	}
+	now := clock()
+	busy := false
+	if b.effect != nil {
+		if _, ok := b.effectDurations[b.effectCode]; ok {
+			busy = now.Before(b.effectUntil)
+		} else {
+			busy = b.effect.IsPlaying()
+		}
+	}
+	if !allowEffect(b.effectCode, id, busy) {
+		return
+	}
 	raw, err := os.ReadFile(filepath.Join(b.dir, name))
 	if err != nil {
 		return
 	}
-	stream, err := vorbis.DecodeF32(bytes.NewReader(raw))
+	factory := b.effectFactory
+	if factory == nil {
+		factory = b.createEffectPlayer
+	}
+	player, err := factory(raw)
 	if err != nil {
 		return
 	}
-	player, err := b.context().NewPlayerF32(stream)
-	if err != nil {
-		b.initErr = err
-		return
+	b.stopEffectLocked()
+	b.effect = player
+	b.effectCode = id
+	if d, ok := b.effectDurations[id]; ok {
+		b.effectUntil = clock().Add(d)
 	}
 	player.SetVolume(LevelGain(b.level))
 	player.Play()

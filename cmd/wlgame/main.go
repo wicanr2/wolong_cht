@@ -2116,6 +2116,12 @@ func main() {
 		saveFile: *saveFile, saveBase: path, sound: sound.Open(*audioDir),
 		cmdCell: -1} // −1 ＝ 沒有指令流程在跑（零值 0 是「進言」）
 	g.sound.SetSilent(silentAudio)
+	if raw, err := os.ReadFile(filepath.Join(g.origDir, "SOUND.DAT")); err == nil {
+		if err := g.sound.SetEffectTimings(raw); err != nil {
+			log.Printf("sound effect timings unavailable: %v", err)
+		}
+	}
+
 	if *hdLocationDir != "" {
 		if pack, err := library.LoadHDLocations(*hdLocationDir, originalLocationCount(g)); err != nil {
 			log.Printf("HD locations unavailable; original assets retained: %v", err)

@@ -364,18 +364,11 @@ func (b *Battle) emitSFX(code uint8) {
 	if b == nil {
 		return
 	}
-	// 呈現批次內合併相同碼是目前的remake差異。
-	// 原版102F5依效果碼優先度及忙碌旗標選擇，並非同碼去重；
-	// 該播放策略仍待接線，見docs/spec/159的音效請求草稿。
-	for _, c := range b.sfx {
-		if c == code {
-			return
-		}
-	}
+	// 保留當拍全部請求與順序；播放層另做原版優先度選擇。
 	b.sfx = append(b.sfx, code)
 }
 
-// TakeSoundEffects 取走並清空這一輪排隊的效果碼。
+// TakeSoundEffects取走當拍有序請求；呼叫端須在下一Step前消費。
 func (b *Battle) TakeSoundEffects() []uint8 {
 	if b == nil || len(b.sfx) == 0 {
 		return nil
@@ -671,6 +664,8 @@ func (b *Battle) Step() {
 	if b.Done {
 		return
 	}
+	// 未消費的聲音只屬上一拍；快速／無聲路徑不累積歷史。
+	b.sfx = b.sfx[:0]
 	if b.unitCollision == nil {
 		b.initUnitCollision()
 	}

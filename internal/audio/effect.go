@@ -1,6 +1,9 @@
 package audio
 
-import "fmt"
+import (
+	"fmt"
+	"time"
+)
 
 // `SOUND.DAT` 的重放（`docs/re/57` §6）。
 //
@@ -114,4 +117,42 @@ func stopEffect(c *OPL3, bank, ch int) {
 	c.Write(bank, 0xB0+uint8(ch), 0)
 	c.Write(bank, 0x53+n, 0x3F)
 	c.Write(bank, 0x50+n, 0x3F)
+}
+
+// EffectTicks回傳效果鏈結至停止所需的慢拍數。Delay0依byte遞減需256拍。
+func EffectTicks(list []Effect, id int) (int, error) {
+	if id < 0 || id >= len(list) {
+		return 0, fmt.Errorf("effect%d out of range", id)
+	}
+	if id == 0 {
+		return 0, nil
+	}
+	seen := make(map[int]bool)
+	ticks := 0
+	for id != 0 {
+		if id < 0 || id >= len(list) || seen[id] {
+			return 0, fmt.Errorf("invalid effect chain at%d", id)
+		}
+		if len(list[id].Raw) != effectSize {
+			return 0, fmt.Errorf("invalid effect record%d", id)
+		}
+		seen[id] = true
+		delay := list[id].Delay()
+		if delay == 0 {
+			delay = 256
+		}
+		ticks += delay
+		id = list[id].Next()
+	}
+	return ticks, nil
+}
+
+// EffectDuration沿既有音訊規格換算忙碌時間，不包含OGG裁尾或殘響。
+// 這是hardware-spec approximation，不是原版ISR相位／wall-clock對拍。
+func EffectDuration(list []Effect, id int) (time.Duration, error) {
+	ticks, err := EffectTicks(list, id)
+	if err != nil {
+		return 0, err
+	}
+	return time.Duration(float64(ticks)*float64(time.Second)*slowTickDiv/isrHz + 0.5), nil
 }

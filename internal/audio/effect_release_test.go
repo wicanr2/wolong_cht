@@ -44,3 +44,23 @@ func TestEffectEndingStopsSustainedTone(t *testing.T) {
 		t.Fatalf("鏈結結束後仍發聲：開頭RMS=%g，末段RMS=%g", segments[0], segments[5])
 	}
 }
+
+func TestEffectTicksUsesByteCountdownAndStopsAtZero(t *testing.T) {
+	list := []Effect{{Raw: make([]byte, effectSize)}, sustainedTestEffect(), sustainedTestEffect()}
+	list[1].Raw[13], list[1].Raw[14] = 2, 6
+	list[2].Raw[14] = 0
+	if ticks, err := EffectTicks(list, 1); err != nil || ticks != 262 {
+		t.Fatalf("六拍加byte0倒數應為262，得到%d，%v", ticks, err)
+	}
+	if ticks, err := EffectTicks(list, 0); err != nil || ticks != 0 {
+		t.Fatal("停止碼不應等待記錄0的Delay")
+	}
+	list[2].Raw[13] = 1
+	if _, err := EffectTicks(list, 1); err == nil {
+		t.Fatal("循環鏈應回錯誤")
+	}
+	list[2].Raw = nil
+	if _, err := EffectTicks(list, 2); err == nil {
+		t.Fatal("破損記錄應回錯誤")
+	}
+}
