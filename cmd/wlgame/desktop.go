@@ -360,6 +360,23 @@ func (s *desktopGame) writeTrace() {
 		"buttons": [3]bool{ebiten.IsMouseButtonPressed(ebiten.MouseButtonLeft), ebiten.IsMouseButtonPressed(ebiten.MouseButtonRight), ebiten.IsMouseButtonPressed(ebiten.MouseButtonMiddle)},
 		"canBack": g.desktopEnabled(desktopBack), "hostReady": g.desktopHostReady(),
 	}
+	if len(g.messages) > 0 {
+		d := g.messages[0]
+		v["message"] = map[string]any{"lines": d.lines, "page": d.page,
+			"scene": d.scene, "upper": d.upper, "lower": d.lower, "portrait": d.portraitPage}
+	}
+	if g.world != nil {
+		if c := g.world.PendingDiplomacy(); c != nil {
+			v["diplomacy"] = c
+			v["diplomacyAmountEditing"] = g.diplomacyEditingAmount
+		}
+		v["trust"] = g.world.Trust
+		funds, targets := []int{}, []int{}
+		for _, f := range g.world.Factions {
+			funds, targets = append(funds, f.Funds), append(targets, f.InvasionTarget)
+		}
+		v["factionFunds"], v["invasionTargets"] = funds, targets
+	}
 	buttons := map[string][4]int{}
 	for _, row := range []struct {
 		key    string

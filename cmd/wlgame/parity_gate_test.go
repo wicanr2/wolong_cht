@@ -74,11 +74,12 @@ func TestEvent2To5TalkBranchParityGate(t *testing.T) {
 	for _, tc := range diplomacyCases {
 		t.Run(tc.name, func(t *testing.T) {
 			g := &game{lib: lib, world: w}
-			g.enqueueDiplomacyTalk(state.DiplomacyChoice{
+			choice := state.DiplomacyChoice{
 				Kind: tc.kind, Source: tc.source, Invader: tc.invader,
-				InitialAmount: 6000, OfferAmount: tc.offer,
-			}, tc.option)
-			assertTalkModalContract(t, g, 2)
+				Target: 2, InitialAmount: 6000, OfferAmount: tc.offer,
+			}
+			g.enqueueDiplomacyTalk(choice, adoptedDiplomacyResultForTest(choice, tc.option))
+			assertTalkModalContract(t, g, 3)
 		})
 	}
 

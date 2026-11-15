@@ -68,6 +68,7 @@ func (s *Session) PickModal(i int) {
 	switch s.ModalKind() {
 	case modalDiplomacy:
 		if i == int(state.DiplomacyOfferFunds) {
+			s.world.SetDiplomacyOfferAmount(0)
 			s.amountPad = true
 			return
 		}
@@ -80,7 +81,6 @@ func (s *Session) PickModal(i int) {
 		s.world.ResolveFunding(opt)
 	}
 }
-
 
 // modalOptionRect 是第 i 個選項的矩形。選項貼著主區下緣排。
 func modalOptionRect(i, n int) (x, y, w, h int) {

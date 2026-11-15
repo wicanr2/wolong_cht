@@ -2873,8 +2873,7 @@ func TestQueuedDiplomacyChoice(t *testing.T) {
 	}
 }
 
-// 事件 2／3 進入玩家三選一前，原版先顯示請求報告：停戰是 #360，協力是
-// #373；兩者的 {3} 都是提出請求的勢力君主，而不是事件字高的數字。
+// 事件2／3先以#42通知君主召見，場景中的提問另由360／373顯示。
 func TestQueuedDiplomacyChoiceTalkNotices(t *testing.T) {
 	w := load(t, 0)
 	player, invader, invaded := 0, 1, 2
@@ -2904,7 +2903,7 @@ func TestQueuedDiplomacyChoiceTalkNotices(t *testing.T) {
 	w.eventCursor, w.eventDelay = 0, 1
 	ev := Event{}
 	w.dispatchQueuedEvent(&ev)
-	want := []TalkNotice{{Index: 0x175, City: -1, Faction: invader, General: -1, Amount: -1}}
+	want := []TalkNotice{{Index: 0x2A, City: -1, Faction: -1, General: -1, Amount: -1}}
 	if !reflect.DeepEqual(ev.TalkNotices, want) {
 		t.Fatalf("事件 2 前置 TALK 錯誤：got %#v want %#v", ev.TalkNotices, want)
 	}
@@ -2933,7 +2932,7 @@ func TestQueuedDiplomacyChoiceTalkNotices(t *testing.T) {
 	w.eventCursor, w.eventDelay = 0, 1
 	ev = Event{}
 	w.dispatchQueuedEvent(&ev)
-	want = []TalkNotice{{Index: 0x168, City: -1, Faction: source, General: -1, Amount: -1}}
+	want = []TalkNotice{{Index: 0x2A, City: -1, Faction: -1, General: -1, Amount: -1}}
 	if !reflect.DeepEqual(ev.TalkNotices, want) {
 		t.Fatalf("事件 3 前置 TALK 錯誤：got %#v want %#v", ev.TalkNotices, want)
 	}

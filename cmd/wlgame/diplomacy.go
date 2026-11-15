@@ -62,8 +62,7 @@ func (g *game) updateDiplomacy() {
 	if row, ok := g.talkChoiceInput(&g.diplomacyRow, len(g.diplomacyChoiceLines(*c))); ok {
 		g.diplomacyRow = row
 		if row == int(state.DiplomacyOfferFunds) {
-			g.diplomacyEditingAmount = true
-			g.beginAmountEditor(amountCursorDiplomacy, amountAnchorEventX, amountAnchorEventY)
+			g.beginDiplomacyAmount()
 			return
 		}
 		g.resolveDiplomacy(*c, state.DiplomacyOption(row))
@@ -92,28 +91,24 @@ func (g *game) updateDiplomacy() {
 	option := state.DiplomacyOption(g.diplomacyRow)
 	if option == state.DiplomacyOfferFunds &&
 		(g.confirmed()) {
-		g.diplomacyEditingAmount = true
-		g.beginAmountEditor(amountCursorDiplomacy, amountAnchorEventX, amountAnchorEventY)
+		g.beginDiplomacyAmount()
 		return
 	}
 	g.resolveDiplomacy(*c, option)
 }
 
+func (g *game) beginDiplomacyAmount() {
+	g.world.SetDiplomacyOfferAmount(0)
+	g.diplomacyEditingAmount = true
+	g.beginAmountEditor(amountCursorDiplomacy, amountAnchorEventX, amountAnchorEventY)
+}
+
 func (g *game) resolveDiplomacy(c state.DiplomacyChoice, option state.DiplomacyOption) {
-	kind := c.Kind
-	ok := g.world.ResolveDiplomacy(option)
-	g.enqueueDiplomacyTalk(c, option)
+	result, _ := g.world.ResolveDiplomacyWithResult(option)
+	g.enqueueDiplomacyTalk(c, result)
 	g.diplomacyRow = 0
 	g.diplomacyEditingAmount = false
 	g.amountCursorActive = false
-	if option == state.DiplomacyReject {
-		g.lastEvent = ""
-		return
-	}
-	if !ok {
-		g.setEvent(diplomacyTitle(kind) + "：交涉未成立")
-		return
-	}
 	g.lastEvent = ""
 }
 
@@ -138,24 +133,23 @@ func diplomacyTalkChoiceIndex(c state.DiplomacyChoice, option state.DiplomacyOpt
 }
 
 // diplomacyTalkRequester 是 TALK.DAT 的 \\3 參數來源。事件 2 的事件字高是
-// 玩家／合作方，所以真正提出協力請求的是 Invader；事件 3 則是 Source。
+// 玩家／合作方，請求方名稱來自DI指向的Target；事件3則是Source。
 func (g *game) diplomacyTalkRequester(c state.DiplomacyChoice) string {
 	id := c.Source
 	if c.Kind == state.DiplomacyCooperation {
-		id = c.Invader
+		id = c.Target
 	}
 	return g.diplomacyFactionName(id)
 }
 
 // diplomacyTalkResponse 對應 sub_13902 回傳給 sub_13C3D 的 AL。外交指定金額
 // 超過初始要求雖然 state 收尾 fail-closed，但原版仍顯示 response 2 的破裂句。
-func diplomacyTalkResponse(c state.DiplomacyChoice, option state.DiplomacyOption) (int, int) {
-	if option == state.DiplomacyReject ||
-		(option == state.DiplomacyOfferFunds && c.OfferAmount > c.InitialAmount) {
+func diplomacyTalkResponse(result state.DiplomacyResult) (int, int) {
+	if result.Response >= 2 {
 		return 2, -1
 	}
-	if option == state.DiplomacyOfferFunds && c.OfferAmount > 0 {
-		return 1, c.OfferAmount
+	if result.Response == 1 {
+		return 1, result.Amount
 	}
 	return 0, -1
 }
@@ -173,22 +167,59 @@ func (g *game) diplomacyTalkVars(c state.DiplomacyChoice, amount int) map[byte]s
 
 // enqueueDiplomacyTalk 接回 sub_13902 的已證實文字索引與
 // sub_13C3D 的主要結果句；原版次要信賴度／AH 分支仍留在未完成邊界。
-func (g *game) enqueueDiplomacyTalk(c state.DiplomacyChoice, option state.DiplomacyOption) {
+func (g *game) enqueueDiplomacyTalk(c state.DiplomacyChoice, result state.DiplomacyResult) {
 	choiceAmount := -1
-	if option == state.DiplomacyOfferFunds {
+	if result.AdviceOption == state.DiplomacyOfferFunds {
 		choiceAmount = c.OfferAmount
+	}
+	prompt := g.diplomacySceneMessage(g.diplomacyTalkPromptIndex(c), g.diplomacyTalkVars(c, -1), g.playerLordPortrait())
+	if prompt != nil {
+		prompt.upper, prompt.scene = true, 0
 	}
 	// 玩家挑的那一列由**軍師**在事件場景的下框說出來（原版 `sub_13CDC`，
 	// docs/spec/42 §2）。插圖是事件 2／3 的第 0 頁，留在背後。
-	g.enqueueAdvisorTalk(diplomacyTalkChoiceIndex(c, option),
+	before := len(g.messages)
+	g.enqueueAdvisorTalk(diplomacyTalkChoiceIndex(c, result.AdviceOption),
 		g.diplomacyTalkVars(c, choiceAmount), 0)
-	response, resultAmount := diplomacyTalkResponse(c, option)
+	var advisor *messageDialog
+	if len(g.messages) > before {
+		g.messages[len(g.messages)-1].underlay = prompt
+		copy := g.messages[len(g.messages)-1]
+		advisor = &copy
+	}
+	replyIndex := g.diplomacyTalkPromptIndex(c) + 7
+	if result.AdviceAdopted {
+		replyIndex += 3
+	}
+	if reply := g.diplomacySceneMessage(replyIndex, g.diplomacyTalkVars(c, -1), g.playerLordPortrait()); reply != nil {
+		reply.upper, reply.scene, reply.underlay = true, 0, advisor
+		g.messages = append(g.messages, *reply)
+	}
+	response, resultAmount := diplomacyTalkResponse(result)
 	resultBase := 0x2B // TALK #43; event 3
 	if c.Kind == state.DiplomacyCooperation {
 		resultBase = 0x2F // TALK #47; event 2
 	}
 	g.enqueueTalkWithPortrait(resultBase+response,
 		g.diplomacyTalkVars(c, resultAmount), g.diplomacyResultPortrait(c))
+	if result.Response == 3 {
+		g.enqueueTalkWithPortrait(resolveBattleTalkIndex(0x1A5, 0), g.diplomacyTalkVars(c, -1), g.playerLordPortrait())
+	}
+	for _, notice := range result.TalkNotices {
+		g.enqueueTalkNotice(notice)
+	}
+}
+
+// 只取已由共用TALK排版器建立的視窗，供同一場景保留上下框。
+func (g *game) diplomacySceneMessage(index int, vars map[byte]string, portrait int) *messageDialog {
+	before := len(g.messages)
+	g.enqueueTalkWithPortrait(index, vars, portrait)
+	if len(g.messages) == before {
+		return nil
+	}
+	d := g.messages[len(g.messages)-1]
+	g.messages = g.messages[:before]
+	return &d
 }
 
 // diplomacyResultPortrait 是結果句的講話者（原版 `sub_13C3D` 開頭）：
@@ -205,9 +236,6 @@ func (g *game) diplomacyResultPortrait(c state.DiplomacyChoice) int {
 		return defaultPortraitPage
 	}
 	id := c.Source
-	if c.Kind == state.DiplomacyCooperation {
-		id = c.Invader
-	}
 	if id < 0 || id >= len(g.world.Factions) || id == g.world.Player {
 		return defaultPortraitPage
 	}

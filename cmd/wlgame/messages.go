@@ -22,6 +22,9 @@ type messageDialog struct {
 	// lower 表示這一則要畫在**事件場景的下框**（原版 `sub_13CDC`）。
 	// 下框寫死是軍師在說話，也就是玩家自己（docs/spec/42 §1）。
 	lower bool
+	upper bool
+	// underlay保存同一事件場景中尚未被覆寫的另一個對白框。
+	underlay *messageDialog
 	// scene 是要留在背後的 IVENTGRF 頁；−1 表示不畫插圖。
 	// 原版的事件對話是疊在插圖上的，插圖不會因為換一句話而消失。
 	scene int
@@ -151,6 +154,16 @@ func (g *game) enqueueEventMessages(ev state.Event) {
 		}
 		g.enqueueTalkNotice(notice)
 	}
+	if ev.Diplomacy != nil {
+		// 原版13C99先等待君主提問的右鍵，再由13B7E開三列選單。
+		// 提問畫面與選列器各有一次獨立的輸入等待。
+		c := *ev.Diplomacy
+		if prompt := g.diplomacySceneMessage(g.diplomacyTalkPromptIndex(c),
+			g.diplomacyTalkVars(c, -1), g.playerLordPortrait()); prompt != nil {
+			prompt.upper, prompt.scene = true, 0
+			g.messages = append(g.messages, *prompt)
+		}
+	}
 	for _, id := range ev.ReleasedGenerals {
 		if id < 0 || id >= len(g.world.Generals) ||
 			g.world.Player < 0 || g.world.Player >= len(g.world.Factions) ||
@@ -236,6 +249,9 @@ func (g *game) playerAdvisorPortrait() int {
 	if g == nil || g.world == nil || g.world.Player < 0 ||
 		g.world.Player >= len(g.world.Factions) {
 		return defaultPortraitPage
+	}
+	if g.world.HasCustomAdvisor() {
+		return g.world.AdvisorPortrait
 	}
 	advisor := g.world.Factions[g.world.Player].Advisor
 	if advisor < 0 || advisor >= len(g.world.Generals) ||
@@ -323,7 +339,38 @@ func (g *game) enqueueTalkNotice(notice state.TalkNotice) {
 
 func (g *game) drawMessage(screen *ebiten.Image) {
 	d := g.messages[0]
-	lines, pages, ok := messagePage(d.lines, d.page)
+	_, pages, ok := messagePage(d.lines, d.page)
+	if !ok {
+		return
+	}
+	if d.scene >= 0 {
+		g.drawIventScene(screen, d.scene)
+	}
+	g.drawMessageLayer(screen, &d)
+	x, y := messageDialogPosition(&d)
+	// 翻頁提示是remake差異，原有非外交視窗維持既有呈現。
+	if pages > 1 {
+		g.td.Draw(screen, fmt.Sprintf("%d／%d", d.page+1, pages),
+			x+talkBoxW-48, y+talkBoxH-24, chrome.Paper)
+	}
+}
+
+func messageDialogPosition(d *messageDialog) (int, int) {
+	if d.lower {
+		return talkLowerBoxX, talkLowerBoxY
+	}
+	if d.upper {
+		return talkUpperBoxX, talkUpperBoxY
+	}
+	return talkBoxX, talkBoxY
+}
+
+func (g *game) drawMessageLayer(screen *ebiten.Image, d *messageDialog) {
+	if d == nil {
+		return
+	}
+	g.drawMessageLayer(screen, d.underlay)
+	lines, _, ok := messagePage(d.lines, d.page)
 	if !ok {
 		return
 	}
@@ -334,19 +381,7 @@ func (g *game) drawMessage(screen *ebiten.Image) {
 	if portrait < 0 {
 		portrait = defaultPortraitPage
 	}
-	x, y := talkBoxX, talkBoxY
-	if d.lower {
-		// 事件場景的下框：軍師在說話（docs/spec/42）。
-		x, y = talkLowerBoxX, talkLowerBoxY
-	}
-	if d.scene >= 0 {
-		g.drawIventScene(screen, d.scene)
-	}
+	x, y := messageDialogPosition(d)
 	g.drawLegacyTalkBoxFields(screen, x, y, talkBoxW, talkBoxH, lines,
 		portrait, d.fields)
-	// 翻頁提示是 remake 加的：原版靠等待輸入，沒有頁碼。
-	if pages > 1 {
-		g.td.Draw(screen, fmt.Sprintf("%d／%d", d.page+1, pages),
-			x+talkBoxW-48, y+talkBoxH-24, chrome.Paper)
-	}
 }

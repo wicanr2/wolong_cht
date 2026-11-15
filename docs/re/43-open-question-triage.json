@@ -364,19 +364,6 @@
     },
     {
       "file": "docs/mechanics/70-ai.md",
-      "item": "協力第④b道閘的正常外交視窗連續流程",
-      "status": "角色及有向關係已定位，條件常式已對拍；原版正常玩家視窗仍待抽驗，依Issue #26",
-      "section": "未解",
-      "domain": "規則正確性",
-      "verdict": "靜態",
-      "occurrence": 0,
-      "id": "oq-2a0a3256805a153d1655",
-      "classification": "actionable",
-      "github_issue": 26,
-      "reason": "條件與角色方向已補證；正常原版外交視窗連續流程仍依Issue #26。"
-    },
-    {
-      "file": "docs/mechanics/70-ai.md",
       "item": "事件 2／3 的完整接受流程與原版訊息、4／5 的逐位金額輸入、6／7 的 `TALK.DAT` 反應、9 的原版完整流程、11／12 的物件動畫",
       "status": "事件佇列的 runtime 已在，缺的是各事件的原版畫面流程；逐一對 `sub_14269` 一帶的分派做 oracle",
       "section": "未解",
@@ -10059,19 +10046,6 @@
       "classification": "actionable",
       "github_issue": 5,
       "reason": "對峙 96 拍動畫與音效，併入 Issue #5。"
-    },
-    {
-      "file": "docs/spec/176-event-queue-cursor-not-restored.md",
-      "item": "eventDelay`（`byte_131AD`）的相位。",
-      "status": "（未解小節內文）",
-      "section": "5. 未解",
-      "domain": "其他",
-      "verdict": "靜態",
-      "occurrence": 0,
-      "id": "oq-12a110b6c502db322988",
-      "classification": "evidence-only",
-      "github_issue": null,
-      "reason": "目前列只保留原版證據邊界，未命中現行玩家路徑、規則或交付 Issue；若影響範圍改變，先建立新 Issue 再調整分類。"
     },
     {
       "file": "docs/spec/177-replan-on-leg-not-from-city.md",

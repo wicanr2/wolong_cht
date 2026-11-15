@@ -149,14 +149,30 @@ func TestEvent2To5FullTalkPageSampling(t *testing.T) {
 			if tc.option == state.DiplomacyOfferFunds {
 				choiceAmount = tc.c.OfferAmount
 			}
-			response, resultAmount := diplomacyTalkResponse(tc.c, tc.option)
+			result := adoptedDiplomacyResultForTest(tc.c, tc.option)
+			response, resultAmount := diplomacyTalkResponse(result)
 			_ = response
 			vars := []map[byte]string{
 				g.diplomacyTalkVars(tc.c, choiceAmount),
+				g.diplomacyTalkVars(tc.c, -1),
 				g.diplomacyTalkVars(tc.c, resultAmount),
 			}
-			assertTalkPairSample(t, lib, w, tc.indices, vars, tc.label,
-				func(g *game) { g.enqueueDiplomacyTalk(tc.c, tc.option) })
+			indices := []int{tc.indices[0], g.diplomacyTalkPromptIndex(tc.c) + 10, tc.indices[1]}
+			if result.Response == 3 {
+				index := resolveBattleTalkIndex(0x1A5, 0)
+				penaltyVars := g.diplomacyTalkVars(tc.c, -1)
+				lines, _ := lib.Talk.Lines(index, penaltyVars)
+				visible := false
+				for _, line := range lines {
+					visible = visible || line != ""
+				}
+				if visible {
+					indices = append(indices, index)
+					vars = append(vars, penaltyVars)
+				}
+			}
+			assertTalkPairSample(t, lib, w, indices, vars, tc.label,
+				func(g *game) { g.enqueueDiplomacyTalk(tc.c, result) })
 		})
 	}
 

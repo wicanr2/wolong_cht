@@ -108,9 +108,9 @@ func (w *World) beginDiplomacy(ev *Event, choice DiplomacyChoice) bool {
 	var ok bool
 	switch choice.Kind {
 	case DiplomacyCooperation:
-		_, choice.OfferAmount, ok = w.cooperationTerms(choice.Source, choice.Invader, choice.Target)
+		choice.InitialResponse, choice.OfferAmount, ok = w.cooperationTerms(choice.Source, choice.Invader, choice.Target)
 	case DiplomacyCeasefire:
-		_, choice.OfferAmount, ok = w.ceasefireTerms(choice.Source, choice.Target)
+		choice.InitialResponse, choice.OfferAmount, ok = w.ceasefireTerms(choice.Source, choice.Target)
 	default:
 		return false
 	}
@@ -121,85 +121,70 @@ func (w *World) beginDiplomacy(ev *Event, choice DiplomacyChoice) bool {
 	w.diplomacy = &choice
 	if ev != nil {
 		ev.Diplomacy = w.diplomacy
-		// sub_138C7／sub_138E6 在玩家進入三選一前先顯示
-		// TALK #360／#373；{3} 是提出請求的勢力君主名。
-		index, faction := 0x168, choice.Source
-		if choice.Kind == DiplomacyCooperation {
-			index, faction = 0x175, choice.Invader
-		}
+		// sub_13902先以通報者顯示#42，再進場景中的君主提問。
 		ev.TalkNotices = append(ev.TalkNotices, TalkNotice{
-			Index: index, City: -1, Faction: faction, General: -1, Amount: -1,
+			Index: 0x2A, City: -1, Faction: -1, General: -1, Amount: -1,
 		})
 	}
 	return true
 }
 
-// ResolveDiplomacy 消費目前的玩家外交選擇。
-//
-// 事件 2／3 的三列已按原版 AL=0／1／reject 分開；提供資金使用
-// sub_13712／sub_136C4 算出的預設金額與目前已編輯的 OfferAmount。
-// Trust advice、其餘亂數建議與原版逐頁訊息仍留在後續 parity 工作；本函式只接入
-// 已由 sub_13C3D 證實的超額輸入扣 30 分分支。
+// ResolveDiplomacy保留既有bool入口，與呈現層共用同一份結算。
 func (w *World) ResolveDiplomacy(option DiplomacyOption) bool {
+	_, applied := w.ResolveDiplomacyWithResult(option)
+	return applied
+}
+
+// ResolveDiplomacyWithResult按原版13902保留初始回應及一次採納骰。
+// 回傳的實際條件供UI報告，不能以玩家建議推定君主最後決定。
+func (w *World) ResolveDiplomacyWithResult(option DiplomacyOption) (DiplomacyResult, bool) {
+	result := DiplomacyResult{Response: 2, AdviceOption: option}
 	choice := w.diplomacy
 	if choice == nil || option > DiplomacyReject {
-		return false
+		return result, false
 	}
 	w.diplomacy = nil
-
-	// ⭐⭐ **軍師答完，君主還要擲一次骰**（`sub_13902`，docs/spec/189）：
-	//
-	//	call sub_1ECE0            ; ★ 不論玩家選哪一列都取，含「拒絕」
-	//	cmp  al, cs:byte_10D00    ; 與信賴度比
-	//	ja   short loc_139BF      ; 亂數 > 信賴度 ⇒ 整段套用被跳過
-	//
-	// 這是 `CLAUDE.md` §3.2「玩家是軍師不是君主」在程式碼裡的樣子。
-	// ⚠ 撥款（`sub_139E8`）**沒有**這一擲，兩支不要一起改。
-	//
-	// ⚠ 亂數要在 `option` 分流**之前**取——原版是無條件的，
-	// 少取一次就讓之後每一座據點換一組亂數（同局面跑到 5/14
-	// 差 89 座據點，docs/playtest/119 §47）。
+	if option == DiplomacyOfferFunds && choice.OfferAmount == 0 {
+		result.AdviceOption = DiplomacyAcceptFree
+	}
+	// 包含拒絕也必須取一次，且不能重新計算外交代表而多取亂數。
 	roll := 0
 	if w.rng != nil {
 		roll = w.rng.Next() & 0xFF
 	}
-	// ⚠ 這一支在信賴度 0xFF 時結構上走不到（`al` 是 8 位元），
-	// 所以「不採納會怎樣」還沒有被原版驗過——形狀照機器碼寫，
-	// 標為假說（docs/spec/189 §3）。
-	if roll > clampU8(w.Trust) {
-		return false
+	if choice.InitialAmount < 0 || choice.OfferAmount < 0 {
+		return result, false
 	}
-	if option == DiplomacyReject {
-		return false
-	}
-
-	// sub_138C7／sub_138E6 先把 sub_136C4／sub_13712 的 DX 留在
-	// sub_13902 的初始編輯值；玩家關閉視窗前不會再跑一次條件函式。
-	// 特別是代表政治值平手時，重算會錯誤多吃一次原版亂數。
-	amount := choice.InitialAmount
-	if amount < 0 || choice.OfferAmount < 0 {
-		return false
-	}
-	response := 0
-	if option == DiplomacyOfferFunds {
-		amount = choice.OfferAmount
-		// sub_13902 的 `DX > [BP+0Ah]` 會把回傳 AL 設為 3；
-		// 外層 handler 以 `cmp al, 2` 視為拒絕，不套用外交收尾。
-		if amount > choice.InitialAmount {
+	result.Response, result.Amount = choice.InitialResponse, choice.InitialAmount
+	result.AdviceAdopted = roll <= clampU8(w.Trust)
+	if result.AdviceAdopted {
+		result.Response = int(result.AdviceOption)
+		if option == DiplomacyOfferFunds {
+			result.Amount = choice.OfferAmount
+		}
+		if option == DiplomacyOfferFunds && choice.OfferAmount > choice.InitialAmount {
+			result.Response = 3
 			w.AdjustTrust(diplomacyOverOfferTrustPenalty)
-			return false
-		}
-		if amount > 0 {
-			response = 1
 		}
 	}
-
+	if result.Response >= 2 {
+		return result, false
+	}
+	declarationNotice := choice.Kind == DiplomacyCooperation && choice.Source == w.Player &&
+		choice.Source >= 0 && choice.Source < numFactions && choice.Invader >= 0 && choice.Invader < numFactions &&
+		!w.Friendship[choice.Source][choice.Invader].AtWar()
+	applied := false
 	switch choice.Kind {
 	case DiplomacyCooperation:
-		return w.finishQueuedCooperation(choice.Source, choice.Invader, choice.Target, response, amount)
+		applied = w.finishQueuedCooperation(choice.Source, choice.Invader, choice.Target, result.Response, result.Amount)
 	case DiplomacyCeasefire:
-		return w.finishQueuedCeasefire(choice.Source, choice.Target, response, amount)
-	default:
-		return false
+		applied = w.finishQueuedCeasefire(choice.Source, choice.Target, result.Response, result.Amount)
 	}
+	if applied && declarationNotice {
+		result.TalkNotices = append(result.TalkNotices, TalkNotice{
+			Index: 0x1A0, City: -1, Faction: choice.Invader,
+			General: w.Factions[choice.Source].Lord, Amount: -1, SpeakerPortrait: true,
+		})
+	}
+	return result, applied
 }

@@ -659,7 +659,8 @@ func loadBlock(b []byte) *World {
 		Trust:           int(b[trustOffset]),
 		AdvisorPortrait: int(b[advisorPortraitOffset]),
 		raw:             append([]byte(nil), b...),
-		eventDelay:      7,
+		// byte_131AD 的程序初值為 1；月結才設 7（spec/176 §6）。
+		eventDelay: 1,
 		// 事件 10 的原版 producer unknown；remake 預設使用明確標示的
 		// 近似 producer，仍可由 SetApproximateEvent10(false) 關閉。
 		approximateEvent10: true,
@@ -935,12 +936,23 @@ const (
 
 // DiplomacyChoice 是暫存在 runtime 的玩家外交視窗，不寫入存檔。
 type DiplomacyChoice struct {
-	Kind          DiplomacyKind
-	Source        int
-	Invader       int
-	Target        int
-	InitialAmount int
-	OfferAmount   int
+	Kind            DiplomacyKind
+	Source          int
+	Invader         int
+	Target          int
+	InitialResponse int
+	InitialAmount   int
+	OfferAmount     int
+}
+
+// DiplomacyResult 保存原版13902實際回傳與後續通知，不寫入存檔。
+// 建議未被採納時，Response／Amount沿用視窗開啟前的條件。
+type DiplomacyResult struct {
+	Response      int
+	Amount        int
+	AdviceOption  DiplomacyOption
+	AdviceAdopted bool
+	TalkNotices   []TalkNotice
 }
 
 // Event 是一個 tick 裡發生的事，供呼叫端記錄或呈現。

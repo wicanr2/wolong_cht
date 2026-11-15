@@ -12,7 +12,7 @@ import "strconv"
 // 而怎麼解碼是呈現層的事。
 //
 // ⚠ 桌面版與手機版共用這一份。每個 marker 的語意都是從原版反推的
-//（`\3` 是**君主名**不是勢力編號、`\6` 只調 X 不輸出字元、
+// （`\3` 是**君主名**不是勢力編號、`\6` 只調 X 不輸出字元、
 // `\2` 在 formatter 有效時要走回查而不是據點名），各寫一份必然會有一邊
 // 把某個 marker 印成錯的東西。
 func (w *World) TalkNoticeVars(n TalkNotice, decode func(string) string) (map[byte]string, bool) {
@@ -28,8 +28,10 @@ func (w *World) TalkNoticeVars(n TalkNotice, decode func(string) string) (map[by
 		if advisor >= 0 && advisor < len(w.Generals) && w.Generals[advisor].Alive {
 			// marker \4（00010939）取玩家勢力的軍師姓名。
 			vars['4'] = decode(w.Generals[advisor].Name)
-		} else if name, _ := w.AdvisorNameRaw(); name != "" {
+		} else if w.HasCustomAdvisor() {
 			// 自訂軍師（+0x02 ＝ 0x7F）：名字在區塊 +0x52A2（docs/formats/10 §4）。
+			// 有效的全形空白仍是參數，不能讓#42因缺marker4而消失。
+			name, _ := w.AdvisorNameRaw()
 			vars['4'] = decode(name)
 		}
 	}
