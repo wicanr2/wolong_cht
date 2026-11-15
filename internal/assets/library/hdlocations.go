@@ -105,7 +105,7 @@ func LoadHDLocations(dir string, pageCount int) (*HDLocations, error) {
 		if !e.Native || sample.HD.File != "hd-generated/"+e.File || sample.HD.Width != e.Width || sample.HD.Height != e.Height || sample.HD.SHA != e.SHA {
 			return nil, fmt.Errorf("HD location selection mismatch")
 		}
-		if _, err = readHDPNG(nativeRoot, e.File, e.Width, e.Height, e.SHA); err != nil {
+		if err = validateHDPNGRecord(e.File, e.Width, e.Height, e.SHA); err != nil {
 			return nil, err
 		}
 		s.pages[page] = e

@@ -71,6 +71,9 @@ func (s *HDPortraits) pngBytes(e hdPortraitEntry) ([]byte, error) {
 }
 
 func readHDPNG(root, file string, width, height int, digest string) ([]byte, error) {
+	if err := validateHDPNGRecord(file, width, height, digest); err != nil {
+		return nil, err
+	}
 	b, err := readHDAsset(root, file, 16<<20)
 	if err != nil {
 		return nil, err
@@ -83,13 +86,29 @@ func readHDPNG(root, file string, width, height int, digest string) ([]byte, err
 	if err != nil {
 		return nil, err
 	}
-	if c.Width != width || c.Height != height || c.Width <= 0 || c.Height <= 0 || c.Width > 4096 || c.Height > 4096 || c.Width*c.Height > 4194304 {
+	if c.Width != width || c.Height != height {
 		return nil, fmt.Errorf("invalid HD dimensions: %s", file)
 	}
 	return b, nil
 }
 
-// LoadHDPortraits validates the whole selected group before it becomes available.
+// validateHDPNGRecord checks catalog metadata without opening the image.
+// Actual bytes, symlinks, hashes and PNG dimensions are checked by Image.
+func validateHDPNGRecord(file string, width, height int, digest string) error {
+	if file == "" || filepath.Base(file) != file || filepath.Ext(file) != ".png" {
+		return fmt.Errorf("invalid HD image filename %q", file)
+	}
+	h, err := hex.DecodeString(digest)
+	if err != nil || len(h) != sha256.Size {
+		return fmt.Errorf("invalid HD image digest: %s", file)
+	}
+	if width <= 0 || height <= 0 || width > 4096 || height > 4096 || width*height > 4194304 {
+		return fmt.Errorf("invalid HD dimensions: %s", file)
+	}
+	return nil
+}
+
+// LoadHDPortraits validates the selected catalog without reading its PNGs.
 // pageCount must come from the loaded original archive, not a version string.
 func LoadHDPortraits(dir string, pageCount int) (*HDPortraits, error) {
 	root, err := filepath.Abs(dir)
@@ -135,11 +154,7 @@ func LoadHDPortraits(dir string, pageCount int) (*HDPortraits, error) {
 		if _, ok := s.pages[*e.PortraitPage]; ok {
 			return nil, fmt.Errorf("duplicate HD page: %d", *e.PortraitPage)
 		}
-		digest, err := hex.DecodeString(e.SHA256)
-		if err != nil || len(digest) != sha256.Size || filepath.Ext(e.File) != ".png" {
-			return nil, fmt.Errorf("invalid HD image record: %s", name)
-		}
-		if _, err = s.pngBytes(e); err != nil {
+		if err = validateHDPNGRecord(e.File, e.Width, e.Height, e.SHA256); err != nil {
 			return nil, err
 		}
 		s.pages[*e.PortraitPage] = e

@@ -61,6 +61,15 @@ func TestHDLocationsSelectionAndPageZero(t *testing.T) {
 			writeHDWorldJSON(t, dir, "originals.json", original)
 			writeHDWorldJSON(t, dir, "manifest.json", map[string]any{"samples": samples})
 			pack, err := LoadHDLocations(dir, 15)
+			if name == "bad image" {
+				if err != nil {
+					t.Fatal("catalog must not open unseen bad image", err)
+				}
+				if _, err := pack.Image(0); err == nil {
+					t.Fatal("bad requested image must fall back")
+				}
+				return
+			}
 			if name != "valid" {
 				if err == nil {
 					t.Fatal("invalid scene selection accepted")

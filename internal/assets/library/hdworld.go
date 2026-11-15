@@ -3,7 +3,6 @@ package library
 // Existing local art-study catalog adapter; not a new distribution format. Spec275.
 import (
 	"bytes"
-	"encoding/hex"
 	"encoding/json"
 	"fmt"
 	"image"
@@ -118,11 +117,7 @@ func LoadHDWorld(dir string) (*HDWorld, error) {
 					}
 				}
 			}
-			digest, err := hex.DecodeString(rec.SHA)
-			if err != nil || len(digest) != 32 || filepath.Ext(rec.File) != ".png" {
-				return nil, fmt.Errorf("invalid HD world PNG record: %s", key)
-			}
-			if _, err = readHDPNG(root, rec.File, rec.Width, rec.Height, rec.SHA); err != nil {
+			if err = validateHDPNGRecord(rec.File, rec.Width, rec.Height, rec.SHA); err != nil {
 				return nil, err
 			}
 			s.layers = append(s.layers, HDWorldLayer{ID: key, Source: source, Core: core, Width: rec.Width, Height: rec.Height, Feather: feather, file: rec.File, digest: rec.SHA})

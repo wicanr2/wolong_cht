@@ -47,7 +47,7 @@ func LoadHDBanner(dir string) (*HDBanner, error) {
 	if !rec.Native || rec.Bank < 0 || rec.Bank >= 4 || c[0] < 0 || c[1] < 0 || c[2] <= 0 || c[3] <= 0 || c[0] > rec.Width || c[1] > rec.Height || c[2] > rec.Width-c[0] || c[3] > rec.Height-c[1] {
 		return nil, fmt.Errorf("invalid HD banner content or palette")
 	}
-	if _, err = readHDPNG(root, rec.File, rec.Width, rec.Height, rec.SHA); err != nil {
+	if err = validateHDPNGRecord(rec.File, rec.Width, rec.Height, rec.SHA); err != nil {
 		return nil, err
 	}
 	return &HDBanner{root: root, file: rec.File, digest: rec.SHA, width: rec.Width, height: rec.Height, Content: image.Rect(c[0], c[1], c[0]+c[2], c[1]+c[3]), Bank: rec.Bank}, nil

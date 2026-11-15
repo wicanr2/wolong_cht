@@ -75,6 +75,15 @@ func TestHDWorldCatalogValidation(t *testing.T) {
 			writeHDWorldJSON(t, dir, "record.json", rec)
 			writeHDWorldJSON(t, dir, "regions.json", cat)
 			pack, err := LoadHDWorld(dir)
+			if name == "missing PNG" {
+				if err != nil {
+					t.Fatal("catalog must not open missing PNG", err)
+				}
+				if _, err := pack.Image(0); err == nil {
+					t.Fatal("missing requested PNG must fall back")
+				}
+				return
+			}
 			if name != "valid" {
 				if err == nil {
 					t.Fatal("accepted malformed world pack")
