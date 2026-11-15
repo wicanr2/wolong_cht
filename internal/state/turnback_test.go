@@ -1,6 +1,7 @@
 package state
 
 import (
+	"fmt"
 	"testing"
 
 	"github.com/wicanr2/wolong_cht/internal/rules/army"
@@ -8,6 +9,51 @@ import (
 	"github.com/wicanr2/wolong_cht/internal/rules/economy"
 	"github.com/wicanr2/wolong_cht/internal/rules/rng"
 )
+
+// 對應spec132的實際原版樣本；本測試驗正式API的整條玩家／AI續行。
+// 原版相同初態與逐次RNG比對另有收據，不由此測試代證。
+func TestPeacefulTurnbackThenPlayerWaitsOrAIReturnsHome(t *testing.T) {
+	for _, player := range []int{0, 2} {
+		t.Run(fmt.Sprintf("player%d", player), func(t *testing.T) {
+			w := scenarioWithRoads(t)
+			w.Player = 0
+			const id, home, border, target = 37, 82, 87, 90
+			kinds := [army.Positions]army.TroopType{army.Cavalry, army.Cavalry, army.Infantry, army.Infantry, army.Archer, army.Archer}
+			manned := [army.Positions]bool{true, true, true, true, true, true}
+			if err := w.FormCorps(id, kinds, manned); err != nil {
+				t.Fatal(err)
+			}
+			if err := w.March(id, target); err != nil {
+				t.Fatal(err)
+			}
+			w.Player = player
+			w.EnableStrategicAI()
+			random := rng.NewFixed(7)
+			turned := false
+			for tick := 0; tick < 3200; tick++ {
+				w.Tick(random)
+				c := w.Corps[id]
+				if c.Ordered == border && c.TargetNode == border {
+					turned = true
+				}
+				if w.PendingBattle() != nil {
+					t.Fatal("和平路徑不應進戰鬥")
+				}
+			}
+			c := w.Corps[id]
+			if !turned {
+				t.Fatal("軍團沒有實際折返")
+			}
+			if player == 0 {
+				if !c.Alive || c.Node != border || c.Stage != StageNormal || c.Ordered != border {
+					t.Fatalf("玩家折返後應停留：%+v", c)
+				}
+			} else if c.Alive || c.Node != home || c.Ordered != home || c.Stage != StageDisband {
+				t.Fatalf("AI無待辦時應回首都解體：%+v", c)
+			}
+		})
+	}
+}
 
 // 邊界掉頭（`docs/spec/132`）：軍團走進**和平**勢力的據點之前會折返。
 //

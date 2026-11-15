@@ -7228,19 +7228,6 @@
     },
     {
       "file": "docs/re/86-march-turnback-at-peace.md",
-      "item": "掉頭之後為什麼停住",
-      "status": "回到 87 之後 `+0x14` 等於 `+0x0E` ⇒ 到站 ⇒ `sub_14325` 分派，Stage 0 而 87 不是首都 ⇒ 什麼都不做。合理但沒有逐條驗過分派表的其他 Stage",
-      "section": "5. 未解",
-      "domain": "程式碼理解",
-      "verdict": "靜態",
-      "occurrence": 0,
-      "id": "oq-a210c0433f8bc2473f59",
-      "classification": "merge-target",
-      "github_issue": 29,
-      "reason": "AI 行軍分派、救援候選、佔用圖或君主出陣，併入 Issue #29。"
-    },
-    {
-      "file": "docs/re/86-march-turnback-at-peace.md",
       "item": "玩家軍團站在據點上時完全不判",
       "status": "`sub_12662` 的 `jz → 12697` 跳過 `sub_14300`。這代表玩家的軍團**不會**自動留守受威脅的據點，但沒有實機驗過（`sub_14300` 自己的三個條件已 confirmed，見 §2.1）",
       "section": "5. 未解",
@@ -9214,19 +9201,6 @@
       "classification": "evidence-only",
       "github_issue": null,
       "reason": "目前列只保留原版證據邊界，未命中現行玩家路徑、規則或交付 Issue；若影響範圍改變，先建立新 Issue 再調整分類。"
-    },
-    {
-      "file": "docs/spec/132-march-turnback-at-peace.md",
-      "item": "折返之後會不會再出發",
-      "status": "原版回到據點就停住（玩家的軍團在據點上完全不判）。**AI 的軍團**走 `sub_14300`：只有「腳下的據點受威脅、而且這一格的軍團數 ≤ 1」才會留守，否則照常繼續行軍（[`../re/86`](../re/86-march-turnback-at-peace.md) §2.1）。折返之後 AI 要不要再出發由 `sub_14325` 的 Stage 機決定，仍沒有實機觀測",
-      "section": "5. 未解",
-      "domain": "其他",
-      "verdict": "靜態",
-      "occurrence": 0,
-      "id": "oq-233f6e523f7d3b49e1ad",
-      "classification": "actionable",
-      "github_issue": 29,
-      "reason": "AI 行軍分派、救援候選、佔用圖或君主出陣，併入 Issue #29。"
     },
     {
       "file": "docs/spec/133-opening-deployment.md",
