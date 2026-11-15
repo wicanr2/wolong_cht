@@ -364,8 +364,9 @@ func (b *Battle) emitSFX(code uint8) {
 	if b == nil {
 		return
 	}
-	// 同一幀重複的碼只留一個：原版一次只送一個 code 給 TSR，
-	// 而 TSR 只有三個 2-operator 通道（docs/re/57 §2）。
+	// 呈現批次內合併相同碼是目前的remake差異。
+	// 原版102F5依效果碼優先度及忙碌旗標選擇，並非同碼去重；
+	// 該播放策略仍待接線，見docs/spec/159的音效請求草稿。
 	for _, c := range b.sfx {
 		if c == code {
 			return

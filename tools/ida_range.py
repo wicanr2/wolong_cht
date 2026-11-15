@@ -21,6 +21,7 @@ import ida_funcs
 import ida_kernwin
 import ida_nalt
 import ida_pro
+import ida_ua
 import idc
 
 # 要看哪幾段寫在 /work/range_list.txt，一行一筆「起 迄 說明」（十六進位）；
@@ -53,6 +54,25 @@ def ranges():
 
 def main():
     ida_auto.auto_wait()
+    # 一次性probe可明示尚被IDA當成資料的已知程式碼區間。
+    # 不用此選項修改正式資料庫；呼叫端保存輸入與原始bytes。
+    decoded = []
+    decode_list = "/output/decode_ranges.json"
+    if PROBE and os.path.isfile(decode_list):
+        with open(decode_list, encoding="utf-8") as fh:
+            decoded = json.load(fh)
+        for region in decoded:
+            start, end = (int(value, 0) for value in region)
+            assert any(a <= start < end <= b for a, b, _ in ranges())
+            before = ida_bytes.get_bytes(start, end-start)
+            assert before is not None
+            ida_bytes.del_items(start, ida_bytes.DELIT_SIMPLE, end-start)
+            ea = start
+            while ea < end:
+                size = ida_ua.create_insn(ea)
+                assert size > 0 and ea+size <= end, hex(ea)
+                ea += size
+            assert ida_bytes.get_bytes(start, end-start) == before
     lines = ["位址區間反組譯（IDA DOS/V linear address）",
              "輸入檔 SHA-256：%s" % ida_nalt.retrieve_input_file_sha256().hex(),
              "函式數：%d" % ida_funcs.get_func_qty()]
@@ -80,6 +100,7 @@ def main():
                        "address_space": "IDA DOS/V linear",
                        "input_sha256": ida_nalt.retrieve_input_file_sha256().hex(),
                        "function_count": ida_funcs.get_func_qty(),
+                       "explicit_code_decode_ranges": decoded,
                        "uid": os.getuid(), "gid": os.getgid(), "regions": regions},
                       fh, ensure_ascii=False, indent=2)
             fh.write("\n")

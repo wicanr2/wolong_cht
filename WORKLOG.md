@@ -1794,3 +1794,15 @@
 - 驗證工具修正：可丟棄Go入口改回模組內並保留probe後綴；GPU測試由RunGame前讀像素改為活躍Draw取樣。第一輪r2啟動因建置腳本殘留r1輸出路徑而未啟動，保存失敗收據並核對binary路徑後同期限重跑；保留原r1來源雜湊。以上與GUI等待失敗均如實保存，未列成未明遊戲缺陷。
 - [spec159](docs/spec/159-tactical-command-movement-order.md)、[正式證據](workplace/scratch/ui-windows-20261104/cao-compose677-evidence.json)、[本機畫面](workplace/scratch/ui-windows-20261104/cao-compose677-game-review.html)及[整合收據](workplace/scratch/ui-windows-20261104/cao-compose677-integration.json)保存33份受測來源、原版／seed／工具／binary及本輪產物雜湊；前輪449份凍結產物不變。完整UI像素、原版守方同狀態動態、音效與其他場面沿Issues #16／#24，目標保持active。原素材與截圖留本機，依既有授權commit、push，不建立Release。
 - 收尾：1138列分流、596份文件過期斷言與1908個追蹤檔素材檢查通過。官方文件入口仍止於65個既有失效連結，新增0；幽靈引用352筆／323種同基線，歷史census.tsv符號層未執行。33份來源包與本輪產物雜湊、root-owned檔及md目錄檢查、Docker清理與提交／遠端main核對保存於整合收據；不動其他專案容器。
+
+
+## 2026-11-15：投射物音效請求核對與資源關聲修正
+
+- 前輪735bff3已推送，工作樹乾淨，本輪依remake／原版對拍、音源與平台規格停止線路由續做Issue #24。主機gh認證通過，唯讀核對Issues #16／#24皆OPEN，未寫入或關閉Issue。
+- 同一初態、固定seed及滑鼠輸入完整重跑原版，716次普通發射484／特殊98／命中134的請求逐拍碼與順序全等。原版680筆主要快照、typed677拍主要狀態與前輪逐byte不變。現行去重後417次；原版102F5另有前碼優先度／忙碌閘，不能由差額推算實際聲數。既有「三個通道所以同碼去重」註解已訂正，播放策略仍DRAFT。
+- IDA Pro9.4非root窄匯出確認YNSOUND每段先key-off並關兩個operator，鏈結0也走關聲；既有RenderEffect漏掉兩步。只查cue與資源解譯，沒有重做ISR／硬體時序。COM以明示CS:offset對應IDA10000h+offset，不套MZ映像基準。
+- dosgolem隔離呼叫效果入口／下一筆，18種音效完整寫入序列作oracle。候選18種全等，舊版18種全不同，缺接續關聲／缺結束關聲兩類錯版各被18案拒絕。持續音重新起音與結束停聲回歸、音訊套件冷測通過後READY，才接正式。正式18種序列逐筆等於原版及候選，兩套件冷測／vet與wlaudio建置通過。
+- 正式命令列產生普通發射12的WAV，與受測生成路徑逐byte相同；特殊10／命中11／普通12三個OGG經ffprobe及遊戲的Ebiten Vorbis解碼器完整解碼，44100Hz立體聲、非靜音、無非有限樣本。修正前／後內嵌試聽頁只留本機；未經人耳或實體音效卡確認，不稱原版波形／wall-clock parity。玩家既有OGG需自行重生，本輪不自動覆寫。
+- 驗證工具修正：COM自動分析把效果程式碼列為資料，加入一次性probe的明示解碼，確認bytes不變並保留原名稱；第一次延伸區間超過已知helper返回點而失敗，保存log後以原始C3與IDA函式結尾訂正範圍。候選產生器初次替換條件碰到兩處呼叫，收緊錨點後重跑；試聽前版第一次誤用已更新root來源，保存失敗材料，改用735bff3及雜湊核對的舊來源，最後與凍結的舊序列逐筆相同。均列工具問題，未列遊戲缺陷。
+- [spec159](docs/spec/159-tactical-command-movement-order.md)、[正式證據](workplace/scratch/ui-windows-20261104/cao-sfx677-evidence.json)、[本機試聽](workplace/scratch/ui-windows-20261104/cao-sfx677-audio-review.html)與[整合收據](workplace/scratch/ui-windows-20261104/cao-sfx677-integration.json)保存10份來源、工具、輸入、seed及產物雜湊；前輪650份凍結產物未改。正常攻守GUI沒有重跑，本輪改離線音效生成，播放程式未改。完整UI像素、原版守方同狀態動態、播放佇列／優先度沿既有Issues，目標保持active。依既有授權commit與push，不建立Release，原素材及衍生音檔不入Git。
+- 收尾：1138列分流、596份文件過期斷言及1909個追蹤檔素材檢查通過。官方文件入口仍止於65個既有失效連結，新增0；幽靈引用352筆／323種同基線，歷史census.tsv符號層未執行。六個試聽頁內嵌WAV與來源全等；10份來源、前輪650份與本輪產物雜湊、root-owned檔／md目錄檢查、Docker清理與提交／遠端main核對保存於整合收據。

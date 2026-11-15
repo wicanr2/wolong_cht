@@ -36,6 +36,7 @@ func (e Effect) Silent() bool { return e.Raw[0x02] == 0x3F && e.Raw[0x03] == 0x3
 // 暫存器位移照原版：通道 6 的兩個 operator 在 `0x10`／`0x13`，
 // 所以 `0x20` 族落在 `0x30+n`、`0x40` 族落在 `0x50+n`，以此類推。
 func (e Effect) program(c *OPL3, bank, ch int) {
+	stopEffect(c, bank, ch)
 	n := uint8(ch - 6)
 	o1, o2 := 0x10+n, 0x13+n
 	for i, base := range []uint8{0x20, 0x40, 0x60, 0x80} {
@@ -67,7 +68,11 @@ func RenderEffect(list []Effect, id int, tail float64) (*PCM, error) {
 	perSample := isrHz / slowTickDiv / NativeRate
 	acc, ticksLeft := 0.0, 0
 	cur := id
-	list[cur].program(c, 0, ch)
+	if cur == 0 {
+		stopEffect(c, 0, ch)
+	} else {
+		list[cur].program(c, 0, ch)
+	}
 	ticksLeft = list[cur].Delay()
 
 	// 上限擋住壞資料造成的無限鏈。正常的鏈都在幾十個 tick 內收掉。
@@ -85,6 +90,7 @@ func RenderEffect(list []Effect, id int, tail float64) (*PCM, error) {
 			}
 			next := list[cur].Next()
 			if next == 0 || next >= len(list) || next == cur {
+				stopEffect(c, 0, ch)
 				cur = -1 // 鏈結束，讓殘響自己收尾
 				continue
 			}
@@ -100,4 +106,12 @@ func RenderEffect(list []Effect, id int, tail float64) (*PCM, error) {
 		}
 	}
 	return out, nil
+}
+
+// stopEffect對應YNSOUND的10838–10848：先key-off，再關兩個operator。
+func stopEffect(c *OPL3, bank, ch int) {
+	n := uint8(ch - 6)
+	c.Write(bank, 0xB0+uint8(ch), 0)
+	c.Write(bank, 0x53+n, 0x3F)
+	c.Write(bank, 0x50+n, 0x3F)
 }
