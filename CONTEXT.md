@@ -256,6 +256,7 @@ GPU最多兩頁快取，其他季節、液晶、未選頁與讀圖失敗沿原�
 
 | 日期／目前程式 | 最近驗證 | 狀態 | 交付物 |
 |---|---|---|---|
+| 2026-11-16；wlgame-ai-long-r1 | 原版18函式bytes、480案完整區塊／佔用圖／RNG全等；前輪1351案、全專案冷測／vet、正常滑鼠62項／9圖；六個錯版拒絕 | 已修解體後該次軍費尾段及重編成保留欄位，存讀檔可接續。正式六表5/1、5/16、6/1全等，6/16起仍有差異；整體AI目標進行中，強化AI未啟用 | [spec178](docs/spec/178-upkeep-and-morale-gate-is-on-leg.md)、[spec173](docs/spec/173-corps-flag-bit0-and-sprite-fields.md)、[整合收據](workplace/scratch/ai-long-20261116/integration.json) |
 | 2026-11-16；wlgame-relief-form-r2 | 原版編成960案全等，分派391案擴至128原始槽；被俘前段16案，六個月不變量、全專案冷測／vet與正常滑鼠62項／9圖 | 已修無侵攻目標的求援、正值挑將與部分失敗寫回，補戰敗俘虜職務。90日來源已重建至7/16，六表5/1及5/16全等，6/1起仍有差異；整體AI目標進行中，強化AI未啟用 | [spec164](docs/spec/164-relief-request-gates.md)、[整合收據](workplace/scratch/ai-relief-20261116/integration.json)、[長程結果](workplace/scratch/ai-relief-20261116/long-parity-result.json) |
 | 2026-11-16；wlgame-relief-r1 | 原版63 bytes核對、384案完整軍團／RNG全等，舊Go拒240案；全專案冷測／vet，正常曹操滑鼠62項／9圖 | 已移除守軍分派額外的勢力限制，保留委任／Stage／行軍排除。局部極端同格與正常UI分別驗證；其餘救援候選及#10政略90日仍待核對，整體AI目標進行中 | [spec180](docs/spec/180-relief-dispatch-want-counts-candidates.md)、[本片收據](workplace/scratch/ai-dispatch-20261115/relief-integration.json) |
 | 2026-11-15；wlgame-sortie-r1 | 原版24條指令核對、1024組出陣判定全等，舊Go拒294案；四劇本負資金存讀檔；全專案冷測／vet，正常曹操滑鼠34項 | 已補君主出陣負資金例外，兵源不足仍拒絕。Issue #29「君主出陣未實作」是歷史記載；救援分派與#10政略90日仍待核對，整體AI目標進行中，強化AI未啟用 | [spec49](docs/spec/49-advise-relocate-and-sortie.md)、[本片收據](workplace/scratch/ai-dispatch-20261115/integration.json) |

@@ -432,7 +432,7 @@ func (w *World) autoFormCorps(faction, leader int, delegated bool) bool {
 	// ⚠ **初值走共用的那一支**（docs/spec/173 §2）。這裡本來是
 	// `var c Corps` 再逐欄補，漏掉的 `+0x08`／`+0x0B` 就用 Go 的零值
 	// 頂上——朝向變成「往 X 減」、計時變成間隔，兩個都與原版不同。
-	c := w.newCorpsRecord(faction, f.Capital, f.MoraleBase)
+	c := w.newCorpsRecord(leader, faction, f.Capital, f.MoraleBase)
 	c.Delegated = delegated
 	for slot, kind := range kinds {
 		remaining := counts[kind]
@@ -503,6 +503,7 @@ func (w *World) formAICorpsTo(faction, dest int) *StrategyEvent {
 	if !w.autoFormCorps(faction, leader, true) {
 		return nil
 	}
+	w.Corps[leader].Stage = StageNormal
 	home := w.clampCity(f.Capital)
 
 	destination := dest

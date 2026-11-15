@@ -244,87 +244,93 @@ func (w *World) loadCorps(b []byte) {
 }
 
 func (w *World) saveCorps(b []byte) {
-	for i, c := range w.Corps {
-		r := b[corpsBase+i*corpsSize:]
-		if !c.Alive {
-			// 敗走中的軍團要把旗標 8 與倒數寫回去，其餘欄位不動
-			// （原版 `sub_12977` 也只改這兩個，docs/spec/43）。
-			if c.Routing {
-				r[0x00] = 0x08
-				r[0x03] = byte(c.Countdown)
-			}
-			// 其餘不存在的軍團**一個 byte 都不動**——重建會抹掉痕跡。
-			continue
+	for i := range w.Corps {
+		w.saveCorpsRecord(b, i)
+	}
+}
+
+// saveCorpsRecord 與一般存檔共用，解體前僅保存該筆已更新的原欄位。
+func (w *World) saveCorpsRecord(b []byte, i int) {
+	c := w.Corps[i]
+	r := b[corpsBase+i*corpsSize:]
+	if !c.Alive {
+		// 敗走中的軍團要把旗標 8 與倒數寫回去，其餘欄位不動
+		// （原版 `sub_12977` 也只改這兩個，docs/spec/43）。
+		if c.Routing {
+			r[0x00] = 0x08
+			r[0x03] = byte(c.Countdown)
 		}
-		// ⚠ **不要整個 byte 寫死。** remake 只建模位元 7／6（存在）與
-		// 位元 2（委任）；位元 0／1／4／5 有設定端與清除端、語意還沒定案
-		// （docs/re/34 §2），但它們是原版的狀態——覆寫等於每次存檔都抹掉。
-		// 原版只在**建立軍團**時整個寫 0xC0（`sub_16F26`），既有軍團的
-		// 其他位元由各自的維護端負責（docs/spec/166）。
-		keep := byte(0)
-		if r[0x00] >= aliveFlag {
-			keep = r[0x00] &^ modelledCorpsBits
-		}
-		r[0x00] = newCorps | keep
-		if c.Delegated {
-			r[0x00] |= 0x04
-		} else {
-			r[0x00] &^= 0x04
-		}
-		if c.OnPath {
-			r[0x00] |= 0x01
-		} else {
-			r[0x00] &^= 0x01
-		}
-		if c.Replan {
-			r[0x00] |= 0x02
-		} else {
-			r[0x00] &^= 0x02
-		}
-		if c.Standoff {
-			r[0x00] |= standoffBit
-		} else {
-			r[0x00] &^= standoffBit
-		}
-		// ⚠ **活著的軍團也要寫 `+0x03`。** 不在對峙時原版恆為 0
-		// （`sub_1264A` 每個週期歸零）——不寫就會留著存檔裡的舊值。
-		r[0x03] = byte(c.Countdown)
-		r[0x01] = byte(c.Faction)
-		r[0x02] = byte(i)
-		putU16(r, 0x04, c.Men)
-		r[0x06] = byte(c.Morale)
-		r[0x08] = byte(c.Heading)
-		// `+0x09` 是導出值：**勢力編號 × 5**（`sub_16FD2`，docs/spec/173 §1.3）。
-		// 每個勢力五張圖塊（四方向 ＋ 停著），與 `world.CorpsHeadings` 同一個
-		// 常數——狀態層不依賴資產層，所以這裡另寫一份並互指。
-		r[0x09] = byte(c.Faction * corpsSpriteStride)
-		r[0x0A] = byte(c.Direction)
-		r[0x0B] = byte(c.Timer)
-		putU16(r, 0x0C, c.PathPtr)
-		// `+0x0E` 的兩種語意：行軍中是連結記錄位址、停著是據點 × 8。
-		if c.LinkAddr != 0 {
-			putU16(r, 0x0E, c.LinkAddr)
-		} else {
-			putU16(r, 0x0E, c.Node*8)
-		}
-		putU16(r, 0x10, c.X)
-		putU16(r, 0x12, c.Y)
-		// 佔用圖的兩欄是導出值：偏移 ＝ X、段 ＝ 基底 ＋ Y × 24。
-		if w.occupancySeg > 0 {
-			putU16(r, 0x1A, c.X)
-			putU16(r, 0x1C, w.occupancySeg+c.Y*24)
-		}
-		putU16(r, 0x14, c.TargetNode*8)
-		putU16(r, 0x16, c.TargetX)
-		putU16(r, 0x18, c.TargetY)
-		r[0x1E] = byte(c.Interval)
-		r[0x20] = byte(c.Ordered)
-		r[0x23] = byte(c.Stage)
-		for k, u := range c.Units {
-			s := r[unitSlotBase+k*unitSlotSize:]
-			s[1] = byte(u.Men)
-			s[2] = byteFromKind(u.Kind)
-		}
+		// 其餘不存在的軍團**一個 byte 都不動**——重建會抹掉痕跡。
+		return
+	}
+	// ⚠ **不要整個 byte 寫死。** remake 只建模位元 7／6（存在）與
+	// 位元 2（委任）；位元 0／1／4／5 有設定端與清除端、語意還沒定案
+	// （docs/re/34 §2），但它們是原版的狀態——覆寫等於每次存檔都抹掉。
+	// 原版只在**建立軍團**時整個寫 0xC0（`sub_16F26`），既有軍團的
+	// 其他位元由各自的維護端負責（docs/spec/166）。
+	keep := byte(0)
+	if r[0x00] >= aliveFlag {
+		keep = r[0x00] &^ modelledCorpsBits
+	}
+	r[0x00] = newCorps | keep
+	if c.Delegated {
+		r[0x00] |= 0x04
+	} else {
+		r[0x00] &^= 0x04
+	}
+	if c.OnPath {
+		r[0x00] |= 0x01
+	} else {
+		r[0x00] &^= 0x01
+	}
+	if c.Replan {
+		r[0x00] |= 0x02
+	} else {
+		r[0x00] &^= 0x02
+	}
+	if c.Standoff {
+		r[0x00] |= standoffBit
+	} else {
+		r[0x00] &^= standoffBit
+	}
+	// ⚠ **活著的軍團也要寫 `+0x03`。** 不在對峙時原版恆為 0
+	// （`sub_1264A` 每個週期歸零）——不寫就會留著存檔裡的舊值。
+	r[0x03] = byte(c.Countdown)
+	r[0x01] = byte(c.Faction)
+	r[0x02] = byte(i)
+	putU16(r, 0x04, c.Men)
+	r[0x06] = byte(c.Morale)
+	r[0x08] = byte(c.Heading)
+	// `+0x09` 是導出值：**勢力編號 × 5**（`sub_16FD2`，docs/spec/173 §1.3）。
+	// 每個勢力五張圖塊（四方向 ＋ 停著），與 `world.CorpsHeadings` 同一個
+	// 常數——狀態層不依賴資產層，所以這裡另寫一份並互指。
+	r[0x09] = byte(c.Faction * corpsSpriteStride)
+	r[0x0A] = byte(c.Direction)
+	r[0x0B] = byte(c.Timer)
+	putU16(r, 0x0C, c.PathPtr)
+	// `+0x0E` 的兩種語意：行軍中是連結記錄位址、停著是據點 × 8。
+	if c.LinkAddr != 0 {
+		putU16(r, 0x0E, c.LinkAddr)
+	} else {
+		putU16(r, 0x0E, c.Node*8)
+	}
+	putU16(r, 0x10, c.X)
+	putU16(r, 0x12, c.Y)
+	// 佔用圖的兩欄是導出值：偏移 ＝ X、段 ＝ 基底 ＋ Y × 24。
+	if w.occupancySeg > 0 {
+		putU16(r, 0x1A, c.X)
+		putU16(r, 0x1C, w.occupancySeg+c.Y*24)
+	}
+	putU16(r, 0x14, c.TargetNode*8)
+	putU16(r, 0x16, c.TargetX)
+	putU16(r, 0x18, c.TargetY)
+	r[0x1E] = byte(c.Interval)
+	r[0x20] = byte(c.Ordered)
+	r[0x23] = byte(c.Stage)
+	for k, u := range c.Units {
+		s := r[unitSlotBase+k*unitSlotSize:]
+		s[1] = byte(u.Men)
+		s[2] = byteFromKind(u.Kind)
 	}
 }
 
@@ -451,18 +457,24 @@ func distributeReserves(pool *[economy.NumTroopTypes]int,
 //
 // ⭐ **計時是 1 不是間隔**：`sub_16FD2` 收尾寫 `[si+0Bh] = 1`，
 // 新編的軍團**下一拍就輪得到**。
-func (w *World) newCorpsRecord(faction, capital, morale int) Corps {
+func (w *World) newCorpsRecord(leader, faction, capital, morale int) Corps {
 	home := w.clampCity(capital)
+	// sub_16F26 不清舊倒數、步進與路徑指標；Stage 初值為1。
+	previous := w.Corps[leader]
 	return Corps{
-		Alive:   true,
-		Faction: faction,
-		Morale:  morale,
-		Ordered: capital,
-		Node:    home,
-		Heading: HeadingStill,
-		Timer:   1,
-		X:       w.Cities[home].X,
-		Y:       w.Cities[home].Y,
+		Direction: previous.Direction,
+		PathPtr:   previous.PathPtr,
+		Countdown: previous.Countdown,
+		Stage:     1,
+		Alive:     true,
+		Faction:   faction,
+		Morale:    morale,
+		Ordered:   capital,
+		Node:      home,
+		Heading:   HeadingStill,
+		Timer:     1,
+		X:         w.Cities[home].X,
+		Y:         w.Cities[home].Y,
 		// 目標先設成原地，行軍指令下達前不會動。
 		TargetNode: home,
 		TargetX:    w.Cities[home].X,
@@ -510,7 +522,7 @@ func (w *World) FormCorps(leader int, kinds [army.Positions]army.TroopType,
 		return fmt.Errorf("state: 大將的位置分不到兵（預備兵 %v）", f.Reserves)
 	}
 
-	c := w.newCorpsRecord(g.Faction, f.Capital, f.MoraleBase)
+	c := w.newCorpsRecord(leader, g.Faction, f.Capital, f.MoraleBase)
 	allCav := false
 	for k, ok := range manned {
 		if !ok || men[k] == 0 {
@@ -778,6 +790,12 @@ func (w *World) tickOneCorps(i, hour int, rng combat.Rand) *CorpsEvent {
 		}
 		return nil
 	}
+	// 對應125D2共同尾段；提前返回仍執行，戰術待續則由ResumeTick接回。
+	defer func() {
+		if w.pending == nil && w.outcome == InProgress {
+			w.finishCorpsVisit(i, hour)
+		}
+	}()
 	ev := CorpsEvent{Corps: i, Enemy: -1, Captured: -1,
 		Relocated: capital.None, GovernorReturned: noGovernor}
 
@@ -863,10 +881,6 @@ func (w *World) tickOneCorps(i, hour int, rng combat.Rand) *CorpsEvent {
 				ev.Arrived = w.atTargetNode(i)
 			}
 		}
-	}
-
-	if w.pending == nil && w.outcome == InProgress {
-		w.finishCorpsVisit(i, hour)
 	}
 
 	if !ev.Moved && ev.Battle == nil {
@@ -2229,14 +2243,15 @@ func byteStep(step int) int { return int(byte(int8(step))) }
 func (w *World) finishCorpsVisit(i, hour int) {
 	c := &w.Corps[i]
 	// ② 軍費與士氣。每天「一時」那個小時才收。
-	// 這一步壞滅的軍團不收——它已經不在了。
+	// 本次巡迴已進入的軍團，即使移動中解體，仍走125D2尾段。
+	// 原本就不存在的軍團由外層略過，不會持續收費。
 	//
 	// ⭐ **軍費是當場從資金扣的**（原版 `sub_12600` → `sub_1562B`），
 	// 不進「本月支出」那個累加器——那一格只有預備兵維持費在寫
 	// （`sub_13E65`，docs/spec/50）。總額一個月下來一樣，
 	// 差在月中：出兵中的勢力資金會即時往下掉，而每小時的侵攻財政閘
 	// 讀的正是資金。
-	if hour == upkeepHour && c.Alive {
+	if hour == upkeepHour {
 		// ⚠ 判準是 `cmp word ptr [si+0Eh], 800h` ＝ **有沒有走在路段上**，
 		// 不是節點的種類（docs/spec/178）。`Corps.Node` 在行軍中留著
 		// 出發那一站，拿它去問「在不在野外」永遠答「在城裡」——
@@ -2247,6 +2262,9 @@ func (w *World) finishCorpsVisit(i, hour int) {
 		cc := combat.Corps{Morale: c.Morale}
 		combat.Recover(&cc, f.MoraleBase, onLeg)
 		c.Morale = cc.Morale
+		if !c.Alive && len(w.raw) > corpsBase+i*corpsSize+6 {
+			w.raw[corpsBase+i*corpsSize+6] = byte(c.Morale)
+		}
 	}
 
 }

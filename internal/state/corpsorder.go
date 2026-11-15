@@ -12,8 +12,8 @@ import (
 	"fmt"
 
 	"github.com/wicanr2/wolong_cht/internal/rules/army"
-	"github.com/wicanr2/wolong_cht/internal/rules/economy"
 	"github.com/wicanr2/wolong_cht/internal/rules/combat"
+	"github.com/wicanr2/wolong_cht/internal/rules/economy"
 )
 
 // 軍團記錄 `+0x23` 的 Stage（`docs/re/64` §2）。八個值全部實作：
@@ -218,6 +218,7 @@ func (c Corps) slots() (kinds [army.Positions]army.TroopType,
 }
 
 // poolBack 是 `sub_14717`：六個槽的兵員全部退回勢力的預備兵池。
+// 只清單兵槽，保留 +4 總兵力；補兵之後另由重算常式更新總欄。
 //
 // ⚠ **要夾 `MaxReserve`（65,500）**。原版 `sub_155EC` 的 `0xFFDC` 正是在
 // 退兵這條路徑上驗到的（docs/spec/21 §5），而 remake 先前只有月結加兵
@@ -234,7 +235,6 @@ func (w *World) poolBack(i int) {
 		}
 		c.Units[k] = combat.Unit{Kind: u.Kind}
 	}
-	c.Men = 0
 }
 
 // disbandCorps 是 `sub_14651` 的五個動作（`docs/re/64` §3）。
@@ -243,7 +243,7 @@ func (w *World) disbandCorps(i int) {
 	if !c.Alive {
 		return
 	}
-	w.poolBack(i)                  // ② 兵回預備兵池
+	w.poolBack(i) // ② 兵回預備兵池
 	if c.Faction >= 0 && c.Faction < numFactions {
 		f := &w.Factions[c.Faction]
 		if f.Corps > 0 {
@@ -253,8 +253,11 @@ func (w *World) disbandCorps(i int) {
 	if i >= 0 && i < len(w.Generals) {
 		w.Generals[i].Duty = DutyNone // ④ 主將解職（軍團編號 ＝ 主將編號）
 	}
-	c.Alive = false // ③ 軍團記錄歸零
-	c.Stage = StageNormal
+	if len(w.raw) >= corpsBase+(i+1)*corpsSize {
+		w.saveCorpsRecord(w.raw, i)
+		w.raw[corpsBase+i*corpsSize] = 0
+	}
+	c.Alive, c.Routing, c.Standoff, c.OnPath, c.Replan, c.Delegated = false, false, false, false, false, false
 	w.exitCell(c.X, c.Y) // ⑤ 大地圖佔用圖 −1（docs/spec/183）
 }
 
