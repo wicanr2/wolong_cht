@@ -176,33 +176,58 @@ func (g *game) startBattleTalk(p *state.Pending) {
 // pumpDuelTalks 把狀態機累積的喊話換成 TALK 索引掛上對白框。
 // 變體與肖像照說話大將（`sub_1075B` 的八變體公式）。
 func (g *game) pumpDuelTalks(p *state.Pending) {
-	s := &g.battleTalkSession
 	for _, dt := range p.Battle.TakeDuelTalks() {
-		commander := g.battleCommander(p, dt.Side)
-		if commander < 0 || commander >= len(g.world.Generals) {
-			continue
-		}
-		general := g.world.Generals[commander]
-		// ⭐ **變體用 `+0x1E` 的原始值 0–7**（`sub_1C315` 的
-		// `mov ah, [bx+1Eh]`，docs/spec/136 §3）。「模 3 收成 0–2」
-		// 是進言那條路（`sub_13C99`）的作法，套到這裡會換成別人的台詞。
-		entry := BattleTalkEntry{
-			Speaker:  big5(general.TalkName()), // \1 ＝ 呼び名，docs/spec/119
-			Index:    resolveBattleTalkIndex(dt.Group, general.TalkVariant),
-			Portrait: general.Portrait,
-			Side:     dt.Side,
-			Duration: battleTalkDuration,
-		}
-		// 對手的呼び名：參數串流的第一格（docs/spec/136 §2）。
-		if o := g.battleCommander(p, 1-dt.Side); o >= 0 && o < len(g.world.Generals) {
-			entry.Other = big5(g.world.Generals[o].TalkName())
-		}
-		// 不能安全代入的 marker 直接丟棄該 entry，不顯示 debug／半句文字。
-		if _, _, ok := g.battleTalkText(entry); !ok {
-			continue
-		}
-		s.queue.set(entry)
+		g.queueBattleTalk(p, dt.Side, dt.Group)
 	}
+}
+
+// queueBattleTalk 共用原版人物變體與參數串流，Side 保留實際攻守側。
+func (g *game) queueBattleTalk(p *state.Pending, side, group int) bool {
+	if g == nil || g.world == nil || p == nil || p.Battle == nil || side < 0 || side > 1 {
+		return false
+	}
+	commander := g.battleCommander(p, side)
+	if commander < 0 || commander >= len(g.world.Generals) {
+		return false
+	}
+	general := g.world.Generals[commander]
+	// sub_1C315 以武將+1Eh原始說話型0–7選變體，不能套進言的模3收斂。
+	// 名稱仍使用呼び名；參數串流順序是[對手,說話者]，沿spec119／136。
+	entry := BattleTalkEntry{
+		Speaker:  big5(general.TalkName()),
+		Index:    resolveBattleTalkIndex(group, general.TalkVariant),
+		Portrait: general.Portrait,
+		Side:     side,
+		Duration: battleTalkDuration,
+	}
+	if other := g.battleCommander(p, 1-side); other >= 0 && other < len(g.world.Generals) {
+		entry.Other = big5(g.world.Generals[other].TalkName())
+	}
+	if _, _, ok := g.battleTalkText(entry); !ok {
+		return false
+	}
+	g.bindBattleTalk(p.Battle)
+	return g.battleTalkSession.queue.set(entry)
+}
+
+// playerBattleTalkGroup 對應熱區1C1B9的喊話，拒絕城壁令與退卻另有索引。
+func playerBattleTalkGroup(command int, playerDefends, accepted bool) int {
+	if command < 0 || command > 5 {
+		return -1
+	}
+	if !accepted {
+		if command == 3 {
+			return 0x1AC
+		}
+		return -1
+	}
+	if command == 5 {
+		return 0x1AF
+	}
+	if command == 3 && playerDefends {
+		return 0x1B6
+	}
+	return 0x1B1 + command
 }
 
 // battleTalkText 回傳整則文字，以及**句中要畫色 9 的那個名字**。

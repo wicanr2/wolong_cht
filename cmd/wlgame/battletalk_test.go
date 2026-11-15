@@ -29,6 +29,58 @@ func TestResolveBattleTalkIndex(t *testing.T) {
 	}
 }
 
+// 原版1C315的角色0是玩家，玩家進攻或守城都在下框。
+func TestBattleTalkPlacementFollowsPlayerRole(t *testing.T) {
+	var table text.Table
+	for index, literal := range map[int]string{1: "attacker", 2: "defender"} {
+		table.Messages[index] = text.Message{Lines: []text.Line{{Parts: []text.Part{{Raw: []byte(literal)}}}}}
+	}
+	for _, player := range []int{tactical.AttackerSide, tactical.DefenderSide} {
+		b := &tactical.Battle{PlayerSide: player}
+		p := &state.Pending{Battle: b}
+		g := &game{world: &state.World{}, lib: &library.Library{Talk: &table}}
+		g.battleTalkSession.initialize(b, []BattleTalkEntry{
+			{Index: 1, Side: 0, Portrait: 13}, {Index: 2, Side: 1, Portrait: 27},
+		})
+		got := g.battleTalkState(b, p)
+		wantTop, wantBottom := "defender", "attacker"
+		wantTopPortrait, wantBottomPortrait := 27, 13
+		if player == tactical.DefenderSide {
+			wantTop, wantBottom = wantBottom, wantTop
+			wantTopPortrait, wantBottomPortrait = wantBottomPortrait, wantTopPortrait
+		}
+		if got.Top != wantTop || got.Bottom != wantBottom || got.TopPortrait != wantTopPortrait || got.BottomPortrait != wantBottomPortrait {
+			t.Fatalf("玩家側%d的台詞或頭像位置錯誤：%+v", player, got)
+		}
+	}
+}
+
+// re60 §6.1的展開後索引以說話型0為基準，退卻與兩種城壁分支各不相同。
+func TestPlayerBattleCommandTalkIndices(t *testing.T) {
+	for _, tc := range []struct {
+		command           int
+		defends, accepted bool
+		want              int
+	}{
+		{0, false, true, 622}, {1, false, true, 630}, {2, false, true, 638},
+		{3, false, true, 646}, {4, false, true, 654}, {5, false, true, 606},
+		{3, true, true, 662}, {3, false, false, 582}, {3, true, false, 582},
+	} {
+		group := playerBattleTalkGroup(tc.command, tc.defends, tc.accepted)
+		if got := resolveBattleTalkIndex(group, 0); got != tc.want {
+			t.Errorf("指令%d 守方%v 接受%v：索引%d，應為%d", tc.command, tc.defends, tc.accepted, got, tc.want)
+		}
+	}
+	if got := resolveBattleTalkIndex(playerBattleTalkGroup(3, false, true), 7); got != 653 {
+		t.Fatalf("正常曹操242拍登城，夏侯淵說話型7：索引%d，應為653", got)
+	}
+	for _, command := range []int{-1, 6, 100} {
+		if playerBattleTalkGroup(command, false, true) != -1 {
+			t.Fatalf("無效指令%d不應顯示喊話", command)
+		}
+	}
+}
+
 // TestBattleTalkSlotsAreIndexedBySide 釘住「每一側各一個框」。
 //
 // 原版 `sub_1C315` 依側別把到期時刻寫進 `word_1D322`（側 0）或

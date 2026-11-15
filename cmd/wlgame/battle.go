@@ -194,11 +194,9 @@ func (g *game) issueBattleCommand(b *tactical.Battle, command int) {
 		return
 	}
 	side := g.battleSide()
-	order := tactical.Command(command)
-	if !b.OrderSelected(side, order) {
-		// 原版跳 TALK 582「這哪裡有城壁啊！！」並且不下令。
-		g.setEvent("這哪裡有城壁啊！！")
-		return
+	accepted := b.OrderSelected(side, tactical.Command(command))
+	if group := playerBattleTalkGroup(command, side == tactical.DefenderSide, accepted); group >= 0 {
+		g.queueBattleTalk(g.world.PendingBattle(), side, group)
 	}
 	g.lastEvent = ""
 }
@@ -393,10 +391,10 @@ func (g *game) drawBattleChrome(screen *ebiten.Image, b *tactical.Battle, p *sta
 	g.drawBattleGateBar(screen, b)
 	talks := g.battleTalkState(b, p)
 	if talks.visible(0) {
-		g.drawBattleTalk(screen, talks.text(0), talks.speaker(0), l.TopTalk, 0, talks.portrait(0), p)
+		g.drawBattleTalk(screen, talks.text(0), talks.speaker(0), l.TopTalk, 1-b.PlayerSide, talks.portrait(0), p)
 	}
 	if talks.visible(1) {
-		g.drawBattleTalk(screen, talks.text(1), talks.speaker(1), l.BottomTalk, 1, talks.portrait(1), p)
+		g.drawBattleTalk(screen, talks.text(1), talks.speaker(1), l.BottomTalk, b.PlayerSide, talks.portrait(1), p)
 	}
 	g.drawBattleKeys(screen, b, l.BottomCommands)
 }
@@ -413,7 +411,7 @@ func (g *game) battleTalkState(b *tactical.Battle, p *state.Pending) battleTalkS
 		return battleTalkState{}
 	}
 	// **兩側各一個框，可以同時掛著**（原版 word_1D322／word_1D324，
-	// docs/spec/60）——上框是側 0、下框是側 1。
+	// docs/spec/60）——上框是對方，下框是玩家；隊列仍按實際攻守側索引。
 	result := battleTalkState{}
 	for side := 0; side < 2; side++ {
 		entry, ok := s.queue.current(side)
@@ -427,7 +425,7 @@ func (g *game) battleTalkState(b *tactical.Battle, p *state.Pending) battleTalkS
 		}
 		// ⚠ 換色的是 `\1` **實際代進去**的名字，不一定是說話者
 		// （docs/spec/136）。
-		if side == 0 {
+		if side != b.PlayerSide {
 			result.Top, result.TopPortrait, result.TopSpeaker = text, entry.Portrait, name
 		} else {
 			result.Bottom, result.BottomPortrait, result.BottomSpeaker = text, entry.Portrait, name
