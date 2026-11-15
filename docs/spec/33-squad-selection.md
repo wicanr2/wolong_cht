@@ -1,5 +1,11 @@
 # 33 — 底列六格是選部隊，不是第二套命令列
 
+## 2026-11-15：喊話時鐘與持續介面狀態接線
+
+輸入DOS/V KI.EXE SHA-256 `fffeba985231cda4d636e93d10f598470b1f691d00275e4aa38e285893d43868`，dosgolem `f79eab6db8c64a524a06535e53e5d32b0bbcf7c8`，位址為oracle.IDA DOS/V linear。
+已證實定位：`1A8CC／1C673`。底列保存隊長0–5分派最後登錄的圖示。內部命令6／7／8不清圖，不能每幀直接讀Cmd；535拍內部6仍顯登城3，正式完整圖已對齊。玩家選隊後按退卻的OrderSelected遮罩接線另有缺口，原版1C21A走全軍1A8F6；本片未驗該caller的選取清除。
+31張完整圖、677拍倒數、四套件冷測、五負對照與正常滑鼠範圍見[spec159](159-tactical-command-movement-order.md)及[收據](../../workplace/scratch/ui-windows-20261104/cao-talkphase677-integration.json)。
+
 **狀態：CONFORMED。** 兩張順序表、選取位元圖、下令時的取用方式、
 「沒選 ＝ 全隊」、六張命令圖示與每格的兵種圖示都有機器碼出處，
 已實作並有單測。

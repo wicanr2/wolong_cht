@@ -177,13 +177,17 @@ func (g *game) startBattleTalk(p *state.Pending) {
 // 變體與肖像照說話大將（`sub_1075B` 的八變體公式）。
 func (g *game) pumpDuelTalks(p *state.Pending) {
 	for _, dt := range p.Battle.TakeDuelTalks() {
-		g.queueBattleTalk(p, dt.Side, dt.Group)
+		g.queueBattleTalk(p, dt.Side, dt.Group, dt.Frame)
 	}
 }
 
 // queueBattleTalk 共用原版人物變體與參數串流，Side 保留實際攻守側。
-func (g *game) queueBattleTalk(p *state.Pending, side, group int) bool {
+func (g *game) queueBattleTalk(p *state.Pending, side, group, atFrame int) bool {
 	if g == nil || g.world == nil || p == nil || p.Battle == nil || side < 0 || side > 1 {
+		return false
+	}
+	age := p.Battle.Frame - atFrame
+	if age < 0 || age >= battleTalkDuration {
 		return false
 	}
 	commander := g.battleCommander(p, side)
@@ -198,7 +202,7 @@ func (g *game) queueBattleTalk(p *state.Pending, side, group int) bool {
 		Index:    resolveBattleTalkIndex(group, general.TalkVariant),
 		Portrait: general.Portrait,
 		Side:     side,
-		Duration: battleTalkDuration,
+		Duration: battleTalkDuration - age,
 	}
 	if other := g.battleCommander(p, 1-side); other >= 0 && other < len(g.world.Generals) {
 		entry.Other = big5(g.world.Generals[other].TalkName())
@@ -243,7 +247,13 @@ func (g *game) battleTalkText(entry BattleTalkEntry) (string, string, bool) {
 	// `sub_1C315` 推的是 `[對手, 說話者]`，而 `\6` **也吃一個**。
 	// 於是 `{6}…{1}` 的 `\1` 是說話者、`{1}…` 的 `\1` 是對手——
 	// 同一組八個變體裡兩種版面都有。
-	lines, names, ok := g.talkStream(entry.Index, []string{entry.Other, entry.Speaker})
+	params := []string{entry.Other, entry.Speaker}
+	for i, name := range params {
+		if name != "" {
+			params[i] = padTalkField(name)
+		}
+	}
+	lines, names, ok := g.talkStream(entry.Index, params)
 	if !ok || len(lines) == 0 {
 		return "", "", false
 	}
@@ -253,7 +263,7 @@ func (g *game) battleTalkText(entry BattleTalkEntry) (string, string, bool) {
 	}
 	name := ""
 	if len(names) > 0 {
-		name = names[0]
+		name = strings.TrimRight(names[0], " \u3000")
 	}
 	return text, name, true
 }

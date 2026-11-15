@@ -278,6 +278,9 @@ type Battle struct {
 	// 不進存檔。
 	bar structureBar
 
+	// commandIcons 保存1A8CC最後畫出的六隊圖示，不把內部命令6–8當新圖示。
+	commandIcons [Squads]Command
+
 	// paths 是尋路請求佇列（docs/spec/120）。原版是 `CS:0xD352` 起的
 	// 128 格環狀陣列，兩個游標在 `word_1D34E`／`word_1D350`。
 	paths pathQueue
@@ -779,6 +782,7 @@ func (b *Battle) checkGeneralRetreat() {
 		previous := b.endPhase
 		b.Order(i, -1, Retreat)
 		if previous == 0 {
+			b.say(i, 0x1B0)
 			b.Log = append(b.Log, sideName(i)+"的大將體力不支，全軍退卻")
 		}
 	}
@@ -923,3 +927,6 @@ func (b *Battle) orderForField(c Command) Command {
 	}
 	return c
 }
+
+// CommandIcons 回傳玩家底列最後登錄的指令圖示；純呈現暫態，不進存檔。
+func (b *Battle) CommandIcons() [Squads]Command { return b.commandIcons }

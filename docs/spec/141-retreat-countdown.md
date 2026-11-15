@@ -1,5 +1,11 @@
 # 141 — 全軍退卻之後的 120 拍倒數
 
+## 2026-11-15：喊話時鐘與持續介面狀態接線
+
+輸入DOS/V KI.EXE SHA-256 `fffeba985231cda4d636e93d10f598470b1f691d00275e4aa38e285893d43868`，dosgolem `f79eab6db8c64a524a06535e53e5d32b0bbcf7c8`，位址為oracle.IDA DOS/V linear。
+已證實定位：`1AE56／1A8F6／1C315`。移動前低體力檢查首次成功全軍退卻時，以CX=1B0掛該側大將原版喊話，60拍後到期。已有全軍退卻旗標便不再掛框；傳令、旗標、體力、路徑、倒數與勝負不變。這是自動退卻路徑，不代證玩家選隊／重複退卻caller已接齊。
+31張完整圖、677拍倒數、四套件冷測、五負對照與正常滑鼠範圍見[spec159](159-tactical-command-movement-order.md)及[收據](../../workplace/scratch/ui-windows-20261104/cao-talkphase677-integration.json)。
+
 ## 2026-11-14：撤退傳令與首次出口初始化（CONFORMED，限本片）
 
 接續上一片已完成的停止補兵，核對六隊長傳令、重複全軍退卻拒絕、大將檢查與首次移動。

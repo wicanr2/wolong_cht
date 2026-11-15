@@ -146,6 +146,7 @@ func (g *game) updateBattle() {
 		// ——原版第 5 列的 handler `sub_160A5` 就做這一件事
 		// （docs/re/61 §4、docs/spec/34）。
 		n := g.tacticalThrottle.Steps(g.tacticalSpeed, speed.TacticalMul, speed.HighSpeedTactical)
+		firstFrame := b.Frame
 		for i := 0; i < n && !b.Done; i++ {
 			b.Step()
 			for _, code := range b.TakeSoundEffects() {
@@ -153,8 +154,8 @@ func (g *game) updateBattle() {
 			}
 		}
 		// 這一幀新產生的單挑喊話當幀就掛框，不等下一幀。
+		g.tickBattleTalk(b.Frame - firstFrame)
 		g.pumpDuelTalks(p)
-		g.tickBattleTalk(n)
 		return
 	}
 	clearBattleTalkSession(g, b)
@@ -196,7 +197,7 @@ func (g *game) issueBattleCommand(b *tactical.Battle, command int) {
 	side := g.battleSide()
 	accepted := b.OrderSelected(side, tactical.Command(command))
 	if group := playerBattleTalkGroup(command, side == tactical.DefenderSide, accepted); group >= 0 {
-		g.queueBattleTalk(g.world.PendingBattle(), side, group)
+		g.queueBattleTalk(g.world.PendingBattle(), side, group, b.Frame)
 	}
 	g.lastEvent = ""
 }
@@ -998,6 +999,7 @@ func (g *game) drawBattleKeys(screen *ebiten.Image, b *tactical.Battle, r battle
 	amber := color.RGBA{240, 200, 120, 255}
 	dim := color.RGBA{190, 190, 200, 255}
 	side := &b.Sides[g.battleSide()]
+	icons := b.CommandIcons()
 	for i, cell := range splitBattleCommandCells(r) {
 		squad := battleBottomSlotSquad[i]
 		picked := side.SquadSelected(squad)
@@ -1018,8 +1020,8 @@ func (g *game) drawBattleKeys(screen *ebiten.Image, b *tactical.Battle, r battle
 				screen.DrawImage(g.battleArmIcons[arm], op)
 			}
 			// 格子右半是**這一隊目前的命令**（sub_1C673，docs/spec/33 §1.2）。
-			// 每隊的第一個兵是隊長，命令看它的 Cmd；就位（7）畫成陣形。
-			if code := battleSlotOrderIcon(side.Soldiers[squad*tactical.PerSquad].Cmd); code >= 0 &&
+			// 隊長命令0–5換圖；內部6／7／8保留此前圖示，沿1A8CC。
+			if code := battleSlotOrderIcon(icons[squad]); code >= 0 &&
 				code < len(g.battleOrderIcons) && g.battleOrderIcons[code] != nil {
 				op = &ebiten.DrawImageOptions{}
 				op.GeoM.Translate(float64(cell.X+battleSlotOrderX),
@@ -1231,8 +1233,8 @@ func (g *game) stageEncounter(siege bool, siegeNode, steps int, me, foe *state.C
 		// （對白 60 tick 到期，docs/spec/60）。
 		for i := 0; i < steps; i++ {
 			p.Battle.Step()
-			g.pumpDuelTalks(p)
 			g.tickBattleTalk(1)
+			g.pumpDuelTalks(p)
 		}
 		g.tacticalSpeed = 1
 	}

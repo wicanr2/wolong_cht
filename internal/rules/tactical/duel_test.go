@@ -82,7 +82,7 @@ func TestDuelRefuse(t *testing.T) {
 	duelTick(b) // 弱側 lo=0 < 0x12C0 → 拒戰
 	duelTick(b) // 強側回應＋立即收尾
 	got := b.TakeDuelTalks()
-	want := []DuelTalk{{1, 0x1B9}, {0, 0x1CC}}
+	want := []DuelTalk{{Side: 1, Group: 0x1B9}, {Side: 0, Group: 0x1CC}}
 	if len(got) != 2 || got[0] != want[0] || got[1] != want[1] {
 		t.Fatalf("拒戰喊話 %v，應為 %v", got, want)
 	}
@@ -99,7 +99,7 @@ func TestDuelAcceptAndVerdict(t *testing.T) {
 	duelTick(b) // 互嗆第一句 0x1BA
 	duelTick(b) // 互嗆第二句 0x1BB → 會合 → 對打段
 	got := b.TakeDuelTalks()
-	want := []DuelTalk{{0, 0x1B7}, {1, 0x1B8}, {0, 0x1BA}, {1, 0x1BB}}
+	want := []DuelTalk{{Side: 0, Group: 0x1B7}, {Side: 1, Group: 0x1B8}, {Side: 0, Group: 0x1BA}, {Side: 1, Group: 0x1BB}}
 	if len(got) != len(want) {
 		t.Fatalf("喊話 %v，應為 %v", got, want)
 	}
@@ -127,7 +127,7 @@ func TestDuelAcceptAndVerdict(t *testing.T) {
 	duelTick(b)  // 敗方喊話
 	duelTick(b)  // 勝方喊話、收尾
 	got = b.TakeDuelTalks()
-	want = []DuelTalk{{1, 0x1CC}, {0, 0x1CD}}
+	want = []DuelTalk{{Side: 1, Group: 0x1CC}, {Side: 0, Group: 0x1CD}}
 	if len(got) != 2 || got[0] != want[0] || got[1] != want[1] {
 		t.Fatalf("決著喊話 %v，應為 %v", got, want)
 	}

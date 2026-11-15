@@ -14782,15 +14782,15 @@
     {
       "file": "docs/spec/159-tactical-command-movement-order.md",
       "item": "完整戰術移動排程與後段動畫",
-      "status": "正常原版已定位上下框角色與玩家指令漏喊，正式修正並通過攻方五張完整圖、守方六圖不變及正常滑鼠。核心、RNG與677拍戰果不變；腳本喊話起點、自動退卻喊話及換色／底列殘差仍沿Issue #16／#24",
+      "status": "攻城677拍全軍／RNG、5289投射物及8124城牆全等，31張完整圖只差游標，677拍喊話倒數全等，正常滑鼠70點。已補自動退卻、事件時刻、三格姓名及持續圖示；野戰單挑目前收據與玩家選隊／重複退卻caller接線仍沿Issue #16／#24",
       "section": "未解",
       "domain": "其他",
       "verdict": "靜態",
       "occurrence": 0,
-      "id": "oq-cb9d40286cca4ce6ee8e",
+      "id": "oq-9f82f2d3824fb6e54c52",
       "classification": "actionable",
       "github_issue": 16,
-      "reason": "上下框與玩家下令已由原版控制流及正常桌面閉合；餘下可重現喊話時序、退卻及繪字／底列差異續用原Issue。"
+      "reason": "攻城完整狀態與31張視窗已閉合；稽核仍缺野戰單挑目前收據，且OrderSelected退卻選隊／重複拒絕與原版全軍入口有差異，續用原Issue。"
     }
   ]
 }

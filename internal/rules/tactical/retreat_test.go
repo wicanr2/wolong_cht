@@ -2,6 +2,70 @@ package tactical
 
 import "testing"
 
+func TestLowGeneralHPEmitsOneTimedRetreatTalk(t *testing.T) {
+	for _, player := range []int{AttackerSide, DefenderSide} {
+		b := newTestBattle(flatField())
+		b.SetPlayerSide(player)
+		b.Frame = 573
+		b.Sides[player].Soldiers[0].HP = 50
+		b.checkGeneralRetreat()
+		if talks := b.TakeDuelTalks(); len(talks) != 0 {
+			t.Fatalf("體力50不應退卻喊話：%v", talks)
+		}
+		b.Sides[player].Soldiers[0].HP = 49
+		b.checkGeneralRetreat()
+		talks := b.TakeDuelTalks()
+		if len(talks) != 1 || talks[0] != (DuelTalk{Side: player, Group: 0x1B0, Frame: 573}) {
+			t.Fatalf("原版573拍移動內退卻喊話錯誤：%v", talks)
+		}
+		b.checkGeneralRetreat()
+		if talks := b.TakeDuelTalks(); len(talks) != 0 {
+			t.Fatalf("已有全軍退卻不能再掛喊話：%v", talks)
+		}
+	}
+}
+
+func TestCommandIconsRetainLastPlayerLeaderOrder(t *testing.T) {
+	for _, player := range []int{AttackerSide, DefenderSide} {
+		b := newTestBattle(walledField(0))
+		b.SetPlayerSide(player)
+		const squad = 1
+		k := squad * PerSquad
+		s := &b.Sides[player].Soldiers[k]
+		s.Cmd, s.Next = Form, ScaleWal
+		b.updateSoldierCommand(player, k)
+		if b.CommandIcons()[squad] != ScaleWal {
+			t.Fatal("登城新令應畫登城圖示")
+		}
+		s.Next = wallAttack
+		b.updateSoldierCommand(player, k)
+		if s.Cmd != wallAttack || b.CommandIcons()[squad] != ScaleWal {
+			t.Fatal("原版535拍內部命令6應保留登城圖示")
+		}
+		s.Next = Duel
+		b.updateSoldierCommand(player, k)
+		if b.CommandIcons()[squad] != ScaleWal {
+			t.Fatal("單挑內部命令不能清除舊圖示")
+		}
+		s.Next, s.GoalX, s.GoalY = Form, s.X, s.Y
+		b.updateSoldierCommand(player, k)
+		if s.Cmd != Holding || b.CommandIcons()[squad] != Form {
+			t.Fatal("陣形到位改7，圖示仍應保留陣形")
+		}
+		opponent := &b.Sides[1-player].Soldiers[k]
+		opponent.Cmd, opponent.Next = Form, Attack
+		b.updateSoldierCommand(1-player, k)
+		if b.CommandIcons()[squad] != Form {
+			t.Fatal("對方傳令不得改玩家底列")
+		}
+		s.Next = Retreat
+		b.updateSoldierCommand(player, k)
+		if b.CommandIcons()[squad] != Retreat {
+			t.Fatal("退卻應換上退卻圖示")
+		}
+	}
+}
+
 // 全軍退卻之後**第 120 拍**結束，勝方是沒退卻的那一側（docs/spec/141）。
 //
 // ⚠ 這是**兜底**那一條出口。原版正常打完走的是「補不出兵」——退卻的兵

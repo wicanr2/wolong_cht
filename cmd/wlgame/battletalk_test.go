@@ -81,6 +81,49 @@ func TestPlayerBattleCommandTalkIndices(t *testing.T) {
 	}
 }
 
+func TestBattleTalkLifetimeUsesOriginalEventFrame(t *testing.T) {
+	var table text.Table
+	table.Messages[621] = text.Message{Lines: []text.Line{{Parts: []text.Part{{Raw: []byte("retreat")}}}}}
+	table.Messages[861] = text.Message{Lines: []text.Line{{Parts: []text.Part{{Raw: []byte("script")}}}}}
+	for _, tc := range []struct{ frame, event, group, remaining int }{
+		{51, 50, 0x1CE, 59}, {68, 67, 0x1CE, 59},
+		{573, 573, 0x1B0, 60}, {575, 573, 0x1B0, 58},
+		{632, 573, 0x1B0, 1}, {633, 573, 0x1B0, 0},
+		{573, 574, 0x1B0, 0},
+	} {
+		b := &tactical.Battle{Frame: tc.frame}
+		p := &state.Pending{Battle: b, Attacker: 0, Defender: 1}
+		w := &state.World{}
+		w.Corps[0].Alive = true
+		w.Generals[0].TalkVariant = 7
+		g := &game{world: w, lib: &library.Library{Talk: &table}}
+		ok := g.queueBattleTalk(p, 0, tc.group, tc.event)
+		if ok != (tc.remaining > 0) || g.battleTalkSession.queue.remaining[0] != tc.remaining {
+			t.Fatalf("frame%d，事件%d：剩餘%v，應為%d", tc.frame, tc.event, g.battleTalkSession.queue.remaining, tc.remaining)
+		}
+		if tc.remaining > 0 {
+			g.tickBattleTalk(tc.remaining)
+			if g.battleTalkSession.queue.active() {
+				t.Fatal("到期後不能仍保留喊話")
+			}
+		}
+	}
+}
+
+func TestBattleTalkMarkerRetainsThreeCellNameSlot(t *testing.T) {
+	var table text.Table
+	table.Messages[100] = text.Message{Lines: []text.Line{{Parts: []text.Part{{Marker: '1'}, {Raw: []byte("!")}}}}}
+	g := &game{lib: &library.Library{Talk: &table}}
+	for _, tc := range []struct{ name, want string }{
+		{"呂布", "呂布　!"}, {"夏侯淵", "夏侯淵!"},
+	} {
+		got, name, ok := g.battleTalkText(BattleTalkEntry{Index: 100, Other: tc.name})
+		if !ok || got != tc.want || name != tc.name {
+			t.Fatalf("三格姓名欄：文字%q、換色名字%q，應為%q、%q", got, name, tc.want, tc.name)
+		}
+	}
+}
+
 // TestBattleTalkSlotsAreIndexedBySide 釘住「每一側各一個框」。
 //
 // 原版 `sub_1C315` 依側別把到期時刻寫進 `word_1D322`（側 0）或

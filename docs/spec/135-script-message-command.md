@@ -1,5 +1,11 @@
 # 135 — 腳本指令 16 是「掛一個對白框」：攻城戰的開場勸降
 
+## 2026-11-15：喊話時鐘與持續介面狀態接線
+
+輸入DOS/V KI.EXE SHA-256 `fffeba985231cda4d636e93d10f598470b1f691d00275e4aa38e285893d43868`，dosgolem `f79eab6db8c64a524a06535e53e5d32b0bbcf7c8`，位址為oracle.IDA DOS/V linear。
+已證實定位：`1A426／1A69F／1A12A`。腳本op16的事件時間記為Step目前Frame−1，因原版1A426先於1A12A加一；只補事件時刻，不搬動規則執行順序、腳本PC或亂數。完整更新返回點的677拍倒數已核對，不用1A065下一輪腳本後的中間階段冒稱同一階段。
+31張完整圖、677拍倒數、四套件冷測、五負對照與正常滑鼠範圍見[spec159](159-tactical-command-movement-order.md)及[收據](../../workplace/scratch/ui-windows-20261104/cao-talkphase677-integration.json)。
+
 **狀態：CONFORMED。** `opMessage` 在 remake 是空的 stub（只寫進 `Battle.Log`），
 於是**攻城戰開場那兩個對白框一個都不會出現**——同一場的 `field` 對拍
 22.30% 全部來自它們。原版是腳本指令 16（`sub_1A69F`），

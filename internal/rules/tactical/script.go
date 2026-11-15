@@ -268,7 +268,8 @@ func (s *Script) message(b *Battle, par, arg int) {
 	if b.endPhase != want {
 		return
 	}
-	b.say(side, scriptTalkBase+arg)
+	// 1A426先執行腳本，1A12A才加計時器；Step內Frame已先遞增。
+	b.sayAt(side, scriptTalkBase+arg, b.Frame-1)
 }
 
 // branch 重現 `sub_1A591`：目標是**下一個 word 的高位元組 × 2**，

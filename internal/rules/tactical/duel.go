@@ -37,6 +37,8 @@ type DuelInput struct {
 type DuelTalk struct {
 	Side  int
 	Group int
+	// Frame 是事件發生的絕對戰術拍；呈現端依目前Frame計算剩餘壽命。
+	Frame int
 }
 
 // 狀態機的相位。
@@ -92,8 +94,12 @@ func (b *Battle) TakeDuelTalks() []DuelTalk {
 }
 
 // say 把一則對白排進出口。
-func (b *Battle) say(side, group int) {
-	b.talks = append(b.talks, DuelTalk{Side: side, Group: group})
+func (b *Battle) say(side, group int) { b.sayAt(side, group, b.Frame) }
+func (b *Battle) sayAt(side, group, frame int) {
+	if frame < 0 {
+		frame = 0
+	}
+	b.talks = append(b.talks, DuelTalk{Side: side, Group: group, Frame: frame})
 }
 
 // DuelActive 回報單挑流程是否進行中（挑戰喊話起、決著收尾止）。

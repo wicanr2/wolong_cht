@@ -1,5 +1,11 @@
 # 119 — `\1` 與 `\4` 代入的是呼び名，不是姓名
 
+## 2026-11-15：喊話時鐘與持續介面狀態接線
+
+輸入DOS/V KI.EXE SHA-256 `fffeba985231cda4d636e93d10f598470b1f691d00275e4aa38e285893d43868`，dosgolem `f79eab6db8c64a524a06535e53e5d32b0bbcf7c8`，位址為oracle.IDA DOS/V linear。
+已證實定位：`1088A／108B2`。1088A在姓名標記返回後固定加30h，呼び名即使只有兩字仍佔三格。一般TALK已有padTalkField，戰術串流先前漏接，本片共用既有函式補齊；原「換色」192像素殘差實為後續文字少移16像素。人物資料與Alias不改。
+31張完整圖、677拍倒數、四套件冷測、五負對照與正常滑鼠範圍見[spec159](159-tactical-command-movement-order.md)及[收據](../../workplace/scratch/ui-windows-20261104/cao-talkphase677-integration.json)。
+
 **狀態：CONFORMED。** 七個 `\N` 標記的 handler 全部讀完之後，
 兩個代入點要改：`\1`（訊息裡的武將）與 `\4`（玩家的軍師）取的是
 武將記錄 `+0x08` 呼び名，remake 一直代 `+0x02` 姓名。

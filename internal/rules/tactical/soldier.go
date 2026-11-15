@@ -74,6 +74,9 @@ func (b *Battle) updateSoldierCommand(side, k int) {
 	b.lockOnNearest(side, k)
 	previous := s.Cmd
 	changed := s.applyNewOrder()
+	if changed && side == b.PlayerSide && k%PerSquad == 0 && s.Cmd >= Form && s.Cmd <= Retreat {
+		b.commandIcons[k/PerSquad] = s.Cmd
+	}
 	// 1A93A先將舊GoalXY放入AX；其他1AA2C入口保留舊／新命令。
 	if s.Cmd == Form && k%PerSquad == 0 {
 		if s.GoalX != s.GoalY {

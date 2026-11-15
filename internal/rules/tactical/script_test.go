@@ -293,6 +293,16 @@ func TestScriptMessageEmitsATalk(t *testing.T) {
 	}
 }
 
+func TestScriptSpeechPrecedesCurrentTickIncrement(t *testing.T) {
+	b := newTestBattle(flatField())
+	b.Frame = 51
+	runScript(b, 1, []byte{opMessage, 0})
+	talks := b.TakeDuelTalks()
+	if len(talks) != 1 || talks[0] != (DuelTalk{Side: 0, Group: 0x1CE, Frame: 50}) {
+		t.Fatalf("原版1A426在tick50掛框，再由1A12A加到51：%v", talks)
+	}
+}
+
 // 同一段腳本掛到另一側，兩句話要跟著換邊——這一支才擋得住
 // 「把原版的側編號當成 remake 的側編號」。
 func TestScriptMessageSidesFollowTheScriptSide(t *testing.T) {
