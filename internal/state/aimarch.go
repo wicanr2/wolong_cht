@@ -86,10 +86,9 @@ func (w *World) aiStage1(i int, rng rander) {
 		c.Stage = StageNormal
 		return
 	}
-	// 第三個條件讀呼叫鏈留下的 DI+0x18（spec195、spec271）。
-	// 目標相同、自軍據點分支會先由 sub_128F4 寫本團 node×32，
-	// 其餘已建模 writer 是 Stage 2 的意圖據點與本函式的勢力記錄。
-	// DI 不一定對齊記錄起點，不能一概解釋成目前據點的軍團數。
+	// 第三個條件讀本次到站留下的 DI+0x18（spec271）。
+	// 普通到站是 node×32，途中留守是 (node×1024)&FFFFh，
+	// 來源可能是其他記錄、圖庫或地圖，不能改問目前據點的軍團數。
 	if !w.cityThreatened(site) || w.residualField18() > aiCrowded {
 		// 出擊前隨機等 1–8 個 tick，讓同一批軍團不會一起動。
 		c.Timer = rng.Next()&7 + 1
@@ -117,8 +116,8 @@ func (w *World) aiStage1(i int, rng rander) {
 func (w *World) aiStage2(i int) {
 	c := &w.Corps[i]
 	// ⭐ 原版第一行是 `mov di, ax`（ax ＝ 意圖據點的記錄位址）——
-	// 那個 `di` 會留到下一次 `sub_143AF` 被當成 `+0x18` 讀
-	// （docs/spec/195 §2）。
+	// 記錄本次呼叫的 DI；正常抵達會在下一次分派前重新計算
+	// （spec271），不把它當成下一拍 Stage1 的固定輸入。
 	//
 	// ⚠ **無條件設**：`sub_14325` 不管 `+0x20` 是不是有效據點都算得出
 	// 位址（`0xFF` ⇒ `0x840 + 255×32`，落在據點表之外），而 `sub_1440F`
@@ -149,35 +148,6 @@ func (w *World) aiStage2(i int) {
 	c.Ordered = dest
 	c.Stage = StageNormal
 	w.leaveCell(node)
-}
-
-// residualField18 回傳原版呼叫鏈的 DI+0x18（spec195、spec271）。
-// 對齊的據點記錄讀軍團數；據點表之前也可能落在半筆勢力或表間區域。
-//
-// 未涵蓋的上游仍保留「未知 ⇒ 大於門檻」的既有近似。
-func (w *World) residualField18() int {
-	d := w.stage1DI
-	switch {
-	case d < 0:
-		// 沒有人設過：第一次呼叫前的值來自更早的呼叫鏈，讀不出來。
-		// 用「大於門檻」＝出擊。
-		return aiCrowded + 1
-	case d >= runtimeCityBase:
-		// 據點記錄：`+0x18` ＝ 停在那一格的軍團數。
-		if city := (d - runtimeCityBase) / citySize; validCity(city) && city < len(w.Cities) {
-			return w.Cities[city].Occupancy
-		}
-	case len(w.raw) == blockSize:
-		// 前面的分支已保證 0≤d<0x840。使用目前區塊映射，
-		// 讓已解欄位與未解原始 bytes 沿用相同的寫回契約。
-		return int(w.Bytes()[factionBase+d+0x18])
-	default:
-		// 勢力記錄：`+0x18` ＝ 武將數。
-		if f := d / factionSize; f >= 0 && f < numFactions {
-			return w.Factions[f].Generals
-		}
-	}
-	return aiCrowded + 1
 }
 
 // aiStage3 是 `sub_14466`：補完兵之後的體檢。

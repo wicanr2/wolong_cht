@@ -256,6 +256,7 @@ GPU最多兩頁快取，其他季節、液晶、未選頁與讀圖失敗沿原�
 
 | 日期／目前程式 | 最近驗證 | 狀態 | 交付物 |
 |---|---|---|---|
+| 2026-11-15；wlgame-ai-context-final-r1 | 原版480筆重現、18函式bytes；正式1170案軍團／RNG相同，兩實際錯版拒絕；全專案冷測／vet，正常滑鼠62項／9圖，存讀檔重建 | 到站上下文閉合：兩條抵達分別重建DI，43個存檔外值來自原素材。無新存檔欄位或HD預載；整體AI仍進行中，接Issue #29救援／分派及#10政略90日，強化AI未啟用 | [spec271](docs/spec/271-arrival-ai-context.md)、[本片收據](workplace/scratch/ai-hold-20261115/banks-integration.json) |
 | 2026-11-15；正式程式沿wlgame-hd-lazy-r1 | 原版450筆軌跡重現、七函式原bytes、128-byte來源與兩反例；正常退卻tick139及64世界拍，累計480筆AI觀測 | 留守DS:A818已定位原地圖(168,33)，戰術重用後正常重載；完整DI及存讀檔仍DRAFT。正式AI與HD程式未改，強化AI未啟用 | [spec271](docs/spec/271-arrival-ai-context.md)、[來源](workplace/scratch/ai-hold-20261115/source-analysis.json)、[生命週期](workplace/scratch/ai-hold-20261115/lifecycle-analysis.json) |
 | 2026-11-15；wlgame-hd-lazy-r1 | 四套件冷測／vet／建置、四類舊載入器反例；209張素材SHA不變；正常滑鼠145點／13圖；實際索引讀取556.4MB→1.6MB | HD啟動只讀索引，PNG首次顯示才驗證／解碼；有限快取沿用。原版AI正常450筆及受控留守來源已補證，存檔外資料映射仍DRAFT；強化AI尚未啟用 | [spec275](docs/spec/275-hd-toolbar-portraits-and-tools.md)、[HD收據](workplace/scratch/hd-lazy-20261115/integration.json)、[AI證據](workplace/scratch/ai-hold-20261115/analysis.json) |
 | 2026-11-15；wlgame-cao-duel-matrix-r1 | 五套件冷測／vet／建置、兩舊規則負對照；正常滑鼠62項／9圖，四個實際輸入邊界案；攻方1177、退卻900／500拍27欄／RNG全等，舊4487拍及101圖不變 | 已修一般Order只向隊長傳令、退卻敗方保留原版等待。原版攻方為受控角色場景。本輪戰鬥動畫抽驗目標閉合，全遊戲與其他地形不外推 | [spec159](docs/spec/159-tactical-command-movement-order.md)、[本機對照](workplace/scratch/ui-windows-20261104/cao-duel-matrix-review.html)、[收據](workplace/scratch/ui-windows-20261104/cao-duel-matrix-integration.json) |
@@ -1113,6 +1114,13 @@ DOSBox-X 那條路**不刪**：它是這一條的正對照，而且 PC-98 版只
 ---
 
 ## 6. 已被推翻的斷言
+
+### 2026-11-15：Stage1必須保存上一拍DI才能重現原版
+
+spec195舊模型將181次入口DI解讀為上一支軍團留下的位址；新caller審查確認正常非玩家分派
+先由128F4重建，而另一個17FB4入口只供玩家。九個圖庫及34個地圖來源也已確認。
+本次正常到站可在存讀檔後重建，不需要增加DI存檔欄位。原始觀測及舊推導保留，
+正式1170案、存讀檔與62項正常滑鼠驗證見[spec271](docs/spec/271-arrival-ai-context.md)。
 
 ### 2026-11-15：所有隊長都不補兵
 

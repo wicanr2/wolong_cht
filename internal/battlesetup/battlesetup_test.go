@@ -1,11 +1,13 @@
 package battlesetup
 
 import (
+	"bytes"
 	"os"
 	"reflect"
 	"testing"
 
 	"github.com/wicanr2/wolong_cht/internal/assets/battle"
+	"github.com/wicanr2/wolong_cht/internal/assets/gfx"
 	"github.com/wicanr2/wolong_cht/internal/assets/world"
 	"github.com/wicanr2/wolong_cht/internal/rules/army"
 	"github.com/wicanr2/wolong_cht/internal/rules/combat"
@@ -16,6 +18,68 @@ import (
 )
 
 const original = "../../workplace/orig/dosv"
+
+// 原版節點21的留守讀點是圖庫值0；缺少注入會沿未知近似出擊。
+// 同時驗新遊戲共用Load及讀檔重新掛來源，不能只驗孤立setter。
+func TestOriginalAIHoldSourceSurvivesWorldReload(t *testing.T) {
+	icon, err := os.ReadFile(original + "/ICONGRF.DAT")
+	if err != nil {
+		t.Skip("缺少原版素材")
+	}
+	region := gfx.IconRegions[3]
+	if len(icon) < region.Offset+region.Length {
+		t.Fatal("原圖庫範圍不完整")
+	}
+	chrome := icon[region.Offset : region.Offset+region.Length]
+	data, err := os.ReadFile(original + "/MMAP.MAP")
+	if err != nil {
+		t.Fatal(err)
+	}
+	m, err := world.ParseMap(data)
+	if err != nil {
+		t.Fatal(err)
+	}
+	for _, present := range []bool{true, false} {
+		w, err := state.LoadScenario(original+"/SINARIO.DAT", 0)
+		if err != nil {
+			t.Fatal(err)
+		}
+		w.Player = 0
+		city := &w.Cities[21]
+		city.Owner, city.Threatened, city.Specific, city.Occupancy = 12, true, false, 1
+		w.Corps[0] = state.Corps{Alive: true, Faction: 12, Node: 21, X: city.X, Y: city.Y,
+			TargetNode: 22, Ordered: 21, Stage: 1, Timer: 1, Interval: 3, Men: 600, Morale: 200}
+		source := chrome
+		if !present {
+			source = nil
+		}
+		if _, _, err := Load(Options{Dir: original, World: w, Map: m, Chrome: source}); err != nil {
+			t.Fatal(err)
+		}
+		block := w.Bytes()
+		restored, err := state.LoadBlock(block)
+		if err != nil {
+			t.Fatal(err)
+		}
+		if err := restored.Restore(w.TakeSnapshot()); err != nil {
+			t.Fatal(err)
+		}
+		AttachAIHoldSources(restored, source, m)
+		if !bytes.Equal(block, restored.Bytes()) {
+			t.Fatal("掛回原素材改寫了存檔")
+		}
+		for _, current := range []*state.World{w, restored} {
+			current.Tick(rng.NewFixed(7))
+			want := 2
+			if present {
+				want = 1
+			}
+			if got := current.Corps[0].Stage; got != want {
+				t.Fatalf("來源存在=%v：Stage=%d，預期%d", present, got, want)
+			}
+		}
+	}
+}
 
 func TestProviderLoadsExplicitSelectionForEveryEncounter(t *testing.T) {
 	if _, err := os.Stat(original + "/KI.EXE"); err != nil {

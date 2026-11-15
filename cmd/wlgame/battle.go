@@ -1095,7 +1095,8 @@ func sideLabel(i int) string {
 func (g *game) installTactical(dir string) {
 	p, setup, err := battlesetup.Load(battlesetup.Options{
 		Dir: dir, World: g.world, Map: worldMapOf(g.lib),
-		Warn: func(m string) { log.Print("⚠ " + m) },
+		Chrome: chromeOf(g.lib),
+		Warn:   func(m string) { log.Print("⚠ " + m) },
 	})
 	if err != nil {
 		log.Printf("⚠ %v；玩家的戰鬥會走自動判定", err)
@@ -1114,6 +1115,13 @@ func worldMapOf(l *library.Library) *world.Map {
 		return nil
 	}
 	return l.World
+}
+
+func chromeOf(l *library.Library) []byte {
+	if l == nil {
+		return nil
+	}
+	return l.Chrome
 }
 
 // demoBattle 是**驗收用**的捷徑：直接擺一場戰術戰鬥出來。

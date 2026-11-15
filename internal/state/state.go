@@ -397,11 +397,15 @@ type World struct {
 	Cities   [numCities]City
 	Generals [numGenerals]General
 
-	// stage1DI 保存 sub_143AF 讀取的 DI 位址（spec195、spec271）。
-	// 目標相同、自軍據點分支先由 sub_128F4 寫 node×32；Stage 2
-	// 與留守補兵分支另寫意圖據點、勢力的記錄位址。
-	// −1 表示尚無已建模的上游值；途中留守等路徑仍有證據限制。
+	// stage1DI 是本次抵達呼叫鏈的 DI（spec271）。普通抵達及途中留守
+	// 在分派前重建，不能拿上一拍的值當正常 Stage1 輸入。
+	// −1 只供沒有上游的直接呼叫保留既有未知近似；不需寫入存檔。
 	stage1DI int
+	// 原版錯位讀取會落到圖庫與地圖。只保留43個已證實讀點，
+	// 由原素材重新注入，不保存圖像、HD資料或DOS實體位址。
+	aiHoldIcons                      [9]byte
+	aiHoldMap                        [34]byte
+	aiHoldIconsReady, aiHoldMapReady bool
 
 	// terrain 是大地圖圖塊查詢。**規則層不讀檔案**，所以由呼叫端注入
 	// （與 `SetRoads` 同一個做法）。nil ＝ 沒接上，野戰不擲戰場骰

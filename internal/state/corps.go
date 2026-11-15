@@ -798,11 +798,10 @@ func (w *World) tickOneCorps(i, hour int, rng combat.Rand) *CorpsEvent {
 		// **先問還在不在路段上**——`LinkAddr` 只在走完整條路線時歸零
 		// （docs/spec/179 §2）。
 		if w.atTargetNode(i) {
-			// sub_128F4 在分派前留下 node×32，沒有加據點表基址。
-			// 目前只還原自軍據點的直接返回分支（spec271）。
-			if validCity(c.Node) && w.Cities[c.Node].Owner == c.Faction {
-				w.stage1DI = c.Node * citySize
-			}
+			// 1266A 設靜止，128F4 留下 node×32，沒有加據點表基址。
+			// 其敵方處理鏈亦保存 DI（spec271），不依賴前一團的上下文。
+			c.Heading = HeadingStill
+			w.stage1DI = (c.Node * citySize) & 0xffff
 			w.arriveCorps(i, rng)
 			if !c.Alive {
 				ev.Disbanded, ev.Routed = !c.Routing, c.Routing
@@ -817,6 +816,8 @@ func (w *World) tickOneCorps(i, hour int, rng combat.Rand) *CorpsEvent {
 			// ⚠ 走這一條**不動佔用圖**：原版分派完直接 `retn`，
 			// 跳過結尾的 `inc byte ptr [di]`。
 			c.Heading = HeadingStill
+			// 14300 成功時先把 BX 多移三次，128F4 再乘4。
+			w.stage1DI = (c.Node * 1024) & 0xffff
 			w.arriveCorps(i, rng)
 			if !c.Alive {
 				ev.Disbanded, ev.Routed = !c.Routing, c.Routing

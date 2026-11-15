@@ -329,6 +329,7 @@ func (g *game) readSave(slot int) error {
 	w.SetRoads(g.roads)
 	w.SetTactical(g.tactical)
 	battlesetup.AttachTerrain(w, worldMapOf(g.lib))
+	battlesetup.AttachAIHoldSources(w, chromeOf(g.lib), worldMapOf(g.lib))
 	g.world = w
 	g.resetMapZoom()
 	g.view = nil

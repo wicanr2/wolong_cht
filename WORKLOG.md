@@ -1976,3 +1976,16 @@
 - 原版log仍有一筆未實作int61h AH0A AL03，沒有音訊一致性聲明。DS:A818來源已閉合；完整DI記憶體區域、成功留守正常路徑及存讀檔上下文仍待原Issue #11，正式Go與存檔格式不改。依使用者順序，強化AI尚未接正式工具列。
 - 回填spec271、mechanics70與三份較早文件，現況入口新增本輪限定狀態。[來源分析](workplace/scratch/ai-hold-20261115/source-analysis.json)、[正常返回](workplace/scratch/ai-hold-20261115/lifecycle-analysis.json)及[收尾收據](workplace/scratch/ai-hold-20261115/source-integration.json)保存原始輸入、版本、原位址、重播與限制。文件檢查、回填負對照、擁有權及Docker清理後沿既有授權commit／push，沒有發布原版素材。
 - 嚴格抽取、1135列分流、596文件過期掃描與1912追蹤檔素材檢查通過。索引及官方check.sh仍有65個既有本機缺鏈，對5d2802f差分新增0；phantom仍352筆／323個唯一引用，新增0，缺歷史census.tsv的IDA符號層未跑。三列回填的缺標記反例均拒絕。前輪2255產物及20份正式來源SHA未變，本輪凍結3131份研究產物；沒有重新執行未變更程式的Go測試。未發現root-owned檔案或.md目錄，所有本輪一次性容器均移除，提交／推送身分另存source-repository收據。
+
+## 2026-11-15：到站AI完整來源與正式存讀檔重建
+
+- 使用者設定「完成核對剩餘AI」為active目標。接續a232856，依現況表、Issue #11及規格閘門處理剩餘九點；另唯讀核對#29救援／分派及#10政略90日。目標不因本片完成而關閉，沒有寫遠端Issue或重新決定強化AI規則。
+- 九點皆落在原ICONGRF第3段，四時點的完整9120 bytes相同；三個非零byte由1F510 DOS讀檔寫入，其餘零值由完整區塊比較確認，未從缺少變值紀錄推論零寫入。原480筆觀測逐筆相同。43個存檔外值只需由既有原素材注入，不讀HD PNG。
+- 18個既有IDA Pro9.4函式按MZ relocation核對原始bytes。12671由128F4重建DI後分派，17FB4受玩家條件保護；1291A、顯示鏈與亂數常式保存DI。正常非玩家Stage1不需保存上一拍DI，舊跨拍模型保留歷史並回填勘誤。資料與位址沿spec271及banks-analysis收據，沒有修改.i64或重開硬體時序研究。
+- 從第一個自然12662快照事前宣告1170個受控案例，涵蓋192節點、普通抵達／途中留守、自然／2／3讀值及18個外勢力據點案例。每案先還原同一258-byte RNG，Go接相同FromRaw初態，完整軍團64 bytes與RNG258 bytes相同。這是正常入口展開的局部矩陣，不是1170條正常玩家流程。
+- 首版合成座標未同步原格子far pointer，Go寫回與原版保留的舊指標不同；補SI+1A／1C再重跑。比較也發現普通抵達的1266A會將朝向設4，候選模型先補原指令動作，再進READY。原型與失敗結果均保留，沒有用模糊容許值或遮掉欄位讓比較通過。
+- READY後接aicontext、兩條到站writer、共用資產注入、桌面新遊戲／讀檔、手機及wlsim。世界讀點使用目前typed寫回值，圖庫九點與地圖34點只保留43 bytes。無新存檔欄位，保留缺素材時既有未知近似，沒有啟用強化AI。原版標準DOS/V配置以外不外推。
+- 正式1170案通過；實際a232856舊規則有888案不符，其中304案Stage及RNG不同；誤用普通抵達算式的留守錯版有275案Stage及RNG不同。全專案冷測、受影響vet與建置通過。正式矩陣首跑漏掛/orig，補唯讀掛載後同image重跑；屬執行器環境問題。新增讀檔重建、typed值即時變動、缺來源及共用Load／讀檔注入的行為對照皆通過。
+- 正常滑鼠62項／9圖通過新遊戲、編成、滑鼠停手行軍、途中存讀、自然野戰、下令、退卻與戰後存讀。目視凸字軍團標記與戰後世界；此GUI不代證受控矩陣的整場畫面。受測程式SHA及9圖沿正常操作收據。
+- spec271限定CONFORMED；spec40、194、195、re65、mechanics70與CONTEXT回填，舊181次觀測及舊DRAFT歷程保留。完整行軍救援與政略90日仍依原Goal及Issue #29／#10接續，不宣稱全部AI完成。[來源與矩陣](workplace/scratch/ai-hold-20261115/banks-analysis.json)、[正式檢查](workplace/scratch/ai-hold-20261115/formal-checks.json)、[正常操作](workplace/scratch/ai-hold-20261115/ai-context-final-gui/mouse-toolbar-gui.json)及[收尾](workplace/scratch/ai-hold-20261115/banks-integration.json)保存版本、輸入及限制；沿既有授權commit／push，不散布原版素材。
+- 嚴格抽取初次指出原spec271已解範圍仍掛在未解標題下；改為抽驗界線並只移除該筆本地索引，其他1134列完整保留，未改遠端Issue。文件與分流驗證通過，索引及官方check.sh仍有65個既有本機缺鏈，新增0；phantom維持352筆／323個唯一引用，新增0，缺census.tsv的IDA符號層未跑。六列回填有缺標記反例，13份來源已封存；前輪3131及2255份產物、209張HD選稿與69份原版輸入SHA不變。擁有權及Docker清理結果由本片收尾保存。

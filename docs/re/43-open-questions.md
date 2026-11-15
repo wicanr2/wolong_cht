@@ -7,7 +7,7 @@
 
 現行工作與狀態由 GitHub [Issues](https://github.com/wicanr2/wolong_cht/issues) 管理；
 本地 [`docs/worklist.json`](../worklist.json) 與 `tools/worklist.py verify` 只作輔助。
-1141 列不是同數量的獨立 backlog；可執行項目已由完成的 Issue #28 分流，證據／歷史項目留在本索引。
+1140 列不是同數量的獨立 backlog；可執行項目已由完成的 Issue #28 分流，證據／歷史項目留在本索引。
 
 - 日期：2026-11-15
 - 產生工具：`tools/re_open_questions.py`
@@ -22,7 +22,7 @@
 
 ## 0. ⚠ 這個數字在量什麼
 
-**1135 列分布在 463 份文件，平均每份 2.5 列。**
+**1134 列分布在 462 份文件，平均每份 2.5 列。**
 
 ⭐ **所以它比較接近「文件有多少份」，不是「原版還有多少沒解」。**
 每寫一份新文件就帶進約三列自己的未解——而 `check.sh --strict` 還會
@@ -50,8 +50,8 @@
 | 程式碼理解 | 317 | 310 | 6 | 1 |
 | 驗收 | 245 | 220 | 25 | 0 |
 | 外部資料 | 6 | 5 | 1 | 0 |
-| 其他 | 536 | 512 | 23 | 1 |
-| **合計** | **1135** | 1073 | 59 | 3 |
+| 其他 | 535 | 511 | 23 | 1 |
+| **合計** | **1134** | 1072 | 59 | 3 |
 
 ⚠ **這是列數，不是獨立問題數。** 索引檔的「現況」欄是別的文件的摘要，同一個缺口在那份文件自己的未解表裡還有一列——這類共 **0** 列（另有少數只是提到「未解」兩個字的圖例列）。
 
@@ -59,7 +59,7 @@
 
 | 來源目錄 | 列數 |
 |---|---:|
-| `docs/spec/` | 493 |
+| `docs/spec/` | 492 |
 | `docs/re/` | 317 |
 | `docs/playtest/` | 245 |
 | `docs/release/` | 26 |
@@ -693,7 +693,7 @@
 | [`reference/04-first-survey.md`](../reference/04-first-survey.md) | 不要憑「同一份專案應該用同一個編譯器」外推——**`KI.EXE` 的編譯器未解。 | （散句） | 靜態 | evidence-only | — |
 | [`reference/05-eten-font-provenance.md`](../reference/05-eten-font-provenance.md) | `END_S13/S14/S15` 是中文版加的結局段 | S13／S14 是字型。**`END_S15` 仍未解** | 靜態 | evidence-only | — |
 
-## 2.6 其他（536 條）
+## 2.6 其他（535 條）
 
 | 出處 | 缺口 | 現況 | 裁決 | 分流 | Issue |
 |---|---|---|---|---|---|
@@ -1103,7 +1103,6 @@
 | [`spec/27-lord-select-window.md`](../spec/27-lord-select-window.md) | 頭像尺寸 | 軍師頭像的下緣照原版座標會略微超出那個 208×104 的底框；沒有 oracle 可比，先照機器碼畫 | 實測 | evidence-only | — |
 | [`spec/270-tactical-hit-boundaries.md`](../spec/270-tactical-hit-boundaries.md) | Issue #30 完整攻守行軍 | 本片只修戰術控制邊界；正常守軍遭遇不代證玩家攻方與逐拍碰撞矩陣 | 靜態 | merge-target | [#30](https://github.com/wicanr2/wolong_cht/issues/30) |
 | [`spec/270-tactical-hit-boundaries.md`](../spec/270-tactical-hit-boundaries.md) | 戰鬥規則與畫面 | 不改陣形、單挑、結算或戰場動畫，不宣稱整幅同狀態 parity | 靜態 | evidence-only | — |
-| [`spec/271-arrival-ai-context.md`](../spec/271-arrival-ai-context.md) | 完整 DI 生命週期、敵方據點副作用、守方碰撞矩陣、完整戰鬥及戰役不由此片代證。 | （未解小節內文） | 靜態 | merge-target | [#11](https://github.com/wicanr2/wolong_cht/issues/11) |
 | [`spec/272-world-tick-battle-resume.md`](../spec/272-world-tick-battle-resume.md) | 完整戰鬥亂數／軍損／像素、MCH動畫、全部事件排程與完整戰役仍各自維持原界線。 | （未解小節內文） | 靜態 | evidence-only | — |
 | [`spec/273-encounter-battlefield-context.md`](../spec/273-encounter-battlefield-context.md) | 非玩家雙方的入口AL | 未知 / 否，保留已標示近似，不影響類型8抽骰次數 | 靜態 | evidence-only | — |
 | [`spec/273-encounter-battlefield-context.md`](../spec/273-encounter-battlefield-context.md) | 類型9完整翻轉語意 | 未知 / 否，維持既有限制；Issue #31仍開啟 | 靜態 | merge-target | [#31](https://github.com/wicanr2/wolong_cht/issues/31) |

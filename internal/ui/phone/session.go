@@ -192,6 +192,7 @@ func (s *Session) attachBattlefield() {
 	}
 	p, setup, err := battlesetup.Load(battlesetup.Options{
 		Dir: s.origDir, World: s.world, Map: s.lib.World,
+		Chrome: s.lib.Chrome,
 	})
 	if err != nil {
 		return

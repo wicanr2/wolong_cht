@@ -13051,19 +13051,6 @@
       "reason": "spec270 僅修控制邊界，不從此片宣稱陣形、單挑、結算或整幅畫面 parity。"
     },
     {
-      "file": "docs/spec/271-arrival-ai-context.md",
-      "item": "完整 DI 生命週期、敵方據點副作用、守方碰撞矩陣、完整戰鬥及戰役不由此片代證。",
-      "status": "（未解小節內文）",
-      "section": "未解範圍",
-      "domain": "其他",
-      "verdict": "靜態",
-      "occurrence": 0,
-      "id": "oq-80be4a337da2839d5c9c",
-      "classification": "merge-target",
-      "github_issue": 11,
-      "reason": "完整 DI 生命週期仍由 Issue #11 管理；此片的抵達上下文不代證守方矩陣或完整戰役。"
-    },
-    {
       "file": "docs/spec/272-world-tick-battle-resume.md",
       "item": "完整戰鬥亂數／軍損／像素、MCH動畫、全部事件排程與完整戰役仍各自維持原界線。",
       "status": "（未解小節內文）",

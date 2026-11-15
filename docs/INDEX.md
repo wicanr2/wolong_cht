@@ -516,7 +516,7 @@
 | [`docs/spec/269-peaceful-turnback-step.md`](spec/269-peaceful-turnback-step.md) | 269：和平邊界折返的同拍移動與存檔步進量 | CONFORMED。限和平折返同拍語意、原生行軍存檔恢復及正常滑鼠流程抽驗。 | 2026-11-03 |
 | [`docs/spec/27-lord-select-window.md`](spec/27-lord-select-window.md) | 27 — 君主選擇視窗 | CONFORMED。版面已照原版實作並有契約測試； 輸入照原版收斂成兩個熱區（§2.1）。「自定」開命名視窗（[10… | 2026-08-15 |
 | [`docs/spec/270-tactical-hit-boundaries.md`](spec/270-tactical-hit-boundaries.md) | 270：戰術命令與選隊的完整點擊邊界 | CONFORMED。原版熱區表與remake在全畫布256,000個座標一致，舊內縮實作被拒絕；44項正常戰術GUI… | 2026-11-03 |
-| [`docs/spec/271-arrival-ai-context.md`](spec/271-arrival-ai-context.md) | 271：抵達分派前的 AI 上下文 | CONFORMED。正式實作通過81點比較、錯版拒絕、冷測與67項正常攻方滑鼠驗收。 | 2026-11-03 |
+| [`docs/spec/271-arrival-ai-context.md`](spec/271-arrival-ai-context.md) | 271：抵達分派前的 AI 上下文 | CONFORMED。2026-11-15完整到站上下文通過1170個原版受控案例及62項正常滑鼠抽驗；11月3日的8… | 2026-11-15 |
 | [`docs/spec/272-world-tick-battle-resume.md`](spec/272-world-tick-battle-resume.md) | 272：戰術戰鬥中斷世界更新，戰後續完同一拍 | CONFORMED。入戰暫停、戰後續跑及存檔保護已實作；正式冷測與正常攻守滑鼠流程通過。 | 2026-11-03 |
 | [`docs/spec/273-encounter-battlefield-context.md`](spec/273-encounter-battlefield-context.md) | 273 — 在接戰位置選場一次，供戰術與畫面共用 | CONFORMED。 | 2026-11-04 |
 | [`docs/spec/274-original-list-scrollbar-drag.md`](spec/274-original-list-scrollbar-drag.md) | 274 — 清單捲軸按住預覽，放開提交 | CONFORMED。 | 2026-11-04 |

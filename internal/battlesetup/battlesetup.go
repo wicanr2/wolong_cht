@@ -28,6 +28,8 @@ type Options struct {
 	World *state.World
 	// Map 是大地圖，野戰靠它取樣地形。缺席時野戰一律用預設那一張。
 	Map *world.Map
+	// Chrome 是原 ICONGRF 第3段。戰略AI的錯位讀點也會讀到它。
+	Chrome []byte
 	// Warn 收載入過程的警告，nil 就丟掉。**三份資料各自可缺**，
 	// 少一份就退一級，不會讓遊戲開不起來。
 	Warn func(string)
@@ -39,6 +41,7 @@ type Options struct {
 // 那是一個要讓呼叫端知道的降級，不是可以靜靜吞掉的細節。
 func Load(opt Options) (*Provider, *state.TacticalSetup, error) {
 	AttachTerrain(opt.World, opt.Map)
+	AttachAIHoldSources(opt.World, opt.Chrome, opt.Map)
 	warn := opt.Warn
 	if warn == nil {
 		warn = func(string) {}
@@ -92,6 +95,18 @@ func AttachTerrain(w *state.World, m *world.Map) {
 		return
 	}
 	w.SetTerrain(func(x, y int) byte { tile, _ := m.Tile(x, y); return tile })
+}
+
+// AttachAIHoldSources 供新遊戲、讀檔及無頭模擬共用，與戰術素材能否載入無關。
+func AttachAIHoldSources(w *state.World, chrome []byte, m *world.Map) {
+	if w == nil {
+		return
+	}
+	if m == nil || len(m.Tiles) != world.Width*world.Height {
+		w.SetAIHoldSources(chrome, nil)
+		return
+	}
+	w.SetAIHoldSources(chrome, func(x, y int) byte { return m.Tiles[y*world.Width+x] })
 }
 
 func loadLibrary(dir string, warn func(string)) *battle.Library {

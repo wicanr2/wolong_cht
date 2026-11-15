@@ -20,10 +20,13 @@ import (
 	"fmt"
 	"log"
 	"os"
+	"path/filepath"
 	"text/tabwriter"
 
+	"github.com/wicanr2/wolong_cht/internal/assets/gfx"
 	"github.com/wicanr2/wolong_cht/internal/assets/text"
 	"github.com/wicanr2/wolong_cht/internal/assets/world"
+	"github.com/wicanr2/wolong_cht/internal/battlesetup"
 	"github.com/wicanr2/wolong_cht/internal/rules/clock"
 	"github.com/wicanr2/wolong_cht/internal/rules/diplomacy"
 	"github.com/wicanr2/wolong_cht/internal/rules/economy"
@@ -252,6 +255,15 @@ func loadRoads(path string, w *state.World) *march.Graph {
 		fmt.Printf("（大地圖解不開：%v；行軍走直線）\n", err)
 		return nil
 	}
+	// 規則亦會讀到原圖庫／地圖的43個留守讀點；與桌面使用相同注入入口。
+	var chrome []byte
+	if icon, err := os.ReadFile(filepath.Join(filepath.Dir(path), "ICONGRF.DAT")); err == nil {
+		region := gfx.IconRegions[3]
+		if len(icon) >= region.Offset+region.Length {
+			chrome = icon[region.Offset : region.Offset+region.Length]
+		}
+	}
+	battlesetup.AttachAIHoldSources(w, chrome, m)
 	xy := make([][2]int, len(w.Cities))
 	for i := range w.Cities {
 		xy[i] = [2]int{w.Cities[i].X, w.Cities[i].Y}
