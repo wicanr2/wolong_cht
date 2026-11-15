@@ -256,6 +256,7 @@ GPU最多兩頁快取，其他季節、液晶、未選頁與讀圖失敗沿原�
 
 | 日期／目前程式 | 最近驗證 | 狀態 | 交付物 |
 |---|---|---|---|
+| 2026-11-16；wlgame-ai-neutral-r1 | 原版五函式bytes、6,096組完整區塊相同，舊Go拒224組；正常讀檔後事件1的完整收尾相同；兩錯版、producer／存讀檔、全專案冷測／vet、滑鼠62項／9圖與七日期六表全0 | 已保留135AB的36門檻與中立24別名國力比較，#27機制條件補齊。整體AI仍接#26正常外交視窗連續流程；強化AI未啟用 | [spec219宣戰反應契約](docs/spec/219-c-event-handlers.md)、[整合收據](workplace/scratch/ai-neutral-20261116/integration.json) |
 | 2026-11-16；wlgame-ai-cooperation-r1 | 原版五函式bytes、12,288組條件／RNG全等，舊Go拒4,656組；玩家佇列／選擇／存檔與AI拒絕、全專案冷測／vet、滑鼠62項／9圖；七日期至7/16六表全0 | 已補交戰關係先歸零，修正報酬及免費接受誤判。#26仍留正常外交視窗連續流程，#27中立邊界續查；整體AI進行中，強化AI未啟用 | [spec219補正契約](docs/spec/219-c-event-handlers.md)、[整合收據](workplace/scratch/ai-cooperation-20261116/integration.json) |
 | 2026-11-16；正式程式沿wlgame-ai-replan-r1 | 兩次真實原版折返、14個完整軍團／c/s事件、兩組佔用圖／RNG及4/16六表相同；正式API回歸及停用AI錯版拒絕 | 已補玩家折返停留與受控初態AI回首都解體的實機觀測，未改正式規則。行軍救援既有抽驗已收尾，整體AI仍接#26／#27外交邊界，強化AI未啟用 | [spec132 §5](docs/spec/132-march-turnback-at-peace.md)、[整合收據](workplace/scratch/ai-turnback-20261116/integration.json) |
 | 2026-11-16；wlgame-ai-replan-r1 | 原版7函式／512案完整區塊全等，舊Go拒160案；64組分派入口、三條救援次數相同；七日期至7/16六表全0、正常曹操滑鼠62項／9圖 | 已修Stage10／11改回首都漏設旗標，以及目標setter額外設旗標／連結位址抵達判斷。6/12差異消除；仍核對#29折返後觀測及#26／#27外交邊界，整體AI目標進行中 | [spec177本片](docs/spec/177-replan-on-leg-not-from-city.md)、[整合收據](workplace/scratch/ai-replan-20261116/integration.json) |

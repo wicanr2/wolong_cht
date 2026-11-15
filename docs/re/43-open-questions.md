@@ -7,7 +7,7 @@
 
 現行工作與狀態由 GitHub [Issues](https://github.com/wicanr2/wolong_cht/issues) 管理；
 本地 [`docs/worklist.json`](../worklist.json) 與 `tools/worklist.py verify` 只作輔助。
-1131 列不是同數量的獨立 backlog；可執行項目已由完成的 Issue #28 分流，證據／歷史項目留在本索引。
+1129 列不是同數量的獨立 backlog；可執行項目已由完成的 Issue #28 分流，證據／歷史項目留在本索引。
 
 - 日期：2026-11-15
 - 產生工具：`tools/re_open_questions.py`
@@ -22,7 +22,7 @@
 
 ## 0. ⚠ 這個數字在量什麼
 
-**1125 列分布在 457 份文件，平均每份 2.5 列。**
+**1123 列分布在 457 份文件，平均每份 2.5 列。**
 
 ⭐ **所以它比較接近「文件有多少份」，不是「原版還有多少沒解」。**
 每寫一份新文件就帶進約三列自己的未解——而 `check.sh --strict` 還會
@@ -47,11 +47,11 @@
 |---|---:|---:|---:|---:|
 | 規則正確性 | 11 | 7 | 3 | 1 |
 | 資料保存 | 20 | 19 | 1 | 0 |
-| 程式碼理解 | 316 | 309 | 6 | 1 |
+| 程式碼理解 | 315 | 308 | 6 | 1 |
 | 驗收 | 245 | 220 | 25 | 0 |
 | 外部資料 | 6 | 5 | 1 | 0 |
-| 其他 | 527 | 503 | 23 | 1 |
-| **合計** | **1125** | 1063 | 59 | 3 |
+| 其他 | 526 | 502 | 23 | 1 |
+| **合計** | **1123** | 1061 | 59 | 3 |
 
 ⚠ **這是列數，不是獨立問題數。** 索引檔的「現況」欄是別的文件的摘要，同一個缺口在那份文件自己的未解表裡還有一列——這類共 **0** 列（另有少數只是提到「未解」兩個字的圖例列）。
 
@@ -59,8 +59,8 @@
 
 | 來源目錄 | 列數 |
 |---|---:|
-| `docs/spec/` | 484 |
-| `docs/re/` | 316 |
+| `docs/spec/` | 483 |
+| `docs/re/` | 315 |
 | `docs/playtest/` | 245 |
 | `docs/release/` | 26 |
 | `docs/formats/` | 20 |
@@ -110,7 +110,7 @@
 | [`formats/09-cutscene-images.md`](../formats/09-cutscene-images.md) | `GAMEOVER.DAT` 誰播 | 不在 `D7END.EXE` 的十二幕裡。**推測是 `KI.EXE` 的敗北路徑**（`../re/59`），沒有找到取用端 | 靜態 | evidence-only | — |
 | [`formats/10-end-s15-namechars.md`](../formats/10-end-s15-namechars.md) | 勢力 `+0x02 = 0x7F` 時，訊息裡的 `{4}` 從哪裡取名 | 推測從 `5222h`，`sub_1075B` 那條路沒回頭讀 | 靜態 | evidence-only | — |
 
-## 2.3 程式碼理解（316 條）
+## 2.3 程式碼理解（315 條）
 
 | 出處 | 缺口 | 現況 | 裁決 | 分流 | Issue |
 |---|---|---|---|---|---|
@@ -144,7 +144,6 @@
 | [`re/09-combat.md`](../re/09-combat.md) | `[si+3]` 的 0／1／≥2 是誰設的 | 決定哪一支軍團會進戰鬥畫面 | 靜態 | evidence-only | — |
 | [`re/100-c-event-handlers-restoration.md`](../re/100-c-event-handlers-restoration.md) | 完整 UI／選擇／戰鬥／金額 callee | 本輪量 caller 與受控回傳，不能宣稱正常玩家 parity | 靜態 | evidence-only | — |
 | [`re/100-c-event-handlers-restoration.md`](../re/100-c-event-handlers-restoration.md) | 完整 Go 每時與事件三方 | 尚未驗證 | 靜態 | evidence-only | — |
-| [`re/100-c-event-handlers-restoration.md`](../re/100-c-event-handlers-restoration.md) | 中立 0x24 的玩家規則 | 原始 byte 行為與玩法語意分開，Issue #27 維持 OPEN | 靜態 | actionable | [#27](https://github.com/wicanr2/wolong_cht/issues/27) |
 | [`re/100-c-event-handlers-restoration.md`](../re/100-c-event-handlers-restoration.md) | C 機器碼匹配與原作者工具鏈 | spec/255 已判手寫組語，C 機器碼匹配不可行；整檔匹配仍由組語基準提供 | 靜態 | merge-target | [#25](https://github.com/wicanr2/wolong_cht/issues/25) |
 | [`re/101-c-modal-restoration.md`](../re/101-c-modal-restoration.md) | 完整底層繪圖／輸入／音效及自然玩家視窗 | primitive fixture 不取代正常玩家或像素證據，Issue #22 保持 OPEN | 靜態 | evidence-only | — |
 | [`re/101-c-modal-restoration.md`](../re/101-c-modal-restoration.md) | 完整 Go 視窗及每時三方 | 尚未驗證 | 靜態 | evidence-only | — |
@@ -692,7 +691,7 @@
 | [`reference/04-first-survey.md`](../reference/04-first-survey.md) | 不要憑「同一份專案應該用同一個編譯器」外推——**`KI.EXE` 的編譯器未解。 | （散句） | 靜態 | evidence-only | — |
 | [`reference/05-eten-font-provenance.md`](../reference/05-eten-font-provenance.md) | `END_S13/S14/S15` 是中文版加的結局段 | S13／S14 是字型。**`END_S15` 仍未解** | 靜態 | evidence-only | — |
 
-## 2.6 其他（527 條）
+## 2.6 其他（526 條）
 
 | 出處 | 缺口 | 現況 | 裁決 | 分流 | Issue |
 |---|---|---|---|---|---|
@@ -949,7 +948,6 @@
 | [`spec/218-c-hourly-update.md`](../spec/218-c-hourly-update.md) | C 機器碼匹配 | spec/255 已判手寫組語，C 機器碼匹配不可行 | 靜態 | merge-target | [#25](https://github.com/wicanr2/wolong_cht/issues/25) |
 | [`spec/219-c-event-handlers.md`](../spec/219-c-event-handlers.md) | 正常玩家事件 modal 與戰術 | 未驗證，fixture 不作完成證據 | 靜態 | evidence-only | — |
 | [`spec/219-c-event-handlers.md`](../spec/219-c-event-handlers.md) | Go 每時與事件三方 | 未驗證 | 靜態 | evidence-only | — |
-| [`spec/219-c-event-handlers.md`](../spec/219-c-event-handlers.md) | 中立 0x24 的玩家語意 | 未驗證，本輪只還原原始控制流 | 靜態 | merge-target | [#27](https://github.com/wicanr2/wolong_cht/issues/27) |
 | [`spec/219-c-event-handlers.md`](../spec/219-c-event-handlers.md) | C 機器碼、原作 compiler | spec/255 已判手寫組語，C 機器碼匹配不可行 | 靜態 | merge-target | [#25](https://github.com/wicanr2/wolong_cht/issues/25) |
 | [`spec/22-corps-formation-window.md`](../spec/22-corps-formation-window.md) | 頭像的邊框 | `sub_107D2` 只 blit 64×64 的圖塊，**框在哪裡畫的沒找到**——場景 5 的 op 清單裡沒有頭像那一格的框 | 靜態 | evidence-only | — |
 | [`spec/22-corps-formation-window.md`](../spec/22-corps-formation-window.md) | 兵種標籤 | 畫面用場景 5 的「主將」，規則層的 `army.Position` 第一個是「大將」（原版 TALK #62 也這樣說）。兩處用語不同是原版就有的，不要統一 | 靜態 | merge-target | [#12](https://github.com/wicanr2/wolong_cht/issues/12) |

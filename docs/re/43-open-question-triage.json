@@ -4212,19 +4212,6 @@
     },
     {
       "file": "docs/re/100-c-event-handlers-restoration.md",
-      "item": "中立 0x24 的玩家規則",
-      "status": "原始 byte 行為與玩法語意分開，Issue #27 維持 OPEN",
-      "section": "5. 未解範圍",
-      "domain": "程式碼理解",
-      "verdict": "靜態",
-      "occurrence": 0,
-      "id": "oq-6ff7e75acf4908eec74e",
-      "classification": "actionable",
-      "github_issue": 27,
-      "reason": "sub_135AB 的 0x24 中立／越界門檻，併入 Issue #27。"
-    },
-    {
-      "file": "docs/re/100-c-event-handlers-restoration.md",
       "item": "C 機器碼匹配與原作者工具鏈",
       "status": "spec/255 已判手寫組語，C 機器碼匹配不可行；整檔匹配仍由組語基準提供",
       "section": "5. 未解範圍",
@@ -11047,19 +11034,6 @@
       "classification": "evidence-only",
       "github_issue": null,
       "reason": "目前列只保留原版證據邊界，未命中現行玩家路徑、規則或交付 Issue；若影響範圍改變，先建立新 Issue 再調整分類。"
-    },
-    {
-      "file": "docs/spec/219-c-event-handlers.md",
-      "item": "中立 0x24 的玩家語意",
-      "status": "未驗證，本輪只還原原始控制流",
-      "section": "4. 未解範圍",
-      "domain": "其他",
-      "verdict": "靜態",
-      "occurrence": 0,
-      "id": "oq-98b3dac81f10b0c30ffb",
-      "classification": "merge-target",
-      "github_issue": 27,
-      "reason": "sub_135AB 的 0x24 中立／越界門檻，併入 Issue #27。"
     },
     {
       "file": "docs/spec/219-c-event-handlers.md",

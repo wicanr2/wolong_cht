@@ -970,25 +970,47 @@ func (w *World) applyQueuedDeclaration(source, target int) bool {
 		return true
 	}
 
-	// sub_135AB：被宣戰者若手上的目標比宣戰者更強，就先吃原本的目標；
-	// 否則回頭把宣戰者設成侵攻目標。中立沒有可讀的勢力記錄，這裡採
-	// fail-closed 的 remake 邊界，不重現原版對交友度表起點的越界讀。
-	defender := &w.Factions[target]
-	current := defender.InvasionTarget
-	retaliate := current == diplomacy.NoTarget || current == combat.NeutralFaction ||
-		current < 0 || current >= numFactions
-	if !retaliate {
-		retaliate = strategyai.Power(strategyFactionValue(w, source)) >
-			strategyai.Power(strategyFactionValue(w, current))
-	}
-	if retaliate && target != w.Player {
-		defender.InvasionTarget = source
+	// sub_135AB：原目標國力不低於宣戰者時保留，否則改攻宣戰者。
+	// 原始門檻是36，不是中立編號24；
+	// 22至35會把同一資料區的其他記錄當成國力欄位，見spec219。
+	if target != w.Player {
+		defender := &w.Factions[target]
+		current := defender.InvasionTarget
+		retaliate := current < 0 || current >= 0x24
+		if !retaliate {
+			currentPower, ok := w.declarationTargetPower(current)
+			retaliate = !ok || strategyai.Power(strategyFactionValue(w, source)) > currentPower
+		}
+		if retaliate {
+			defender.InvasionTarget = source
+		}
 	}
 
 	war := strategyai.AtWarValue(w.Friendship[source][target], w.Friendship[target][source])
 	w.Friendship[source][target] = war
 	w.Friendship[target][source] = war
 	return true
+}
+
+// declarationTargetPower 保存sub_135AB的原始0..35記錄索引。
+// 中立24讀到目前交友度表，不可改讀載入時的raw快照。
+func (w *World) declarationTargetPower(faction int) (int, bool) {
+	if faction < 0 || faction >= 0x24 {
+		return 0, false
+	}
+	if faction < numFactions {
+		return strategyai.Power(strategyFactionValue(w, faction)), true
+	}
+	if len(w.raw) != blockSize {
+		return 0, false
+	}
+	b := w.Bytes()
+	off := factionBase + faction*factionSize
+	return strategyai.Power(strategyai.Faction{
+		Reserves: [3]int{u16(b, off+4), u16(b, off+6), u16(b, off+8)},
+		Funds:    i24(b, off+0x20),
+		Cities:   int(b[off+0x23]),
+	}), true
 }
 
 // strategyFactionValue 只把 sub_13091 需要的資料投影給 strategyai.Power。
