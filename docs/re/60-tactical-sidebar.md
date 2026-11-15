@@ -1,5 +1,11 @@
 # 60 — 戰術側欄：那一欄畫了什麼，每一格由誰畫
 
+## 2026-11-15：玩家退卻輸入與選取清除勘誤
+
+輸入DOS/V KI.EXE SHA-256 `fffeba985231cda4d636e93d10f598470b1f691d00275e4aa38e285893d43868`，dosgolem `f79eab6db8c64a524a06535e53e5d32b0bbcf7c8`。位址為oracle.IDA DOS/V linear，以下為已證實的正常原版滑鼠觀測。
+已證實定位：`1C21A／1A8F6／1C315`。正常玩家輸入確認退卻獨立於一般選隊命令；只選主將也寫六隊長Next=5。成功1C315返回後由caller清選取，重複拒絕不清選取、不刷新原到期word66。這項動態證據補齊選取語意，舊靜態片段保留作歷史定位。
+287拍核心、三張完整圖及74項正常滑鼠驗證範圍見[spec159](../spec/159-tactical-command-movement-order.md)及[收據](../../workplace/scratch/ui-windows-20261104/cao-retreat-input-integration.json)。
+
 2026-11-15接線回填：§6.1既有指令群組已接入正式桌面TALK入口，正常原版242拍登城為CX=1B4、DL=0，夏侯淵原始說話型7展開653。
 玩家喊話畫下框、對方畫上框，與攻守分開；不另顯示拒絕登城的事件通知。
 原版觀測、正式抽驗與尚存時序／退卻喊話差異見[spec159](../spec/159-tactical-command-movement-order.md)。

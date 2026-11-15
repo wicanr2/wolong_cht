@@ -1048,10 +1048,12 @@ func (g *game) drawBattleKeys(screen *ebiten.Image, b *tactical.Battle, r battle
 			g.battleCommandSelect)
 		if picked {
 			outer, inner := battleSlotSelectRects(cell.X)
-			vector.StrokeRect(screen, float32(outer.X), float32(outer.Y),
-				float32(outer.W), float32(outer.H), 1, g.battleCommandSelect, false)
-			vector.StrokeRect(screen, float32(inner.X), float32(inner.Y),
-				float32(inner.W), float32(inner.H), 1, g.battleCommandSelect, false)
+			for _, box := range []battleRect{outer, inner} {
+				vector.FillRect(screen, float32(box.X), float32(box.Y), float32(box.W), 1, g.battleCommandSelect, false)
+				vector.FillRect(screen, float32(box.X), float32(box.Y+box.H-1), float32(box.W), 1, g.battleCommandSelect, false)
+				vector.FillRect(screen, float32(box.X), float32(box.Y+1), 1, float32(box.H-2), g.battleCommandSelect, false)
+				vector.FillRect(screen, float32(box.X+box.W-1), float32(box.Y+1), 1, float32(box.H-2), g.battleCommandSelect, false)
+			}
 		}
 	}
 	if b.Done {

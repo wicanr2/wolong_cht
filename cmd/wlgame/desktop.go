@@ -414,10 +414,16 @@ func (s *desktopGame) writeTrace() {
 		if p := g.world.PendingBattle(); p != nil {
 			b := p.Battle
 			side := g.battleSide()
+			orders := make([][2]int, len(b.Sides[side].Kinds))
+			for k := range orders {
+				soldier := b.Sides[side].Soldiers[k*len(b.Sides[side].Soldiers)/len(orders)]
+				orders[k] = [2]int{int(soldier.Cmd), int(soldier.Next)}
+			}
 			v["battle"] = map[string]any{
 				"attacker": p.Attacker, "defender": p.Defender, "node": p.Node,
 				"mode": int(p.Mode), "side": side, "frame": b.Frame, "done": b.Done,
 				"opening": b.OpeningActive(), "talk": g.battleTalkSession.queue.active(),
+				"squadOrders": orders, "talkRemaining": g.battleTalkSession.queue.remaining,
 				"selected": b.Sides[side].Selected, "formation": b.Sides[side].Formation,
 				"line": b.Sides[side].Line, "standing": int(b.Sides[side].Standing),
 				"leaderOrder":    [2]int{int(b.Sides[side].Soldiers[0].Cmd), int(b.Sides[side].Soldiers[0].Next)},

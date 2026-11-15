@@ -748,6 +748,44 @@ func TestOrderSelectedOnlyReachesPickedSquads(t *testing.T) {
 	}
 }
 
+// 原版1C21A→1A8F6：退卻傳六隊長，成功清選取，拒絕保留選取。
+func TestSelectedRetreatUsesWholeArmyAndRejectsRepeat(t *testing.T) {
+	for _, side := range []int{AttackerSide, DefenderSide} {
+		for _, mask := range []uint8{0, 1, 4, AllSquadsMask} {
+			b := newTestBattle(walledField(32))
+			b.SetPlayerSide(side)
+			b.Sides[side].Selected = mask
+			before := b.Sides
+			if !b.OrderSelected(side, Retreat) || b.endPhase != side+1 || b.Sides[side].Selected != 0 {
+				t.Fatalf("側%d選取%x：全軍退卻必須成功並清選取", side, mask)
+			}
+			for k, s := range b.Sides[side].Soldiers {
+				want := before[side].Soldiers[k].Next
+				if k%PerSquad == 0 {
+					want = Retreat
+				}
+				if s.Next != want || s.Cmd != before[side].Soldiers[k].Cmd {
+					t.Fatalf("側%d槽%d：首次只向六隊長排退卻，隊員等後續傳令", side, k)
+				}
+			}
+			b.Sides[side].Selected = 4
+			if b.OrderSelected(side, Retreat) || b.Sides[side].Selected != 4 || b.endPhase != side+1 {
+				t.Fatal("已有退卻時應拒絕並保留選隊")
+			}
+		}
+	}
+}
+
+func TestSelectedRetreatAlsoRejectsOpposingArmyRetreat(t *testing.T) {
+	b := newTestBattle(flatField())
+	b.Order(1, -1, Retreat)
+	b.Sides[0].Selected = 1
+	before := b.Sides[0].Soldiers[0].Next
+	if b.OrderSelected(0, Retreat) || b.Sides[0].Selected != 1 || b.endPhase != 2 || b.Sides[0].Soldiers[0].Next != before {
+		t.Fatal("對方已全軍退卻，也不能另外開始我方退卻或清選取")
+	}
+}
+
 // ⚠ 城壁令對**玩家**是拒絕，對腳本是降級成攻擊——兩條路不同。
 func TestOrderSelectedRejectsScaleWallOffSiege(t *testing.T) {
 	field := newTestBattle(NewField(make([][]int, Height), 0)) // gateX=0 ＝ 沒有城

@@ -146,6 +146,15 @@ func (b *Battle) OrderSelected(side int, c Command) bool {
 	if c == ScaleWal && !b.Field.IsSiege() {
 		return false
 	}
+	// 1C21A走全軍1A8F6；成功才清選取，已有退卻則保留。
+	if c == Retreat {
+		if b.endPhase != 0 {
+			return false
+		}
+		b.Order(side, -1, Retreat)
+		b.TakeSquadSelection(side)
+		return true
+	}
 	mask := b.TakeSquadSelection(side)
 	if mask == AllSquadsMask {
 		b.Order(side, -1, c)

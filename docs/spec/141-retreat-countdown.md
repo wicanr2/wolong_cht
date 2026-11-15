@@ -1,5 +1,11 @@
 # 141 — 全軍退卻之後的 120 拍倒數
 
+## 2026-11-15：玩家退卻輸入與選取清除勘誤
+
+輸入DOS/V KI.EXE SHA-256 `fffeba985231cda4d636e93d10f598470b1f691d00275e4aa38e285893d43868`，dosgolem `f79eab6db8c64a524a06535e53e5d32b0bbcf7c8`。位址為oracle.IDA DOS/V linear，以下為已證實的正常原版滑鼠觀測。
+已證實定位：`1C21A／1A8F6／1C315`。補齊玩家caller：無論選隊遮罩為何，首次退卻走全軍傳令，成功後才清選取。已有任一側退卻則拒絕，保留選取且不重掛TALK；既有倒數、補兵停止及單兵傳令規則不變。原版262／267／277拍已動態核對，取代先前只驗自動退卻而未證玩家接線的限制。
+287拍核心、三張完整圖及74項正常滑鼠驗證範圍見[spec159](159-tactical-command-movement-order.md)及[收據](../../workplace/scratch/ui-windows-20261104/cao-retreat-input-integration.json)。
+
 ## 2026-11-15：喊話時鐘與持續介面狀態接線
 
 輸入DOS/V KI.EXE SHA-256 `fffeba985231cda4d636e93d10f598470b1f691d00275e4aa38e285893d43868`，dosgolem `f79eab6db8c64a524a06535e53e5d32b0bbcf7c8`，位址為oracle.IDA DOS/V linear。

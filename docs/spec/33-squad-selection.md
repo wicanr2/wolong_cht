@@ -1,5 +1,11 @@
 # 33 — 底列六格是選部隊，不是第二套命令列
 
+## 2026-11-15：玩家退卻輸入與選取清除勘誤
+
+輸入DOS/V KI.EXE SHA-256 `fffeba985231cda4d636e93d10f598470b1f691d00275e4aa38e285893d43868`，dosgolem `f79eab6db8c64a524a06535e53e5d32b0bbcf7c8`。位址為oracle.IDA DOS/V linear，以下為已證實的正常原版滑鼠觀測。
+已證實定位：`1C21A／1A8F6／1C315`。退卻有獨立caller，不套一般選隊遮罩。首次262拍只選主將仍傳六隊長Next=5；1C315內選取尚1，返回輸入迴圈已清0。已有任一側全軍退卻便拒絕，267／277拍選取0／4都保留，喊話到期word66不刷新。正式OrderSelected已補此分支。選取框沿§1.4含尾端矩形，以整數1像素填線繪兩圈；中心線描邊曾多出188個差異像素，三個完整畫面已僅差游標。
+287拍核心、三張完整圖及74項正常滑鼠驗證範圍見[spec159](159-tactical-command-movement-order.md)及[收據](../../workplace/scratch/ui-windows-20261104/cao-retreat-input-integration.json)。
+
 ## 2026-11-15：喊話時鐘與持續介面狀態接線
 
 輸入DOS/V KI.EXE SHA-256 `fffeba985231cda4d636e93d10f598470b1f691d00275e4aa38e285893d43868`，dosgolem `f79eab6db8c64a524a06535e53e5d32b0bbcf7c8`，位址為oracle.IDA DOS/V linear。
@@ -171,6 +177,11 @@
 點螢幕第 i 格  →  隊 = cs:D2E4[i]  →  選取位元圖 ^= 1 << 隊
 
 下令(命令碼 c):
+    if c == 退卻:
+        if 已有任何一側全軍退卻: return 拒絕     # 保留選取與喊話到期
+        下全軍退卻令                          # 六隊長Next = 5
+        清空選取位元圖
+        return 成功
     if c == 城壁 and 這張圖沒有城:            # byte_1AB4F == 0
         跳 TALK 582「這哪裡有城壁啊！！」，不下令
         return
