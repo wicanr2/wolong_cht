@@ -137,8 +137,8 @@ type Faction struct {
 
 	Diplomat int // 派駐「這個」勢力的外交官（由別人派來），0xFF ＝ 無
 
-	// LowFunds 是記錄 +0x00 的 bit 6：資金低於「取消侵攻」門檻的**一半**
-	// 時設起（docs/re/08 §1）。
+	// LowFunds 是記錄 +0x00 的 bit 6：資金高word不大於侵攻門檻的一半。
+	// 每時更新及存讀檔保留此旗標（docs/re/08 §1、spec182 §7）。
 	//
 	// 消費端是 AI 軍團挑目標的 Stage 2：設起時**跳過 LostSite**，
 	// 只接 ReliefSite——沒錢就不主動反攻失土（docs/re/65 §4.1）。
@@ -720,6 +720,7 @@ func loadBlock(b []byte) *World {
 		r := b[factionBase+i*factionSize:]
 		w.Factions[i] = Faction{
 			Alive:          r[0x00] >= 0x80,
+			LowFunds:       r[0x00]&0x40 != 0,
 			Lord:           int(r[0x01]),
 			Advisor:        int(r[0x02]),
 			Capital:        int(r[0x03]),
@@ -1368,7 +1369,7 @@ func (w *World) hourly(ev *Event, rng economy.Rand) {
 		}
 		f.InvasionTarget = diplomacy.NoTarget
 		// 再低一半就設 bit 6：AI 軍團挑目標時會跳過「奪回失土」。
-		f.LowFunds = !diplomacy.CanSustainInvasion(f.Funds*2, f.Cities)
+		f.LowFunds = diplomacy.LowInvasionFunds(f.Funds, f.Cities)
 	} else {
 		f.LowFunds = false
 	}
@@ -1636,6 +1637,10 @@ func (w *World) Bytes() []byte {
 			r[0x00] |= 0x80
 		} else {
 			r[0x00] &^= 0x80
+		}
+		r[0x00] &^= 0x40
+		if f.LowFunds {
+			r[0x00] |= 0x40
 		}
 		r[0x01] = byte(f.Lord)
 		r[0x02] = byte(f.Advisor)

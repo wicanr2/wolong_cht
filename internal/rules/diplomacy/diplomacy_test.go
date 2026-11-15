@@ -188,16 +188,19 @@ func TestCeaseFire(t *testing.T) {
 
 // ⭐ 財政撐不住就取消侵攻，門檻與據點數掛鉤。
 func TestInvasionSustainability(t *testing.T) {
-	// 14 個據點 → 門檻 = (14×8 + 24) << 8 = 136 << 8 = 34,816
+	// 原版 cmp 門檻,資金高word / jl：高word相等仍會取消侵攻。
+	// 14個據點的最低可維持資金是137<<8 = 35,072。
 	const cities = 14
-	if got := InvasionThreshold(cities); got != 34816 {
-		t.Errorf("門檻 = %d, want 34816", got)
+	if got := InvasionThreshold(cities); got != 35072 {
+		t.Errorf("門檻 = %d, want 35072", got)
 	}
-	if !CanSustainInvasion(34816, cities) {
-		t.Error("剛好在門檻上應該撐得住")
+	if !CanSustainInvasion(35072, cities) {
+		t.Error("高word超過門檻才撐得住")
 	}
-	if CanSustainInvasion(34815, cities) {
-		t.Error("低於門檻不該撐得住")
+	for _, funds := range []int{34815, 34816, 34943, 34944, 35071} {
+		if CanSustainInvasion(funds, cities) {
+			t.Errorf("資金%d的高word尚未超過門檻", funds)
+		}
 	}
 
 	// 地盤越大，門檻越高。
@@ -209,6 +212,26 @@ func TestInvasionSustainability(t *testing.T) {
 	for _, f := range []int{-1, -1000, -655000} {
 		if CanSustainInvasion(f, 1) {
 			t.Errorf("資金 %d 不該撐得住侵攻", f)
+		}
+	}
+}
+
+// 原版財政切片與196/6/14長局的邊界，見spec182 §7。
+func TestInvasionFinanceNativeBoundaries(t *testing.T) {
+	for _, tc := range []struct {
+		funds        int
+		sustain, low bool
+	}{
+		{22527, false, true}, {22528, false, true},
+		{22655, false, true}, {22656, false, true}, {22783, false, true},
+		{22784, false, false}, {45182, false, false},
+		{45311, false, false}, {45312, true, false},
+	} {
+		if got := CanSustainInvasion(tc.funds, 19); got != tc.sustain {
+			t.Errorf("funds=%d sustain=%v want=%v", tc.funds, got, tc.sustain)
+		}
+		if got := LowInvasionFunds(tc.funds, 19); got != tc.low {
+			t.Errorf("funds=%d low=%v want=%v", tc.funds, got, tc.low)
 		}
 	}
 }

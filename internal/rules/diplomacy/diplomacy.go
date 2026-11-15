@@ -228,7 +228,7 @@ const NoTarget = 0xFF
 //
 // 原版每小時輪到該勢力時檢查（`sub_13E11`）：
 //
-//	資金 >> 8  <  據點數 × 8 + 24   →  侵攻目標設回 0xFF
+//	資金 >> 8 <= 據點數 × 8 + 24 → 侵攻目標設回 0xFF
 //
 // **⭐ 財政撐不住就自動取消侵攻**，而且門檻與**據點數**掛鉤——
 // 地盤越大，維持一場侵攻需要的最低資金越高。
@@ -239,9 +239,15 @@ const NoTarget = 0xFF
 //
 // funds 傳有號的資金原值，程式內部照原版取 >> 8。
 func CanSustainInvasion(funds, cities int) bool {
-	return funds>>8 >= cities*8+24
+	return funds>>8 > cities*8+24
 }
 
-// InvasionThreshold 回傳維持侵攻所需的最低資金（原值，不是 >> 8 之後的）。
+// LowInvasionFunds 對應 sub_13E3C–13E43 的資金吃緊旗標。
+// 原版先把據點門檻減半，再比較資金的高word；不可先把資金加倍。
+func LowInvasionFunds(funds, cities int) bool {
+	return funds>>8 <= (cities*8+24)/2
+}
+
+// InvasionThreshold 回傳仍能維持侵攻的最低資金（原值，不是 >> 8 之後的）。
 // 只用於顯示與測試——判斷請用 CanSustainInvasion，那個才是照原版的比較法。
-func InvasionThreshold(cities int) int { return (cities*8 + 24) << 8 }
+func InvasionThreshold(cities int) int { return (cities*8 + 25) << 8 }
