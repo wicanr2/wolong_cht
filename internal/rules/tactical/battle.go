@@ -689,9 +689,6 @@ func (b *Battle) Step() {
 	// 原版在同一個地方（0001A12A）遞增計時器並檢查三個 UI 的到期。
 	b.expireStructureBar()
 
-	// 開戰單挑（`sub_1A1C5` 在主迴圈最前面，docs/spec/80）。
-	b.stepDuel()
-
 	// 腳本先跑：原版的主迴圈是「執行一個腳本指令 → 更新實體」。
 	// ⭐ 開場 50 tick ＋ 整段單挑期間**腳本不跑**——腳本直譯器在
 	// 原版主迴圈裡，而 `sub_1A1C5` 沒返回主迴圈一步都不動；
@@ -751,6 +748,8 @@ func (b *Battle) Step() {
 	// `sub_1A754`／`sub_1A785` 的位置相同（docs/spec/128）。
 	b.applySquadLeaderGone()
 	b.checkVictory(present)
+	// 1A1C5先走完等待的實體更新，再下下一階段命令（spec159）。
+	b.stepDuel()
 }
 
 // checkVictory 重現 `sub_1A6FA` 的三條出口。**順序照原版**：

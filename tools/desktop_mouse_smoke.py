@@ -730,8 +730,25 @@ def run(binary, orig, font, output, mode="desktop"):
                         click(496, 344, exact=True)
                         wait(lambda s: s.get("battle", {}).get("standing") == 4, "field guard command by mouse")
                         shot("field-guard")
+                        retreat_trace_offset = trace.stat().st_size
                         click(496, 360, exact=True)
-                        wait(lambda s: s.get("battle", {}).get("leaderOrder", [None, None])[b["side"]] == 5, "field retreat command by mouse")
+
+                        def field_retreat_observed(_):
+                            # 最高速可在click返回前離場；核對本次輸入後的實際軌跡。
+                            with trace.open() as rows:
+                                rows.seek(retreat_trace_offset)
+                                for line in rows:
+                                    try:
+                                        battle = json.loads(line).get("battle", {})
+                                    except json.JSONDecodeError:
+                                        continue
+                                    if (battle.get("mode") == 1 and battle.get("attacker") == b["attacker"] and
+                                            battle.get("defender") == b["defender"] and
+                                            battle.get("leaderOrder", [None])[0] == 5):
+                                        return True
+                            return False
+
+                        wait(field_retreat_observed, "field retreat command by mouse")
                         wait(lambda s: not s.get("battle"), "field retreat resolves normally", 90)
                     if mode == "defend":
                         end = time.monotonic()+120

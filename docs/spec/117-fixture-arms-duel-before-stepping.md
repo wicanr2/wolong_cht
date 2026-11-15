@@ -1,5 +1,13 @@
 # 117 — 驗收捷徑要先武裝開場喊話再推戰場
 
+## 2026-11-15：單挑跨拍邊界勘誤
+
+輸入DOS/V KI.EXE SHA-256 `fffeba985231cda4d636e93d10f598470b1f691d00275e4aa38e285893d43868`，dosgolem `f79eab6db8c64a524a06535e53e5d32b0bbcf7c8`。位址為oracle.IDA DOS/V linear。
+正常道路野戰已證實：`1A1C5`先完成50次`1ADC8`，再於phase50進`1A2E8`／`1A398`／`1C315`挑戰；phase90拒戰、phase110回應，之後才開主迴圈。正式stepDuel已移至本拍完整更新之後，避免第50拍提早影響命令及移動。
+兩個固定亂數案例的拒戰開場分別吻合至220／217拍，各14張完整圖僅游標。後段尋路與應戰互砍／決著仍未由此片證實，玩家守方的抽樣不代證雙角色完整範圍；沿Issue #16／#17。
+先武裝再推進的既有契約保留；本片補齊Step內部等待完成與下一階段命令的先後，沒有增加自然流程自動按訊息旗標。
+驗收範圍見[spec159](159-tactical-command-movement-order.md)及[整合收據](../../workplace/scratch/ui-windows-20261104/cao-field-duel-integration.json)。
+
 **狀態：CONFORMED。** `-battle-steps` 那條驗收路徑先推完 N 個戰場 tick
 才呼叫 `startBattleTalk`，於是單挑狀態機在整段開場期間都沒有輸入——
 挑戰喊話一次都不會產生。正常迴圈（`updateBattle`）是**先武裝再推**，

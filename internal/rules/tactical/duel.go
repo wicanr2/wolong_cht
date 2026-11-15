@@ -220,8 +220,8 @@ func (b *Battle) duelBanterPair() int {
 	return pair
 }
 
-// stepDuel 每戰場 tick 推進一次（掛在 Step() 開頭——
-// 原版 `sub_1A1C5` 在主迴圈之前，remake 以相位機拆進逐 tick 的 Step）。
+// stepDuel 在本拍實體更新完成後推進一次。
+// 原版1A1C5先走完等待迴圈，再寫下一階段命令（docs/spec/159）。
 func (b *Battle) stepDuel() {
 	d := &b.duel
 	if !d.armed || d.phase == duelIdle {

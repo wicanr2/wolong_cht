@@ -6917,15 +6917,15 @@
     {
       "file": "docs/re/74-battle-opening-duel.md",
       "item": "開場凍結與大將騎出的機器碼形式",
-      "status": "實機定案（b0–b3），但 `sub_1A1C5` 內部的等待常式怎麼擋住實體更新未逐條讀——見 `spec/80` §3.1",
+      "status": "正常道路野戰拒戰已證實50／90／110拍；實體照常更新，主迴圈腳本及輸入等待。應戰互砍／決著、雙玩家角色完整時間與結果仍沿Issue #17",
       "section": "5. 未解",
       "domain": "程式碼理解",
       "verdict": "靜態",
       "occurrence": 0,
-      "id": "oq-1ac8d1754415725f8ed0",
+      "id": "oq-ac0bd1d0eb54e289fc0e",
       "classification": "actionable",
       "github_issue": 17,
-      "reason": "單挑角色方向與開場可操作 tick，併入 Issue #17。"
+      "reason": "本輪正常原版拒戰開場已有動態與GUI證據；剩餘分支保留原Issue，不以窄抽樣關閉。"
     },
     {
       "file": "docs/re/75-duel-talk-audit.md",
@@ -14782,15 +14782,15 @@
     {
       "file": "docs/spec/159-tactical-command-movement-order.md",
       "item": "完整戰術移動排程與後段動畫",
-      "status": "攻城677拍全軍／RNG及31張完整圖已驗；玩家選隊退卻全軍入口／成功清選取／重複拒絕完成，新增287拍核心與三張完整圖、正常滑鼠74項通過。只餘野戰單挑目前原版收據，沿Issue #16／#24",
+      "status": "野戰拒戰相位已修：兩案核心前220／217拍全等、各14張完整圖僅游標；攻城677拍及25圖／677縮圖不變。普通路徑首差221／218拍，應戰互砍及雙側完整結果仍沿Issue #16／#17",
       "section": "未解",
       "domain": "其他",
       "verdict": "靜態",
       "occurrence": 0,
-      "id": "oq-bfae34abc81f8d8e0b0c",
+      "id": "oq-47178e5e78e74ca8338d",
       "classification": "actionable",
       "github_issue": 16,
-      "reason": "選隊退卻caller及完整視窗已由目前原版與正常滑鼠核對；尚缺野戰單挑目前原版收據，續用原Issue。"
+      "reason": "本輪正常原版拒戰開場已有動態與GUI證據；剩餘分支保留原Issue，不以窄抽樣關閉。"
     }
   ]
 }

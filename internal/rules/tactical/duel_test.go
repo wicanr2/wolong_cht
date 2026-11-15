@@ -60,6 +60,41 @@ func TestDuelNoChallengeWhenBothWeak(t *testing.T) {
 	}
 }
 
+// 第50拍先完成一般移動，挑戰命令從第51拍才影響單兵。
+func TestDuelChallengeWaitCompletesBeforeMovementChanges(t *testing.T) {
+	for _, player := range []int{AttackerSide, DefenderSide} {
+		b := NewBattle(flatField(), &Formations{}, &fixedRand{seq: []int{0}}, 0)
+		b.SetPlayerSide(player)
+		in := DuelInput{FieldNumber: 198}
+		for side := range b.Sides {
+			x, hp, power, martial, command := 60, 156, 32, 7, 4
+			if side == player {
+				x, hp, power, martial, command = 3, 188, 56, 12, 6
+			}
+			b.Sides[side].Line = x // 零偏移陣形，維持此等待邊界的原地目標。
+			b.Sides[side].Soldiers[0] = Soldier{Alive: true, Kind: General, X: x, Y: 32, HP: hp, Power: power, Stamina: 127,
+				Cmd: Holding, Next: Holding, GoalX: x, GoalY: 32, StepX: x, StepY: 32, Target: -1}
+			in.Martial[side], in.CommandStat[side] = martial, command
+		}
+		b.SetDuelInput(in)
+		// 原版最後一拍等待的邊界；整段正常開場另由dosgolem重播驗證。
+		b.Frame, b.duel.timer = 49, 1
+		b.Step()
+		g := b.Sides[player].Soldiers[0]
+		if g.X != 3 || g.Y != 32 || g.Stamina != 127 || g.StepX != 3 {
+			t.Fatalf("第50拍仍應先完成原地等待：%+v", g)
+		}
+		talks := b.TakeDuelTalks()
+		if len(talks) != 1 || talks[0] != (DuelTalk{Side: player, Group: 0x1B7, Frame: 50}) || g.Cmd != Duel {
+			t.Fatalf("完成50拍後應立即掛挑戰及命令：%v", talks)
+		}
+		b.Step()
+		if b.Sides[player].Soldiers[0].Stamina != 126 {
+			t.Fatal("第51拍才應按單挑目標開始移動並消耗體力")
+		}
+	}
+}
+
 // 拒戰分支：強側 0x1B7 → 弱側 0x1B9 → 強側 0x1CC → 立即清命令。
 func TestDuelRefuse(t *testing.T) {
 	b := duelBattle(t, 0xC0, [2]int{90, 0}, [2]int{0, 0}, []int{0})

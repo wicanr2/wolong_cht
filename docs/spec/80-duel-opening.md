@@ -1,5 +1,13 @@
 # 80 — 開戰單挑：挑戰、拒戰、應戰、回合互嗆、決著
 
+## 2026-11-15：單挑跨拍邊界勘誤
+
+輸入DOS/V KI.EXE SHA-256 `fffeba985231cda4d636e93d10f598470b1f691d00275e4aa38e285893d43868`，dosgolem `f79eab6db8c64a524a06535e53e5d32b0bbcf7c8`。位址為oracle.IDA DOS/V linear。
+正常道路野戰已證實：`1A1C5`先完成50次`1ADC8`，再於phase50進`1A2E8`／`1A398`／`1C315`挑戰；phase90拒戰、phase110回應，之後才開主迴圈。正式stepDuel已移至本拍完整更新之後，避免第50拍提早影響命令及移動。
+兩個固定亂數案例的拒戰開場分別吻合至220／217拍，各14張完整圖僅游標。後段尋路與應戰互砍／決著仍未由此片證實，玩家守方的抽樣不代證雙角色完整範圍；沿Issue #16／#17。
+本節取代「stepDuel掛在Step開頭」的現行接線說明；歷史機器碼與實機收據保留。禁止用重試亂數來挑選對拍結果。
+驗收範圍見[spec159](159-tactical-command-movement-order.md)及[整合收據](../../workplace/scratch/ui-windows-20261104/cao-field-duel-integration.json)。
+
 > 2026-09-08 角色訂正（窄修正 READY）：原版單挑位依玩家／對方分為
 > (24,32)／(40,32)，不是攻／守。來源為 IDA Pro 9.4、DOS/V linear
 > `0001A39D–0001A3A7`（依 DL 選 0x2018／0x2028）及
@@ -125,7 +133,7 @@ byte_1D34B ≠ 1 → 直接返回，主迴圈（腳本＋輸入）開始
 
 | 項目 | 位置 |
 |---|---|
-| 單挑狀態機 | `internal/rules/tactical/duel.go`：`stepDuel` 掛在 `Battle.Step()` 開頭 |
+| 單挑狀態機 | `internal/rules/tactical/duel.go`：`stepDuel` 在 `Battle.Step()` 完成本拍實體更新後推進 |
 | 輸入 | `DuelInput{FieldNumber, Martial, CommandStat}`——`startBattleTalk`（`cmd/wlgame/battletalk.go`）在綁定戰鬥時餵一次 |
 | 台詞輸出 | `Battle.TakeDuelTalks()` 回 `[]DuelTalk{Side, Group}`；`pumpDuelTalks` 换成 TALK 索引（八變體照大將的 `TalkVariant`）掛上對白框 |
 | 靜止機制 | **不凍實體**：`Battle.Step` 在開場 50 tick ＋ 單挑期間**不跑腳本**（`OpeningActive()`），呈現層同期擋掉戰術命令輸入；有腳本的那一側**不再預發「攻擊」當底**（那是照錯誤前提加的，原版開打時兩軍都是命令 0）|
@@ -144,8 +152,7 @@ byte_1D34B ≠ 1 → 直接返回，主迴圈（腳本＋輸入）開始
 | 對拍 | b0（挑戰幀，remake 於 tick ~52 截）field 0.05%＝原版游標、其餘八區七 PASS＋minimap 0.18% | [`../playtest/43`](../playtest/43-field-battle-parity.md) |
 | 台詞抽驗 | 24 組 × 8 變體靜態全表＋九句實機反查零反例；**退卻跳過分支**（敗方命令 5 → 不喊 0x1CC）在 `parity-duel2` 實機發生 | [`../re/75`](../re/75-duel-talk-audit.md) |
 
-⚠ 氣勢帶亂數（§2），同一存檔每次跑挑戰側與拒戰／應戰路徑都可能不同
-——對拍截圖要重試到 rng 落在與原版相同的路徑（挑戰側＝攻方）。
+2026-11-15勘誤：先前建議重試到亂數落在相同路徑的做法已廢止。對拍在初始化前固定原版與Go的完整亂數狀態，保留全部結果；不同分支各自建立事先固定的案例，不以重擲或挑結果驗收。
 
 ## 7. 未解
 
