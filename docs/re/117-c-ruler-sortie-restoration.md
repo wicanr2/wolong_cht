@@ -33,6 +33,11 @@ O0／O2 各 451 組完整 RAM、四 plane、暫存器／FLAGS、堆疊、呼叫�
 [版控收據](c-verdict-verification.json)，重跑 `bash tools/c_recovery_verdict.sh`。
 原資金符號例外已回填 [AI 機制](../mechanics/70-ai.md)。
 
+2026-11-15：沿本份 IDA 匯出重新核對 24 條出陣判定指令，發現正式 Go 尚未接負資金例外。
+已依 [spec49](../spec/49-advise-relocate-and-sortie.md) 修正，1,024 組原版局部判定全等，
+舊 Go 的 294 組差異被拒；四劇本存讀檔與正常曹操滑鼠出陣另行抽驗。
+這是 Go 呼叫路徑補正，沒有重寫或擴大本份 C 局部驗證聲明。
+
 ## 未解範圍
 
 | 項目 | 限制 |

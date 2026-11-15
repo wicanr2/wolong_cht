@@ -450,3 +450,19 @@ func TestSortieFundsGateScalesWithAggression(t *testing.T) {
 		}
 	}
 }
+
+// 原版有號 24 位資金的負號分支跳過國庫閘，兵源閘仍生效。
+func TestAcceptSortieNegativeFundsStillNeedsReserves(t *testing.T) {
+	for _, funds := range []int{-8388608, -257, -256, -1} {
+		for _, aggression := range []int{0, 10, 15} {
+			for _, reserves := range []int{599, 600, 65536, 196605} {
+				if got := AcceptSortie(Sortie{funds, aggression, reserves}); got != (reserves >= 600) {
+					t.Errorf("資金%d／好戰%d／兵源%d：接受=%v", funds, aggression, reserves, got)
+				}
+			}
+		}
+	}
+	if AcceptSortie(Sortie{Funds: 0, Aggression: 0, Reserves: 600}) {
+		t.Fatal("非負資金仍須通過國庫閘")
+	}
+}

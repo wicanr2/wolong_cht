@@ -1,11 +1,48 @@
 package state
 
 import (
+	"bytes"
 	"testing"
 
 	"github.com/wicanr2/wolong_cht/internal/rules/army"
 	"github.com/wicanr2/wolong_cht/internal/rules/combat"
 )
+
+// 原始資金解析、規則、出陣編成與存讀檔共用同一條正式路徑。
+func TestAdviseSortieNegativeFundsSaveRoundTrip(t *testing.T) {
+	for scenario := 0; scenario < 4; scenario++ {
+		for _, funds := range []int{-655000, -1} {
+			w := load(t, scenario)
+			w.Player = w.AliveFactions()[0]
+			f := &w.Factions[w.Player]
+			f.Funds, f.Aggression, f.Reserves = funds, 0, [3]int{300, 300, 300}
+			lord := f.Lord
+			before := w.Bytes()
+			restored, err := LoadBlock(before)
+			if err != nil {
+				t.Fatal(err)
+			}
+			if got := restored.Factions[w.Player].Funds; got != funds {
+				t.Fatalf("劇本%d資金解析=%d，要%d", scenario, got, funds)
+			}
+			if !restored.AdviseSortieAccepted() || !restored.AdviseSortie() {
+				t.Fatalf("劇本%d／資金%d未能出陣", scenario, funds)
+			}
+			c := &restored.Corps[lord]
+			if !c.Alive || c.Delegated || c.Men == 0 || !restored.Generals[lord].Posted() {
+				t.Fatalf("劇本%d出陣狀態不完整：%+v", scenario, c)
+			}
+			after := restored.Bytes()
+			reloaded, err := LoadBlock(after)
+			if err != nil {
+				t.Fatal(err)
+			}
+			if !bytes.Equal(after, reloaded.Bytes()) || !reloaded.LordLeadsCorps() || reloaded.AdviseSortieAccepted() {
+				t.Fatalf("劇本%d讀檔後出陣狀態改變", scenario)
+			}
+		}
+	}
+}
 
 // 君主親自出陣的那一支**不是委任**——`sub_16E8F` 設了委任位元，
 // `sub_1699E` 緊接著把它清掉（docs/spec/49 §3）。

@@ -449,7 +449,7 @@ func weakerThanHalf(s Situation) bool {
 // Sortie 是「請求君主出陣」要看的三個數。**兩道閘都不看敵情**，
 // 只看自己的錢與兵（`docs/mechanics/70-ai.md` §1.2）。
 type Sortie struct {
-	Funds      int // 勢力資金
+	Funds      int // 勢力資金，有號 24 位
 	Aggression int // 君主的好戰等級 0–15（勢力記錄 +0x28）
 	Reserves   int // 三種預備兵的總點數
 }
@@ -474,8 +474,8 @@ func SortieFundsGate(aggression int) int {
 
 // AcceptSortie 回報君主會不會親自出陣。
 //
-// ⚠ **兩道閘是「而且」的關係**——任一不過就整個擋下（原版用同一個
-// `dl` 旗標，任一條成立就寫 1）。
+// 原版 `169C4 cmp bh,80h`／`169C7 jnb 169D2` 讓負資金略過國庫閘，
+// 但兵源仍須達標。見 docs/spec/49 的資金符號分支補正。
 func AcceptSortie(s Sortie) bool {
-	return s.Funds >= SortieFundsGate(s.Aggression) && s.Reserves >= SortieReserveGate
+	return (s.Funds < 0 || s.Funds >= SortieFundsGate(s.Aggression)) && s.Reserves >= SortieReserveGate
 }

@@ -542,7 +542,7 @@
 | [`docs/spec/46-post-battle-retreat.md`](spec/46-post-battle-retreat.md) | 46 — 戰後敗方退一站回家，退不了就壞滅 | CONFORMED。 | 2026-08-17 |
 | [`docs/spec/47-city-fall-corps-redirect.md`](spec/47-city-fall-corps-redirect.md) | 47 — 據點易主之後，舊主留在那一格的軍團調頭回家 | CONFORMED。 | 2026-08-17 |
 | [`docs/spec/48-governor-returns-on-city-fall.md`](spec/48-governor-returns-on-city-fall.md) | 48 — 據點被攻陷，派駐的內政官被遣回 | CONFORMED。 | 2026-08-17 |
-| [`docs/spec/49-advise-relocate-and-sortie.md`](spec/49-advise-relocate-and-sortie.md) | 49 — 進言的第四、五項：遷都與請求君主出陣 | CONFORMED。 | 2026-08-17 |
+| [`docs/spec/49-advise-relocate-and-sortie.md`](spec/49-advise-relocate-and-sortie.md) | 49 — 進言的第四、五項：遷都與請求君主出陣 | CONFORMED。 | 2026-11-15 |
 | [`docs/spec/50-corps-upkeep-charges-funds.md`](spec/50-corps-upkeep-charges-funds.md) | 50 — 軍費直接扣資金，不進「本月支出」 | CONFORMED。 | 2026-08-17 |
 | [`docs/spec/51-vga-dac-palette-scale.md`](spec/51-vga-dac-palette-scale.md) | 51 — DOS/V 的顏色到不了滿刻度：4 bit → VGA 6 bit DAC → 8 bit | CONFORMED。 | 2026-08-17 |
 | [`docs/spec/52-main-screen-camera-and-banner-date.md`](spec/52-main-screen-camera-and-banner-date.md) | 52 — 開局的鏡頭位置與橫幅日期 | CONFORMED。 | 2026-08-17 |
