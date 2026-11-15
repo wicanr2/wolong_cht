@@ -414,7 +414,7 @@
 | [`docs/spec/174-relief-dispatch-does-not-move-marching-corps.md`](spec/174-relief-dispatch-does-not-move-marching-corps.md) | 174 — 求援調兵只調站著的軍團，而且只寫意圖 | CONFORMED。 | 2026-09-09 |
 | [`docs/spec/175-encounter-standoff-countdown.md`](spec/175-encounter-standoff-countdown.md) | 175 — 撞上敵人不是立刻開打：+0x03 先倒數 12 次（96 拍） | CONFORMED。 | 2026-09-09 |
 | [`docs/spec/176-event-queue-cursor-not-restored.md`](spec/176-event-queue-cursor-not-restored.md) | 176 — 事件佇列游標要從存檔還原（區塊 +0x30） | CONFORMED。 | 2026-09-10 |
-| [`docs/spec/177-replan-on-leg-not-from-city.md`](spec/177-replan-on-leg-not-from-city.md) | 177 — 走在路段上重新選路只在這條邊上決定方向 | CONFORMED。 | 2026-09-10 |
+| [`docs/spec/177-replan-on-leg-not-from-city.md`](spec/177-replan-on-leg-not-from-city.md) | 177 — 走在路段上重新選路只在這條邊上決定方向 | CONFORMED，僅本新增切片。 | 2026-09-10 |
 | [`docs/spec/178-upkeep-and-morale-gate-is-on-leg.md`](spec/178-upkeep-and-morale-gate-is-on-leg.md) | 178 — 軍費與士氣的判準是「有沒有走在路段上」 | CONFORMED。 | 2026-09-10 |
 | [`docs/spec/179-recalc-on-battle-and-arrival-test.md`](spec/179-recalc-on-battle-and-arrival-test.md) | 179 — 戰後重算把移動計時寫 1；「到了沒」比的是節點欄不是 Corps.Node | CONFORMED。 | 2026-09-10 |
 | [`docs/spec/180-relief-dispatch-want-counts-candidates.md`](spec/180-relief-dispatch-want-counts-candidates.md) | 180 — 求援調兵的 want 數的是候選不是選中 | CONFORMED。 | 2026-11-16 |

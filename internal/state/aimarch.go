@@ -186,8 +186,8 @@ func (w *World) headHomeResupply(i int) {
 	}
 	capital := w.clampCity(w.Factions[c.Faction].Capital)
 	if c.Ordered != capital {
-		// 原版這裡還設位元 1 ＝「下一步要重算」（remake 未建模）。
 		c.Ordered = capital
+		c.Replan = true // sub_144BD：在據點上改意圖也要設，下一次移動才清。
 	}
 	// ⭐ `sub_14548` 是**無條件**呼叫的（`loc_144C0` 落下去就是），
 	// 不管意圖有沒有變——三個目標欄位每一輪都會被重寫，

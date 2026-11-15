@@ -7,7 +7,7 @@
 
 現行工作與狀態由 GitHub [Issues](https://github.com/wicanr2/wolong_cht/issues) 管理；
 本地 [`docs/worklist.json`](../worklist.json) 與 `tools/worklist.py verify` 只作輔助。
-1138 列不是同數量的獨立 backlog；可執行項目已由完成的 Issue #28 分流，證據／歷史項目留在本索引。
+1133 列不是同數量的獨立 backlog；可執行項目已由完成的 Issue #28 分流，證據／歷史項目留在本索引。
 
 - 日期：2026-11-15
 - 產生工具：`tools/re_open_questions.py`
@@ -22,7 +22,7 @@
 
 ## 0. ⚠ 這個數字在量什麼
 
-**1132 列分布在 461 份文件，平均每份 2.5 列。**
+**1127 列分布在 458 份文件，平均每份 2.5 列。**
 
 ⭐ **所以它比較接近「文件有多少份」，不是「原版還有多少沒解」。**
 每寫一份新文件就帶進約三列自己的未解——而 `check.sh --strict` 還會
@@ -50,8 +50,8 @@
 | 程式碼理解 | 317 | 310 | 6 | 1 |
 | 驗收 | 245 | 220 | 25 | 0 |
 | 外部資料 | 6 | 5 | 1 | 0 |
-| 其他 | 533 | 509 | 23 | 1 |
-| **合計** | **1132** | 1070 | 59 | 3 |
+| 其他 | 528 | 504 | 23 | 1 |
+| **合計** | **1127** | 1065 | 59 | 3 |
 
 ⚠ **這是列數，不是獨立問題數。** 索引檔的「現況」欄是別的文件的摘要，同一個缺口在那份文件自己的未解表裡還有一列——這類共 **0** 列（另有少數只是提到「未解」兩個字的圖例列）。
 
@@ -59,7 +59,7 @@
 
 | 來源目錄 | 列數 |
 |---|---:|
-| `docs/spec/` | 490 |
+| `docs/spec/` | 485 |
 | `docs/re/` | 317 |
 | `docs/playtest/` | 245 |
 | `docs/release/` | 26 |
@@ -693,7 +693,7 @@
 | [`reference/04-first-survey.md`](../reference/04-first-survey.md) | 不要憑「同一份專案應該用同一個編譯器」外推——**`KI.EXE` 的編譯器未解。 | （散句） | 靜態 | evidence-only | — |
 | [`reference/05-eten-font-provenance.md`](../reference/05-eten-font-provenance.md) | `END_S13/S14/S15` 是中文版加的結局段 | S13／S14 是字型。**`END_S15` 仍未解** | 靜態 | evidence-only | — |
 
-## 2.6 其他（533 條）
+## 2.6 其他（528 條）
 
 | 出處 | 缺口 | 現況 | 裁決 | 分流 | Issue |
 |---|---|---|---|---|---|
@@ -868,11 +868,6 @@
 | [`spec/166-save-writeback-keeps-unmodelled-bits.md`](../spec/166-save-writeback-keeps-unmodelled-bits.md) | 勢力／據點／武將 | 完全相同 | 靜態 | evidence-only | — |
 | [`spec/166-save-writeback-keeps-unmodelled-bits.md`](../spec/166-save-writeback-keeps-unmodelled-bits.md) | **軍團** | `+0x00` 有 6 支不同（`C5` → `C4`） | 靜態 | evidence-only | — |
 | [`spec/166-save-writeback-keeps-unmodelled-bits.md`](../spec/166-save-writeback-keeps-unmodelled-bits.md) | 位元 0／1／4／5 有設定端與清除端、語意尚未定案 | （散句） | 靜態 | evidence-only | — |
-| [`spec/169-march-has-no-city-stub.md`](../spec/169-march-has-no-city-stub.md) | `sub_14325` 分派表的 16 項 | 玩家半張與 AI 半張各 8 項；remake 只對到 0–3 與 8／10／11，其餘未逐支對過 | 靜態 | actionable | [#29](https://github.com/wicanr2/wolong_cht/issues/29) |
-| [`spec/170-ai-target-takes-two-ticks.md`](../spec/170-ai-target-takes-two-ticks.md) | 軍團 `+0x00` 位元 1 | remake 沒建模。它的效果（下一次移動前重查道路表）被 remake 的「`March` 當場算好 routes」涵蓋，但存檔寫回是靠 `modelledCorpsBits` 原樣保留的，不是真的維護 | 靜態 | merge-target | [#25](https://github.com/wicanr2/wolong_cht/issues/25) |
-| [`spec/170-ai-target-takes-two-ticks.md`](../spec/170-ai-target-takes-two-ticks.md) | `sub_14325` 分派表的 16 項 | 玩家半張與 AI 半張各 8 項，remake 只對到 0–3 與 8/10/11；其餘未逐支對過 | 靜態 | actionable | [#29](https://github.com/wicanr2/wolong_cht/issues/29) |
-| [`spec/171-ai-only-expands-via-relief.md`](../spec/171-ai-only-expands-via-relief.md) | 求援機率路徑的次數 | 原版 210 次（`sub_14057`）、remake 9 次。方向與軍團數相反，成因還沒查 | 靜態 | actionable | [#29](https://github.com/wicanr2/wolong_cht/issues/29) |
-| [`spec/171-ai-only-expands-via-relief.md`](../spec/171-ai-only-expands-via-relief.md) | `sub_1699E`（君主親自出陣） | remake 未實作；它是 `sub_16E8F` 的第二個呼叫端 | 靜態 | actionable | [#29](https://github.com/wicanr2/wolong_cht/issues/29) |
 | [`spec/172-corps-march-fields.md`](../spec/172-corps-march-fields.md) | 軍團 `+0x00` 位元 4／5 | 有成對的設定與清除端，語意未定（`../re/34` §2）。寫回靠 `modelledCorpsBits` 原樣保留。位元 0 已解（`173`） | 靜態 | evidence-only | — |
 | [`spec/172-corps-march-fields.md`](../spec/172-corps-march-fields.md) | 索引表 `0x0000`–`0x07FF` 的 `+6`／`+8` | 一個據點只放得下兩個方向，四方向的據點怎麼放沒讀 | 靜態 | evidence-only | — |
 | [`spec/173-corps-flag-bit0-and-sprite-fields.md`](../spec/173-corps-flag-bit0-and-sprite-fields.md) | 軍團 `+0x00` 位元 4／5 | 有成對的設定與清除端，語意未定（`../re/34` §2） | 靜態 | evidence-only | — |

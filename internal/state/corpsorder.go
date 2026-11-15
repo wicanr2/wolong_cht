@@ -164,6 +164,7 @@ func (w *World) arriveDisband(i int) {
 		// ⚠ 那支的重算**分兩半**：走在邊上時只決定往哪一端，站在據點上
 		// 才算整條路（docs/spec/177）。
 		c.Ordered = capital
+		c.Replan = true // sub_144EA：只在意圖改成首都時設旗標。
 	}
 	// ⭐ `sub_14548` 是**無條件**呼叫的（`loc_144ED` 落下去就是），
 	// 不管意圖有沒有變——三個目標欄位每一輪都會被重寫。
@@ -350,11 +351,14 @@ func (w *World) retarget(i, node int) bool {
 	c := &w.Corps[i]
 	node = w.clampCity(node)
 	dst := &w.Cities[node]
-	here := c.Node == node && c.X == dst.X && c.Y == dst.Y
-	if c.TargetNode != node || c.TargetX != dst.X || c.TargetY != dst.Y {
+	here := c.LinkAddr == 0 && c.Node == node && c.X == dst.X && c.Y == dst.Y
+	if c.LinkAddr == 0 && (c.TargetNode != node || c.TargetX != dst.X || c.TargetY != dst.Y) {
+		// 只準備據點出發的私有快取。sub_14548不設重算旗標，
+		// 路段上的方向須等既有bit 1交給下一次移動處理。
 		ordered := c.Ordered
-		w.retargetAndReplan(i, node, true)
+		_ = w.March(i, node)
 		c.Ordered = ordered
 	}
+	c.TargetNode, c.TargetX, c.TargetY = node, dst.X, dst.Y
 	return here
 }

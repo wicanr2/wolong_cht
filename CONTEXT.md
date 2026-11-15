@@ -256,6 +256,7 @@ GPU最多兩頁快取，其他季節、液晶、未選頁與讀圖失敗沿原�
 
 | 日期／目前程式 | 最近驗證 | 狀態 | 交付物 |
 |---|---|---|---|
+| 2026-11-16；wlgame-ai-replan-r1 | 原版7函式／512案完整區塊全等，舊Go拒160案；64組分派入口、三條救援次數相同；七日期至7/16六表全0、正常曹操滑鼠62項／9圖 | 已修Stage10／11改回首都漏設旗標，以及目標setter額外設旗標／連結位址抵達判斷。6/12差異消除；仍核對#29折返後觀測及#26／#27外交邊界，整體AI目標進行中 | [spec177本片](docs/spec/177-replan-on-leg-not-from-city.md)、[整合收據](workplace/scratch/ai-replan-20261116/integration.json) |
 | 2026-11-16；wlgame-ai-finance-r1 | 原版財政19,300組與兩錯版、正常每時及存讀檔、全專案冷測／vet、正常曹操滑鼠62項／9圖；正式六日期至196/7/16六表全等 | 已修資金相等門檻、半門檻及LowFunds存讀檔。Issue #10的固定長局gate通過；仍核對#29覆蓋及6/12中途重算旗標，整體AI目標進行中，強化AI未啟用 | [spec182 §7](docs/spec/182-monthly-settlement-before-hourly.md)、[playtest119 §51](docs/playtest/119-rng-pace-comparison.md)、[整合收據](workplace/scratch/ai-rng-20261116/integration.json) |
 | 2026-11-16；wlgame-ai-long-r1 | 原版18函式bytes、480案完整區塊／佔用圖／RNG全等；前輪1351案、全專案冷測／vet、正常滑鼠62項／9圖；六個錯版拒絕 | 已修解體後該次軍費尾段及重編成保留欄位，存讀檔可接續。正式六表5/1、5/16、6/1全等，6/16起仍有差異；整體AI目標進行中，強化AI未啟用 | [spec178](docs/spec/178-upkeep-and-morale-gate-is-on-leg.md)、[spec173](docs/spec/173-corps-flag-bit0-and-sprite-fields.md)、[整合收據](workplace/scratch/ai-long-20261116/integration.json) |
 | 2026-11-16；wlgame-relief-form-r2 | 原版編成960案全等，分派391案擴至128原始槽；被俘前段16案，六個月不變量、全專案冷測／vet與正常滑鼠62項／9圖 | 已修無侵攻目標的求援、正值挑將與部分失敗寫回，補戰敗俘虜職務。90日來源已重建至7/16，六表5/1及5/16全等，6/1起仍有差異；整體AI目標進行中，強化AI未啟用 | [spec164](docs/spec/164-relief-request-gates.md)、[整合收據](workplace/scratch/ai-relief-20261116/integration.json)、[長程結果](workplace/scratch/ai-relief-20261116/long-parity-result.json) |
