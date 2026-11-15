@@ -111,6 +111,13 @@ func floorDiv2(v int) int {
 
 // View 是戰場畫面的資源：解好的子圖塊圖與相機。
 type View struct {
+	compositeCache *[battleDisplayScanRows][battleDisplayAnchors]compositeTileCache
+
+	observed       *tactical.Battle
+	retained       *battleDisplayGrid
+	retainedInfo   [battleDisplayGridRows][battleDisplayGridCols]battleDisplaySlotInfo
+	retainedCamera [2]int
+
 	lib   *battle.Library
 	set   int
 	field int        // 這一張戰場的編號，重新展開堆疊時要用
@@ -653,7 +660,25 @@ func (v *View) rawImage(raw int) *ebiten.Image {
 // 畫完整 32 px。這正是高物件跨相鄰菱形遮擋的來源。
 func (v *View) drawDisplayGrid(dst *ebiten.Image, entries []battleDisplayEntry) {
 	grid := makeDisplayGrid(entries)
+	if v.retained != nil {
+		for row := range grid {
+			for col := range grid[row] {
+				for z := range grid[row][col] {
+					grid[row][col][z][1] = v.retained[row][col][z][1]
+					slot := &grid[row][col][z][0]
+					if slot.set && slot.entry.kind == displayProjectile && 2*z+1 < v.retainedInfo[row][col].start {
+						*slot = battleDisplaySlot{}
+					}
+				}
+			}
+		}
+	}
+
 	info := makeDisplayInfo(&grid)
+	useCache := dst == v.buf && v.retained != nil && v.sprites != nil
+	if useCache && v.compositeCache == nil {
+		v.compositeCache = new([battleDisplayScanRows][battleDisplayAnchors]compositeTileCache)
+	}
 	// sub_1E085／sub_1E0E1 先在 16×32 的暫存格式合成；sub_1DFE8／
 	// sub_1E011 最後才把四段 16×8 重排成 VGA 上的 32×16。
 	encoded := ebiten.NewImage(battle.SubTileW, battle.SubTileH)
@@ -661,12 +686,24 @@ func (v *View) drawDisplayGrid(dst *ebiten.Image, entries []battleDisplayEntry) 
 	op := &ebiten.DrawImageOptions{}
 	for row := 0; row < battleDisplayScanRows; row++ {
 		for ai := 0; ai < battleDisplayAnchors; ai++ {
+
 			anchor := 1 + ai*2
+			z0, z1 := displayDepthRange(&info, row, anchor)
+			if useCache {
+				cell := &v.compositeCache[row][ai]
+				key := displayCompositeKey(&grid, row, anchor, z0, z1)
+				if cell.valid && cell.key == key {
+					continue
+				}
+				if cell.valid {
+					vector.DrawFilledRect(dst, float32(ai*battle.SubTileW*2), float32(row*isoRowPx), float32(battle.SubTileW*2), float32(isoRowPx), color.RGBA{16, 18, 20, 255}, false)
+				}
+				cell.key, cell.valid = key, true
+			}
 			encoded.Clear()
 			// 深度不是 0–6 全畫：從自己的地面畫到最高的鄰居
 			// （`sub_1DDB4` ＋ `sub_1DE95`，docs/spec/58 §3）。
 			// 多畫低於地面的那幾層，城壁的面上會多出一排亮邊。
-			z0, z1 := displayDepthRange(&info, row, anchor)
 			for layer := z0; layer <= z1; layer++ {
 				v.drawDisplaySlice(encoded, grid[row][anchor-1][layer], 24, 0)
 				v.drawDisplaySlice(encoded, grid[row][anchor+1][layer], 16, 8)
@@ -843,8 +880,15 @@ func (v *View) Render(b *tactical.Battle) *ebiten.Image {
 	if v.buf == nil {
 		v.buf = ebiten.NewImage(NativeW, NativeH)
 	}
-	v.buf.Fill(color.RGBA{16, 18, 20, 255})
-	v.syncTiles(b)
+	if b != nil && v.observed != b {
+		v.Observe(b)
+	}
+	if v.observed == nil {
+		v.syncTiles(b)
+	}
+	if v.compositeCache == nil || v.retained == nil || v.sprites == nil {
+		v.buf.Fill(color.RGBA{16, 18, 20, 255})
+	}
 	v.drawDisplayGrid(v.buf, v.buildDisplayList(b))
 	v.drawFallbackDots(b)
 	return v.buf
@@ -916,4 +960,120 @@ func deathDisplaySource(d tactical.Death) int {
 	}
 	n := battle.SpriteFor(int(d.Kind), d.BeforeFacing, flags)
 	return battle.CombinedSourceTerrainTiles + d.Side*battle.UnitsPerSide + n*2
+}
+
+// Observe須在首次Step前接上；略過GPU繪圖時仍保留原版登錄順序。
+func (v *View) Observe(b *tactical.Battle) {
+	if b == nil || v.observed == b {
+		return
+	}
+	if v.observed != nil {
+		v.observed.SetDrawingObserver(nil)
+	}
+	v.observed = b
+	b.SetDrawingObserver(v)
+	v.rebuildRetained(b)
+	if b.Frame > 0 {
+		for _, side := range []int{b.PlayerSide, 1 - b.PlayerSide} {
+			for k, s := range b.Sides[side].Soldiers {
+				if s.Alive {
+					v.DrawSoldierDrawing(b.Role(side), b.DrawnSoldier(side, k))
+				}
+			}
+		}
+		for _, d := range b.Deaths() {
+			v.DrawDeathDrawing(b.Role(d.Side), d)
+		}
+	}
+}
+func (v *View) rebuildRetained(b *tactical.Battle) {
+	v.applyCameraOrigin()
+	v.syncTiles(b)
+	entries := v.buildDisplayList(nil)
+	terrain := entries[:0]
+	for _, e := range entries {
+		if e.kind == displayTerrain && e.cellCol >= 0 && e.cellCol < 31 {
+			terrain = append(terrain, e)
+		}
+	}
+	grid := makeDisplayGrid(terrain)
+	v.retained = &grid
+	v.retainedInfo = makeDisplayInfo(&grid)
+	v.retainedCamera = [2]int{v.camWorldX, v.camWorldY}
+}
+func (v *View) BeginDrawingFrame(b *tactical.Battle) {
+	if v.observed != b {
+		return
+	}
+	if b.Field.Revision() != v.tileRev || v.retainedCamera != [2]int{v.camWorldX, v.camWorldY} {
+		v.rebuildRetained(b)
+	}
+}
+func (v *View) drawRetained(x, y, z, raw int, erase bool) {
+	if v.retained == nil {
+		return
+	}
+	col, row := isoProjectOriginal(x, y, z)
+	col -= v.camCol
+	row -= v.camRow
+	if col < 0 || col >= 31 || row < 0 || row >= 24 {
+		return
+	}
+	for upper := 0; upper < 2; upper++ {
+		r, depth := row-upper, z+upper
+		if r < 0 || depth < 0 || depth >= battle.MaxStack {
+			continue
+		}
+		slot := &v.retained[r][col][depth][1]
+		if erase {
+			*slot = battleDisplaySlot{}
+			continue
+		}
+		if !displaySlotEmpty(*slot) || 2*depth+1 < v.retainedInfo[r][col].start {
+			continue
+		}
+		*slot = battleDisplaySlot{set: true, entry: battleDisplayEntry{kind: displayRawUnit, raw: raw + 1 - upper}}
+	}
+}
+func (v *View) EraseSoldierDrawing(x, y, z int) { v.drawRetained(x, y, z, 0, true) }
+func (v *View) DrawSoldierDrawing(role int, d tactical.SoldierDrawing) {
+	flags := int(d.PoseStep)
+	if d.Hurt {
+		flags |= battle.PoseFlagFront
+	}
+	if d.HitGeneral {
+		flags |= battle.PoseFlagHitGeneral
+	}
+	raw := battle.CombinedSourceTerrainTiles + role*battle.UnitsPerSide + battle.SpriteFor(int(d.Kind), d.Facing, flags)*2
+	v.drawRetained(d.X, d.Y, d.Z, raw, false)
+}
+func (v *View) DrawDeathDrawing(role int, d tactical.Death) {
+	d.Side = role
+	v.drawRetained(d.X, d.Y, d.Z, deathDisplaySource(d), false)
+}
+
+type compositeTileKey [2 + 5*battle.MaxStack*2]int
+type compositeTileCache struct {
+	key   compositeTileKey
+	valid bool
+}
+
+func displayCompositeKey(grid *battleDisplayGrid, row, anchor, z0, z1 int) compositeTileKey {
+	var key compositeTileKey
+	key[0], key[1] = z0, z1
+	index := 2
+	for _, at := range [5][2]int{{row, anchor - 1}, {row, anchor + 1}, {row, anchor}, {row + 1, anchor - 1}, {row + 1, anchor + 1}} {
+		for z := 0; z < battle.MaxStack; z++ {
+			for lane := 0; lane < 2; lane++ {
+				if at[0] >= 0 && at[0] < battleDisplayGridRows && at[1] >= 0 && at[1] < battleDisplayGridCols {
+					slot := grid[at[0]][at[1]][z][lane]
+					if !displaySlotEmpty(slot) {
+						key[index] = slot.entry.raw
+					}
+				}
+				index++
+			}
+		}
+	}
+	return key
 }

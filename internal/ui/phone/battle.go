@@ -70,6 +70,9 @@ func (s *Session) tickBattle() {
 	}
 	if s.battle.view == nil {
 		s.battle = battleState{view: s.newBattleView(), tacSpeed: DefaultSpeed}
+		if s.battle.view != nil {
+			s.battle.view.Observe(b)
+		}
 	}
 	if s.paused {
 		return // 只有驗收路徑會停，那不是遊戲內的暫停

@@ -247,6 +247,9 @@ func oppositeAdvantage(a Advantage) Advantage {
 
 // Battle 是一場進行中的戰術戰鬥。
 type Battle struct {
+	drawingObserver DrawingObserver
+	drawingPrevious *[2][SoldiersOnFoot][3]int
+
 	unitCollision *collisionGrid
 	// 上次移動批次的餘力兵數；首次移動結束前尚未有效。
 	freshCounts [2]int
@@ -670,6 +673,10 @@ func (b *Battle) Step() {
 	if b.unitCollision == nil {
 		b.initUnitCollision()
 	}
+	b.initDrawingPrevious()
+	if b.drawingObserver != nil {
+		b.drawingObserver.BeginDrawingFrame(b)
+	}
 	b.Frame++
 	// 原版在同一個地方（0001A12A）遞增計時器並檢查三個 UI 的到期。
 	b.expireStructureBar()
@@ -830,6 +837,9 @@ func (b *Battle) reinforceSoldier(side, k int) {
 	}
 	unit.X, unit.Y, unit.Z = x, y, 0
 	unit.PlaneHigh, unit.OnWall, unit.Climbing = 0, false, false
+	if b.drawingPrevious != nil {
+		b.drawingPrevious[side][k] = [3]int{unit.X, unit.Y, unit.Z}
+	}
 	if b.unitCollision != nil {
 		cell := y*Width + x
 		if b.unitCollision.cells[cell]&0x7f != 0 || b.unitCollision.cells[cell+0x1000]&0x7f != 0 {

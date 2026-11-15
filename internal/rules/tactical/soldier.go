@@ -761,6 +761,9 @@ func (b *Battle) swapWith(side, k, side2, k2 int) bool {
 	if me.PlaneHigh != other.PlaneHigh && (!me.CanClimb() || !other.CanClimb()) {
 		return false
 	}
+	if b.drawingPrevious != nil {
+		b.drawingPrevious[side][k], b.drawingPrevious[side2][k2] = b.drawingPrevious[side2][k2], b.drawingPrevious[side][k]
+	}
 	me.X, other.X = other.X, me.X
 	me.Y, other.Y = other.Y, me.Y
 	me.Z, other.Z = other.Z, me.Z

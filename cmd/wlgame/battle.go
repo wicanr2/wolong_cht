@@ -66,6 +66,9 @@ func (g *game) updateBattle() {
 	l := dosvBattleLayoutFor(screenW, screenH)
 	if g.view == nil {
 		g.view = g.newBattleView(p.FieldNumber, p.FieldRotate)
+		if g.view != nil {
+			g.view.Observe(b)
+		}
 	}
 
 	// ＋／− 調**戰術速度**。原版的戰術速度是獨立設定（系統選單第 5 列），

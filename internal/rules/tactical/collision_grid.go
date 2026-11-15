@@ -166,6 +166,7 @@ func (g *collisionGrid) removeSlot(slot, plane int) {
 }
 
 func (b *Battle) clearUnitCollision(side, k int) {
+	b.eraseSoldierDrawing(side, k)
 	if b.unitCollision != nil {
 		b.unitCollision.removeSlot(b.collisionSlot(side, k), int(b.Sides[side].Soldiers[k].planeHigh())>>4)
 	}

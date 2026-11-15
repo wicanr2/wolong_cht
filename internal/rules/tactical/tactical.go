@@ -543,6 +543,58 @@ func (b *Battle) recordSoldierDrawing(side, k int, moved bool) {
 	if moved {
 		d.PoseStep ^= 1
 	}
+	b.notifySoldierDrawing(side, k, d)
 	b.drawn[side][k] = d
 	b.drawnValid[side] |= 1 << uint(k)
+}
+
+// DrawingObserver依原版單兵槽序接收暫態繪圖變更。
+// 接收端只更新呈現，不改規則或消耗亂數。
+type DrawingObserver interface {
+	BeginDrawingFrame(*Battle)
+	EraseSoldierDrawing(x, y, z int)
+	DrawSoldierDrawing(role int, d SoldierDrawing)
+	DrawDeathDrawing(role int, d Death)
+}
+
+func (b *Battle) SetDrawingObserver(observer DrawingObserver) { b.drawingObserver = observer }
+func (b *Battle) initDrawingPrevious() {
+	if b.drawingPrevious != nil {
+		return
+	}
+	b.drawingPrevious = new([2][SoldiersOnFoot][3]int)
+	for side := range b.Sides {
+		for k, s := range b.Sides[side].Soldiers {
+			b.drawingPrevious[side][k] = [3]int{s.X, s.Y, s.Z}
+		}
+	}
+}
+func (b *Battle) eraseSoldierDrawing(side, k int) {
+	if b.drawingPrevious == nil || side < 0 || side >= 2 || k < 0 || k >= SoldiersOnFoot {
+		return
+	}
+	xyz := b.drawingPrevious[side][k]
+	if b.drawingObserver != nil {
+		b.drawingObserver.EraseSoldierDrawing(xyz[0], xyz[1], xyz[2])
+	}
+}
+func (b *Battle) notifySoldierDrawing(side, k int, d SoldierDrawing) {
+	if b.drawingPrevious == nil {
+		return
+	}
+	b.eraseSoldierDrawing(side, k)
+	if b.drawingObserver != nil {
+		b.drawingObserver.DrawSoldierDrawing(b.Role(side), d)
+	}
+	b.drawingPrevious[side][k] = [3]int{d.X, d.Y, d.Z}
+}
+func (b *Battle) notifyDeathDrawing(d Death) {
+	if b.drawingPrevious == nil || d.Side < 0 || d.Side >= 2 || d.Slot < 0 || d.Slot >= SoldiersOnFoot {
+		return
+	}
+	b.eraseSoldierDrawing(d.Side, d.Slot)
+	if b.drawingObserver != nil {
+		b.drawingObserver.DrawDeathDrawing(b.Role(d.Side), d)
+	}
+	b.drawingPrevious[d.Side][d.Slot] = [3]int{d.X, d.Y, d.Z}
 }

@@ -114,6 +114,7 @@ func (b *Battle) advanceDeath(i int) bool {
 		}
 	}
 	if d.FramesLeft > 0 {
+		b.notifyDeathDrawing(*d)
 		return false
 	}
 	if b.unitCollision != nil && d.Slot >= 0 {
