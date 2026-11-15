@@ -22,8 +22,8 @@ const (
 	opOrder     = 3  // 下命令
 	opQFoeForm  = 4  // 敵方選的陣形編號
 	opQFoeLine  = 5  // 敵方的陣形線落在哪一段
-	opQMine     = 6  // 我方六隊命令的最小值
-	opQTheirs   = 7  // 敵方六隊命令的最小值
+	opQMine     = 6  // 我方六隊正規化命令的最大值
+	opQTheirs   = 7  // 敵方六隊正規化命令的最大值
 	opQAdv      = 8  // 有利／不利
 	opQRand     = 9  // 亂數 mod N
 	opBranch    = 10 // 條件分支
@@ -161,9 +161,9 @@ func (s *Script) exec(b *Battle, op, par, arg int) {
 		}
 
 	case opQMine:
-		s.cond = minCommand(&b.Sides[side])
+		s.cond = maxCommand(&b.Sides[side])
 	case opQTheirs:
-		s.cond = minCommand(&b.Sides[1-side])
+		s.cond = maxCommand(&b.Sides[1-side])
 	case opQAdv:
 		// 1A564讀玩家角色的全域值，並以腳本側上次移動餘力覆蓋。
 		s.cond = int(b.Advantage[b.PlayerSide])
@@ -298,21 +298,18 @@ func (s *Script) branch(par, arg int) {
 	s.pc += 2 // 跳過目標
 }
 
-// minCommand 回傳一側六隊「生效中的命令」的最小值。
+// maxCommand 逐隊將命令≥4視為0，再取六隊最大值（1A52E–1A55F）。
 // 原版把 ≥ 4 的當成 0（`sub_1A52E`）。
-func minCommand(sd *Side) int {
-	m := 255
+func maxCommand(sd *Side) int {
+	m := 0
 	for k := 0; k < Squads; k++ {
 		c := int(sd.Soldiers[k*PerSquad].Cmd)
 		if c >= 4 {
 			c = 0
 		}
-		if c < m {
+		if c > m {
 			m = c
 		}
-	}
-	if m == 255 {
-		return 0
 	}
 	return m
 }

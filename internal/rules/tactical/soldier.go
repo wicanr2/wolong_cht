@@ -402,7 +402,6 @@ func (b *Battle) moveToward(side, k int) {
 		} else {
 			s.MoveFlag = false
 			s.HitGeneral = false
-			b.faceLockedTarget(side, s)
 			if s.Target >= 0 && s.Target < len(b.Sides[1-side].Soldiers) {
 				e := &b.Sides[1-side].Soldiers[s.Target]
 				if max(abs(s.X-e.X), abs(s.Y-e.Y)) == 1 && s.X == s.GoalX && s.Y == s.GoalY {
@@ -410,6 +409,7 @@ func (b *Battle) moveToward(side, k int) {
 					return
 				}
 			}
+			b.faceLockedTarget(side, s)
 			s.StepX, s.StepY = s.GoalX, s.GoalY
 			return
 		}

@@ -850,7 +850,7 @@
 | [`spec/154-mouse-cursor.md`](../spec/154-mouse-cursor.md) | 遊玩端的自繪 | 等 §4 定案 | 靜態 | evidence-only | — |
 | [`spec/155-desktop-launcher-input.md`](../spec/155-desktop-launcher-input.md) | 戰後結算與地圖捲動仍待補強；Windows／macOS 原生操作未驗收。 | （未解小節內文） | 靜態 | actionable | [#2](https://github.com/wicanr2/wolong_cht/issues/2) |
 | [`spec/156-desktop-preferences.md`](../spec/156-desktop-preferences.md) | 無阻擋實作的偏好語意缺口；Windows／macOS 原生設定路徑與操作由人工驗收。 | （未解小節內文） | 靜態 | merge-target | [#2](https://github.com/wicanr2/wolong_cht/issues/2) |
-| [`spec/159-tactical-command-movement-order.md`](../spec/159-tactical-command-movement-order.md) | 完整戰術移動排程與後段動畫 | 正式正常登城513拍27欄位／RNG與3578筆投射物相同；剩餘514拍命令／中繼Y、516拍座標、518拍RNG及其他戰場／完整像素，沿既有Issue #16，不建立獨立新目標 | 靜態 | actionable | [#16](https://github.com/wicanr2/wolong_cht/issues/16) |
+| [`spec/159-tactical-command-movement-order.md`](../spec/159-tactical-command-movement-order.md) | 完整戰術移動排程與後段動畫 | 正式正常登城535拍27欄位／RNG相同；投射物至534拍4002筆，AI控制狀態677共同邊界相同；剩535拍箭矢、536拍單兵、538拍座標、542拍RNG及完整像素／其他戰場，沿既有Issue #16，不另建目標 | 靜態 | actionable | [#16](https://github.com/wicanr2/wolong_cht/issues/16) |
 | [`spec/160-rng-consumption-alignment.md`](../spec/160-rng-consumption-alignment.md) | `14060` 屬於哪一支、取數做什麼用 | 只知道在 `sub_13EFD` 底下，12 次／36 小時的節奏還沒對到機制 | 靜態 | merge-target | [#10](https://github.com/wicanr2/wolong_cht/issues/10) |
 | [`spec/160-rng-consumption-alignment.md`](../spec/160-rng-consumption-alignment.md) | 開戰期的消費端清單 | 還沒統計；閒置期的四個位址不足以涵蓋 | 靜態 | merge-target | [#10](https://github.com/wicanr2/wolong_cht/issues/10) |
 | [`spec/160-rng-consumption-alignment.md`](../spec/160-rng-consumption-alignment.md) | remake 的呼叫點與原版位址的對照表 | 要邊比邊建，沒有現成的 | 靜態 | merge-target | [#10](https://github.com/wicanr2/wolong_cht/issues/10) |

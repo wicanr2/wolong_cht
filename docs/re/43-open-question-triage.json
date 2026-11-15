@@ -14795,12 +14795,12 @@
     {
       "file": "docs/spec/159-tactical-command-movement-order.md",
       "item": "完整戰術移動排程與後段動畫",
-      "status": "正式正常登城513拍27欄位／RNG與3578筆投射物相同；剩餘514拍命令／中繼Y、516拍座標、518拍RNG及其他戰場／完整像素，沿既有Issue #16，不建立獨立新目標",
+      "status": "正式正常登城535拍27欄位／RNG相同；投射物至534拍4002筆，AI控制狀態677共同邊界相同；剩535拍箭矢、536拍單兵、538拍座標、542拍RNG及完整像素／其他戰場，沿既有Issue #16，不另建目標",
       "section": "未解",
       "domain": "其他",
       "verdict": "靜態",
       "occurrence": 0,
-      "id": "oq-9c9c026ce3640dd342a2",
+      "id": "oq-9fb3ce2aabc8bb37687c",
       "classification": "actionable",
       "github_issue": 16,
       "reason": "原版正常樣本證實240拍單兵／人物接線，腳本216拍後與完整排程仍屬既有Issue #16；顯式登記同一範圍，不另開工作。"
