@@ -417,7 +417,7 @@
 | [`docs/spec/177-replan-on-leg-not-from-city.md`](spec/177-replan-on-leg-not-from-city.md) | 177 — 走在路段上重新選路只在這條邊上決定方向 | CONFORMED。 | 2026-09-10 |
 | [`docs/spec/178-upkeep-and-morale-gate-is-on-leg.md`](spec/178-upkeep-and-morale-gate-is-on-leg.md) | 178 — 軍費與士氣的判準是「有沒有走在路段上」 | CONFORMED。 | 2026-09-10 |
 | [`docs/spec/179-recalc-on-battle-and-arrival-test.md`](spec/179-recalc-on-battle-and-arrival-test.md) | 179 — 戰後重算把移動計時寫 1；「到了沒」比的是節點欄不是 Corps.Node | CONFORMED。 | 2026-09-10 |
-| [`docs/spec/180-relief-dispatch-want-counts-candidates.md`](spec/180-relief-dispatch-want-counts-candidates.md) | 180 — 求援調兵的 want 數的是候選不是選中 | CONFORMED。 | 2026-09-10 |
+| [`docs/spec/180-relief-dispatch-want-counts-candidates.md`](spec/180-relief-dispatch-want-counts-candidates.md) | 180 — 求援調兵的 want 數的是候選不是選中 | CONFORMED。 | 2026-11-16 |
 | [`docs/spec/181-ai-recruit-gate-and-monthly-globals.md`](spec/181-ai-recruit-gate-and-monthly-globals.md) | 181 — AI 的募兵節制；月結的顯示用收支在保存區塊裡 | CONFORMED。 | 2026-09-10 |
 | [`docs/spec/182-monthly-settlement-before-hourly.md`](spec/182-monthly-settlement-before-hourly.md) | 182 — 月結跑在每「時」更新之前 | CONFORMED。 | 2026-09-10 |
 | [`docs/spec/183-occupancy-map-is-incremental.md`](spec/183-occupancy-map-is-incremental.md) | 183 — 佔用圖是增量維護的，據點 +0x18 從它抄 | CONFORMED（結構）。 | 2026-09-10 |

@@ -10243,19 +10243,6 @@
       "reason": "目前列只保留原版證據邊界，未命中現行玩家路徑、規則或交付 Issue；若影響範圍改變，先建立新 Issue 再調整分類。"
     },
     {
-      "file": "docs/spec/180-relief-dispatch-want-counts-candidates.md",
-      "item": "原版**沒有比勢力**（`sub_14155` 只看節點欄、活著、位元 2、Stage），",
-      "status": "（未解小節內文）",
-      "section": "6. 未解",
-      "domain": "其他",
-      "verdict": "靜態",
-      "occurrence": 0,
-      "id": "oq-c45740f688ace896da06",
-      "classification": "actionable",
-      "github_issue": 29,
-      "reason": "AI 行軍分派、救援候選、佔用圖或君主出陣，併入 Issue #29。"
-    },
-    {
       "file": "docs/spec/181-ai-recruit-gate-and-monthly-globals.md",
       "item": "勢力 7 的本月支出在月結那一小時差一次累加（原版 46、remake 0），",
       "status": "（未解小節內文）",

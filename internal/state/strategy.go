@@ -730,7 +730,7 @@ func (w *World) dispatchGarrison(site, target, want, skip int, rng economy.Rand)
 		// 玩家自己指揮的不會被搶走。`+0x23 >= 8` 是待解體，也調不動。
 		gs[i] = threat.Garrison{
 			At:    at,
-			Ready: cp.Alive && cp.Faction == w.Cities[site].Owner && cp.Delegated,
+			Ready: cp.Alive && cp.Delegated,
 			Stage: cp.Stage,
 		}
 	}

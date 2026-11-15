@@ -7,7 +7,7 @@
 
 現行工作與狀態由 GitHub [Issues](https://github.com/wicanr2/wolong_cht/issues) 管理；
 本地 [`docs/worklist.json`](../worklist.json) 與 `tools/worklist.py verify` 只作輔助。
-1140 列不是同數量的獨立 backlog；可執行項目已由完成的 Issue #28 分流，證據／歷史項目留在本索引。
+1139 列不是同數量的獨立 backlog；可執行項目已由完成的 Issue #28 分流，證據／歷史項目留在本索引。
 
 - 日期：2026-11-15
 - 產生工具：`tools/re_open_questions.py`
@@ -22,7 +22,7 @@
 
 ## 0. ⚠ 這個數字在量什麼
 
-**1134 列分布在 462 份文件，平均每份 2.5 列。**
+**1133 列分布在 461 份文件，平均每份 2.5 列。**
 
 ⭐ **所以它比較接近「文件有多少份」，不是「原版還有多少沒解」。**
 每寫一份新文件就帶進約三列自己的未解——而 `check.sh --strict` 還會
@@ -50,8 +50,8 @@
 | 程式碼理解 | 317 | 310 | 6 | 1 |
 | 驗收 | 245 | 220 | 25 | 0 |
 | 外部資料 | 6 | 5 | 1 | 0 |
-| 其他 | 535 | 511 | 23 | 1 |
-| **合計** | **1134** | 1072 | 59 | 3 |
+| 其他 | 534 | 510 | 23 | 1 |
+| **合計** | **1133** | 1071 | 59 | 3 |
 
 ⚠ **這是列數，不是獨立問題數。** 索引檔的「現況」欄是別的文件的摘要，同一個缺口在那份文件自己的未解表裡還有一列——這類共 **0** 列（另有少數只是提到「未解」兩個字的圖例列）。
 
@@ -59,7 +59,7 @@
 
 | 來源目錄 | 列數 |
 |---|---:|
-| `docs/spec/` | 492 |
+| `docs/spec/` | 491 |
 | `docs/re/` | 317 |
 | `docs/playtest/` | 245 |
 | `docs/release/` | 26 |
@@ -693,7 +693,7 @@
 | [`reference/04-first-survey.md`](../reference/04-first-survey.md) | 不要憑「同一份專案應該用同一個編譯器」外推——**`KI.EXE` 的編譯器未解。 | （散句） | 靜態 | evidence-only | — |
 | [`reference/05-eten-font-provenance.md`](../reference/05-eten-font-provenance.md) | `END_S13/S14/S15` 是中文版加的結局段 | S13／S14 是字型。**`END_S15` 仍未解** | 靜態 | evidence-only | — |
 
-## 2.6 其他（535 條）
+## 2.6 其他（534 條）
 
 | 出處 | 缺口 | 現況 | 裁決 | 分流 | Issue |
 |---|---|---|---|---|---|
@@ -887,7 +887,6 @@
 | [`spec/177-replan-on-leg-not-from-city.md`](../spec/177-replan-on-leg-not-from-city.md) | loc_1491B` 在「已經在邊上」那一支回傳的 `dx` 與 `bp` 比較的語意 | （未解小節內文） | 靜態 | merge-target | [#3](https://github.com/wicanr2/wolong_cht/issues/3) |
 | [`spec/178-upkeep-and-morale-gate-is-on-leg.md`](../spec/178-upkeep-and-morale-gate-is-on-leg.md) | byte_10CF3`（「一時」的判準）remake 用 `hour == upkeepHour` 代替， | （未解小節內文） | 靜態 | merge-target | [#10](https://github.com/wicanr2/wolong_cht/issues/10) |
 | [`spec/179-recalc-on-battle-and-arrival-test.md`](../spec/179-recalc-on-battle-and-arrival-test.md) | 拍 2,454 起軍團 19 的 Stage 機仍快一步：原版 10 → 9 → **8**， | （未解小節內文） | 靜態 | evidence-only | — |
-| [`spec/180-relief-dispatch-want-counts-candidates.md`](../spec/180-relief-dispatch-want-counts-candidates.md) | 原版**沒有比勢力**（`sub_14155` 只看節點欄、活著、位元 2、Stage）， | （未解小節內文） | 靜態 | actionable | [#29](https://github.com/wicanr2/wolong_cht/issues/29) |
 | [`spec/181-ai-recruit-gate-and-monthly-globals.md`](../spec/181-ai-recruit-gate-and-monthly-globals.md) | 勢力 7 的本月支出在月結那一小時差一次累加（原版 46、remake 0）， | （未解小節內文） | 靜態 | merge-target | [#10](https://github.com/wicanr2/wolong_cht/issues/10) |
 | [`spec/181-ai-recruit-gate-and-monthly-globals.md`](../spec/181-ai-recruit-gate-and-monthly-globals.md) | 拍 3,400 的每時勢力游標（`+0x2C`）差 1。 | （未解小節內文） | 靜態 | merge-target | [#10](https://github.com/wicanr2/wolong_cht/issues/10) |
 | [`spec/182-monthly-settlement-before-hourly.md`](../spec/182-monthly-settlement-before-hourly.md) | 拍 3,420 的據點 129 上昇值與防災值各差 1——那是拍 3,415 的調兵分歧 | （未解小節內文） | 靜態 | evidence-only | — |

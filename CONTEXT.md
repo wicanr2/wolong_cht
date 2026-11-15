@@ -5,7 +5,7 @@
 >
 > 硬規則、目標、工作紀律在 [`CLAUDE.md`](./CLAUDE.md)。這份只管**狀態**。
 >
-> 最後更新：2026-11-15
+> 最後更新：2026-11-16
 
 ## 目前工作：先完成 remake
 
@@ -256,6 +256,7 @@ GPU最多兩頁快取，其他季節、液晶、未選頁與讀圖失敗沿原�
 
 | 日期／目前程式 | 最近驗證 | 狀態 | 交付物 |
 |---|---|---|---|
+| 2026-11-16；wlgame-relief-r1 | 原版63 bytes核對、384案完整軍團／RNG全等，舊Go拒240案；全專案冷測／vet，正常曹操滑鼠62項／9圖 | 已移除守軍分派額外的勢力限制，保留委任／Stage／行軍排除。局部極端同格與正常UI分別驗證；其餘救援候選及#10政略90日仍待核對，整體AI目標進行中 | [spec180](docs/spec/180-relief-dispatch-want-counts-candidates.md)、[本片收據](workplace/scratch/ai-dispatch-20261115/relief-integration.json) |
 | 2026-11-15；wlgame-sortie-r1 | 原版24條指令核對、1024組出陣判定全等，舊Go拒294案；四劇本負資金存讀檔；全專案冷測／vet，正常曹操滑鼠34項 | 已補君主出陣負資金例外，兵源不足仍拒絕。Issue #29「君主出陣未實作」是歷史記載；救援分派與#10政略90日仍待核對，整體AI目標進行中，強化AI未啟用 | [spec49](docs/spec/49-advise-relocate-and-sortie.md)、[本片收據](workplace/scratch/ai-dispatch-20261115/integration.json) |
 | 2026-11-15；wlgame-ai-context-final-r1 | 原版480筆重現、18函式bytes；正式1170案軍團／RNG相同，兩實際錯版拒絕；全專案冷測／vet，正常滑鼠62項／9圖，存讀檔重建 | 到站上下文閉合：兩條抵達分別重建DI，43個存檔外值來自原素材。無新存檔欄位或HD預載；整體AI仍進行中，接Issue #29救援／分派及#10政略90日，強化AI未啟用 | [spec271](docs/spec/271-arrival-ai-context.md)、[本片收據](workplace/scratch/ai-hold-20261115/banks-integration.json) |
 | 2026-11-15；正式程式沿wlgame-hd-lazy-r1 | 原版450筆軌跡重現、七函式原bytes、128-byte來源與兩反例；正常退卻tick139及64世界拍，累計480筆AI觀測 | 留守DS:A818已定位原地圖(168,33)，戰術重用後正常重載；完整DI及存讀檔仍DRAFT。正式AI與HD程式未改，強化AI未啟用 | [spec271](docs/spec/271-arrival-ai-context.md)、[來源](workplace/scratch/ai-hold-20261115/source-analysis.json)、[生命週期](workplace/scratch/ai-hold-20261115/lifecycle-analysis.json) |

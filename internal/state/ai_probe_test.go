@@ -12,6 +12,24 @@ import (
 
 const threatNeutral = threat.Neutral
 
+// sub_14155 不比較勢力。同格的外軍仍按委任與 Stage 決定，且占候選額度。
+func TestReliefDispatchDoesNotFilterFaction(t *testing.T) {
+	for _, tc := range []struct {
+		delegated bool
+		stage     int
+		wantMove  bool
+	}{{true, 3, true}, {false, 3, false}, {true, 8, false}} {
+		w := &World{}
+		w.Cities[100].Owner = 12
+		w.Corps[0] = Corps{Alive: true, Faction: 13, Node: 100, Ordered: 100, Delegated: tc.delegated, Stage: tc.stage}
+		w.Corps[1] = Corps{Alive: true, Faction: 12, Node: 100, Ordered: 100, Delegated: true, Stage: 3}
+		w.dispatchGarrison(100, 97, 1, 0, rng.NewFixed(1))
+		if (w.Corps[0].Ordered == 97) != tc.wantMove || w.Corps[1].Ordered != 100 {
+			t.Fatalf("委任%v／Stage%d：兩支意圖=%d/%d", tc.delegated, tc.stage, w.Corps[0].Ordered, w.Corps[1].Ordered)
+		}
+	}
+}
+
 func TestScenarioOneStrategyNeighbourOrder(t *testing.T) {
 	w := load(t, 0)
 	got := w.strategyCandidates(0)

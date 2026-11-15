@@ -133,6 +133,10 @@ for _, i := range threat.Dispatch(gs, site, want, skip, next) {
 | 狀態層 | `internal/state/strategy.go`：`dispatchGarrison` |
 | 差異 | 無（照原版）|
 
+2026-11-16：另補原版不比較軍團勢力的候選條件。384 案局部分派軍團記錄與 RNG 全等，
+Go 額外限制已移除；仍保留此處的行軍排除與只寫意圖／Stage。
+證據與正常流程界線見 [spec180](180-relief-dispatch-want-counts-candidates.md)。
+
 ## 4. 驗證
 
 | 方式 | 證據 |
