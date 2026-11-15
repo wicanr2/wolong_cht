@@ -9957,19 +9957,6 @@
       "reason": "AI 行軍分派、救援候選、佔用圖或君主出陣，併入 Issue #29。"
     },
     {
-      "file": "docs/spec/164-relief-request-gates.md",
-      "item": "`sub_145C1` 挑武將的規則",
-      "status": "取 `+0x11` 最大且 `+0x17 == 0` 的那一位；remake 的 `formAICorpsTo` 是否同序未驗",
-      "section": "7. 未解",
-      "domain": "其他",
-      "verdict": "靜態",
-      "occurrence": 0,
-      "id": "oq-4abc6d6e1b9fe9c2c1a0",
-      "classification": "actionable",
-      "github_issue": 29,
-      "reason": "AI 行軍分派、救援候選、佔用圖或君主出陣，併入 Issue #29。"
-    },
-    {
       "file": "docs/spec/166-save-writeback-keeps-unmodelled-bits.md",
       "item": "勢力／據點／武將",
       "status": "完全相同",

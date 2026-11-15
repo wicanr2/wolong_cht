@@ -1752,8 +1752,7 @@ func (w *World) corpsPerishes(ev *CorpsEvent, i, winner int, rng combat.Rand) {
 	}
 	switch fate {
 	case combat.Captured:
-		g.Captor = loser
-		g.Faction = winner
+		setGeneralCaptive(g, loser, winner)
 		// 原版 `sub_12AD2(al=0FFh, ah=舊勢力)`：只從舊勢力扣，
 		// 不加給俘虜方——被俘期間這名武將不算在任何一方的武將數裡。
 		w.dropGeneralCount(loser)

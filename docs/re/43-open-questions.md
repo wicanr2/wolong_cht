@@ -7,7 +7,7 @@
 
 現行工作與狀態由 GitHub [Issues](https://github.com/wicanr2/wolong_cht/issues) 管理；
 本地 [`docs/worklist.json`](../worklist.json) 與 `tools/worklist.py verify` 只作輔助。
-1139 列不是同數量的獨立 backlog；可執行項目已由完成的 Issue #28 分流，證據／歷史項目留在本索引。
+1138 列不是同數量的獨立 backlog；可執行項目已由完成的 Issue #28 分流，證據／歷史項目留在本索引。
 
 - 日期：2026-11-15
 - 產生工具：`tools/re_open_questions.py`
@@ -22,7 +22,7 @@
 
 ## 0. ⚠ 這個數字在量什麼
 
-**1133 列分布在 461 份文件，平均每份 2.5 列。**
+**1132 列分布在 461 份文件，平均每份 2.5 列。**
 
 ⭐ **所以它比較接近「文件有多少份」，不是「原版還有多少沒解」。**
 每寫一份新文件就帶進約三列自己的未解——而 `check.sh --strict` 還會
@@ -50,8 +50,8 @@
 | 程式碼理解 | 317 | 310 | 6 | 1 |
 | 驗收 | 245 | 220 | 25 | 0 |
 | 外部資料 | 6 | 5 | 1 | 0 |
-| 其他 | 534 | 510 | 23 | 1 |
-| **合計** | **1133** | 1071 | 59 | 3 |
+| 其他 | 533 | 509 | 23 | 1 |
+| **合計** | **1132** | 1070 | 59 | 3 |
 
 ⚠ **這是列數，不是獨立問題數。** 索引檔的「現況」欄是別的文件的摘要，同一個缺口在那份文件自己的未解表裡還有一列——這類共 **0** 列（另有少數只是提到「未解」兩個字的圖例列）。
 
@@ -59,7 +59,7 @@
 
 | 來源目錄 | 列數 |
 |---|---:|
-| `docs/spec/` | 491 |
+| `docs/spec/` | 490 |
 | `docs/re/` | 317 |
 | `docs/playtest/` | 245 |
 | `docs/release/` | 26 |
@@ -693,7 +693,7 @@
 | [`reference/04-first-survey.md`](../reference/04-first-survey.md) | 不要憑「同一份專案應該用同一個編譯器」外推——**`KI.EXE` 的編譯器未解。 | （散句） | 靜態 | evidence-only | — |
 | [`reference/05-eten-font-provenance.md`](../reference/05-eten-font-provenance.md) | `END_S13/S14/S15` 是中文版加的結局段 | S13／S14 是字型。**`END_S15` 仍未解** | 靜態 | evidence-only | — |
 
-## 2.6 其他（534 條）
+## 2.6 其他（533 條）
 
 | 出處 | 缺口 | 現況 | 裁決 | 分流 | Issue |
 |---|---|---|---|---|---|
@@ -865,7 +865,6 @@
 | [`spec/163-city-tick-order.md`](../spec/163-city-tick-order.md) | `formAICorps` 在原版的位置 | 沒有證據。這一輪沿用「跟著威脅」的現況 | 靜態 | merge-target | [#10](https://github.com/wicanr2/wolong_cht/issues/10) |
 | [`spec/163-city-tick-order.md`](../spec/163-city-tick-order.md) | ② 易主 → 原主勢力 `+0x17` | remake 在 `refreshCityThreat` 裡，順序與原版一致，但沒有單獨驗過 | 靜態 | merge-target | [#10](https://github.com/wicanr2/wolong_cht/issues/10) |
 | [`spec/164-relief-request-gates.md`](../spec/164-relief-request-gates.md) | AI 自動判定戰鬥的觸發時機 | 對拍第一個分歧在拍 1978（remake）／2119（原版），差 141 拍。成因未解 | 靜態 | actionable | [#29](https://github.com/wicanr2/wolong_cht/issues/29) |
-| [`spec/164-relief-request-gates.md`](../spec/164-relief-request-gates.md) | `sub_145C1` 挑武將的規則 | 取 `+0x11` 最大且 `+0x17 == 0` 的那一位；remake 的 `formAICorpsTo` 是否同序未驗 | 靜態 | actionable | [#29](https://github.com/wicanr2/wolong_cht/issues/29) |
 | [`spec/166-save-writeback-keeps-unmodelled-bits.md`](../spec/166-save-writeback-keeps-unmodelled-bits.md) | 勢力／據點／武將 | 完全相同 | 靜態 | evidence-only | — |
 | [`spec/166-save-writeback-keeps-unmodelled-bits.md`](../spec/166-save-writeback-keeps-unmodelled-bits.md) | **軍團** | `+0x00` 有 6 支不同（`C5` → `C4`） | 靜態 | evidence-only | — |
 | [`spec/166-save-writeback-keeps-unmodelled-bits.md`](../spec/166-save-writeback-keeps-unmodelled-bits.md) | 位元 0／1／4／5 有設定端與清除端、語意尚未定案 | （散句） | 靜態 | evidence-only | — |

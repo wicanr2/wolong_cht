@@ -1,6 +1,7 @@
 package state
 
 import (
+	"bytes"
 	"sort"
 	"testing"
 
@@ -11,6 +12,67 @@ import (
 )
 
 const threatNeutral = threat.Neutral
+
+func TestReliefFormationOriginalCandidateAndSave(t *testing.T) {
+	for _, mode := range []string{"tie", "last", "zero", "thin", "partial"} {
+		t.Run(mode, func(t *testing.T) {
+			w := load(t, 0)
+			w.Player = 0
+			const faction, site = 12, 97
+			f := &w.Factions[faction]
+			f.Alive, f.InvasionTarget, f.Corps = true, diplomacy.NoTarget, 0
+			f.Reserves = [3]int{900, 900, 900}
+			w.Cities[site].Owner, w.Cities[site].ReliefCooldown = faction, 0
+			for i := range w.Generals {
+				w.Generals[i].Faction = noFaction
+			}
+			for _, i := range []int{11, 126} {
+				g := &w.Generals[i]
+				g.Alive, g.Faction, g.Duty, g.Martial, g.Captor = true, faction, DutyNone, 12, noFaction
+			}
+			leader := 11
+			if mode == "last" || mode == "thin" {
+				w.Generals[126].Martial, leader = 15, 126
+			}
+			if mode == "zero" {
+				w.Generals[11].Martial, w.Generals[126].Martial = 0, 0
+			}
+			if mode == "thin" {
+				f.Reserves = [3]int{49, 49, 49}
+			}
+			if mode == "partial" {
+				f.Reserves = [3]int{0, 0, 200}
+			}
+			reserves := f.Reserves
+			w.requestRelief(site, 1, rng.NewFixed(7))
+			formed := mode == "tie" || mode == "last"
+			if w.Corps[leader].Alive != formed || f.ReliefSite != site {
+				t.Fatalf("編成=%v／求援地點=%d", w.Corps[leader].Alive, f.ReliefSite)
+			}
+			if formed && (!w.Corps[leader].Delegated || w.Corps[leader].Ordered != site || f.Corps != 1) {
+				t.Fatal("無侵攻目標時未正確建立求援軍團")
+			}
+			if !formed && (f.Reserves != reserves || f.Corps != 0 || w.Cities[site].ReliefCooldown != 0) {
+				t.Fatal("編成失敗仍扣兵、增加軍團或寫冷卻")
+			}
+			saved := w.Bytes()
+			if mode == "thin" && saved[corpsBase+leader*corpsSize+2] != byte(leader) {
+				t.Fatal("編成失敗漏寫原版軍團編號 byte")
+			}
+			if mode == "partial" {
+				for k := 0; k < 4; k++ {
+					if saved[corpsBase+leader*corpsSize+unitSlotBase+k*unitSlotSize+2] != 3 {
+						t.Fatal("編成失敗漏寫已選定的步兵槽", k)
+					}
+				}
+			}
+			reloaded, err := LoadBlock(saved)
+			if err != nil || !bytes.Equal(saved, reloaded.Bytes()) {
+				t.Fatal("求援狀態存讀檔不同", err)
+			}
+		})
+	}
+}
 
 // sub_14155 不比較勢力。同格的外軍仍按委任與 Stage 決定，且占候選額度。
 func TestReliefDispatchDoesNotFilterFaction(t *testing.T) {

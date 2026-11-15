@@ -1,6 +1,54 @@
 package state
 
-import "testing"
+import (
+	"bytes"
+	"testing"
+
+	"github.com/wicanr2/wolong_cht/internal/rules/combat"
+	"github.com/wicanr2/wolong_cht/internal/rules/rng"
+)
+
+func TestCapturedCorpsLeaderCannotBeSelectedForRelief(t *testing.T) {
+	for _, sovereign := range []bool{false, true} {
+		w := load(t, 0)
+		const id, loser, winner = 7, 12, 13
+		g := &w.Generals[id]
+		g.Alive, g.Faction, g.Captor, g.Duty = true, loser, noFaction, DutyCorpsLeader
+		g.Martial, g.Command, g.Politics = 15, 0, 0
+		g.Sovereign, g.TalkVariant = sovereign, 1
+		w.Factions[loser].Lord, w.Factions[loser].Capital = 3, 82
+		w.Corps[id] = Corps{Alive: true, Faction: loser}
+		ev := &CorpsEvent{Corps: id}
+		w.corpsPerishes(ev, id, winner, &fixedRand{v: 127})
+		if ev.Fate[id] != combat.Captured || g.Duty != DutyCaptive || g.Captor != loser || g.Faction != winner {
+			t.Fatalf("戰敗被俘狀態錯誤：fate=%v general=%+v", ev.Fate[id], g)
+		}
+		variant := 1
+		if sovereign {
+			variant += 3
+		}
+		if g.Sovereign || g.TalkVariant != variant {
+			t.Fatal("被俘主公型沒有套用既有轉換")
+		}
+		for i := range w.Generals {
+			if i != id {
+				w.Generals[i].Martial = 0
+			}
+		}
+		w.Factions[winner].Alive, w.Factions[winner].Corps = true, 0
+		w.Factions[winner].Reserves = [3]int{900, 900, 900}
+		w.Cities[97].Owner = winner
+		w.requestRelief(97, 1, rng.NewFixed(7))
+		if w.Corps[id].Alive || g.Duty != DutyCaptive {
+			t.Fatal("AI 把俘虜重新編成軍團")
+		}
+		saved := w.Bytes()
+		restored, err := LoadBlock(saved)
+		if err != nil || !bytes.Equal(saved, restored.Bytes()) || restored.Generals[id].Duty != DutyCaptive {
+			t.Fatal("被俘狀態存讀檔改變", err)
+		}
+	}
+}
 
 // 應戰軍團照 sub_14C72 計分挑（docs/spec/82）：
 // 分數＝(兵數>>4 低 byte)×(士氣>>4)×(評價>>4＋1)，嚴格最大、同分取先。

@@ -398,6 +398,10 @@ func (w *World) autoFormCorps(faction, leader int, delegated bool) bool {
 	if faction < 0 || faction >= numFactions || leader < 0 || leader >= numCorps {
 		return false
 	}
+	// sub_16E8F 在試配兵源前就寫軍團 +2；失敗也保留這個原始 byte。
+	if at := corpsBase + leader*corpsSize + 2; at < len(w.raw) {
+		w.raw[at] = byte(leader)
+	}
 	f := &w.Factions[faction]
 	var kinds [army.Positions]army.TroopType
 	probe := f.Reserves
@@ -408,6 +412,10 @@ func (w *World) autoFormCorps(faction, leader int, delegated bool) bool {
 				continue
 			}
 			kinds[slot] = kind
+			// sub_16F0A 每配到一槽就寫兵種；後續失敗也不回復。
+			if at := corpsBase + leader*corpsSize + unitSlotBase + slot*unitSlotSize + 2; at < len(w.raw) {
+				w.raw[at] = byteFromKind(kind)
+			}
 			probe[kind] -= 0x32
 			found = true
 			break
@@ -473,14 +481,15 @@ func (w *World) formAICorpsTo(faction, dest int) *StrategyEvent {
 	// 上限是 `max(5, 資金 ÷ 8192)` 減掉現有軍團數（原版 `sub_14575`，
 	// docs/re/44 §4.1）。**先前這裡寫的是 `f.Corps != 0`**——那讓 AI
 	// 永遠只有一支軍團，資金再多也不會擴軍。
-	if !f.Alive || f.InvasionTarget == diplomacy.NoTarget ||
+	if !f.Alive || (dest < 0 && f.InvasionTarget == diplomacy.NoTarget) ||
 		threat.Budget(f.Funds, f.Corps) == 0 {
 		return nil
 	}
 
 	leader := -1
 	for i, g := range w.Generals {
-		if !g.Alive || g.Faction != faction || g.Posted() || g.Captor != noFaction {
+		// sub_145C1 只比勢力、職務與嚴格正的最高武術；同值保留先掃到者。
+		if g.Faction != faction || g.Posted() || g.Martial == 0 {
 			continue
 		}
 		if leader < 0 || g.Martial > w.Generals[leader].Martial {

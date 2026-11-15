@@ -40,7 +40,7 @@ import (
 // tracing 包住原版的產生器，記下每一次取數的呼叫點。
 // **它不改變輸出**：值原封不動來自底下那一支。
 type tracing struct {
-	inner *rng.Rand
+	inner  *rng.Rand
 	seq    int
 	where  []string
 	values []int
@@ -159,6 +159,9 @@ func main() {
 		w.SetTactical(setup)
 		wired = append(wired, "戰術層")
 	}
+	// 原版到站判斷還會讀 ICONGRF 與 MMAP；戰術開關不影響這份來源。
+	battlesetup.AttachAIHoldSources(w, lib.Chrome, lib.World)
+	wired = append(wired, "原版到站資料來源")
 	if *events {
 		w.OnEvent = func(e state.EventTrace) {
 			fmt.Printf("  ▶ %d年%d月%d日 %d時 事件%02X 發起%3d 對象%3d 第二%3d 槽%3d\n",

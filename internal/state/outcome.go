@@ -125,9 +125,7 @@ func (w *World) disperseFaction(i, winner int) {
 		}
 		if winner >= 0 && winner < numFactions {
 			// `sub_129C3` 把職務寫成 4（俘虜），不是清成無職。
-			g.Captor, g.Faction = i, winner
-			g.Duty = DutyCaptive
-			demoteCapturedSovereign(g)
+			setGeneralCaptive(g, i, winner)
 		} else {
 			g.Faction = noFaction
 		}
@@ -176,6 +174,12 @@ func (w *World) VictoryLordTalkIndex() (index, general int, ok bool) {
 		return 0, 0, false
 	}
 	return VictoryLordTalkBase, lord, true
+}
+
+// setGeneralCaptive 對應 sub_129C3 的共同欄位寫入；計數仍由各 caller 處理。
+func setGeneralCaptive(g *General, loser, winner int) {
+	g.Captor, g.Faction, g.Duty = loser, winner, DutyCaptive
+	demoteCapturedSovereign(g)
 }
 
 // demoteCapturedSovereign 是 `sub_129C3` 的 `loc_12A12`：被俘的人只要
