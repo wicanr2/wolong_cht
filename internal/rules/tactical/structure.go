@@ -347,7 +347,7 @@ func (b *Battle) breakRow(y int) {
 		if s.Y != y || s.Broken {
 			continue
 		}
-		s.Broken, s.Durability = true, 0
+		s.Broken = true
 		b.clearStructureCosts(s)
 		delta := brokenWallDelta
 		if s.Kind == KindGate {
@@ -355,6 +355,7 @@ func (b *Battle) breakRow(y int) {
 		}
 		for r := 0; r < s.Run; r++ {
 			b.Field.Retile(s.X, s.Y+r, delta)
+			b.clearBrokenStructureCell(s.X, s.Y+r)
 		}
 		b.Log = append(b.Log, structureName(s.Kind)+"被打壞了")
 	}
@@ -384,10 +385,11 @@ func (b *Battle) SortieBreaksWalls() {
 		if s.Kind != KindWall || s.Broken {
 			continue
 		}
-		s.Broken, s.Durability = true, 0
+		s.Broken = true
 		b.clearStructureCosts(s)
 		for r := 0; r < s.Run; r++ {
 			b.Field.Retile(s.X, s.Y+r, brokenWallDelta)
+			b.clearBrokenStructureCell(s.X, s.Y+r)
 		}
 	}
 }
@@ -407,6 +409,19 @@ func (b *Battle) clearStructureCosts(s *Structure) {
 	for n := 0; n < s.Run; n++ {
 		if index, ok := costCell(s.X, s.Y+n, PlaneLow); ok {
 			b.unitCollision.cost[index] = 0
+		}
+	}
+}
+
+// 1B861–1B87A：重鋪後清整byte的實體層0–5；第6層保留重鋪結果。
+func (b *Battle) clearBrokenStructureCell(x, y int) {
+	if !inBounds(x, y) {
+		return
+	}
+	for z := 0; z < 6; z++ {
+		b.Field.solid[z][y][x] = false
+		if b.unitCollision != nil {
+			b.unitCollision.cells[z*Width*Height+y*Width+x] = 0
 		}
 	}
 }

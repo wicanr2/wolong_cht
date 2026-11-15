@@ -399,12 +399,11 @@ func (f *Field) Retile(x, y, delta int) {
 	if f.layers != nil {
 		f.setSolidFromLayers(x, y)
 	}
-	// 原版打壞城壁時**不重算地面表**（`sub_1B824` 只重跑 `sub_1BB6D`），
-	// 而那不影響結果：城壁的地面層本來就是拿**打壞後那個圖塊**算的
-	// （`sub_1BCA6` 把 0xD0–0xDF 換成 +0x10，docs/re/63 §2），
-	// 所以重算是恆等變換。真正需要它的是沒有子圖塊表的合成戰場——
-	// 那種戰場的高度直接來自 heights，不重算就會留著舊的連通性。
-	f.buildNav()
+	// 1B824只重鋪該格實體，不重建導航。全圖重建還會把先前破城
+	// 已清空的實體層填回去。只有無子圖塊表的合成場需重算連通性。
+	if f.layers == nil {
+		f.buildNav()
+	}
 }
 
 // Tile 回傳 (x, y) 目前的圖塊值。沒有圖塊資料時回 0。

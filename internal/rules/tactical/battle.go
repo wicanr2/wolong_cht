@@ -766,11 +766,11 @@ func (b *Battle) checkVictory(present [2]int) {
 	}
 }
 
-// checkGeneralRetreat 重現 `sub_1AE56`：大將體力低於 50 → 全軍退卻。
+// checkGeneralRetreat 重現 `sub_1AE56`：大將體力低於50即全軍退卻，離場後仍檢查。
 func (b *Battle) checkGeneralRetreat() {
 	for _, i := range [2]int{b.PlayerSide, 1 - b.PlayerSide} {
 		g := &b.Sides[i].Soldiers[0]
-		if !g.Alive || g.HP >= GeneralRetreatHP {
+		if g.HP >= GeneralRetreatHP {
 			continue
 		}
 		previous := b.endPhase
@@ -792,8 +792,8 @@ func (b *Battle) drainSiegeGeneral() {
 		return
 	}
 	b.siegeTick = 0
-	g := &b.Sides[0].Soldiers[0] // 0 側是攻方
-	if g.Alive && g.HP > 0 {
+	g := &b.Sides[0].Soldiers[0] // 0側是攻方；1AEA0只檢查HP，離場後仍持續扣減。
+	if g.HP > 0 {
 		g.HP--
 	}
 }

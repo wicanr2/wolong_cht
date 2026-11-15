@@ -55,8 +55,8 @@ func TestLockOnPreservesPendingRefreshAndPath(t *testing.T) {
 		b.Sides[1-side].Soldiers[0].Alive = false
 		s.Target, s.TargetRefresh = -1, false
 		b.lockOnNearest(side, 1)
-		if s.Target != -1 || s.TargetRefresh || s.Path != path {
-			t.Fatal("沒有有效敵人時沿用既有防護，不新增刷新或刪路")
+		if s.Target != 0 || !s.TargetRefresh || s.Path != path {
+			t.Fatal("沒有在場敵人時仍鎖定對方槽0並刷新，不刪路")
 		}
 	}
 }
