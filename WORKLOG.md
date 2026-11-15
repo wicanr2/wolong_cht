@@ -1965,3 +1965,14 @@
 - AI三份較早文件與mechanics70追加證據及限制，HD spec275升格限定CONFORMED，目前狀態回填CONTEXT；原版AI仍待執行期映射，強化模式不進正式路徑。檢查、來源封存、回填負對照與Docker／擁有權狀態由本輪收尾收據保存。沿既有授權commit／push，不建立Release或公開原版素材。
 - 文件嚴格抽取、1135列分流與過期斷言檢查通過。索引及官方check.sh仍停在既有65個歷史本機缺鏈，對HEAD差分為0個新增；幽靈掃描352筆與基線相同，IDA符號層因既有census.tsv缺檔未跑。資產deny-list通過，沒有原版素材加入版控。
 - [HD收據](workplace/scratch/hd-lazy-20261115/integration.json)、[載入成本](workplace/scratch/hd-lazy-20261115/performance.json)、[正常滑鼠](workplace/scratch/hd-lazy-20261115/gui-r2/hd-location-gui.json)與[原版AI分析](workplace/scratch/ai-hold-20261115/analysis.json)留本機。
+
+## 2026-11-15：原版AI存檔外來源與正常戰後重載
+
+- 接續5d2802f，查CONTEXT、Issue #11、復古重製／規格閘門、正常試玩與回填路由。Issue仍OPEN，只唯讀，沒有改遠端工作範圍。本輪沿既有AI研究目錄，沒有新增正式玩法決定或啟用強化AI。
+- 原版唯讀重播450筆AI軌跡逐筆相同。由DS2754:A818的實體31D58，核對MMAP段2EB3與解碼後+3228，即(168,33)格；128 bytes相同，錯位與整片1的反例被拒。段差僅記本次配置，不硬編進規則。
+- 重用既有IDA Pro9.4匯出，七函式按MZ relocation重新核對原EXE；沒有啟動新IDA或改正式.i64。寫入監看回報0110:F60C為下一條IP，真正原指令是IDA1F60A；戰術清除回報0110:BB59，對應1BB57 REP STOSW。各工具位址空間分開記錄。
+- 原版正常曹操道路野戰以滑鼠退卻，戰術tick139返回世界，後續64拍及兩則正常訊息右鍵關閉通過。累計480筆AI觀測，舊450筆前綴全同；34個落在地圖區的候選讀點在戰前與返回後均與原圖相同。整圖有五格城池圖形差異，全部保存；本輪沒有觀測到成功途中留守，不把這片提升為完整原版AI parity。
+- 工具初稿只等策略訊息1222B，漏掉非同步開戰台詞；第二稿誤把台詞殘留熱區27當成仍開啟，重複退卻又觸發Click的無畫面變化錯誤。依路由重查正常試玩及既有原版戰術尾段後，第三稿用完整戰術節拍與Tap，已正常返回並取得11拍，在第12拍策略訊息停住。第四稿補普通右鍵訊息處理，相同容器命令乾淨重跑rc0。四稿均留存，不改產品、不注入亂數／計時器／軍團，不把工具失敗列成遊戲缺陷。
+- 原版log仍有一筆未實作int61h AH0A AL03，沒有音訊一致性聲明。DS:A818來源已閉合；完整DI記憶體區域、成功留守正常路徑及存讀檔上下文仍待原Issue #11，正式Go與存檔格式不改。依使用者順序，強化AI尚未接正式工具列。
+- 回填spec271、mechanics70與三份較早文件，現況入口新增本輪限定狀態。[來源分析](workplace/scratch/ai-hold-20261115/source-analysis.json)、[正常返回](workplace/scratch/ai-hold-20261115/lifecycle-analysis.json)及[收尾收據](workplace/scratch/ai-hold-20261115/source-integration.json)保存原始輸入、版本、原位址、重播與限制。文件檢查、回填負對照、擁有權及Docker清理後沿既有授權commit／push，沒有發布原版素材。
+- 嚴格抽取、1135列分流、596文件過期掃描與1912追蹤檔素材檢查通過。索引及官方check.sh仍有65個既有本機缺鏈，對5d2802f差分新增0；phantom仍352筆／323個唯一引用，新增0，缺歷史census.tsv的IDA符號層未跑。三列回填的缺標記反例均拒絕。前輪2255產物及20份正式來源SHA未變，本輪凍結3131份研究產物；沒有重新執行未變更程式的Go測試。未發現root-owned檔案或.md目錄，所有本輪一次性容器均移除，提交／推送身分另存source-repository收據。
