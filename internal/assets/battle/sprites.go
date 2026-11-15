@@ -209,8 +209,8 @@ type Banner struct {
 	Side int
 	// Phase 是**旗子飄動的動畫相位**（原版 `+0x1B`）。
 	//
-	// `sub_1BB10` 每幀 `inc` 再 `and 3`，圖號取 `+0x1C` 的基底加上
-	// **相位 × 2**（顯示串列的一格 ＝ 2，所以就是加一張圖）。
+	// sub_1BB10先以目前相位登錄，再inc並and3。Phase保留起始顯示值，
+	// SourceTile用Frame算目前圖號；一般旗為基底加相位×2。
 	// 建立時給亂數 0–3 是為了讓滿場的旗**不要同步揮舞**。
 	Phase int
 }

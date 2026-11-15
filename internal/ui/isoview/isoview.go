@@ -462,14 +462,26 @@ func (v *View) buildDisplayList(b *tactical.Battle) []battleDisplayEntry {
 	for _, banner := range v.banners {
 		// 旗由62列地形掃描而來；其餘動態物件已保存原版Y（spec57訂正）。
 		col, row := isoProject(banner.X, banner.Y, banner.Z)
-		// sub_1BB10 → sub_1DC03：一般高度用 base+phase*2；Z=6
-		// 的特殊分支用 base+8+phase，且兩者都只登錄一個 raw unit。
+		// 1DC03先檢查錨點；一般旗在lane0登錄下半raw+1及上列raw。
+		cellCol, cellRow := col-v.camCol, row-v.camRow
+		if cellCol < 0 || cellCol >= 31 || cellRow < 0 || cellRow >= 24 {
+			continue
+		}
 		raw := banner.SourceTile(frame)
+		lowerRaw := raw
+		if !banner.SingleCell() {
+			lowerRaw++
+		}
 		entries = append(entries, battleDisplayEntry{kind: displayRawUnit,
-			col: col, row: row, cellCol: col - v.camCol, cellRow: row - v.camRow,
-			layer: banner.Z, lane: 0, x: banner.X, y: banner.Y, z: banner.Z,
-			raw: raw, order: order})
+			col: col, row: row, cellCol: cellCol, cellRow: cellRow, layer: banner.Z, lane: 0,
+			x: banner.X, y: banner.Y, z: banner.Z, raw: lowerRaw, order: order})
 		order++
+		if !banner.SingleCell() && cellRow > 0 {
+			entries = append(entries, battleDisplayEntry{kind: displayRawUnit, col: col, row: row,
+				cellCol: cellCol, cellRow: cellRow - 1, layer: banner.Z + 1, lane: 0,
+				x: banner.X, y: banner.Y, z: banner.Z, raw: raw, order: order})
+			order++
+		}
 	}
 	if b != nil {
 		for i, p := range b.Projectiles() {
