@@ -7,7 +7,7 @@
 
 現行工作與狀態由 GitHub [Issues](https://github.com/wicanr2/wolong_cht/issues) 管理；
 本地 [`docs/worklist.json`](../worklist.json) 與 `tools/worklist.py verify` 只作輔助。
-1142 列不是同數量的獨立 backlog；可執行項目已由完成的 Issue #28 分流，證據／歷史項目留在本索引。
+1141 列不是同數量的獨立 backlog；可執行項目已由完成的 Issue #28 分流，證據／歷史項目留在本索引。
 
 - 日期：2026-11-15
 - 產生工具：`tools/re_open_questions.py`
@@ -22,7 +22,7 @@
 
 ## 0. ⚠ 這個數字在量什麼
 
-**1136 列分布在 464 份文件，平均每份 2.4 列。**
+**1135 列分布在 463 份文件，平均每份 2.5 列。**
 
 ⭐ **所以它比較接近「文件有多少份」，不是「原版還有多少沒解」。**
 每寫一份新文件就帶進約三列自己的未解——而 `check.sh --strict` 還會
@@ -47,11 +47,11 @@
 |---|---:|---:|---:|---:|
 | 規則正確性 | 11 | 7 | 3 | 1 |
 | 資料保存 | 20 | 19 | 1 | 0 |
-| 程式碼理解 | 318 | 311 | 6 | 1 |
+| 程式碼理解 | 317 | 310 | 6 | 1 |
 | 驗收 | 245 | 220 | 25 | 0 |
 | 外部資料 | 6 | 5 | 1 | 0 |
 | 其他 | 536 | 512 | 23 | 1 |
-| **合計** | **1136** | 1074 | 59 | 3 |
+| **合計** | **1135** | 1073 | 59 | 3 |
 
 ⚠ **這是列數，不是獨立問題數。** 索引檔的「現況」欄是別的文件的摘要，同一個缺口在那份文件自己的未解表裡還有一列——這類共 **0** 列（另有少數只是提到「未解」兩個字的圖例列）。
 
@@ -60,7 +60,7 @@
 | 來源目錄 | 列數 |
 |---|---:|
 | `docs/spec/` | 493 |
-| `docs/re/` | 318 |
+| `docs/re/` | 317 |
 | `docs/playtest/` | 245 |
 | `docs/release/` | 26 |
 | `docs/formats/` | 20 |
@@ -110,7 +110,7 @@
 | [`formats/09-cutscene-images.md`](../formats/09-cutscene-images.md) | `GAMEOVER.DAT` 誰播 | 不在 `D7END.EXE` 的十二幕裡。**推測是 `KI.EXE` 的敗北路徑**（`../re/59`），沒有找到取用端 | 靜態 | evidence-only | — |
 | [`formats/10-end-s15-namechars.md`](../formats/10-end-s15-namechars.md) | 勢力 `+0x02 = 0x7F` 時，訊息裡的 `{4}` 從哪裡取名 | 推測從 `5222h`，`sub_1075B` 那條路沒回頭讀 | 靜態 | evidence-only | — |
 
-## 2.3 程式碼理解（318 條）
+## 2.3 程式碼理解（317 條）
 
 | 出處 | 缺口 | 現況 | 裁決 | 分流 | Issue |
 |---|---|---|---|---|---|
@@ -351,7 +351,6 @@
 | [`re/73-new-game-faction-list.md`](../re/73-new-game-faction-list.md) | `sub_18DC8` 的 `si=98C8h` | 那一則字串沒取出來看 | 靜態 | evidence-only | — |
 | [`re/73-new-game-faction-list.md`](../re/73-new-game-faction-list.md) | 欄位表的「型別」與「屬性」兩個 word | `0x76`／`0x73` 與 `0x0206`／`0x0204` 只由「名字欄 vs 數字欄」的對應推出語意，沒有讀 `sub_1820E` 裡消費它們的那一段 | 靜態 | evidence-only | — |
 | [`re/73-new-game-faction-list.md`](../re/73-new-game-faction-list.md) | `sub_18607` | **算式已讀**（2026-09-02）：`ax = (word_181B4 − 30h) × dl ÷ byte_181BE`，**有餘數就進位**，結果存回 `cs:word_181A4` 再 `sub_18662`；前半段在 `word_181B0 + 20h + word_181A4` 不進位時用 `su… | 靜態 | evidence-only | — |
-| [`re/74-battle-opening-duel.md`](../re/74-battle-opening-duel.md) | 開場凍結與大將騎出的機器碼形式 | 正常玩家守方應戰已驗完整1545拍，90拍應戰、140拍對打、290／310拍決著、330拍收尾；32圖僅游標。玩家攻方完整矩陣、精確輸入邊界與已退卻敗方等待仍沿Issue #17 | 靜態 | actionable | [#17](https://github.com/wicanr2/wolong_cht/issues/17) |
 | [`re/75-duel-talk-audit.md`](../re/75-duel-talk-audit.md) | 變體 0／2／3／5／6 的臨場抽驗 | 專屬句只在 1／4／7；預設句與它們共用選句機制，公式已 confirmed，抽驗優先度低 | 靜態 | merge-target | [#17](https://github.com/wicanr2/wolong_cht/issues/17) |
 | [`re/76-d7open-opening-player.md`](../re/76-d7open-opening-player.md) | 第 5 幕來源的列距 | `sub_103EF` 每兩列消耗 720 B（240 × 2 ＋ `add si, 0F0h`），推不出單純的「一列 240 B」；要嘛來源有 stride，要嘛捲動是重疊取樣。沒有畫面驗證 | 靜態 | evidence-only | — |
 | [`re/76-d7open-opening-player.md`](../re/76-d7open-opening-player.md) | `sub_10A70` | 第 5 幕與開場初始化各叫一次，內容未讀 | 靜態 | evidence-only | — |
@@ -849,7 +848,7 @@
 | [`spec/154-mouse-cursor.md`](../spec/154-mouse-cursor.md) | 遊玩端的自繪 | 等 §4 定案 | 靜態 | evidence-only | — |
 | [`spec/155-desktop-launcher-input.md`](../spec/155-desktop-launcher-input.md) | 戰後結算與地圖捲動仍待補強；Windows／macOS 原生操作未驗收。 | （未解小節內文） | 靜態 | actionable | [#2](https://github.com/wicanr2/wolong_cht/issues/2) |
 | [`spec/156-desktop-preferences.md`](../spec/156-desktop-preferences.md) | 無阻擋實作的偏好語意缺口；Windows／macOS 原生設定路徑與操作由人工驗收。 | （未解小節內文） | 靜態 | merge-target | [#2](https://github.com/wicanr2/wolong_cht/issues/2) |
-| [`spec/159-tactical-command-movement-order.md`](../spec/159-tactical-command-movement-order.md) | 完整戰術移動排程與後段動畫 | 正常玩家守方應戰與拒戰各1545拍及受控拒戰400拍全軍27欄／RNG全等；應戰32圖僅游標，既有2942拍／69圖／2942縮圖不變。玩家攻方完整矩陣、精確輸入邊界與已退卻敗方等待仍沿Issue #17 | 靜態 | actionable | [#16](https://github.com/wicanr2/wolong_cht/issues/16) |
+| [`spec/159-tactical-command-movement-order.md`](../spec/159-tactical-command-movement-order.md) | 完整戰術移動排程與後段動畫 | 本輪抽驗已閉合：正常守方應戰／拒戰、受控攻方1177拍、兩退卻分支900／500拍及雙角色輸入邊界；舊4487拍規則與101圖不變。其他地形與整體排程仍限既有Issue #16範圍，不以抽樣外推全遊戲 | 靜態 | actionable | [#16](https://github.com/wicanr2/wolong_cht/issues/16) |
 | [`spec/160-rng-consumption-alignment.md`](../spec/160-rng-consumption-alignment.md) | `14060` 屬於哪一支、取數做什麼用 | 只知道在 `sub_13EFD` 底下，12 次／36 小時的節奏還沒對到機制 | 靜態 | merge-target | [#10](https://github.com/wicanr2/wolong_cht/issues/10) |
 | [`spec/160-rng-consumption-alignment.md`](../spec/160-rng-consumption-alignment.md) | 開戰期的消費端清單 | 還沒統計；閒置期的四個位址不足以涵蓋 | 靜態 | merge-target | [#10](https://github.com/wicanr2/wolong_cht/issues/10) |
 | [`spec/160-rng-consumption-alignment.md`](../spec/160-rng-consumption-alignment.md) | remake 的呼叫點與原版位址的對照表 | 要邊比邊建，沒有現成的 | 靜態 | merge-target | [#10](https://github.com/wicanr2/wolong_cht/issues/10) |

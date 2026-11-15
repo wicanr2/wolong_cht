@@ -1,5 +1,11 @@
 # 128 — 隊長倒下不會清掉那一隊的待機兵
 
+## 2026-11-15：一般指令與退卻決著勘誤
+
+DOS/V KI.EXE SHA-256 `fffeba985231cda4d636e93d10f598470b1f691d00275e4aa38e285893d43868`；IDA Pro 9.4及dosgolem `f79eab6db8c64a524a06535e53e5d32b0bbcf7c8`，位址採DOS/V IDA linear。
+已證實定位：`1A4F5／1C1EC／1A83F`。一般Order仍可記錄離場隊長Next，但不直接改隊員；隊長失去後的1A83F每批傳退卻及待機保留契約維持。上輪「非隊長沿在場篩選」的Order接線由本輪只寫隊長訂正。
+驗收與限制見[spec159](159-tactical-command-movement-order.md)及[收據](../../workplace/scratch/ui-windows-20261104/cao-duel-matrix-integration.json)。
+
 ## 2026-11-15：應戰單挑與補兵白旗勘誤
 
 輸入DOS/V KI.EXE SHA-256 `fffeba985231cda4d636e93d10f598470b1f691d00275e4aa38e285893d43868`，dosgolem `f79eab6db8c64a524a06535e53e5d32b0bbcf7c8`。位址為oracle.IDA DOS/V linear，以下為已證實的本案動態與IDA Pro 9.4原始指令證據。

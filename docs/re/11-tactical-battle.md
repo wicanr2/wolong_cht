@@ -1,5 +1,11 @@
 # 11 — 戰術戰鬥：模組結構與戰場資料模型
 
+## 2026-11-15：一般指令與退卻決著勘誤
+
+DOS/V KI.EXE SHA-256 `fffeba985231cda4d636e93d10f598470b1f691d00275e4aa38e285893d43868`；IDA Pro 9.4及dosgolem `f79eab6db8c64a524a06535e53e5d32b0bbcf7c8`，位址採DOS/V IDA linear。
+已證實定位：`1A4E6／1A4EC／1A4F5／1A4F7／1A4FB／1C1EC`。腳本opcode3一般order只寫一隊或六隊長Next，跨距100h；不直接傳七隊員。opcode13 order.by另經1A60D／1A8DE傳令，不能混同。
+驗收與限制見[spec159](../spec/159-tactical-command-movement-order.md)及[收據](../../workplace/scratch/ui-windows-20261104/cao-duel-matrix-integration.json)。
+
 2026-11-15有序格表補充，已證實：`1B735–1B74D`交換三個word，包含`+7／+9／+Bh`的上次繪圖座標。
 `1B4FD–1B52D`在補兵時重設目前及上次座標；`1B312／1B36F／1B40B→1DAAA`按舊座標擦除，不檢查擁有者。
 `1DA1C`先裁切整個錨點，再於空槽且`2Z+1≥start`時登錄；不能從最終兵士快照重建等價格表。

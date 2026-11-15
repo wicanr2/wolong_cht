@@ -1,5 +1,11 @@
 # 60 — 戰術側欄：那一欄畫了什麼，每一格由誰畫
 
+## 2026-11-15：一般指令與退卻決著勘誤
+
+DOS/V KI.EXE SHA-256 `fffeba985231cda4d636e93d10f598470b1f691d00275e4aa38e285893d43868`；IDA Pro 9.4及dosgolem `f79eab6db8c64a524a06535e53e5d32b0bbcf7c8`，位址採DOS/V IDA linear。
+已證實定位：`1C1C9／1C1E5／1C1EC／1C1EE／1A4F5`。一般選隊指令跨100h寫隊長+1Bh，不逐個寫活兵。攻方398拍與退卻分支823拍的隊員Next／命令差異由此消除，選取清除與既有圖示生命週期保留。
+驗收與限制見[spec159](../spec/159-tactical-command-movement-order.md)及[收據](../../workplace/scratch/ui-windows-20261104/cao-duel-matrix-integration.json)。
+
 ## 2026-11-15：應戰單挑與補兵白旗勘誤
 
 輸入DOS/V KI.EXE SHA-256 `fffeba985231cda4d636e93d10f598470b1f691d00275e4aa38e285893d43868`，dosgolem `f79eab6db8c64a524a06535e53e5d32b0bbcf7c8`。位址為oracle.IDA DOS/V linear，以下為已證實的本案動態與IDA Pro 9.4原始指令證據。

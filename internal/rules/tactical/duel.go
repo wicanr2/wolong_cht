@@ -51,7 +51,7 @@ const (
 	duelMelee                // 對打段（`sub_1A298`，計時 0x50）
 	duelRegroup              // 歸位等 20（loc_1A202，每 tick 檢查體力）
 	duelVerdictA             // 敗方 0x1CC、等 20
-	duelVerdictB             // 等敗方20拍後，勝方喊0x1CD
+	duelVerdictB             // 等敗方等待結束後，勝方喊0x1CD
 	duelVerdictFinish        // 再等20拍後清下一命令
 )
 
@@ -71,7 +71,9 @@ type duelState struct {
 	pair int
 	// loser 在決著段有意義。
 	loser int
-	talks []DuelTalk
+	// retreatWait保留決著入口CX：對打段為第二句組號，歸位段為剩餘拍數。
+	retreatWait int
+	talks       []DuelTalk
 }
 
 // SetDuelInput 武裝單挑狀態機。編號不在 0xC0–0xD0 就不動作
@@ -193,6 +195,13 @@ func (b *Battle) duelKO() bool {
 	d.loser = 0
 	if b.duelHP(1) < b.duelHP(0) {
 		d.loser = 1
+	}
+	d.retreatWait = d.timer
+	if d.phase == duelMelee {
+		d.retreatWait = d.pair + 1
+	}
+	if d.retreatWait == 0 {
+		d.retreatWait = 1 << 16 // x86 LOOP起始CX=0時完整倒數一圈。
 	}
 	d.phase = duelVerdictA
 	d.timer = 0
@@ -319,12 +328,16 @@ func (b *Battle) stepDuel() {
 	case duelVerdictA:
 		// 敗方已在退卻就不喊、也不清命令（loc_1A251 的 `cmp [di+1Ah], 5`——
 		// 清命令那一行在 ≠5 的分支裡，退卻的維持退卻）。
+		wait := 20
 		if b.Sides[d.loser].Soldiers[0].Cmd != Retreat {
 			b.say(d.loser, 0x1CC)
 			b.orderDuelLeader(d.loser, false)
+		} else {
+			// 1A251的跳躍也略過MOV CX,20，沿用決著入口CX。
+			wait = d.retreatWait
 		}
 		d.phase = duelVerdictB
-		d.timer = 20
+		d.timer = wait
 	case duelVerdictB:
 		b.say(1-d.loser, 0x1CD)
 		d.phase, d.timer = duelVerdictFinish, 20

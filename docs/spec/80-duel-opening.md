@@ -1,5 +1,11 @@
 # 80 — 開戰單挑：挑戰、拒戰、應戰、回合互嗆、決著
 
+## 2026-11-15：一般指令與退卻決著勘誤
+
+DOS/V KI.EXE SHA-256 `fffeba985231cda4d636e93d10f598470b1f691d00275e4aa38e285893d43868`；IDA Pro 9.4及dosgolem `f79eab6db8c64a524a06535e53e5d32b0bbcf7c8`，位址採DOS/V IDA linear。
+已證實定位：`1A251／1A264／1A267／1A216／1A228／1A3C3／1A297`。敗方已退卻時保留入口CX，不套固定20拍。對打445與歸位16兩案的勝方喊話／收尾分別735／755、241／261拍。兩角色首次輸入在清按鍵計數後RET生效，開場期間按住跨界仍忽略。
+驗收與限制見[spec159](159-tactical-command-movement-order.md)及[收據](../../workplace/scratch/ui-windows-20261104/cao-duel-matrix-integration.json)。
+
 ## 2026-11-15：應戰單挑與補兵白旗勘誤
 
 輸入DOS/V KI.EXE SHA-256 `fffeba985231cda4d636e93d10f598470b1f691d00275e4aa38e285893d43868`，dosgolem `f79eab6db8c64a524a06535e53e5d32b0bbcf7c8`。位址為oracle.IDA DOS/V linear，以下為已證實的本案動態與IDA Pro 9.4原始指令證據。

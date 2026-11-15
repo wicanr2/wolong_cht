@@ -6902,19 +6902,6 @@
       "reason": "目前列只保留原版證據邊界，未命中現行玩家路徑、規則或交付 Issue；若影響範圍改變，先建立新 Issue 再調整分類。"
     },
     {
-      "file": "docs/re/74-battle-opening-duel.md",
-      "item": "開場凍結與大將騎出的機器碼形式",
-      "status": "正常玩家守方應戰已驗完整1545拍，90拍應戰、140拍對打、290／310拍決著、330拍收尾；32圖僅游標。玩家攻方完整矩陣、精確輸入邊界與已退卻敗方等待仍沿Issue #17",
-      "section": "5. 未解",
-      "domain": "程式碼理解",
-      "verdict": "靜態",
-      "occurrence": 0,
-      "id": "oq-010b9ecb40027a86302c",
-      "classification": "actionable",
-      "github_issue": 17,
-      "reason": "目前守方應戰已有完整收據，完整角色與輸入矩陣仍沿Issue #17。"
-    },
-    {
       "file": "docs/re/75-duel-talk-audit.md",
       "item": "變體 0／2／3／5／6 的臨場抽驗",
       "status": "專屬句只在 1／4／7；預設句與它們共用選句機制，公式已 confirmed，抽驗優先度低",
@@ -14769,15 +14756,15 @@
     {
       "file": "docs/spec/159-tactical-command-movement-order.md",
       "item": "完整戰術移動排程與後段動畫",
-      "status": "正常玩家守方應戰與拒戰各1545拍及受控拒戰400拍全軍27欄／RNG全等；應戰32圖僅游標，既有2942拍／69圖／2942縮圖不變。玩家攻方完整矩陣、精確輸入邊界與已退卻敗方等待仍沿Issue #17",
+      "status": "本輪抽驗已閉合：正常守方應戰／拒戰、受控攻方1177拍、兩退卻分支900／500拍及雙角色輸入邊界；舊4487拍規則與101圖不變。其他地形與整體排程仍限既有Issue #16範圍，不以抽樣外推全遊戲",
       "section": "未解",
       "domain": "其他",
       "verdict": "靜態",
       "occurrence": 0,
-      "id": "oq-607767d7a8cb554bc2e3",
+      "id": "oq-6e0bcd90824017ee83be",
       "classification": "actionable",
       "github_issue": 16,
-      "reason": "目前守方應戰已有完整收據，完整角色與輸入矩陣仍沿Issue #17。"
+      "reason": "本輪戰鬥動畫抽樣目標已閉合；此列保留更廣地形及完整排程的既有Issue #16範圍，未寫遠端Issue。"
     }
   ]
 }

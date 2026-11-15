@@ -664,10 +664,10 @@ func (b *Battle) Order(side, squad int, c Command) {
 		}
 		return
 	}
-	for i := lo; i < hi; i++ {
-		if i%PerSquad == 0 || b.Sides[side].Soldiers[i].Alive {
-			b.Sides[side].Soldiers[i].Next = c
-		}
+	// 1A4F5／1C1EC只排隊長Next；隊員由隊長接受命令後傳令。
+	// 直接寫隊員會繞過「退卻不可打斷」的隊長分支。
+	for i := lo; i < hi; i += PerSquad {
+		b.Sides[side].Soldiers[i].Next = c
 	}
 }
 

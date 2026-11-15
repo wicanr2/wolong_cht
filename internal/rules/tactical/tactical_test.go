@@ -169,13 +169,13 @@ func TestDeploymentSplitsOnFieldAndReserve(t *testing.T) {
 func TestScaleWallFallsBackOnOpenField(t *testing.T) {
 	b := newTestBattle(flatField())
 	b.Order(0, -1, ScaleWal)
-	if got := b.Sides[0].Soldiers[1].Next; got != Attack {
+	if got := b.Sides[0].Soldiers[0].Next; got != Attack {
 		t.Errorf("野戰下城壁移動變成 %v，應為攻擊", got)
 	}
 
 	b2 := newTestBattle(walledField(32))
 	b2.Order(0, -1, ScaleWal)
-	if got := b2.Sides[0].Soldiers[1].Next; got != ScaleWal {
+	if got := b2.Sides[0].Soldiers[0].Next; got != ScaleWal {
 		t.Errorf("攻城戰下城壁移動變成 %v，應保持不變", got)
 	}
 }
@@ -1049,21 +1049,21 @@ func TestScriptBasics(t *testing.T) {
 	s := NewScript(code, 0)
 
 	s.Step(b)
-	if got := b.Sides[0].Soldiers[1].Next; got != Form {
+	if got := b.Sides[0].Soldiers[0].Next; got != Form {
 		t.Errorf("全軍命令是 %v，應為陣形", got)
 	}
 	// 第二個 Step 讀到「等待 5」，接下來五幀都在扣計時器。
 	for i := 0; i < 6; i++ {
 		s.Step(b)
-		if b.Sides[0].Soldiers[3*PerSquad+1].Next == Attack {
+		if b.Sides[0].Soldiers[3*PerSquad].Next == Attack {
 			t.Fatalf("第 %d 幀就執行了等待後面的指令", i)
 		}
 	}
 	s.Step(b)
-	if got := b.Sides[0].Soldiers[3*PerSquad+1].Next; got != Attack {
+	if got := b.Sides[0].Soldiers[3*PerSquad].Next; got != Attack {
 		t.Errorf("第 3 隊的命令是 %v，應為攻擊", got)
 	}
-	if got := b.Sides[0].Soldiers[1].Next; got == Attack {
+	if got := b.Sides[0].Soldiers[0].Next; got == Attack {
 		t.Error("指定第 3 隊的命令卻影響到第 0 隊")
 	}
 }
@@ -1082,7 +1082,7 @@ func TestScriptBranch(t *testing.T) {
 	s.Step(b) // q.rand → cond
 	s.Step(b) // branch
 	s.Step(b) // 目標處的指令
-	if got := b.Sides[0].Soldiers[1].Next; got != Attack {
+	if got := b.Sides[0].Soldiers[0].Next; got != Attack {
 		t.Errorf("跳過去之後的命令是 %v，應為攻擊（分支沒跳對）", got)
 	}
 }

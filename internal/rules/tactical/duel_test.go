@@ -151,6 +151,54 @@ func TestDuelVerdictWaitsAfterBothSpeakers(t *testing.T) {
 	}
 }
 
+// 兩條受控原版分支的CX不同，不能固定為20，也不能全用互嗆組號。
+func TestDuelRetreatingLoserPreservesWaitAtKO(t *testing.T) {
+	for _, tc := range []struct {
+		name                                   string
+		phase, timer, pair, ko, winner, finish int
+	}{
+		{"melee", duelMelee, 40, 444, 290, 735, 755},
+		{"regroup", duelRegroup, 16, 442, 225, 241, 261},
+	} {
+		t.Run(tc.name, func(t *testing.T) {
+			b := duelBattle(t, 198, [2]int{12, 12}, [2]int{6, 6}, []int{0})
+			b.Frame = tc.ko
+			b.duel.phase, b.duel.timer, b.duel.pair = tc.phase, tc.timer, tc.pair
+			b.Sides[1].Soldiers[0].HP = 65
+			b.Sides[1].Soldiers[0].Cmd, b.Sides[1].Soldiers[0].Next = Retreat, Retreat
+			b.stepDuel()
+			if len(b.TakeDuelTalks()) != 0 || b.Sides[1].Soldiers[0].Next != Retreat {
+				t.Fatal("退卻敗方不喊話、不清下一命令")
+			}
+			for b.Frame < tc.winner-1 {
+				b.Frame++
+				b.stepDuel()
+			}
+			if len(b.TakeDuelTalks()) != 0 || !b.OpeningActive() {
+				t.Fatal("入口CX的等待尚未走完")
+			}
+			b.Frame++
+			b.stepDuel()
+			talks := b.TakeDuelTalks()
+			if len(talks) != 1 || talks[0] != (DuelTalk{Side: 0, Group: 0x1CD, Frame: tc.winner}) {
+				t.Fatalf("原版勝方喊話拍%d：%v", tc.winner, talks)
+			}
+			for b.Frame < tc.finish-1 {
+				b.Frame++
+				b.stepDuel()
+			}
+			if !b.OpeningActive() {
+				t.Fatal("勝方喊話後仍需等20拍")
+			}
+			b.Frame++
+			b.stepDuel()
+			if b.OpeningActive() || b.Sides[1].Soldiers[0].Next != Form {
+				t.Fatalf("原版%d拍清Next並返回", tc.finish)
+			}
+		})
+	}
+}
+
 // 兩側都不到 0x12C0：無事發生，正常開打。
 func TestDuelNoChallengeWhenBothWeak(t *testing.T) {
 	b := duelBattle(t, 0xC0, [2]int{0, 0}, [2]int{0, 0}, []int{0})

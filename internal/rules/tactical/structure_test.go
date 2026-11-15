@@ -792,12 +792,53 @@ func TestOrdersStillReachInactiveSquadLeaders(t *testing.T) {
 	b.Sides[0].Soldiers[8].Next = Retreat
 	b.Sides[0].Soldiers[9].Alive = false
 	b.Sides[0].Soldiers[9].Next = Retreat
+	followerNext := b.Sides[0].Soldiers[10].Next
 	b.Order(0, -1, Attack)
 	if b.Sides[0].Soldiers[8].Next != Attack || b.Sides[0].Soldiers[8].Alive {
 		t.Fatal("離場隊長仍收到傳令，不可因Alive篩掉或被復活")
 	}
-	if b.Sides[0].Soldiers[9].Next != Retreat || b.Sides[0].Soldiers[10].Next != Attack {
-		t.Fatal("非隊長保留既有在場篩選")
+	if b.Sides[0].Soldiers[9].Next != Retreat || b.Sides[0].Soldiers[10].Next != followerNext {
+		t.Fatal("一般傳令只排隊長，隊員保留原令直到隊長處理")
+	}
+}
+
+func TestOrdinaryOrderCannotBypassRetreatingLeader(t *testing.T) {
+	for _, player := range []int{AttackerSide, DefenderSide} {
+		for _, selected := range []bool{false, true} {
+			b := newTestBattle(flatField())
+			b.SetPlayerSide(player)
+			first := 3 * PerSquad
+			leader := &b.Sides[player].Soldiers[first]
+			leader.Cmd, leader.Next = Retreat, Form
+			for i := first + 1; i < first+PerSquad; i++ {
+				b.Sides[player].Soldiers[i].Next = Form
+			}
+			if selected {
+				b.ToggleSquadSelection(player, 3)
+				if !b.OrderSelected(player, Attack) || b.Sides[player].Selected != 0 {
+					t.Fatal("一般玩家指令仍應受理並清選取")
+				}
+			} else {
+				b.Order(player, 3, Attack)
+			}
+			b.updateSoldierCommand(player, first)
+			if leader.Cmd != Retreat || leader.Next != Attack {
+				t.Fatal("退卻隊長保留目前命令，仍記錄收到的新命令")
+			}
+			for i := first + 1; i < first+PerSquad; i++ {
+				if b.Sides[player].Soldiers[i].Next != Form {
+					t.Fatalf("隊員%d收到繞過隊長的指令", i)
+				}
+			}
+			// 可接受新令的隊長才在命令批次把指令傳給七個位置。
+			leader.Cmd = Holding
+			b.updateSoldierCommand(player, first)
+			for i := first + 1; i < first+PerSquad; i++ {
+				if b.Sides[player].Soldiers[i].Next != Attack {
+					t.Fatalf("隊長接受指令後未傳給隊員%d", i)
+				}
+			}
+		}
 	}
 }
 

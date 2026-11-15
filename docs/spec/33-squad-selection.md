@@ -1,5 +1,11 @@
 # 33 — 底列六格是選部隊，不是第二套命令列
 
+## 2026-11-15：一般指令與退卻決著勘誤
+
+DOS/V KI.EXE SHA-256 `fffeba985231cda4d636e93d10f598470b1f691d00275e4aa38e285893d43868`；IDA Pro 9.4及dosgolem `f79eab6db8c64a524a06535e53e5d32b0bbcf7c8`，位址採DOS/V IDA linear。
+已證實定位：`1C1C9／1C1E5／1C1EC／1C1EE／1A4F5`。玩家一般下令只寫被選隊長Next，未選則六隊長；包含離場隊長。七隊員由隊長接受新令後傳令，已退卻隊長不接受新令，不能由Order直接改隊員。全軍退卻caller及order.by沿各自原路徑。
+驗收與限制見[spec159](159-tactical-command-movement-order.md)及[收據](../../workplace/scratch/ui-windows-20261104/cao-duel-matrix-integration.json)。
+
 ## 2026-11-15：應戰單挑與補兵白旗勘誤
 
 輸入DOS/V KI.EXE SHA-256 `fffeba985231cda4d636e93d10f598470b1f691d00275e4aa38e285893d43868`，dosgolem `f79eab6db8c64a524a06535e53e5d32b0bbcf7c8`。位址為oracle.IDA DOS/V linear，以下為已證實的本案動態與IDA Pro 9.4原始指令證據。
