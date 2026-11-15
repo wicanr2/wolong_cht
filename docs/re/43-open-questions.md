@@ -7,7 +7,7 @@
 
 現行工作與狀態由 GitHub [Issues](https://github.com/wicanr2/wolong_cht/issues) 管理；
 本地 [`docs/worklist.json`](../worklist.json) 與 `tools/worklist.py verify` 只作輔助。
-1144 列不是同數量的獨立 backlog；可執行項目已由完成的 Issue #28 分流，證據／歷史項目留在本索引。
+1143 列不是同數量的獨立 backlog；可執行項目已由完成的 Issue #28 分流，證據／歷史項目留在本索引。
 
 - 日期：2026-11-15
 - 產生工具：`tools/re_open_questions.py`
@@ -22,7 +22,7 @@
 
 ## 0. ⚠ 這個數字在量什麼
 
-**1138 列分布在 464 份文件，平均每份 2.5 列。**
+**1137 列分布在 464 份文件，平均每份 2.5 列。**
 
 ⭐ **所以它比較接近「文件有多少份」，不是「原版還有多少沒解」。**
 每寫一份新文件就帶進約三列自己的未解——而 `check.sh --strict` 還會
@@ -50,8 +50,8 @@
 | 程式碼理解 | 319 | 312 | 6 | 1 |
 | 驗收 | 245 | 220 | 25 | 0 |
 | 外部資料 | 6 | 5 | 1 | 0 |
-| 其他 | 537 | 513 | 23 | 1 |
-| **合計** | **1138** | 1076 | 59 | 3 |
+| 其他 | 536 | 512 | 23 | 1 |
+| **合計** | **1137** | 1075 | 59 | 3 |
 
 ⚠ **這是列數，不是獨立問題數。** 索引檔的「現況」欄是別的文件的摘要，同一個缺口在那份文件自己的未解表裡還有一列——這類共 **0** 列（另有少數只是提到「未解」兩個字的圖例列）。
 
@@ -59,7 +59,7 @@
 
 | 來源目錄 | 列數 |
 |---|---:|
-| `docs/spec/` | 494 |
+| `docs/spec/` | 493 |
 | `docs/re/` | 319 |
 | `docs/playtest/` | 245 |
 | `docs/release/` | 26 |
@@ -695,7 +695,7 @@
 | [`reference/04-first-survey.md`](../reference/04-first-survey.md) | 不要憑「同一份專案應該用同一個編譯器」外推——**`KI.EXE` 的編譯器未解。 | （散句） | 靜態 | evidence-only | — |
 | [`reference/05-eten-font-provenance.md`](../reference/05-eten-font-provenance.md) | `END_S13/S14/S15` 是中文版加的結局段 | S13／S14 是字型。**`END_S15` 仍未解** | 靜態 | evidence-only | — |
 
-## 2.6 其他（537 條）
+## 2.6 其他（536 條）
 
 | 出處 | 缺口 | 現況 | 裁決 | 分流 | Issue |
 |---|---|---|---|---|---|
@@ -850,7 +850,7 @@
 | [`spec/154-mouse-cursor.md`](../spec/154-mouse-cursor.md) | 遊玩端的自繪 | 等 §4 定案 | 靜態 | evidence-only | — |
 | [`spec/155-desktop-launcher-input.md`](../spec/155-desktop-launcher-input.md) | 戰後結算與地圖捲動仍待補強；Windows／macOS 原生操作未驗收。 | （未解小節內文） | 靜態 | actionable | [#2](https://github.com/wicanr2/wolong_cht/issues/2) |
 | [`spec/156-desktop-preferences.md`](../spec/156-desktop-preferences.md) | 無阻擋實作的偏好語意缺口；Windows／macOS 原生設定路徑與操作由人工驗收。 | （未解小節內文） | 靜態 | merge-target | [#2](https://github.com/wicanr2/wolong_cht/issues/2) |
-| [`spec/159-tactical-command-movement-order.md`](../spec/159-tactical-command-movement-order.md) | 完整戰術移動排程與後段動畫 | 677拍攻方規則／戰果與716次聲音請求、單聲部／原碼優先度已驗；本輪補原版正常守方前320拍96槽27欄／RNG、661活動投射物、3520城牆全等，六圖診斷UI區外0差異。前輪攻方97點／守方83點保留。完整UI與其他場面沿Issues #16／#24；音效秒數維持硬體規格近似 | 靜態 | actionable | [#16](https://github.com/wicanr2/wolong_cht/issues/16) |
+| [`spec/159-tactical-command-movement-order.md`](../spec/159-tactical-command-movement-order.md) | 完整戰術移動排程與後段動畫 | 攻方677拍、守方320拍核心與前輪相同；已修破牆／破門縮圖同拍更新，319張縮圖的1260個修正像素全等、六張完整圖僅95游標像素差異；正常滑鼠通過。17拍縮圖兵點擦除／順序差異仍沿Issue #16，其他場面／完整守方戰果有界 | 靜態 | actionable | [#16](https://github.com/wicanr2/wolong_cht/issues/16) |
 | [`spec/160-rng-consumption-alignment.md`](../spec/160-rng-consumption-alignment.md) | `14060` 屬於哪一支、取數做什麼用 | 只知道在 `sub_13EFD` 底下，12 次／36 小時的節奏還沒對到機制 | 靜態 | merge-target | [#10](https://github.com/wicanr2/wolong_cht/issues/10) |
 | [`spec/160-rng-consumption-alignment.md`](../spec/160-rng-consumption-alignment.md) | 開戰期的消費端清單 | 還沒統計；閒置期的四個位址不足以涵蓋 | 靜態 | merge-target | [#10](https://github.com/wicanr2/wolong_cht/issues/10) |
 | [`spec/160-rng-consumption-alignment.md`](../spec/160-rng-consumption-alignment.md) | remake 的呼叫點與原版位址的對照表 | 要邊比邊建，沒有現成的 | 靜態 | merge-target | [#10](https://github.com/wicanr2/wolong_cht/issues/10) |
@@ -1174,7 +1174,6 @@
 | [`spec/61-soldier-initial-hp-from-morale.md`](../spec/61-soldier-initial-hp-from-morale.md) | 挨打那一半的逐次對拍 | 只對過量級（§6.1），沒有逐次比。要對得先讓兩邊的時刻對齊——同 `../playtest/40` §13 那一類 | 靜態 | merge-target | [#12](https://github.com/wicanr2/wolong_cht/issues/12) |
 | [`spec/63-hit-stun.md`](../spec/63-hit-stun.md) | `+0x13` ← 8 | `sub_1B618` 寫、`sub_1B6BC` 不寫。那個欄位誰讀還沒查 | 靜態 | merge-target | [#16](https://github.com/wicanr2/wolong_cht/issues/16) |
 | [`spec/63-hit-stun.md`](../spec/63-hit-stun.md) | 倒地動畫（§1.2） | 4 幀之後 `sub_1B4B8` 收掉，remake 直接把 `Alive` 設成 false | 靜態 | merge-target | [#16](https://github.com/wicanr2/wolong_cht/issues/16) |
-| [`spec/66-broken-walls-repaint.md`](../spec/66-broken-walls-repaint.md) | 縮小地圖要不要跟著換 | 側欄的縮圖也是從同一個緩衝區來的，但重畫時機還沒讀。這一版只換戰場本身 | 靜態 | evidence-only | — |
 | [`spec/66-broken-walls-repaint.md`](../spec/66-broken-walls-repaint.md) | 對拍那 88 px | 兩邊的時刻不同（§1.2），要對就得讓門在同一個 tick 破 | 靜態 | merge-target | [#12](https://github.com/wicanr2/wolong_cht/issues/12) |
 | [`spec/67-ending-playback.md`](../spec/67-ending-playback.md) | 淡入淡出的色階算式 | 17 階已確定，每階怎麼算色值沒讀（`sub_1035F`／`sub_103DC`）；remake 先用疊黑 | 靜態 | evidence-only | — |
 | [`spec/67-ending-playback.md`](../spec/67-ending-playback.md) | `END_S12` 右半 | 用 640 版面畫出來右邊是雜訊，可能還有第二塊（`formats/09` §6） | 實測 | evidence-only | — |

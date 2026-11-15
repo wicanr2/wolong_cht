@@ -1,5 +1,14 @@
 # 19 — DOS/V 戰術縮圖 raw producer 驗收
 
+## 2026-11-15縮圖受損更新勘誤
+
+已由原版正常守汝南319個`1A065`邊界及目前同狀態重播證實：破牆／破門的當拍就更新縮圖地形。
+既有DOS/V KI.EXE、IDA linear `1B824→1BB6D`的圖塊路徑沿用，輸入雜湊與執行器身分見[spec159](../spec/159-tactical-command-movement-order.md)。
+`isoview.Minimap`已依目前Field與Revision更新同一張底圖，表頭／尾列保留，兵點／陣形線／十字仍由介面疊上，不重擲旗。
+第266拍起1260個跨拍地形改動像素全等；六張完整畫面除95游標像素外全等，另17拍兵點擦除／順序差異維持有界。
+[正式證據](../../workplace/scratch/ui-windows-20261104/cao-chrome320-evidence.json)與[整合收據](../../workplace/scratch/ui-windows-20261104/cao-chrome320-integration.json)保存新證據。
+本段取代下方「縮圖建一次不更新」的當時實作限制；舊畫面與歷史數字不改。
+
 **狀態：PASS（已證實 producer 的 remake 實作）。底圖、部隊點與陣形線都已接上
 （陣形線見 `docs/spec/37`）；游標十字與小地圖上的城壁受損仍未接（位址已定位）。**
 

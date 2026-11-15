@@ -139,14 +139,11 @@ type View struct {
 	// banners 是場上插的旗（`sub_19E10`，docs/re/11 §5.14）。
 	banners []battle.Banner
 
-	// minimap 是戰術初始化時由 BATTLE.MAP raw tile 與 BATTLE.MDL
-	// attribute table 產生的一次性 128×128 base image。
-	//
-	// ⚠ **原版會在城壁破壞後局部更新**（`sub_1B824` → `sub_1BB6D`，
-	// docs/spec/66；戰場本體 remake 已經跟著換了）。**這張縮圖沒有**——
-	// 它建一次就不再更新，是明知的 remake 差異，缺口記在
-	// docs/playtest/19。不把兵混進這個快取則是刻意的：兵每幀都在動。
-	minimap *ebiten.Image
+	// 小地圖只快取地形；兵點、陣形線與十字仍由介面每幀疊上。
+	// 原版1B824→1BB6D會更新破牆格，見spec66及spec159的320拍觀測。
+	minimap      *ebiten.Image
+	minimapField *tactical.Field
+	minimapRev   int
 
 	// camWorldX／camWorldY 保存原版 word_1D328／word_1D32A 的世界格原點。
 	// sub_1DC9D 會在建立畫面串列後，才把它們換算成投影的 col／row
@@ -935,7 +932,34 @@ func (v *View) drawFallbackDots(b *tactical.Battle) {
 }
 
 // Minimap 是戰術初始化時產生的 128×128 底圖，沒有素材時是 nil。
-func (v *View) Minimap() *ebiten.Image { return v.minimap }
+func (v *View) Minimap() *ebiten.Image {
+	if v == nil {
+		return nil
+	}
+	v.syncMinimap(v.observed)
+	return v.minimap
+}
+
+// 在讀取縮圖時同步，保留城牆於本拍打壞後立即更新的時機。
+// 此快取獨立於大戰場下一拍才重建的持續顯示格。
+func (v *View) syncMinimap(b *tactical.Battle) {
+	if v == nil || v.lib == nil || v.minimap == nil || b == nil || b.Field == nil || !b.Field.HasTiles() {
+		return
+	}
+	if v.minimapField == b.Field && v.minimapRev == b.Field.Revision() {
+		return
+	}
+	rows := v.lib.MinimapRows(v.field)
+	for y := originalRowBias; y < originalRowBias+battle.Height; y++ {
+		for x := 0; x < battle.Width; x++ {
+			rows[y][x] = b.Field.Tile(x, y)
+		}
+	}
+	raw := battle.RenderTacticalMinimap(rows, v.lib.TileAttributes(v.field))
+	v.minimap.WritePixels(raw.RGBA(v.pal).Pix)
+	v.minimapField = b.Field
+	v.minimapRev = b.Field.Revision()
+}
 
 // Cursor 是小地圖上那個十字的位置。**與鏡頭是兩組變數**，
 // 只是被同一個點選一起改。

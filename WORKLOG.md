@@ -1829,3 +1829,15 @@
 - 驗證腳本問題：舊probe的case縮排是空白，修正生成器的tab錨點後才產生來源；第一次由/output執行Go被internal套件規則拒絕，改由同工作樹的/repo/workplace路徑執行，再移除縮小probe後未使用的import。均為工具／環境錯誤，未列產品缺陷。
 - [spec159](docs/spec/159-tactical-command-movement-order.md)、[目前來源／輸入](workplace/scratch/ui-windows-20261104/cao-defender-dyn-evidence.json)、[本機同拍對照](workplace/scratch/ui-windows-20261104/cao-defender-dyn-review.html)與[整合收據](workplace/scratch/ui-windows-20261104/cao-defender-dyn-integration.json)保存38份來源、69輸入及產物雜湊；前輪171份凍結產物未改。完整UI、整場守方戰果及其他場面未由本樣本代證，目標active。原素材、截圖及私有probe不入Git，沿既有授權commit／push，不建立Release。
 - 收尾：1138列分流、596份文件過期斷言與1911個追蹤檔素材檢查通過。官方文件入口仍有65個歷史失效連結，新增0；幽靈引用352筆／323種未增加，歷史census.tsv符號層未執行。38份來源封存、69輸入與前輪171份產物雜湊、擁有權及Docker清理、提交與遠端核對保存於本輪整合收據；沒有留下本輪容器。
+
+## 2026-11-15：守方完整視窗與破牆縮圖更新
+
+- 接續9d2bc25，沿remake驗收及跨規格回填路由；主機gh認證後唯讀核對Issues #16／#24仍OPEN，未寫入遠端Issue。原版正常守汝南路徑補319張縮圖條帶，320拍核心與前輪逐byte相同。640×400完整桌面視窗加入受控重播後，前五樣本只差95游標像素；300拍另36像素來自破牆後仍靜態的縮圖底圖。
+- 依既有spec66的1B824→1BB6D證據及新動態原圖，DRAFT觀測、候選審查後READY。isoview.Minimap獨立依Field與Revision更新同一張地形底圖，在讀取時處理同拍破牆，不提前重建大戰場持續格，不改旗、兵點、十字或陣形線。桌面／手機共用，規則、亂數、存檔與操作不改。
+- 319拍中第266拍起1260個跨拍地形改動像素全等；正式320拍核心及六張完整圖／320張typed縮圖等於候選。六圖只差固定95游標像素，沒有排除UI矩形。17拍既有兵點擦除／順序差異明示保留，候選沒有改那些像素。
+- 四套件冷測、vet與正式建置通過。GPU回歸於遊戲繪製回呼內測未旋轉／旋轉汝南，同拍只改2×2破損格、不跑Render或下一Step，維持image身分；凍結舊來源以缺更新行為失敗，不把編譯失敗當負對照。
+- 工具修正：首次一般go test直接ReadPixels在Ebiten遊戲啟動前被拒絕，改用隔離GPU回呼，不把測試用渲染器加進正式路徑。首次GPU固定格其實是F4門，依原始tile與既有規則把delta從壁16改為門8，兩側及舊版重跑通過。第一次正常GUI的舊腳本檢查Next==退卻，但目前原版已對齊規則保留Next、現令已退卻；保存首次來源／軌跡／圖與映射，改走下令後停手自然結束再重跑，遊戲程式未為此變動。
+- 正常滑鼠68點／19圖通過，包含曹操第一劇本宣戰呂布、夏侯淵編成、停手行軍、途中存讀、自然攻城、改線／登城／突擊、320拍後繼續停手到自然退卻返回；戰報關閉。未選音訊素材，不重驗前輪聲音；GUI輸入不同，不稱與原版同戰果。
+- [spec159](docs/spec/159-tactical-command-movement-order.md)、[正式證據](workplace/scratch/ui-windows-20261104/cao-chrome320-evidence.json)、[本機完整圖](workplace/scratch/ui-windows-20261104/cao-chrome320-review.html)及[整合收據](workplace/scratch/ui-windows-20261104/cao-chrome320-integration.json)保存目前來源、輸入、binary及產物雜湊；前輪589份產物未改。spec66／playtest19的舊縮圖限制已回填，舊影格不改。目標active，不以六圖代證所有場面或完整守方戰果。沿授權commit／push，不建立Release；原圖、probe、素材只留本機。
+- 文件回填工具首次仍假定所有舊未解列保留，spec66狀態含「已解」後被正式掃描器排除；依實際來源移除已結案的evidence-only列並保存原列，1138減為1137，既有其他1136列不變。沒有為湊列數把已解問題重新列成待辦。
+- 收尾：已解列同時從spec66未解表移除，1137列分流、596份文件過期斷言、1911個追蹤檔素材檢查通過。官方文件入口仍有65個歷史失效連結，新增0；幽靈引用352筆／323種未增加，歷史census.tsv符號層未執行。47份來源、69輸入、前輪589份產物、內嵌PNG、擁有權、Docker清理及commit／遠端main核對保存於整合收據。

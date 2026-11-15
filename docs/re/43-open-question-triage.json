@@ -13975,19 +13975,6 @@
     },
     {
       "file": "docs/spec/66-broken-walls-repaint.md",
-      "item": "縮小地圖要不要跟著換",
-      "status": "側欄的縮圖也是從同一個緩衝區來的，但重畫時機還沒讀。這一版只換戰場本身",
-      "section": "5. 未解",
-      "domain": "其他",
-      "verdict": "靜態",
-      "occurrence": 0,
-      "id": "oq-26fce7557d8ce3539f25",
-      "classification": "evidence-only",
-      "github_issue": null,
-      "reason": "目前列只保留原版證據邊界，未命中現行玩家路徑、規則或交付 Issue；若影響範圍改變，先建立新 Issue 再調整分類。"
-    },
-    {
-      "file": "docs/spec/66-broken-walls-repaint.md",
       "item": "對拍那 88 px",
       "status": "兩邊的時刻不同（§1.2），要對就得讓門在同一個 tick 破",
       "section": "5. 未解",
@@ -14795,15 +14782,15 @@
     {
       "file": "docs/spec/159-tactical-command-movement-order.md",
       "item": "完整戰術移動排程與後段動畫",
-      "status": "677拍攻方規則／戰果與716次聲音請求、單聲部／原碼優先度已驗；本輪補原版正常守方前320拍96槽27欄／RNG、661活動投射物、3520城牆全等，六圖診斷UI區外0差異。前輪攻方97點／守方83點保留。完整UI與其他場面沿Issues #16／#24；音效秒數維持硬體規格近似",
+      "status": "攻方677拍、守方320拍核心與前輪相同；已修破牆／破門縮圖同拍更新，319張縮圖的1260個修正像素全等、六張完整圖僅95游標像素差異；正常滑鼠通過。17拍縮圖兵點擦除／順序差異仍沿Issue #16，其他場面／完整守方戰果有界",
       "section": "未解",
       "domain": "其他",
       "verdict": "靜態",
       "occurrence": 0,
-      "id": "oq-cfab36ef7c670dc29293",
+      "id": "oq-bfee9f3d0331a116b4ed",
       "classification": "actionable",
       "github_issue": 16,
-      "reason": "攻方既有整場及音效證據保留，新增守方自然入戰前320拍同狀態動態抽驗；完整UI與其他場面仍沿既有Issues #16／#24，不因受控戰場吻合而宣稱整款完成。"
+      "reason": "縮圖底圖更新已接線並驗證；既有17拍兵點擦除／順序差異沿Issue #16。"
     }
   ]
 }
