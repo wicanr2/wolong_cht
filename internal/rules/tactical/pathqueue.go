@@ -77,9 +77,7 @@ func (b *Battle) drainPathQueue() {
 		}
 		s := &b.Sides[r.side].Soldiers[r.k]
 		s.PathQueued = false
-		if !s.Alive {
-			continue // 排隊期間陣亡：位子讓出來，這一筆作廢
-		}
+		// 1AED2仍處理排隊期間離場的記錄，這筆也占兩筆預算之一。
 		b.computePath(r.side, r.k)
 	}
 }

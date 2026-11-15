@@ -6917,15 +6917,15 @@
     {
       "file": "docs/re/74-battle-opening-duel.md",
       "item": "開場凍結與大將騎出的機器碼形式",
-      "status": "正常道路野戰拒戰已證實50／90／110拍；實體照常更新，主迴圈腳本及輸入等待。應戰互砍／決著、雙玩家角色完整時間與結果仍沿Issue #17",
+      "status": "正常拒戰道路野戰已驗完整1545拍，50／90／110拍相位與38張雙案畫面已對齊；應戰互砍／決著、雙玩家角色完整輸入與結果仍沿Issue #17",
       "section": "5. 未解",
       "domain": "程式碼理解",
       "verdict": "靜態",
       "occurrence": 0,
-      "id": "oq-ac0bd1d0eb54e289fc0e",
+      "id": "oq-6541e181c5d69e2099bd",
       "classification": "actionable",
       "github_issue": 17,
-      "reason": "本輪正常原版拒戰開場已有動態與GUI證據；剩餘分支保留原Issue，不以窄抽樣關閉。"
+      "reason": "目前拒戰野戰完整逐兵及正常GUI證據已閉合後段差異；應戰與完整雙角色輸入仍保留原Issue，不擴張完成聲明。"
     },
     {
       "file": "docs/re/75-duel-talk-audit.md",
@@ -14782,15 +14782,15 @@
     {
       "file": "docs/spec/159-tactical-command-movement-order.md",
       "item": "完整戰術移動排程與後段動畫",
-      "status": "野戰拒戰相位已修：兩案核心前220／217拍全等、各14張完整圖僅游標；攻城677拍及25圖／677縮圖不變。普通路徑首差221／218拍，應戰互砍及雙側完整結果仍沿Issue #16／#17",
+      "status": "正常拒戰野戰完整1545拍及受控400拍96槽27欄／RNG全等，38完整圖僅游標；攻守城997拍／31圖／997縮圖不變。221／218拍後段差異已閉合；應戰互砍／決著及雙角色完整輸入與結果仍沿Issue #17",
       "section": "未解",
       "domain": "其他",
       "verdict": "靜態",
       "occurrence": 0,
-      "id": "oq-47178e5e78e74ca8338d",
+      "id": "oq-5ef3dc24ec1b2e63f1f7",
       "classification": "actionable",
       "github_issue": 16,
-      "reason": "本輪正常原版拒戰開場已有動態與GUI證據；剩餘分支保留原Issue，不以窄抽樣關閉。"
+      "reason": "目前拒戰野戰完整逐兵及正常GUI證據已閉合後段差異；應戰與完整雙角色輸入仍保留原Issue，不擴張完成聲明。"
     }
   ]
 }

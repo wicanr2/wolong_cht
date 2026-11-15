@@ -786,6 +786,58 @@ func TestSelectedRetreatAlsoRejectsOpposingArmyRetreat(t *testing.T) {
 	}
 }
 
+func TestOrdersStillReachInactiveSquadLeaders(t *testing.T) {
+	b := newTestBattle(flatField())
+	b.Sides[0].Soldiers[8].Alive = false
+	b.Sides[0].Soldiers[8].Next = Retreat
+	b.Sides[0].Soldiers[9].Alive = false
+	b.Sides[0].Soldiers[9].Next = Retreat
+	b.Order(0, -1, Attack)
+	if b.Sides[0].Soldiers[8].Next != Attack || b.Sides[0].Soldiers[8].Alive {
+		t.Fatal("離場隊長仍收到傳令，不可因Alive篩掉或被復活")
+	}
+	if b.Sides[0].Soldiers[9].Next != Retreat || b.Sides[0].Soldiers[10].Next != Attack {
+		t.Fatal("非隊長保留既有在場篩選")
+	}
+}
+
+func TestLeaderRetreatWaitsForNextCommandBatch(t *testing.T) {
+	for _, player := range []int{AttackerSide, DefenderSide} {
+		b := NewBattle(flatField(), &Formations{}, &fixedRand{seq: []int{0}}, 0)
+		b.SetPlayerSide(player)
+		b.Frame = 100
+		b.Sides[player].Soldiers[0] = Soldier{Alive: true, Kind: General, HP: 188, X: 1, Y: 30,
+			Cmd: Retreat, Next: Holding, GoalX: 1, GoalY: 30, StepX: 1, StepY: 30, Target: -1}
+		b.Sides[player].Soldiers[1] = Soldier{Alive: true, Kind: Infantry, HP: 100, X: 5, Y: 32,
+			Cmd: Holding, Next: Holding, GoalX: 5, GoalY: 32, StepX: 5, StepY: 32, Target: -1}
+		b.Sides[1-player].Soldiers[0] = Soldier{Alive: true, Kind: General, HP: 156, X: 60, Y: 40,
+			Cmd: Duel, Next: Duel, GoalX: 60, GoalY: 40, StepX: 60, StepY: 40, Target: -1}
+		b.commandIcons[0] = Guard
+		b.Step()
+		if b.Sides[player].Soldiers[0].Alive || !b.Sides[player].Soldiers[1].Alive || b.Sides[player].Soldiers[1].Cmd != Holding {
+			t.Fatal("隊長本批離場，不可回頭讓七名隊員提早執行退卻")
+		}
+		if b.CommandIcons()[0] != Guard {
+			t.Fatal("隊長離場的同批仍保留先前圖示")
+		}
+		b.Step()
+		if b.Sides[player].Soldiers[1].Cmd != Retreat || b.CommandIcons()[0] != Retreat {
+			t.Fatal("下一批確認隊長離場且無待機兵，隊員退卻並改白旗")
+		}
+	}
+}
+
+func TestLeaderLossOrdersAlsoReachInactiveFollowers(t *testing.T) {
+	b := newTestBattle(flatField())
+	s := &b.Sides[0].Soldiers[1]
+	s.Alive, s.HP, s.Cmd, s.Next = false, 0, Form, Form
+	b.Sides[0].Soldiers[2].Cmd, b.Sides[0].Soldiers[2].Next = Retreat, Guard
+	b.squadLeaderGone(0, 0)
+	if s.Next != Retreat || s.Alive || s.HP != 0 || b.Sides[0].Soldiers[2].Next != Guard {
+		t.Fatal("七個位置都要收退卻，已退卻者Next保留舊命令，離場者不復活")
+	}
+}
+
 // ⚠ 城壁令對**玩家**是拒絕，對腳本是降級成攻擊——兩條路不同。
 func TestOrderSelectedRejectsScaleWallOffSiege(t *testing.T) {
 	field := newTestBattle(NewField(make([][]int, Height), 0)) // gateX=0 ＝ 沒有城

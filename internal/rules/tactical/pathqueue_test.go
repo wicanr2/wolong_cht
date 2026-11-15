@@ -119,16 +119,23 @@ func TestPathQueueNeverOverflows(t *testing.T) {
 	}
 }
 
-// 排隊期間陣亡的兵要作廢，不能拿死人去算路。
-func TestPathQueueSkipsDeadSoldiers(t *testing.T) {
+// 原版1AED2照常處理離場記錄，且仍占每拍兩筆預算。
+func TestPathQueueProcessesQueuedDeadSoldiers(t *testing.T) {
 	b := queueFixture(t)
-	b.requestPath(0, 0)
-	b.Sides[0].Soldiers[0].Alive = false
-	b.drainPathQueue()
-	if b.paths.n != 0 {
-		t.Error("死掉的那一筆沒有從佇列裡拿掉")
+	for k := 0; k < 3; k++ {
+		s := &b.Sides[0].Soldiers[k]
+		s.X, s.Y, s.GoalX, s.GoalY = 5, 28+k, 1, 28+k
+		s.StepX, s.StepY, s.Cmd = 5, 28+k, Retreat
+		b.requestPath(0, k)
 	}
-	if b.Sides[0].Soldiers[0].Path != nil {
-		t.Error("幫死人算了一條路")
+	s := &b.Sides[0].Soldiers[0]
+	s.Alive, s.HP = false, 0
+	b.drainPathQueue()
+	if b.paths.n != 1 || !b.Sides[0].Soldiers[2].PathQueued {
+		t.Error("離場記錄也必須占用一筆預算，第三筆留待下一拍")
+	}
+	// 合成平地沒有原版同格的其他兵，直線會壓成終點1,28。
+	if s.Alive || s.HP != 0 || s.PathQueued || s.Path == nil || s.StepX != 1 || s.StepY != 28 {
+		t.Fatalf("出隊應取平地首點1,28並清排隊旗標，不復活：%+v", *s)
 	}
 }

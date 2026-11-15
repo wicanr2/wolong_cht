@@ -1,5 +1,11 @@
 # 33 — 底列六格是選部隊，不是第二套命令列
 
+## 2026-11-15：野戰後段傳令、佇列與側欄勘誤
+
+輸入DOS/V KI.EXE SHA-256 `fffeba985231cda4d636e93d10f598470b1f691d00275e4aa38e285893d43868`，dosgolem `f79eab6db8c64a524a06535e53e5d32b0bbcf7c8`。位址為oracle.IDA DOS/V linear；以下為已證實的正常野戰動態觀測。
+已證實定位：`1A83F／1A8CC／1C673`。底列持續圖示另有隊長不在場的白旗分支：玩家該隊待機數為0才登錄退卻，仍有待機兵的暫時空位不改白旗。207次離場白旗呼叫皆待機0，另107次隊長不在場且待機非零作正對照。
+正式1545／400拍、38張完整圖及正常滑鼠範圍見[spec159](159-tactical-command-movement-order.md)與[收據](../../workplace/scratch/ui-windows-20261104/cao-field-queue-integration.json)。
+
 ## 2026-11-15：玩家退卻輸入與選取清除勘誤
 
 輸入DOS/V KI.EXE SHA-256 `fffeba985231cda4d636e93d10f598470b1f691d00275e4aa38e285893d43868`，dosgolem `f79eab6db8c64a524a06535e53e5d32b0bbcf7c8`。位址為oracle.IDA DOS/V linear，以下為已證實的正常原版滑鼠觀測。

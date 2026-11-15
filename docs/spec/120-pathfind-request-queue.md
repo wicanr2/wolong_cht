@@ -1,5 +1,11 @@
 # 120 — 尋路改成全域佇列：每幀兩個兵，FIFO
 
+## 2026-11-15：野戰後段傳令、佇列與側欄勘誤
+
+輸入DOS/V KI.EXE SHA-256 `fffeba985231cda4d636e93d10f598470b1f691d00275e4aa38e285893d43868`，dosgolem `f79eab6db8c64a524a06535e53e5d32b0bbcf7c8`。位址為oracle.IDA DOS/V linear；以下為已證實的正常野戰動態觀測。
+已證實定位：`1AED2／1B00D`。已排隊後離場的單位仍取出算路，佔本拍兩筆額度之一；不得以Alive跳過。220拍槽11的原版請求證實此事。入隊Alive條件、FIFO與每拍兩筆不變。
+正式1545／400拍、38張完整圖及正常滑鼠範圍見[spec159](159-tactical-command-movement-order.md)與[收據](../../workplace/scratch/ui-windows-20261104/cao-field-queue-integration.json)。
+
 **狀態：CONFORMED。** 原版的重算節流是**一條 128 格的環狀佇列、每幀消化兩筆**，
 不是每個兵各自的計時器。remake 的 `replanInterval = 30`（明示的 remake 差異）
 換成同一個機制，`docs/re/43` 的「重算路徑的時機」跟著關掉。

@@ -1,5 +1,11 @@
 # 60 — 戰術側欄：那一欄畫了什麼，每一格由誰畫
 
+## 2026-11-15：野戰後段傳令、佇列與側欄勘誤
+
+輸入DOS/V KI.EXE SHA-256 `fffeba985231cda4d636e93d10f598470b1f691d00275e4aa38e285893d43868`，dosgolem `f79eab6db8c64a524a06535e53e5d32b0bbcf7c8`。位址為oracle.IDA DOS/V linear；以下為已證實的正常野戰動態觀測。
+已證實定位：`1A83F／1A8CC／1C673／1C775`。summary+04h為六隊待機數之和，側欄兵力條不再加場上存活兵。白旗登錄限玩家隊長不在且該隊待機0，暫時空位保留既有圖示。38張完整野戰畫面僅固定游標，取樣與命令批次見spec159。
+正式1545／400拍、38張完整圖及正常滑鼠範圍見[spec159](../spec/159-tactical-command-movement-order.md)與[收據](../../workplace/scratch/ui-windows-20261104/cao-field-queue-integration.json)。
+
 ## 2026-11-15：玩家退卻輸入與選取清除勘誤
 
 輸入DOS/V KI.EXE SHA-256 `fffeba985231cda4d636e93d10f598470b1f691d00275e4aa38e285893d43868`，dosgolem `f79eab6db8c64a524a06535e53e5d32b0bbcf7c8`。位址為oracle.IDA DOS/V linear，以下為已證實的正常原版滑鼠觀測。

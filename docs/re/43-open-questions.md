@@ -352,7 +352,7 @@
 | [`re/73-new-game-faction-list.md`](../re/73-new-game-faction-list.md) | 欄位表的「型別」與「屬性」兩個 word | `0x76`／`0x73` 與 `0x0206`／`0x0204` 只由「名字欄 vs 數字欄」的對應推出語意，沒有讀 `sub_1820E` 裡消費它們的那一段 | 靜態 | evidence-only | — |
 | [`re/73-new-game-faction-list.md`](../re/73-new-game-faction-list.md) | `sub_18607` | **算式已讀**（2026-09-02）：`ax = (word_181B4 − 30h) × dl ÷ byte_181BE`，**有餘數就進位**，結果存回 `cs:word_181A4` 再 `sub_18662`；前半段在 `word_181B0 + 20h + word_181A4` 不進位時用 `su… | 靜態 | evidence-only | — |
 | [`re/74-battle-opening-duel.md`](../re/74-battle-opening-duel.md) | `word_1D311 += 6` | 疑似喊話框位置位移，未驗 | 靜態 | actionable | [#17](https://github.com/wicanr2/wolong_cht/issues/17) |
-| [`re/74-battle-opening-duel.md`](../re/74-battle-opening-duel.md) | 開場凍結與大將騎出的機器碼形式 | 正常道路野戰拒戰已證實50／90／110拍；實體照常更新，主迴圈腳本及輸入等待。應戰互砍／決著、雙玩家角色完整時間與結果仍沿Issue #17 | 靜態 | actionable | [#17](https://github.com/wicanr2/wolong_cht/issues/17) |
+| [`re/74-battle-opening-duel.md`](../re/74-battle-opening-duel.md) | 開場凍結與大將騎出的機器碼形式 | 正常拒戰道路野戰已驗完整1545拍，50／90／110拍相位與38張雙案畫面已對齊；應戰互砍／決著、雙玩家角色完整輸入與結果仍沿Issue #17 | 靜態 | actionable | [#17](https://github.com/wicanr2/wolong_cht/issues/17) |
 | [`re/75-duel-talk-audit.md`](../re/75-duel-talk-audit.md) | 變體 0／2／3／5／6 的臨場抽驗 | 專屬句只在 1／4／7；預設句與它們共用選句機制，公式已 confirmed，抽驗優先度低 | 靜態 | merge-target | [#17](https://github.com/wicanr2/wolong_cht/issues/17) |
 | [`re/76-d7open-opening-player.md`](../re/76-d7open-opening-player.md) | 第 5 幕來源的列距 | `sub_103EF` 每兩列消耗 720 B（240 × 2 ＋ `add si, 0F0h`），推不出單純的「一列 240 B」；要嘛來源有 stride，要嘛捲動是重疊取樣。沒有畫面驗證 | 靜態 | evidence-only | — |
 | [`re/76-d7open-opening-player.md`](../re/76-d7open-opening-player.md) | `sub_10A70` | 第 5 幕與開場初始化各叫一次，內容未讀 | 靜態 | evidence-only | — |
@@ -850,7 +850,7 @@
 | [`spec/154-mouse-cursor.md`](../spec/154-mouse-cursor.md) | 遊玩端的自繪 | 等 §4 定案 | 靜態 | evidence-only | — |
 | [`spec/155-desktop-launcher-input.md`](../spec/155-desktop-launcher-input.md) | 戰後結算與地圖捲動仍待補強；Windows／macOS 原生操作未驗收。 | （未解小節內文） | 靜態 | actionable | [#2](https://github.com/wicanr2/wolong_cht/issues/2) |
 | [`spec/156-desktop-preferences.md`](../spec/156-desktop-preferences.md) | 無阻擋實作的偏好語意缺口；Windows／macOS 原生設定路徑與操作由人工驗收。 | （未解小節內文） | 靜態 | merge-target | [#2](https://github.com/wicanr2/wolong_cht/issues/2) |
-| [`spec/159-tactical-command-movement-order.md`](../spec/159-tactical-command-movement-order.md) | 完整戰術移動排程與後段動畫 | 野戰拒戰相位已修：兩案核心前220／217拍全等、各14張完整圖僅游標；攻城677拍及25圖／677縮圖不變。普通路徑首差221／218拍，應戰互砍及雙側完整結果仍沿Issue #16／#17 | 靜態 | actionable | [#16](https://github.com/wicanr2/wolong_cht/issues/16) |
+| [`spec/159-tactical-command-movement-order.md`](../spec/159-tactical-command-movement-order.md) | 完整戰術移動排程與後段動畫 | 正常拒戰野戰完整1545拍及受控400拍96槽27欄／RNG全等，38完整圖僅游標；攻守城997拍／31圖／997縮圖不變。221／218拍後段差異已閉合；應戰互砍／決著及雙角色完整輸入與結果仍沿Issue #17 | 靜態 | actionable | [#16](https://github.com/wicanr2/wolong_cht/issues/16) |
 | [`spec/160-rng-consumption-alignment.md`](../spec/160-rng-consumption-alignment.md) | `14060` 屬於哪一支、取數做什麼用 | 只知道在 `sub_13EFD` 底下，12 次／36 小時的節奏還沒對到機制 | 靜態 | merge-target | [#10](https://github.com/wicanr2/wolong_cht/issues/10) |
 | [`spec/160-rng-consumption-alignment.md`](../spec/160-rng-consumption-alignment.md) | 開戰期的消費端清單 | 還沒統計；閒置期的四個位址不足以涵蓋 | 靜態 | merge-target | [#10](https://github.com/wicanr2/wolong_cht/issues/10) |
 | [`spec/160-rng-consumption-alignment.md`](../spec/160-rng-consumption-alignment.md) | remake 的呼叫點與原版位址的對照表 | 要邊比邊建，沒有現成的 | 靜態 | merge-target | [#10](https://github.com/wicanr2/wolong_cht/issues/10) |

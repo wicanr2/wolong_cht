@@ -1,5 +1,11 @@
 # 128 — 隊長倒下不會清掉那一隊的待機兵
 
+## 2026-11-15：野戰後段傳令、佇列與側欄勘誤
+
+輸入DOS/V KI.EXE SHA-256 `fffeba985231cda4d636e93d10f598470b1f691d00275e4aa38e285893d43868`，dosgolem `f79eab6db8c64a524a06535e53e5d32b0bbcf7c8`。位址為oracle.IDA DOS/V linear；以下為已證實的正常野戰動態觀測。
+已證實定位：`1A426／1A754／1A785／1A83F`。隊長在移動中退離邊界，下一個命令批次才處理隊員退卻，不能在同批立即回頭傳令。七名隊員包含離場記錄都寫Next=5，已在退卻者保留Next；腳本也仍可對離場隊長寫Next。待機數不清零。下方改前／現況對照表屬歷史快照，現行接線以此勘誤與spec159為準。
+正式1545／400拍、38張完整圖及正常滑鼠範圍見[spec159](159-tactical-command-movement-order.md)與[收據](../../workplace/scratch/ui-windows-20261104/cao-field-queue-integration.json)。
+
 **狀態：CONFORMED。** remake 的 `squadLeaderGone` 在隊長倒下時把
 `Reserve[squad]` 設成 0，**原版沒有這一步**——碰結算緩衝區的 11 支函式
 逐一看完，待機數只有 `dec`（開場取用、補兵），沒有任何地方寫 0

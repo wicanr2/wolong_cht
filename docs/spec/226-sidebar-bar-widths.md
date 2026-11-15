@@ -1,5 +1,11 @@
 # 226：側欄計量條的原始位移與 byte 寬度
 
+## 2026-11-15：野戰後段傳令、佇列與側欄勘誤
+
+輸入DOS/V KI.EXE SHA-256 `fffeba985231cda4d636e93d10f598470b1f691d00275e4aa38e285893d43868`，dosgolem `f79eab6db8c64a524a06535e53e5d32b0bbcf7c8`。位址為oracle.IDA DOS/V linear；以下為已證實的正常野戰動態觀測。
+已證實定位：`1C775`。原始位移、byte截斷及寬度上限不變。正式呼叫端的兵數來源修正為summary+04h的待機數，typed對應Remaining()-Alive()；先前加進場上兵造成野戰240／300／399拍8／12／16個非游標像素。局部算式全域測試不能代證傳入資料正確。
+正式1545／400拍、38張完整圖及正常滑鼠範圍見[spec159](159-tactical-command-movement-order.md)與[收據](../../workplace/scratch/ui-windows-20261104/cao-field-queue-integration.json)。
+
 **狀態：CONFORMED。O0/O2 各 131,072 組原版／C／正式 Go 長度相同，UI 冷測通過。**
 
 - 日期：2026-10-09

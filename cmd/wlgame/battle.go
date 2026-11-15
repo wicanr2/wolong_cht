@@ -606,7 +606,8 @@ func (g *game) drawBattleSideCell(screen *ebiten.Image, b *tactical.Battle,
 	if len(s.Soldiers) > 0 {
 		health = s.Soldiers[0].HP
 	}
-	menLen, healthLen := battleSideBarLengths(s.Remaining(), health)
+	// summary+04h只數待機兵；Remaining另含場上兵（spec159）。
+	menLen, healthLen := battleSideBarLengths(s.Remaining()-s.Alive(), health)
 	// 索引 12／11 一律查調色盤（docs/spec/54）；未填的部分原版畫成色 0。
 	g.drawBattleBar(screen, cell.MenBar, menLen, g.battleMenBar)
 	g.drawBattleBar(screen, cell.HealthBar, healthLen, g.battleHealthBar)

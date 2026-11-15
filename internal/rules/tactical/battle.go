@@ -665,7 +665,7 @@ func (b *Battle) Order(side, squad int, c Command) {
 		return
 	}
 	for i := lo; i < hi; i++ {
-		if b.Sides[side].Soldiers[i].Alive {
+		if i%PerSquad == 0 || b.Sides[side].Soldiers[i].Alive {
 			b.Sides[side].Soldiers[i].Next = c
 		}
 	}
@@ -706,6 +706,9 @@ func (b *Battle) Step() {
 		for k := range b.Sides[i].Soldiers {
 			if k%PerSquad == 0 && !b.Sides[i].Soldiers[k].Alive {
 				b.squadLeaderGone(i, k)
+				if i == b.PlayerSide && b.Sides[i].Reserve[k/PerSquad] == 0 {
+					b.commandIcons[k/PerSquad] = Retreat
+				}
 			}
 			if b.Sides[i].Soldiers[k].Alive {
 				b.updateSoldierCommand(i, k)
