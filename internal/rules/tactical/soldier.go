@@ -653,8 +653,8 @@ func (b *Battle) tryMove(side, k, x, y, z int) (handled, walled bool) {
 	if s.Plane() == PlaneHigh && s.Cmd == wallAttack && b.Field.HasTiles() && b.Field.Tile(x, y) >= gateSolid {
 		return false, false
 	}
-	// 1B228–1B23E：水平升降同時調整中繼高度，保持相對Z差。
-	s.StepZ += z - s.Z
+	// 1B228–1B23E：水平升降同時調整中繼高度，保留原版byte溢位。
+	s.StepZ = int(uint8(s.StepZ + z - s.Z))
 	s.X, s.Y, s.Z = x, y, z
 	s.syncTerrain(b.Field, x, y, z)
 	return true, false
@@ -678,6 +678,15 @@ func (b *Battle) tryClimb(side, k int) bool {
 	}
 	s.Facing = face << 1
 	s.HitGeneral = false
+	// 1B18A先讀物理頭格，再判未破門；單兵可覆蓋結構物的登錄。
+	if up {
+		if side2, k2 := b.climbHeadOccupant(s); k2 >= 0 {
+			// 1B113：碰撞成功可能只是換位／攻擊，不再額外Z+1。
+			return b.collideWithUnit(side, k, side2, k2)
+		}
+	} else if side2, k2 := b.unitAtLayer(s.X, s.Y, s.Z-1); k2 >= 0 {
+		return b.collideWithUnit(side, k, side2, k2)
+	}
 	if b.Field.GateBlocksHighPlane(s.X, s.Y) {
 		// ⭐ **爬不上去的那一下要打門**（docs/spec/98）。原版
 		// `sub_1B186` 回報「上一層有實體」時把實體編號留在 al，
@@ -685,8 +694,10 @@ func (b *Battle) tryClimb(side, k int) bool {
 		// 碰撞處理——**未破的門就是這樣被打開的**（耐久只有 80）。
 		// 少了這一下，登城的兵站在門格上永遠卡住，攻方只能改去磨
 		// 城壁（耐久上千），而那會讓門強度條一路亮著——原版不會。
-		if b.breakableAt(s.X, s.Y) {
-			b.hitStructure(side, s.Facing, s.X, s.Y)
+		if b.breakableAt(s.X, s.Y) && b.hitStructure(side, s.Facing, s.X, s.Y) {
+			// 1B613排尋路，1B616以CF0結束當拍，位置可保持不變。
+			b.requestPath(side, k)
+			return true
 		}
 		return false
 	}
@@ -697,15 +708,6 @@ func (b *Battle) tryClimb(side, k int) bool {
 	_, ok := b.Field.GroundLevel(s.X, s.Y, other)
 	if !ok {
 		return false
-	}
-	// 1B0F4與1B18A合計查原Z+2；不能改用水平兩格查詢。
-	if up {
-		if side2, k2 := b.climbHeadOccupant(s); k2 >= 0 {
-			// 1B113：碰撞成功可能只是換位／攻擊，不再額外Z+1。
-			return b.collideWithUnit(side, k, side2, k2)
-		}
-	} else if side2, k2 := b.unitAtLayer(s.X, s.Y, s.Z-1); k2 >= 0 {
-		return b.collideWithUnit(side, k, side2, k2)
 	}
 	if up {
 		s.Z++
@@ -729,8 +731,8 @@ func (b *Battle) tryClimb(side, k int) bool {
 //	[di+1A] == 5     擋路的正在**退卻**
 //	[di] & 0x61      bit 0 ＝ **陣亡**（`sub_1B618` 把體力扣到 0 時設，
 //	                 同時 `[di+1] = 4`）；bit 5 ＝ **正在移動常式裡面**
-//	                 （`sub_1AF69` 進入時 `or [si], 20h`、離開時清掉，
-//	                 是重入保護，本專案不需要）；bit 6 ＝ **這一幀已經被換過**
+//	                 （`sub_1AF69` 入口設起，成功碰撞也可保留，
+//	                 阻止後槽友兵換走前排）；bit 6 ＝ **這一幀已經被換過**
 //	[di+02] & 0x10   **剛剛被打中**（`sub_1B618` 設，同時把面向歸零）
 //
 // 通過之後還分兩種：

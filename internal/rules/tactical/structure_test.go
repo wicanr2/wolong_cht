@@ -604,8 +604,8 @@ func TestClimbIntoUnbrokenGateHitsIt(t *testing.T) {
 	s.StepZ = 4
 	before := g.Durability
 
-	if b.tryClimb(AttackerSide, 0) {
-		t.Fatal("未破的門不該爬得上去")
+	if !b.tryClimb(AttackerSide, 0) || s.Z != 0 || !s.PathQueued {
+		t.Fatal("未破門的碰撞應處理成功並排尋路，位置維持原層")
 	}
 	if g.Durability >= before {
 		t.Errorf("爬不上去卻沒有打門：耐久 %d → %d", before, g.Durability)

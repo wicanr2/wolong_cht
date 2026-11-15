@@ -762,8 +762,8 @@ func TestClimbOnlyAtGateCells(t *testing.T) {
 	s.StepZ = 4
 
 	// ★ 門還沒破：上不去。這一格是門（bit 3 有設），擋下來的是 0xF8 那一關。
-	if b.tryClimb(AttackerSide, 0) {
-		t.Fatal("未破的門不該爬得上去")
+	if !b.tryClimb(AttackerSide, 0) || s.Z != 0 {
+		t.Fatal("未破門應完成碰撞，仍不得升層")
 	}
 
 	f.Retile(32, gateY, brokenGateDelta)
