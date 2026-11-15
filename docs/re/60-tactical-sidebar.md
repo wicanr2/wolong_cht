@@ -1,5 +1,11 @@
 # 60 — 戰術側欄：那一欄畫了什麼，每一格由誰畫
 
+## 2026-11-15：應戰單挑與補兵白旗勘誤
+
+輸入DOS/V KI.EXE SHA-256 `fffeba985231cda4d636e93d10f598470b1f691d00275e4aa38e285893d43868`，dosgolem `f79eab6db8c64a524a06535e53e5d32b0bbcf7c8`。位址為oracle.IDA DOS/V linear，以下為已證實的本案動態與IDA Pro 9.4原始指令證據。
+已證實定位：`1A83F／1B437／1B445／1B44D／1A8CC`。207次白旗呼叫的待機0觀察保留，舊因果鏈1A83F→1A8CC不成立。新增498拍槽16補入後改圖示0、499拍倒地，500拍仍維持0的正對照；白旗沿補兵入口與死亡動畫閘更新，消除187個額外像素。
+驗收及限制見[spec159](../spec/159-tactical-command-movement-order.md)與[收據](../../workplace/scratch/ui-windows-20261104/cao-duel-accept-integration.json)。
+
 ## 2026-11-15：野戰後段傳令、佇列與側欄勘誤
 
 輸入DOS/V KI.EXE SHA-256 `fffeba985231cda4d636e93d10f598470b1f691d00275e4aa38e285893d43868`，dosgolem `f79eab6db8c64a524a06535e53e5d32b0bbcf7c8`。位址為oracle.IDA DOS/V linear；以下為已證實的正常野戰動態觀測。

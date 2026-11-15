@@ -1,5 +1,11 @@
 # 128 — 隊長倒下不會清掉那一隊的待機兵
 
+## 2026-11-15：應戰單挑與補兵白旗勘誤
+
+輸入DOS/V KI.EXE SHA-256 `fffeba985231cda4d636e93d10f598470b1f691d00275e4aa38e285893d43868`，dosgolem `f79eab6db8c64a524a06535e53e5d32b0bbcf7c8`。位址為oracle.IDA DOS/V linear，以下為已證實的本案動態與IDA Pro 9.4原始指令證據。
+已證實定位：`1A83F／1B437／1B445／1B44D`。隊員Next的下一批傳令與待機保留契約不變。白旗改由reinforceSoldier嘗試補兵時登錄，必須先通過unitDying；待機0或該側已全軍退卻即拒絕補兵，僅隊長更新圖示。退離沒有倒地動畫，該拍補兵入口即可畫白旗。
+驗收及限制見[spec159](159-tactical-command-movement-order.md)與[收據](../../workplace/scratch/ui-windows-20261104/cao-duel-accept-integration.json)。
+
 ## 2026-11-15：野戰後段傳令、佇列與側欄勘誤
 
 輸入DOS/V KI.EXE SHA-256 `fffeba985231cda4d636e93d10f598470b1f691d00275e4aa38e285893d43868`，dosgolem `f79eab6db8c64a524a06535e53e5d32b0bbcf7c8`。位址為oracle.IDA DOS/V linear；以下為已證實的正常野戰動態觀測。

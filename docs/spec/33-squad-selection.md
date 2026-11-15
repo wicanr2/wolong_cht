@@ -1,5 +1,11 @@
 # 33 — 底列六格是選部隊，不是第二套命令列
 
+## 2026-11-15：應戰單挑與補兵白旗勘誤
+
+輸入DOS/V KI.EXE SHA-256 `fffeba985231cda4d636e93d10f598470b1f691d00275e4aa38e285893d43868`，dosgolem `f79eab6db8c64a524a06535e53e5d32b0bbcf7c8`。位址為oracle.IDA DOS/V linear，以下為已證實的本案動態與IDA Pro 9.4原始指令證據。
+已證實定位：`1A83F／1B437／1B445／1B44D／1A8CC`。上輪把白旗歸因於隊長命令批次不成立。1A83F只傳隊員Next；1B413在死亡動畫結束後嘗試補兵，隊長遇待機0或本側全軍退卻才畫白旗。1A8CC的near返回offset B450對應call1B44D；1C673的返回offset為A8DB。
+驗收及限制見[spec159](159-tactical-command-movement-order.md)與[收據](../../workplace/scratch/ui-windows-20261104/cao-duel-accept-integration.json)。
+
 ## 2026-11-15：野戰後段傳令、佇列與側欄勘誤
 
 輸入DOS/V KI.EXE SHA-256 `fffeba985231cda4d636e93d10f598470b1f691d00275e4aa38e285893d43868`，dosgolem `f79eab6db8c64a524a06535e53e5d32b0bbcf7c8`。位址為oracle.IDA DOS/V linear；以下為已證實的正常野戰動態觀測。

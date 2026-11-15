@@ -34,7 +34,7 @@ func TestDuelGateByFieldNumber(t *testing.T) {
 	}
 }
 
-// 氣勢公式：武術門檻沒過整個歸零；過了是 兵數×體力＋亂數尾。
+// 氣勢公式：武術門檻沒過整個歸零；過了是 戰力×體力＋亂數尾。
 func TestDuelMoraleFormula(t *testing.T) {
 	// 武術 90／統率 0 → 門檻 135，rand(0..7)+8 永遠比不過 → 保留。
 	b := duelBattle(t, 0xC0, [2]int{90, 0}, [2]int{0, 0}, []int{0})
@@ -45,6 +45,109 @@ func TestDuelMoraleFormula(t *testing.T) {
 	b.rng = &fixedRand{seq: []int{3}}
 	if got := b.duelMorale(1); got != 3<<8 {
 		t.Errorf("歸零側氣勢 %d，應為 3<<8=%d", got, 3<<8)
+	}
+}
+
+// 原版1A2EF／1A2F6先玩家後對方。此四次實測取數會接受挑戰，反序會拒戰。
+func TestDuelMoraleUsesPlayerOrder(t *testing.T) {
+	for _, player := range []int{AttackerSide, DefenderSide} {
+		b := duelBattle(t, 198, [2]int{12, 12}, [2]int{6, 6}, []int{16, 40, 56, 39})
+		b.SetPlayerSide(player)
+		b.Sides[player].Soldiers[0].HP, b.Sides[player].Soldiers[0].Power = 188, 56
+		b.Sides[1-player].Soldiers[0].HP, b.Sides[1-player].Soldiers[0].Power = 156, 32
+		duelTick(b)
+		if b.duel.strong != player || b.duel.hi != 10528 || b.duel.lo != 6784 {
+			t.Fatalf("玩家側%d：strong=%d hi=%d lo=%d", player, b.duel.strong, b.duel.hi, b.duel.lo)
+		}
+		b.TakeDuelTalks()
+		duelTick(b)
+		talks := b.TakeDuelTalks()
+		if len(talks) != 1 || talks[0].Side != 1-player || talks[0].Group != 0x1B8 {
+			t.Fatalf("原版同組取數應走應戰：%v", talks)
+		}
+	}
+}
+
+func TestDuelTiedMoraleKeepsPlayerFirst(t *testing.T) {
+	b := duelBattle(t, 198, [2]int{12, 12}, [2]int{6, 6}, []int{0})
+	b.SetPlayerSide(DefenderSide)
+	duelTick(b)
+	if b.duel.strong != DefenderSide {
+		t.Fatal("原版同分不交換，記錄0為玩家")
+	}
+}
+
+type duelCountingRand struct {
+	values []int
+	calls  int
+}
+
+func (r *duelCountingRand) Next() int {
+	v := r.values[r.calls%len(r.values)]
+	r.calls++
+	return v
+}
+
+func TestDuelMeleeReusesDecisionByteForY(t *testing.T) {
+	b := duelBattle(t, 198, [2]int{12, 12}, [2]int{6, 6}, []int{0})
+	r := &duelCountingRand{values: []int{5, 14, 255}}
+	b.rng = r
+	b.duel.phase, b.duel.timer = duelMelee, 48
+	b.stepDuel()
+	if r.calls != 2 {
+		t.Fatalf("1A2A6與1A2B3只取兩次，實際%d", r.calls)
+	}
+	for side := range b.Sides {
+		g := b.Sides[side].Soldiers[0]
+		if g.StepX != 38 || g.StepY != 33 || g.GoalX != 38 || g.GoalY != 33 {
+			t.Fatalf("判定byte5兼作Y、byte14作X，應指向38,33：%+v", g)
+		}
+	}
+	b.duel.timer = 1
+	b.stepDuel()
+	if r.calls != 2 {
+		t.Fatal("計時歸零立即返回，不可再抽一次")
+	}
+}
+
+// 這三個事件邊界出自受控原版290／310／330拍，兩段等待不可合併。
+func TestDuelVerdictWaitsAfterBothSpeakers(t *testing.T) {
+	b := duelBattle(t, 198, [2]int{12, 12}, [2]int{6, 6}, []int{0})
+	b.Frame, b.duel.phase, b.duel.timer = 290, duelMelee, 40
+	b.Sides[1].Soldiers[0].HP = 64
+	for side := range b.Sides {
+		b.Sides[side].Soldiers[0].Cmd, b.Sides[side].Soldiers[0].Next = Duel, Duel
+	}
+	b.stepDuel()
+	talks := b.TakeDuelTalks()
+	if len(talks) != 1 || talks[0] != (DuelTalk{Side: 1, Group: 0x1CC, Frame: 290}) {
+		t.Fatalf("低於70當拍喊敗方：%v", talks)
+	}
+	for b.Frame < 310 {
+		b.Frame++
+		b.stepDuel()
+	}
+	talks = b.TakeDuelTalks()
+	if len(talks) != 1 || talks[0] != (DuelTalk{Side: 0, Group: 0x1CD, Frame: 310}) || !b.OpeningActive() {
+		t.Fatalf("310拍喊勝方後仍封鎖主迴圈：%v", talks)
+	}
+	for b.Frame < 329 {
+		b.Frame++
+		b.stepDuel()
+	}
+	if !b.OpeningActive() || b.Sides[0].Soldiers[0].Next != Duel {
+		t.Fatal("勝方必須完整再等20拍")
+	}
+	b.Frame++
+	b.stepDuel()
+	if b.OpeningActive() {
+		t.Fatal("330拍等待完成應返回主迴圈")
+	}
+	for side := range b.Sides {
+		g := b.Sides[side].Soldiers[0]
+		if g.Next != Form || g.Cmd != Duel {
+			t.Fatal("收尾只清Next，目前Cmd留待下一批更新")
+		}
 	}
 }
 
@@ -81,11 +184,11 @@ func TestDuelChallengeWaitCompletesBeforeMovementChanges(t *testing.T) {
 		b.Frame, b.duel.timer = 49, 1
 		b.Step()
 		g := b.Sides[player].Soldiers[0]
-		if g.X != 3 || g.Y != 32 || g.Stamina != 127 || g.StepX != 3 {
+		if g.X != 3 || g.Y != 32 || g.Stamina != 127 || g.StepX != 24 {
 			t.Fatalf("第50拍仍應先完成原地等待：%+v", g)
 		}
 		talks := b.TakeDuelTalks()
-		if len(talks) != 1 || talks[0] != (DuelTalk{Side: player, Group: 0x1B7, Frame: 50}) || g.Cmd != Duel {
+		if len(talks) != 1 || talks[0] != (DuelTalk{Side: player, Group: 0x1B7, Frame: 50}) || g.Next != Duel || g.Cmd != Holding {
 			t.Fatalf("完成50拍後應立即掛挑戰及命令：%v", talks)
 		}
 		b.Step()
@@ -104,8 +207,8 @@ func TestDuelRefuse(t *testing.T) {
 		t.Fatalf("挑戰喊話 %v，應為側 0 組 0x1B7", talks)
 	}
 	g := &b.Sides[0].Soldiers[0]
-	if g.Cmd != Duel {
-		t.Errorf("強側大將 cmd=%v，應為單挑", g.Cmd)
+	if g.Next != Duel {
+		t.Errorf("強側大將 next=%v，應為單挑", g.Next)
 	}
 	// 挑戰是**寫目標**讓大將騎過去，不搬人（spec/80 §3 第 1 點）。
 	if g.GoalX != 0x18 || g.GoalY != 0x20 {
@@ -121,7 +224,7 @@ func TestDuelRefuse(t *testing.T) {
 	if len(got) != 2 || got[0] != want[0] || got[1] != want[1] {
 		t.Fatalf("拒戰喊話 %v，應為 %v", got, want)
 	}
-	if b.duel.phase != duelIdle || b.Sides[0].Soldiers[0].Cmd == Duel {
+	if b.duel.phase != duelIdle || b.Sides[0].Soldiers[0].Next == Duel {
 		t.Errorf("拒戰後應收尾並解除命令 8")
 	}
 }
@@ -129,7 +232,7 @@ func TestDuelRefuse(t *testing.T) {
 // 應戰分支：0x1B8 → 第 0 回合互嗆 0x1BA/0x1BB → 會合點 → 決著。
 func TestDuelAcceptAndVerdict(t *testing.T) {
 	b := duelBattle(t, 0xC0, [2]int{90, 90}, [2]int{0, 0}, []int{0})
-	duelTick(b) // 評估：同分不換 → 強側 = 攻方，0x1B7
+	duelTick(b) // 評估：同分不換 → 強側 = 玩家，0x1B7
 	duelTick(b) // 應戰 0x1B8
 	duelTick(b) // 互嗆第一句 0x1BA
 	duelTick(b) // 互嗆第二句 0x1BB → 會合 → 對打段
@@ -148,8 +251,8 @@ func TestDuelAcceptAndVerdict(t *testing.T) {
 	}
 	for i := range b.Sides {
 		g := &b.Sides[i].Soldiers[0]
-		if g.Cmd != Duel {
-			t.Errorf("側 %d 大將未進命令 8", i)
+		if g.Next != Duel {
+			t.Errorf("側 %d 大將未收到下一命令 8", i)
 		}
 		// 互嗆完兩大將的目標都是會合點 (0x20,0x20)——騎過去，不瞬移。
 		if g.GoalX != 0x20 || g.GoalY != 0x20 {
@@ -158,9 +261,9 @@ func TestDuelAcceptAndVerdict(t *testing.T) {
 	}
 	// 守側大將被打到 0x40（< 0x46）→ 決著：敗方 0x1CC、勝方 0x1CD。
 	b.Sides[1].Soldiers[0].HP = 0x40
-	b.stepDuel() // 體力檢查 → 決著相位
-	duelTick(b)  // 敗方喊話
-	duelTick(b)  // 勝方喊話、收尾
+	b.stepDuel() // 體力檢查當拍喊敗方
+	duelTick(b)  // 敗方等20拍後，勝方喊話
+	duelTick(b)  // 勝方再等20拍才收尾
 	got = b.TakeDuelTalks()
 	want = []DuelTalk{{Side: 1, Group: 0x1CC}, {Side: 0, Group: 0x1CD}}
 	if len(got) != 2 || got[0] != want[0] || got[1] != want[1] {
@@ -170,7 +273,7 @@ func TestDuelAcceptAndVerdict(t *testing.T) {
 		t.Errorf("決著後未收尾")
 	}
 	for i := range b.Sides {
-		if b.Sides[i].Soldiers[0].Cmd == Duel {
+		if b.Sides[i].Soldiers[0].Next == Duel {
 			t.Errorf("側 %d 決著後命令未解除", i)
 		}
 	}
@@ -206,9 +309,9 @@ func TestDuelVerdictSkipsRetreatingLoser(t *testing.T) {
 	b.TakeDuelTalks()
 	b.Sides[1].Soldiers[0].HP = 0x40
 	b.Sides[1].Soldiers[0].Cmd = Retreat
-	b.stepDuel() // 體力檢查 → 決著相位
-	duelTick(b)  // 敗方段（退卻中：不喊）
-	duelTick(b)  // 勝方 0x1CD、收尾
+	b.stepDuel() // 敗方退卻中不喊；此測試只驗喊話選擇
+	duelTick(b)  // 勝方0x1CD
+	duelTick(b)  // 收尾
 	got := b.TakeDuelTalks()
 	if len(got) != 1 || got[0] != (DuelTalk{Side: 0, Group: 0x1CD}) {
 		t.Fatalf("退卻中敗方仍喊話：%v，應只剩勝方 0x1CD", got)
@@ -274,7 +377,7 @@ func TestDuelPositionsFollowPlayerRole(t *testing.T) {
 				wantX = 24
 			}
 			g := b.Sides[side].Soldiers[0]
-			if g.GoalX != wantX || g.GoalY != 32 {
+			if g.GoalX != wantX || g.GoalY != 32 || g.StepX != wantX || g.StepY != 32 {
 				t.Fatalf("玩家側 %d，大將側 %d：目標 %d,%d，應為 %d,32", player, side, g.GoalX, g.GoalY, wantX)
 			}
 		}

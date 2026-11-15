@@ -706,9 +706,6 @@ func (b *Battle) Step() {
 		for k := range b.Sides[i].Soldiers {
 			if k%PerSquad == 0 && !b.Sides[i].Soldiers[k].Alive {
 				b.squadLeaderGone(i, k)
-				if i == b.PlayerSide && b.Sides[i].Reserve[k/PerSquad] == 0 {
-					b.commandIcons[k/PerSquad] = Retreat
-				}
 			}
 			if b.Sides[i].Soldiers[k].Alive {
 				b.updateSoldierCommand(i, k)
@@ -833,6 +830,10 @@ func (b *Battle) reinforceSoldier(side, k int) {
 	}
 	squad := k / PerSquad
 	if sd.Reserve[squad] <= 0 || b.endPhase == side+1 {
+		// 1B445–1B44D：死亡動畫結束後的隊長補兵入口才畫白旗。
+		if side == b.PlayerSide && k%PerSquad == 0 {
+			b.commandIcons[squad] = Retreat
+		}
 		return
 	}
 	x := MinCoord

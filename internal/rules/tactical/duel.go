@@ -43,15 +43,16 @@ type DuelTalk struct {
 
 // 狀態機的相位。
 const (
-	duelIdle      = iota // 未觸發或已結束
-	duelWait             // 開場等 50 tick（`sub_1A1C5` 開頭）
-	duelChallenge        // 強側喊完 0x1B7、等 40
-	duelRefuseA          // 弱側喊 0x1B9、等 20
-	duelBanterA          // 互嗆第一句喊完、等 10（`sub_1A3C3` 的 cx=0Ah）
-	duelMelee            // 對打段（`sub_1A298`，計時 0x50）
-	duelRegroup          // 歸位等 20（loc_1A202，每 tick 檢查體力）
-	duelVerdictA         // 敗方 0x1CC、等 20
-	duelVerdictB         // 勝方 0x1CD、等 20 後收尾
+	duelIdle          = iota // 未觸發或已結束
+	duelWait                 // 開場等 50 tick（`sub_1A1C5` 開頭）
+	duelChallenge            // 強側喊完 0x1B7、等 40
+	duelRefuseA              // 弱側喊 0x1B9、等 20
+	duelBanterA              // 互嗆第一句喊完、等 10（`sub_1A3C3` 的 cx=0Ah）
+	duelMelee                // 對打段（`sub_1A298`，計時 0x50）
+	duelRegroup              // 歸位等 20（loc_1A202，每 tick 檢查體力）
+	duelVerdictA             // 敗方 0x1CC、等 20
+	duelVerdictB             // 等敗方20拍後，勝方喊0x1CD
+	duelVerdictFinish        // 再等20拍後清下一命令
 )
 
 type duelState struct {
@@ -61,7 +62,7 @@ type duelState struct {
 	timer int
 	// round 是互嗆情境碼（原版 `word_1D31F`，上限 4）。
 	round int
-	// strong 是氣勢高側；hi／lo 是兩側的氣勢值（同分不換、攻方在前）。
+	// strong 是氣勢高側；hi／lo 是兩側的氣勢值（同分不換、玩家在前）。
 	strong int
 	hi, lo int
 	// first 是本回合互嗆先講的一側（r0＝強側；r≥1＝體力高側，同分不換）。
@@ -146,10 +147,11 @@ func (b *Battle) duelSpot(side int) (int, int) {
 	return 0x28, 0x20
 }
 
-// duelGoal 把側 side 大將的目標座標指到 (x,y)——**不搬人**，
+// duelGoal 同時寫大將的StepXY與GoalXY，位置由共通移動更新。
 // 大將自己騎過去（原版寫 `+0x10/+0x11/+0x14`，移動在共通路徑）。
 func (b *Battle) duelGoal(side, x, y int) {
 	g := &b.Sides[side].Soldiers[0]
+	g.StepX, g.StepY = x, y
 	g.GoalX, g.GoalY = x, y
 	g.GoalZ = b.standZ(g, x, y)
 	g.Path = nil
@@ -170,16 +172,14 @@ func (b *Battle) duelMeet(x, y int) {
 	}
 }
 
-// orderDuelLeader 設或清側 side **大將本人**的命令 8（`[si+1Bh]`）。
+// orderDuelLeader只寫大將Next（原版+1Bh），目前Cmd由下一批傳令更新。
 func (b *Battle) orderDuelLeader(side int, on bool) {
 	c := Duel
 	if !on {
 		c = Form
 	}
 	g := &b.Sides[side].Soldiers[0]
-	if g.Alive {
-		g.Cmd, g.Next = c, c
-	}
+	g.Next = c
 }
 
 func (b *Battle) duelHP(side int) int { return b.Sides[side].Soldiers[0].HP }
@@ -229,18 +229,21 @@ func (b *Battle) stepDuel() {
 	}
 	// 對打段與歸位期間每 tick 檢查決著門檻
 	// （`sub_1A298` 與 loc_1A219 的 `cmp [±3], 46h`）。
-	if (d.phase == duelMelee || d.phase == duelRegroup) && b.duelKO() {
-		return
+	if d.phase == duelMelee || d.phase == duelRegroup {
+		b.duelKO()
 	}
 	if d.timer > 0 {
 		d.timer--
 		// 對打段：計時 0x50 起算，剩餘 ≥ 0x30 純等；之後每 tick
 		// 機率 0x20/256 把兩大將的目標改成同一隨機格
-		// （抽的順序照原版：先 y ＝ rand&7+0x1C、再 x ＝ rand&0xF+0x18）。
-		if d.phase == duelMelee && d.timer < 0x30 && b.rng.Next()&0xFF < 0x20 {
-			y := b.rng.Next()&7 + 0x1C
-			x := b.rng.Next()&0xF + 0x18
-			b.duelMeet(x, y)
+		// （判定成功的同一byte算Y，再取一次算X，計時0不再抽）。
+		if d.phase == duelMelee && d.timer > 0 && d.timer < 0x30 {
+			r := b.rng.Next() & 0xFF
+			if r < 0x20 {
+				y := r&7 + 0x1C
+				x := b.rng.Next()&0xF + 0x18
+				b.duelMeet(x, y)
+			}
 		}
 		if d.timer > 0 {
 			return
@@ -249,11 +252,12 @@ func (b *Battle) stepDuel() {
 	weak := 1 - d.strong
 	switch d.phase {
 	case duelWait:
-		// 評估（`sub_1A2E8`）。同分不換：攻方（記錄 0）在前。
-		m0, m1 := b.duelMorale(0), b.duelMorale(1)
-		d.strong, d.hi, d.lo = 0, m0, m1
-		if m1 > m0 {
-			d.strong, d.hi, d.lo = 1, m1, m0
+		// 評估（`sub_1A2E8`）。同分不換：原版記錄0是玩家。
+		player, other := b.PlayerSide, 1-b.PlayerSide
+		mp, mo := b.duelMorale(player), b.duelMorale(other)
+		d.strong, d.hi, d.lo = player, mp, mo
+		if mo > mp {
+			d.strong, d.hi, d.lo = other, mo, mp
 		}
 		if d.hi < duelMoraleFloor {
 			d.phase = duelIdle // 沒人夠氣勢，正常開打
@@ -323,11 +327,10 @@ func (b *Battle) stepDuel() {
 		d.timer = 20
 	case duelVerdictB:
 		b.say(1-d.loser, 0x1CD)
-		// 收尾清命令（loc_1A27A）。退卻中的維持退卻不清。
+		d.phase, d.timer = duelVerdictFinish, 20
+	case duelVerdictFinish:
 		for i := range b.Sides {
-			if b.Sides[i].Soldiers[0].Cmd != Retreat {
-				b.orderDuelLeader(i, false)
-			}
+			b.orderDuelLeader(i, false)
 		}
 		d.phase = duelIdle
 	}

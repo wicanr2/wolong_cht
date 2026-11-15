@@ -817,8 +817,8 @@ func TestLeaderRetreatWaitsForNextCommandBatch(t *testing.T) {
 		if b.Sides[player].Soldiers[0].Alive || !b.Sides[player].Soldiers[1].Alive || b.Sides[player].Soldiers[1].Cmd != Holding {
 			t.Fatal("隊長本批離場，不可回頭讓七名隊員提早執行退卻")
 		}
-		if b.CommandIcons()[0] != Guard {
-			t.Fatal("隊長離場的同批仍保留先前圖示")
+		if b.CommandIcons()[0] != Retreat {
+			t.Fatal("退離沒有死亡動畫，補兵入口遇待機0便畫白旗")
 		}
 		b.Step()
 		if b.Sides[player].Soldiers[1].Cmd != Retreat || b.CommandIcons()[0] != Retreat {
@@ -835,6 +835,34 @@ func TestLeaderLossOrdersAlsoReachInactiveFollowers(t *testing.T) {
 	b.squadLeaderGone(0, 0)
 	if s.Next != Retreat || s.Alive || s.HP != 0 || b.Sides[0].Soldiers[2].Next != Guard {
 		t.Fatal("七個位置都要收退卻，已退卻者Next保留舊命令，離場者不復活")
+	}
+}
+
+func TestEmptyReserveIconWaitsForLeaderReinforcement(t *testing.T) {
+	for _, player := range []int{AttackerSide, DefenderSide} {
+		b := newTestBattle(flatField())
+		b.SetPlayerSide(player)
+		b.commandIcons[1] = Guard
+		b.Sides[player].Reserve[1] = 0
+		b.applyLethalForTest(&b.Sides[player].Soldiers[8])
+		for i := 0; i < DeathFrames; i++ {
+			b.reinforceSoldier(player, 8)
+			if b.CommandIcons()[1] != Guard {
+				t.Fatal("倒地動畫尚未結束，不能提早改白旗")
+			}
+			b.stepDeath(player, 8)
+		}
+		b.reinforceSoldier(player, 8)
+		if b.CommandIcons()[1] != Retreat {
+			t.Fatal("死亡動畫後補兵入口遇待機0才改白旗")
+		}
+		b.commandIcons[1] = Guard
+		b.Sides[player].Reserve[1] = 2
+		b.endPhase = player + 1
+		b.reinforceSoldier(player, 8)
+		if b.CommandIcons()[1] != Retreat || b.Sides[player].Reserve[1] != 2 {
+			t.Fatal("全軍退卻也拒絕補兵並畫白旗，待機數不動")
+		}
 	}
 }
 

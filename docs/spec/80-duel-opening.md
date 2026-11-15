@@ -1,5 +1,11 @@
 # 80 — 開戰單挑：挑戰、拒戰、應戰、回合互嗆、決著
 
+## 2026-11-15：應戰單挑與補兵白旗勘誤
+
+輸入DOS/V KI.EXE SHA-256 `fffeba985231cda4d636e93d10f598470b1f691d00275e4aa38e285893d43868`，dosgolem `f79eab6db8c64a524a06535e53e5d32b0bbcf7c8`。位址為oracle.IDA DOS/V linear，以下為已證實的本案動態與IDA Pro 9.4原始指令證據。
+已證實定位：`1A2E8／1A308／1A398／1A410／1A29E／1A2E2／1A23F／1A282`。先玩家後對方取氣勢亂數，同分維持玩家；寫StepXY及GoalXY，只寫Next而不立即改Cmd。對打的判定byte兼作Y，再取一次算X，計時0不抽；低於70當拍喊敗方，20拍後喊勝方，再等20拍收尾。本次原版敗方當時不是退卻命令，不能以此代證退卻敗方等待。
+驗收及限制見[spec159](159-tactical-command-movement-order.md)與[收據](../../workplace/scratch/ui-windows-20261104/cao-duel-accept-integration.json)。
+
 ## 2026-11-15：單挑跨拍邊界勘誤
 
 輸入DOS/V KI.EXE SHA-256 `fffeba985231cda4d636e93d10f598470b1f691d00275e4aa38e285893d43868`，dosgolem `f79eab6db8c64a524a06535e53e5d32b0bbcf7c8`。位址為oracle.IDA DOS/V linear。
@@ -61,7 +67,7 @@ if rand(0..7)+8 > threshold: core = 0               ；武人氣質門檻
 ⚠ `+0x18` 讀成「兵數」是被推翻的第一版（`CONTEXT.md` 推翻表）：
 兵數多的一側永遠先挑戰，與實機兩輪錄影（氣勢＝士氣高的呂布先喊）相反。
 
-高側為「強側」（同分不換，攻方在前）。
+高側為「強側」（同分不換，玩家在前）。
 
 ## 3. 流程（`sub_1A1C5` 逐條，2026-08-25 第二輪精讀定版）
 
@@ -87,7 +93,7 @@ byte_1D34B ≠ 1 → 直接返回，主迴圈（腳本＋輸入）開始
           **兩大將目標＝同一格 (0x20,0x20)**（會合點）
         對打段（sub_1A298）：計時 0x50；剩餘 ≥ 0x30 純等；
           之後每 tick 機率 0x20/256 把**兩大將目標**改成同一隨機格
-          （先抽 y = rand&7 + 0x1C、再抽 x = rand&0xF + 0x18）
+          （判定成功的同一byte算 y = byte&7 + 0x1C，再抽 x = rand&0xF + 0x18）
           每 tick 檢查任一大將體力 < 0x46（70）→ 決著
         歸位（loc_1A202）：兩大將目標＝各自單挑位、等 20 tick
           （每 tick 檢查體力）→ r++ 回到互嗆
