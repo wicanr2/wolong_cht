@@ -919,6 +919,26 @@ func (g *game) drawBattleMiniMapUnits(screen *ebiten.Image, b *tactical.Battle, 
 	if b == nil {
 		return
 	}
+
+	if g.view != nil {
+		marks := g.view.MinimapMarkers()
+		for wy, row := range marks {
+			for wx, mark := range row {
+				if mark == 0 {
+					continue
+				}
+				col := g.battleUnitDotFoe
+				if mark == 1 {
+					col = g.battleUnitDotAlly
+				}
+				x, y := r.X+2*wy, r.Y+2*(battle.Width-1-wx)
+				if x >= r.X && y >= r.Y && x+2 <= r.right() && y+2 <= r.bottom() {
+					vector.DrawFilledRect(screen, float32(x), float32(y), 2, 2, col, false)
+				}
+			}
+		}
+		return
+	}
 	ally := g.battleSide()
 	for side := range b.Sides {
 		col := g.battleUnitDotFoe

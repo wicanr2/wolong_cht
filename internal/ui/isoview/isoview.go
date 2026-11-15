@@ -144,6 +144,17 @@ type View struct {
 	minimap      *ebiten.Image
 	minimapField *tactical.Field
 	minimapRev   int
+	miniMarks    [battle.Width][battle.Width]uint8
+	miniField    *tactical.Field
+	miniRev      int
+	miniTiles    [battle.Width][battle.Width]byte
+	miniLine     int
+	miniCursor   [2]int
+	miniErased   struct {
+		valid bool
+		x, y  int
+		value uint8
+	}
 
 	// camWorldX／camWorldY 保存原版 word_1D328／word_1D32A 的世界格原點。
 	// sub_1DC9D 會在建立畫面串列後，才把它們換算成投影的 col／row
@@ -1059,8 +1070,22 @@ func (v *View) drawRetained(x, y, z, raw int, erase bool) {
 		*slot = battleDisplaySlot{set: true, entry: battleDisplayEntry{kind: displayRawUnit, raw: raw + 1 - upper}}
 	}
 }
-func (v *View) EraseSoldierDrawing(x, y, z int) { v.drawRetained(x, y, z, 0, true) }
+func (v *View) EraseSoldierDrawing(x, y, z int) {
+	v.syncMinimapMarks()
+	v.miniErased.valid = x >= 0 && x < battle.Width && y >= 0 && y < battle.Width
+	if v.miniErased.valid {
+		v.miniErased.x, v.miniErased.y, v.miniErased.value = x, y, v.miniMarks[y][x]
+		v.miniMarks[y][x] = 0
+	}
+	v.drawRetained(x, y, z, 0, true)
+}
 func (v *View) DrawSoldierDrawing(role int, d tactical.SoldierDrawing) {
+	v.syncMinimapMarks()
+	v.miniErased.valid = false
+	if d.X >= 0 && d.X < battle.Width && d.Y >= 0 && d.Y < battle.Width {
+		v.miniMarks[d.Y][d.X] = uint8(role + 1)
+	}
+
 	flags := int(d.PoseStep)
 	if d.Hurt {
 		flags |= battle.PoseFlagFront
@@ -1072,6 +1097,12 @@ func (v *View) DrawSoldierDrawing(role int, d tactical.SoldierDrawing) {
 	v.drawRetained(d.X, d.Y, d.Z, raw, false)
 }
 func (v *View) DrawDeathDrawing(role int, d tactical.Death) {
+	// 1B360只更新屍體，縮圖兵點到1B3B2移除時才擦掉。
+	if v.miniErased.valid {
+		v.miniMarks[v.miniErased.y][v.miniErased.x] = v.miniErased.value
+		v.miniErased.valid = false
+	}
+
 	d.Side = role
 	v.drawRetained(d.X, d.Y, d.Z, deathDisplaySource(d), false)
 }
@@ -1100,4 +1131,66 @@ func displayCompositeKey(grid *battleDisplayGrid, row, anchor, z0, z1 int) compo
 		}
 	}
 	return key
+}
+
+// MinimapMarkers依單兵擦除／登錄順序保存角色色，0空、1玩家、2對方。
+// 回傳固定大小複本，介面不會改寫呈現狀態。
+func (v *View) MinimapMarkers() [battle.Width][battle.Width]uint8 {
+	v.syncMinimapMarks()
+	return v.miniMarks
+}
+func (v *View) clearMinimapLine(x int) {
+	if x < 0 || x >= battle.Width {
+		return
+	}
+	for y := range v.miniMarks {
+		v.miniMarks[y][x] = 0
+	}
+}
+func (v *View) clearMinimapCross(x, y int) {
+	v.clearMinimapLine(x)
+	if y >= 0 && y < battle.Width {
+		clear(v.miniMarks[y][:])
+	}
+}
+func (v *View) syncMinimapMarks() {
+	if v == nil || v.observed == nil || v.observed.Field == nil {
+		return
+	}
+	b := v.observed
+	f := b.Field
+	line := b.Sides[b.PlayerSide].Line
+	cursor := [2]int{v.cursorX, v.cursorY}
+	initial := v.miniField != f
+	if initial {
+		v.miniMarks = [battle.Width][battle.Width]uint8{}
+		v.miniField = f
+		v.miniErased.valid = false
+	}
+	if initial || v.miniRev != f.Revision() {
+		for y := range v.miniTiles {
+			for x, old := range v.miniTiles[y] {
+				tile := f.Tile(x, y)
+				if !initial && tile != old {
+					v.miniMarks[y][x] = 0
+				}
+				v.miniTiles[y][x] = tile
+			}
+		}
+		if !initial {
+			v.clearMinimapCross(cursor[0], cursor[1])
+			v.clearMinimapLine(line)
+		}
+		v.miniRev = f.Revision()
+	}
+	if !initial && v.miniLine != line {
+		v.clearMinimapLine(v.miniLine)
+		v.clearMinimapLine(line)
+	}
+	if !initial && v.miniCursor != cursor {
+		v.clearMinimapCross(v.miniCursor[0], v.miniCursor[1])
+		v.clearMinimapCross(cursor[0], cursor[1])
+		v.clearMinimapLine(line)
+	}
+	v.miniLine, v.miniCursor = line, cursor
 }
