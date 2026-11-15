@@ -227,10 +227,8 @@ func (b *Battle) doAttackAction(side, k int) {
 		b.shootSpecial(side, k, e)
 		return
 	}
+	// 1AC96同／低平面直接返回；近戰交由1B533的移動碰撞觸發。
 	s.GoalZ = e.Z
-	if abs(s.X-e.X)+abs(s.Y-e.Y) <= 1 && s.Z == e.Z {
-		b.attackCollision(side, s, e)
-	}
 }
 
 // doScaleWall 是命令3／內部6；城上當拍攻擊，其他情況只在新命令時固定目標。

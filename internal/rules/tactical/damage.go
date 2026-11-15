@@ -81,6 +81,8 @@ func (b *Battle) meleeHit(side int, attacker, e *Soldier) bool {
 	if chance < 0x46 {
 		return false
 	}
+	// 1B67E：一般近戰命中重設受擊者發射冷卻，箭傷與大將受擊另走各自分支。
+	e.ProjectileCooldown = 8
 	return b.applyHit(e, damage)
 }
 

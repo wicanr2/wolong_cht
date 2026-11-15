@@ -256,7 +256,7 @@ GPU最多兩頁快取，其他季節、液晶、未選頁與讀圖失敗沿原�
 
 | 日期／目前程式 | 最近驗證 | 狀態 | 交付物 |
 |---|---|---|---|
-| 2026-11-15；wlgame-cao-motion307-r2 | 正常登城前395拍37,920兵次27欄位／RNG與1499筆投射物相同，含55筆特殊記錄；六案原版／typed自動比較、32組角色邊界、三類負對照、41套件冷測／vet；正常GUI85點／25圖、249–256拍同拍特殊動畫 | 修正登城結構物碰撞成功返回、頭格單兵優先及水平StepZ byte溢位。846拍自然敗退返回；GUI另有命令，不作原版同輸入戰果聲明。剩396拍HitGeneral／RNG、401拍座標、完整像素及正常玩家守方動態，Issues #16／#24開啟 | [spec159](docs/spec/159-tactical-command-movement-order.md)、[正式證據](workplace/scratch/ui-windows-20261104/cao-motion307-evidence.json)、[整合收據](workplace/scratch/ui-windows-20261104/cao-motion307-integration.json)、[下一步定位，假說](workplace/scratch/ui-windows-20261104/cao-motion307-next-attack.json) |
+| 2026-11-15；wlgame-cao-attack396-r1 | 正式正常登城前405拍38,880兵次27欄位／RNG與1641筆投射物一致，含55筆特殊；41筆原版分期、26案雙兵20欄及RNG次數、96組命令邊界、三類負對照、41套件冷測／vet；正常GUI86點／25圖、251–258拍同拍特殊動畫 | 修正命令階段額外近戰及一般近戰命中重設受擊發射冷卻8。806拍自然敗退返回，GUI有額外命令，不作原版同輸入戰果聲明。正式剩406拍補兵、442RNG；補兵DRAFT驗到463拍，464命令／排程仍有差異，未進正式。完整像素與正常玩家守方動態仍沿Issues #16／#24 | [spec159](docs/spec/159-tactical-command-movement-order.md)、[正式證據](workplace/scratch/ui-windows-20261104/cao-attack396-evidence.json)、[整合收據](workplace/scratch/ui-windows-20261104/cao-attack396-integration.json)、[補兵草稿入口](workplace/scratch/ui-windows-20261104/cao-birth406-draft.json) |
 | 2026-11-15；wlgame-cao-pose-r1 | 原版前228拍21,888筆人物raw／XYZ全等，229拍初差；41套件冷測／vet、六類負對照；84筆倒地邊界與規則相位全等；正常GUI79點／22圖、277–281拍同拍補抓 | 修正走路相位提早一幀、同拍晚換位／受擊提早顯示，補兵登錄後翻相位。人物／屍體色段依玩家角色；720拍自然返回。完整像素合成、特殊投射物及守方動態樣本仍有界 | [spec159](docs/spec/159-tactical-command-movement-order.md)、[正式比較](workplace/scratch/ui-windows-20261104/cao-pose-formal-comparison.json) |
 | 2026-11-14；wlgame-cao-death-r1 | 14案84次原版受控比較全等；41套件冷測／vet、六類負對照；正常滑鼠71點／17圖，自然收尾返回 | 倒地沿單兵槽序推進，已輪過者等下拍；保留受傷前姿態至首次倒地處理。兩層佔位清除後下一拍才補兵。GUI826拍，完整像素、守方色彩、出生幾何與世界結算仍有界 | [spec68](docs/spec/68-death-animation.md)、[整合收據](workplace/scratch/ui-windows-20261104/cao-death-integration.json)、[正常GUI](workplace/scratch/ui-windows-20261104/cao-death-remake-gui.json) |
 | 2026-11-14；wlgame-cao-retreat-order-r1 | 12個原版受控樣本24階段全等；正常1471–1476拍我方288兵次11欄相同、終點1476拍；41套件冷測／vet、八類負對照；正常滑鼠71點／17圖、自然收尾返回 | 撤退先交六隊長、再傳隊員，拒絕重複全軍令；首次固定出口Goal／Step並入尋路佇列，保留舊命令。大將先檢查門檻再扣體力。完整旗標／敵方後段／動畫仍有界 | [spec141](docs/spec/141-retreat-countdown.md)、[窗口收據](workplace/scratch/ui-windows-20261104/cao-retreat-order-after-window.json)、[正常GUI](workplace/scratch/ui-windows-20261104/cao-retreat-order-remake-gui.json) |
@@ -1101,6 +1101,14 @@ DOSBox-X 那條路**不刪**：它是這一條的正對照，而且 PC-98 版只
 ---
 
 ## 6. 已被推翻的斷言
+
+### 2026-11-15：所有隊長都不補兵
+
+Go舊補兵註解用「大將倒下全隊退卻」推論排除每隊第一格，把大將與其他兵種的隊長混在一起。
+原版正常450拍槽8為Kind18騎兵隊長，已從死亡記錄補回X1、HP200；`1B413`有待機兵時沒有排除隊長，
+待機兵不足時才由`1B445–1B450`另判隊長退卻。
+原始窗口、IDA Pro9.4 DOS/V linear來源與正式缺口見[補兵草稿](workplace/scratch/ui-windows-20261104/cao-birth406-draft.json)。
+目前正式Go仍有這個缺口，草稿463拍後還有命令／槽序差異，不能把本項訂正當作正式補兵已完成。
 
 ### 2026-11-14：退卻每拍重設出口、全軍令直接寫所有隊員
 
