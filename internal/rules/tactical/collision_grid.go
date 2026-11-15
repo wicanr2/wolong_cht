@@ -178,3 +178,9 @@ func costCell(x, y, plane int) (int, bool) {
 	}
 	return plane*0x1000 + y*Width + x, true
 }
+
+// 1B40E and byte ptr [si],10h；其他byte與PathQueued保留。
+func (s *Soldier) clearPresenceFlags() {
+	s.Alive = false
+	s.TargetRefresh, s.Swapped, s.MoveFlag, s.HighTerrain = false, false, false, false
+}

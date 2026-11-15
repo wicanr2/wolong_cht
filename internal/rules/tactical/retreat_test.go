@@ -111,10 +111,12 @@ func TestFullRetreatStopsOnlyRetiringSideReinforcements(t *testing.T) {
 	b := newTestBattle(flatField())
 	b.Sides[0].Soldiers[0].Alive = false
 	b.Sides[0].Soldiers[1].Alive = false
+	b.Sides[0].Soldiers[0].Y = 25
+	b.Sides[0].Soldiers[1].Y = 26
 	b.Sides[0].Soldiers[2].Cmd, b.Sides[0].Soldiers[2].Next = Retreat, Retreat
 	b.Sides[0].Reserve[0] = 17
 	b.reinforce()
-	if !b.Sides[0].Soldiers[1].Alive || b.Sides[0].Reserve[0] != 16 {
+	if !b.Sides[0].Soldiers[0].Alive || !b.Sides[0].Soldiers[1].Alive || b.Sides[0].Reserve[0] != 15 {
 		t.Fatal("隊長不在與個別退卻仍應補兵")
 	}
 }

@@ -83,13 +83,17 @@ func (b *Battle) updateSoldierCommand(side, k int) {
 		s.StepZ = 0
 	}
 
+	if changed && k%PerSquad == 0 && (s.Cmd == Form || s.Cmd == Attack || s.Cmd == Charge || s.Cmd == ScaleWal) {
+		for j := k + 1; j < k+PerSquad; j++ {
+			b.Sides[side].Soldiers[j].receiveTargetOrder(s.Cmd)
+		}
+		if s.Cmd == Charge && side == DefenderSide && b.Field.IsSiege() {
+			b.SortieBreaksWalls()
+		}
+	}
+
 	switch s.Cmd {
 	case Form:
-		if changed && k%PerSquad == 0 {
-			for j := k + 1; j < k+PerSquad; j++ {
-				b.Sides[side].Soldiers[j].receiveTargetOrder(Form)
-			}
-		}
 		b.doFormation(side, k)
 	case Attack, Charge:
 		b.doAttack(side, k)
@@ -182,7 +186,7 @@ func (b *Battle) walkToFormation(side, k int) bool {
 // 弓兵站著放箭，其餘追過去。
 func (b *Battle) doAttack(side, k int) {
 	s := &b.Sides[side].Soldiers[k]
-	if s.Stamina > StaminaFighting {
+	if s.Cmd != Attack && s.Stamina > StaminaFighting {
 		s.Stamina = StaminaFighting
 	}
 	b.doAttackAction(side, k)
@@ -191,6 +195,13 @@ func (b *Battle) doAttack(side, k int) {
 // doAttackAction 不施加突擊餘力上限；守陣共用此兵種動作入口。
 func (b *Battle) doAttackAction(side, k int) {
 	s := &b.Sides[side].Soldiers[k]
+	if s.IsGeneral() && s.Cmd == Attack {
+		if b.walkToFormation(side, k) {
+			s.Stamina = StaminaFull
+		}
+		return
+	}
+
 	if s.Target < 0 {
 		return
 	}
@@ -210,11 +221,6 @@ func (b *Battle) doAttackAction(side, k int) {
 		}
 	}
 
-	if s.IsGeneral() && s.Cmd == Attack {
-		// 命令 1 時大將只移動不攻擊。
-		s.GoalX, s.GoalY, s.GoalZ = e.X, e.Y, e.Z
-		return
-	}
 	if s.Kind == Archer {
 		if !refreshed {
 			s.GoalX, s.GoalY = e.X, e.Y
@@ -327,7 +333,7 @@ func (b *Battle) doRetreat(side, k int) {
 		edge = MaxCoord
 	}
 	if s.X == edge {
-		s.Alive = false
+		s.clearPresenceFlags()
 		b.clearUnitCollision(side, k)
 		// ⭐ 走到畫面外的兵**算生還**（原版 `sub_1B4B8` 的 `ah = 0`
 		// 那條路加一，docs/spec/65）。戰死的走同一支但不加。

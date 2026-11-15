@@ -59,6 +59,9 @@ func TestTacticalBattleAlwaysResolves(t *testing.T) {
 			w.Corps[la].X, w.Corps[la].Y, w.Corps[la].Alive,
 			w.Corps[lb].X, w.Corps[lb].Y, w.Corps[lb].Alive)
 	}
+	// 合成場沒有AI腳本，玩家須明確突擊；攻擊令1的大將依原版回陣位。
+	// 保留碰撞換位的完整收尾閘，不要求無腳本雙方停手也必定結束。
+	p.Battle.Order(p.Battle.PlayerSide, -1, tactical.Charge)
 	for n := 1; n <= 40; n++ {
 		if p.Battle.Run(5000) {
 			t.Logf("★ %d 千 tick 內打完，勝方 %d", n*5, p.Battle.Winner)

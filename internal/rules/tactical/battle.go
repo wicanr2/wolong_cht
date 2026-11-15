@@ -710,7 +710,6 @@ func (b *Battle) Step() {
 	b.drainPathQueue()
 	var present [2]int
 	var fresh [2]int
-	var deathsHandled [2]uint64
 	for _, i := range [2]int{b.PlayerSide, 1 - b.PlayerSide} {
 		for k := range b.Sides[i].Soldiers {
 			if b.Sides[i].Soldiers[k].Alive {
@@ -722,12 +721,11 @@ func (b *Battle) Step() {
 				if b.Sides[i].Soldiers[k].Stamina != 0 {
 					fresh[i]++
 				}
-			} else if b.stepDeath(i, k) {
-				deathsHandled[i] |= 1 << uint(k)
+			} else if !b.stepDeath(i, k) {
+				b.reinforceSoldier(i, k)
 			}
 		}
 	}
-	b.reinforceExcept(deathsHandled)
 
 	b.freshCounts = fresh
 	playerAdvantage := computeAdvantage(fresh[b.PlayerSide], fresh[1-b.PlayerSide])
@@ -801,52 +799,63 @@ func (b *Battle) drainSiegeGeneral() {
 }
 
 // reinforce 讓待機的兵補進場（說明書 4.1 的輸送帶）。
-func (b *Battle) reinforce() { b.reinforceExcept([2]uint64{}) }
-
-func (b *Battle) reinforceExcept(blocked [2]uint64) {
-	for i := range b.Sides {
-		// 1B43E只停止全軍撤退的一側；待機兵保留供戰後結算。
-		if b.endPhase == i+1 {
-			continue
-		}
-		s := &b.Sides[i]
-		for k := 0; k < Squads; k++ {
-			if s.Reserve[k] == 0 {
-				continue
-			}
-			for j := k * PerSquad; j < (k+1)*PerSquad; j++ {
-				if blocked[i]&(1<<uint(j)) != 0 || s.Soldiers[j].Alive {
-					continue
-				}
-				if b.unitDying(i, j) {
-					continue
-				}
-				// 隊長那一格不補——大將倒下是全隊退卻，不是換人。
-				if j == k*PerSquad {
-					continue
-				}
-				x, y := b.formationSpot(i, j)
-				z := b.Field.StandLevel(x, y)
-				if b.unitCollision != nil && b.unitCollision.at(x, y, z) >= 0 {
-					continue
-				}
-				s.Soldiers[j] = Soldier{
-					Alive: true, Kind: s.Kinds[k], Power: s.squadPower(k),
-					HP: s.startHP(), Stamina: StaminaFull, Target: -1,
-					Cmd: Form, Next: s.Standing,
-					X: x, Y: y, Z: b.Field.StandLevel(x, y),
-				}
-				s.Soldiers[j].syncTerrain(b.Field, x, y, s.Soldiers[j].Z)
-				s.Soldiers[j].GoalX, s.Soldiers[j].GoalY = x, y
-				s.Soldiers[j].StepX, s.Soldiers[j].StepY = x, y
-				s.Reserve[k]--
-				b.drawUnitCollision(i, j)
-				b.recordSoldierDrawing(i, j, false)
-				s.Soldiers[j].PoseStep ^= 1
-				break
-			}
+func (b *Battle) reinforce() {
+	for _, side := range [2]int{b.PlayerSide, 1 - b.PlayerSide} {
+		for k := range b.Sides[side].Soldiers {
+			b.reinforceSoldier(side, k)
 		}
 	}
+}
+
+func (b *Battle) reinforceSoldier(side, k int) {
+	sd := &b.Sides[side]
+	unit := &sd.Soldiers[k]
+	if unit.Alive || b.unitDying(side, k) {
+		return
+	}
+	squad := k / PerSquad
+	if sd.Reserve[squad] <= 0 || b.endPhase == side+1 {
+		return
+	}
+	x := MinCoord
+	if b.Role(side) != 0 {
+		x = MaxCoord
+	}
+	y := unit.Y
+	if y < 0x10 {
+		y = 0x10
+	}
+	if y > 0x2f {
+		y = 0x2f
+	}
+	unit.X, unit.Y, unit.Z = x, y, 0
+	unit.PlaneHigh, unit.OnWall, unit.Climbing = 0, false, false
+	if b.unitCollision != nil {
+		cell := y*Width + x
+		if b.unitCollision.cells[cell]&0x7f != 0 || b.unitCollision.cells[cell+0x1000]&0x7f != 0 {
+			return
+		}
+	}
+	next := unit.Next
+	if next == Retreat {
+		next = unit.Cmd
+	}
+	if next == wallAttack {
+		next = ScaleWal
+	}
+	if next == Holding {
+		next = Form
+	}
+	unit.Alive, unit.TargetRefresh = true, true
+	unit.HP, unit.Stun = sd.startHP(), 0
+	unit.Hurt, unit.HitGeneral, unit.PoseStep = false, false, 0
+	unit.Cmd, unit.Next = Duel, next
+	unit.syncTerrain(b.Field, x, y, 0)
+	sd.Reserve[squad]--
+	b.drawUnitCollision(side, k)
+	b.recordSoldierDrawing(side, k, false)
+	unit.Swapped = false
+	unit.PoseStep ^= 1
 }
 
 func sideName(i int) string {

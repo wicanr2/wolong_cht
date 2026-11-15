@@ -211,15 +211,20 @@ func TestStaminaOnlyRefillsOnArrival(t *testing.T) {
 	}
 }
 
-// 攻擊時疲勞度被壓到 40 —— 打起來就回不到滿的。
-func TestAttackCapsStamina(t *testing.T) {
-	b := newTestBattle(flatField())
-	s := &b.Sides[0].Soldiers[2]
-	s.Stamina = StaminaFull
-	s.Cmd, s.Next = Attack, Attack
-	b.updateSoldier(0, 2)
-	if s.Stamina > StaminaFighting {
-		t.Errorf("攻擊中疲勞度 %d，上限應為 %d", s.Stamina, StaminaFighting)
+// 攻擊1保留餘力，突擊2才壓到40；對應原版1AB9C／1AB7C。
+func TestAttackAndChargeStaminaLimits(t *testing.T) {
+	for _, c := range []struct {
+		cmd  Command
+		want int
+	}{{Attack, 80}, {Charge, 40}} {
+		b := newTestBattle(flatField())
+		s := &b.Sides[0].Soldiers[2]
+		s.Stamina = 80
+		s.Cmd, s.Next = c.cmd, c.cmd
+		b.updateSoldierCommand(0, 2)
+		if s.Stamina != c.want {
+			t.Fatalf("command%d stamina%d want%d", c.cmd, s.Stamina, c.want)
+		}
 	}
 }
 
@@ -1104,31 +1109,21 @@ func TestRealScriptsRun(t *testing.T) {
 
 // 補進場的兵要用**那一隊的兵種**，不能用隊長的。
 //
-// 第 0 隊的隊長是大將（兵種 0），照隊長補會讓整隊都變成大將——
-// 而大將不攻擊、不會陣亡，一整隊站著不動，戰鬥就永遠打不完。
-func TestReinforcementsKeepSquadKind(t *testing.T) {
+// 第0隊隊長是大將，隊員各自保留原兵種；補兵不抄隊長或重建整筆。
+// 原版1B413沒有排除隊長，不能因隊員補入就要求所有人都變成步兵。
+func TestReinforcementsKeepExistingKind(t *testing.T) {
 	b := newTestBattle(flatField())
-	// 把第 0 隊打光，讓待機的補上來。
-	for i := 0; i < PerSquad; i++ {
-		b.Sides[0].Soldiers[i].Alive = false
+	for k := 0; k < PerSquad; k++ {
+		b.Sides[0].Soldiers[k].Alive = false
+		b.Sides[0].Soldiers[k].Y = 20 + k
 	}
-	for i := 0; i < 40; i++ {
-		b.reinforce()
-	}
-	generals := 0
-	for i := 0; i < PerSquad; i++ {
-		s := &b.Sides[0].Soldiers[i]
-		if !s.Alive {
-			continue
+	before := b.Sides[0].Soldiers
+	b.reinforce()
+	for k := 0; k < PerSquad; k++ {
+		s := b.Sides[0].Soldiers[k]
+		if !s.Alive || s.Kind != before[k].Kind {
+			t.Fatalf("slot%d retained kind%v, got%+v", k, before[k].Kind, s)
 		}
-		if s.Kind == General {
-			generals++
-		} else if s.Kind != Infantry {
-			t.Errorf("第 0 隊補進來的兵種是 %v，應為步兵", s.Kind)
-		}
-	}
-	if generals > 0 {
-		t.Errorf("補進來 %d 個大將——補兵抄了隊長的兵種", generals)
 	}
 }
 

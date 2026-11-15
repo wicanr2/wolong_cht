@@ -2120,6 +2120,9 @@ func TestPlayerBattleGoesTactical(t *testing.T) {
 		t.Error("戰術戰鬥還沒打完，世界卻繼續走了")
 	}
 
+	// 合成空地沒有BATTLE.DAT腳本；大將的攻擊令1沿原版回陣位。
+	// 此處明確下玩家突擊令，驗證指揮、自然收尾與世界結算的接點。
+	p.Battle.Order(p.Battle.PlayerSide, -1, tactical.Charge)
 	if !p.Battle.Run(200000) {
 		t.Fatal("戰術戰鬥跑不完")
 	}

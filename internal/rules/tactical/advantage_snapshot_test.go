@@ -98,6 +98,7 @@ func TestFreshSnapshotExcludesBirthAndKeepsEarlierCount(t *testing.T) {
 	b := freshSnapshotBattle([2]int{}, 0)
 	b.Sides[0].Reserve[1] = 1
 	b.Sides[0].Kinds[1] = Infantry
+	b.Sides[0].Soldiers[8] = Soldier{Kind: Infantry, Stamina: 2, Y: 40, Cmd: Duel, Next: Duel, Target: -1}
 	b.Step()
 	if b.freshCounts[0] != 0 || b.Sides[0].Fresh() != 1 {
 		t.Fatal("newborn must wait until its own movement turn to enter the count", b.freshCounts, b.Sides[0].Fresh())

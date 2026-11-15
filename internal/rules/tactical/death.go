@@ -109,6 +109,9 @@ func (b *Battle) advanceDeath(i int) bool {
 	d.Pending = false
 	if d.Side >= 0 && d.Side < len(b.Sides) && d.Slot >= 0 && d.Slot < SoldiersOnFoot {
 		b.Sides[d.Side].Soldiers[d.Slot].Stun = d.FramesLeft
+		if d.FramesLeft <= 0 {
+			b.Sides[d.Side].Soldiers[d.Slot].clearPresenceFlags()
+		}
 	}
 	if d.FramesLeft > 0 {
 		return false
@@ -139,8 +142,8 @@ func snapshotDeathPose(s *Soldier) deathPose {
 	return deathPose{int(s.Facing), uint8(s.PoseStep), s.Hurt, s.HitGeneral}
 }
 func (b *Battle) beginDeath(s *Soldier, before deathPose) {
-	s.HP, s.Alive = 0, false
-	s.TargetRefresh, s.Swapped, s.MoveFlag, s.HighTerrain = false, false, false, false
+	s.HP = 0
+	s.clearPresenceFlags()
 	s.Stun = DeathFrames
 	b.addDeathFor(s, before)
 }
