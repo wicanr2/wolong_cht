@@ -1819,3 +1819,13 @@
 - 驗證工具修正：忽略metadata的錯版因now變數未用而先編譯失敗，保存首次來源／log後補保留變數，最後以行為失敗才計負對照。首次ALSA null端沒有實時等待，短測寫出440860672-byte診斷；確認擁有權、記雜湊並保存1MiB前綴後移除全檔，改為有界且按採樣率讀取的FIFO端重跑，未調遊戲速度或等待期限。
 - [spec159](docs/spec/159-tactical-command-movement-order.md)、[正式證據](workplace/scratch/ui-windows-20261104/cao-sfxprio-evidence.json)、[本機遊戲抽驗](workplace/scratch/ui-windows-20261104/cao-sfxprio-game-review.html)及[整合收據](workplace/scratch/ui-windows-20261104/cao-sfxprio-integration.json)保存16份來源、binary、輸入／seed、工具及產物雜湊；前輪124份凍結產物未改。完整UI像素、原版守方同狀態動態與其他場面沿既有Issues，目標保持active。原素材及衍生音訊／截圖只留本機，依既有授權commit、push，不建立Release。
 - 收尾：1138列分流、596份文件過期斷言及1911個追蹤檔素材檢查通過。官方文件入口仍止於65個既有失效連結，新增0；幽靈引用352筆／323種同基線，歷史census.tsv符號層未執行。八張PNG與三個OGG內嵌資料全等；16份來源、前輪124份與本輪產物雜湊、root-owned檔／md目錄檢查、Docker清理與提交／遠端main核對保存於整合收據。
+
+## 2026-11-15：正常玩家守方320拍動態補驗
+
+- 接續ec68b581，沿remake對拍路由與verification-and-handoff停止線，只補原版守方同狀態動態。沿playtest127正常曹操第一劇本取得汝南，等待袁術軍團3自然反攻37；沒有siege／direct-entry、搬座標或注入勝負。自然11B5A SI2300 BX2B80在戰術初始化前置入預先固定258-byte seed，世界RNG不改。
+- 原版dosgolem以指令數及1ADC8／1A065觀測，正常入戰381381065指令、196/4/10 5時。前320拍96槽27欄及完整258-byte RNG全等；10240次投射物活動判定、661筆活動記錄各9欄、3520筆城牆各6欄全等。場地100旋轉，角色映射守方1／攻方0；實際BATTLE.DAT的256-byte腳本唯一對應戰術值3。
+- 六張同拍圖第一拍僅95游標像素不同；其餘含原版對白／門強度條，診斷區外0差異。已目視1／120／300拍地形、旗、人與遮擋。右圖只含正式戰場繪圖器，使用原版鏡頭與旗狀態，不稱完整GUI同像素；本輪不重跑桌面GUI，前輪守方83點維持歷史證據。
+- 本輪未改正式Go來源，不為已吻合分支加特例。原版正常路徑與目前typed／GPU受控重播分開標示，兩個重播的320拍核心輸出逐byte相同。沒有重做音效、硬體時鐘或整套無關測試。
+- 驗證腳本問題：舊probe的case縮排是空白，修正生成器的tab錨點後才產生來源；第一次由/output執行Go被internal套件規則拒絕，改由同工作樹的/repo/workplace路徑執行，再移除縮小probe後未使用的import。均為工具／環境錯誤，未列產品缺陷。
+- [spec159](docs/spec/159-tactical-command-movement-order.md)、[目前來源／輸入](workplace/scratch/ui-windows-20261104/cao-defender-dyn-evidence.json)、[本機同拍對照](workplace/scratch/ui-windows-20261104/cao-defender-dyn-review.html)與[整合收據](workplace/scratch/ui-windows-20261104/cao-defender-dyn-integration.json)保存38份來源、69輸入及產物雜湊；前輪171份凍結產物未改。完整UI、整場守方戰果及其他場面未由本樣本代證，目標active。原素材、截圖及私有probe不入Git，沿既有授權commit／push，不建立Release。
+- 收尾：1138列分流、596份文件過期斷言與1911個追蹤檔素材檢查通過。官方文件入口仍有65個歷史失效連結，新增0；幽靈引用352筆／323種未增加，歷史census.tsv符號層未執行。38份來源封存、69輸入與前輪171份產物雜湊、擁有權及Docker清理、提交與遠端核對保存於本輪整合收據；沒有留下本輪容器。
