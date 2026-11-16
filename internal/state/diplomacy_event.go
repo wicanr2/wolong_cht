@@ -176,7 +176,7 @@ func (w *World) ResolveDiplomacyWithResult(option DiplomacyOption) (DiplomacyRes
 	applied := false
 	switch choice.Kind {
 	case DiplomacyCooperation:
-		applied = w.finishQueuedCooperation(choice.Source, choice.Invader, choice.Target, result.Response, result.Amount)
+		applied, result.ReleasedGenerals = w.finishQueuedCooperationWithReturnees(choice.Source, choice.Invader, choice.Target, result.Response, result.Amount)
 	case DiplomacyCeasefire:
 		applied, result.ReleasedGenerals = w.finishQueuedCeasefireWithReturnees(choice.Source, choice.Target, result.Response, result.Amount)
 	}

@@ -263,3 +263,35 @@ READY首稿把526稱空槽的診斷保留於快照，實作目標raw1／527與�
 GUI用seed1、自然7時核對畫面報價與實際付款；精確原版報價由同入口完整RNG對照負責，不冒稱這兩組條件相同。
 [re12勘誤](../re/12-diplomacy-dialogue.md#2026-11-16事件67返還與固定cf零)及
 [整合收據](../../workplace/scratch/closeout-envoy-captive-20261116/integration.json)保存來源、限制與單一研究列的evidence-only分流。
+
+## 2026-11-16：事件2協力選擇的返還與宣戰順序
+
+**狀態：CONFORMED，限事件2協力選擇後的返還及宣戰對話。** READY早於正式修改封存。
+
+- 沿本頁DOS/V KI.EXE身分、IDA9.4 linear及dosgolem
+  `f79eab6db8c64a524a06535e53e5d32b0bbcf7c8`。四函式每條指令對回EXE檔案偏移，見
+  [指令收據](../../workplace/scratch/closeout-cooperation-captive-20261116/code-proof.json)。
+- 已證實：13251先13C3D回報，AL<2才13258→135ED，逐人13627→150D7；所有返還對白
+  完成後1325D才13526。玩家原先與侵攻方和平時13546選1A0、13588顯示宣戰，不能宣戰先於返還。
+- 以已驗正常產生事件2的predispatch存檔為底，事前設Source/Player0、Invader12、Victim2、
+  Funds0/2各50000、合法Duty4／Faction關押方／Captor舊主及扣除原勢力將數。
+  九案取無俘虜、返玩家、返受攻方、雙向、多人、10000付費、拒絕、30000超額、原已交戰，
+  完整258-byte RNG在每案量測前固定，測量中不寫結果，實跑原版選單／數字鍵及右鍵等待。
+  原版直接131AE於196/5/6 12時，正常四槽多人讀檔為13時，各自完整比較。
+- 玩家39／45返回時各有37通報、本人raw4／肖像49及24的199h請罪；40返受攻方靜默。
+  拒絕及超額不釋放；超額沿421群組警告並扣30。原已交戰不重複宣戰通知。
+- 正式接線：ResolveDiplomacyWithResult的cooperation分支沿既有WithReturnees回傳實際ID。
+  enqueueDiplomacyTalk先處理ReleasedGenerals，再處理TalkNotices的宣戰，沿共用150D7 UI，
+  不複製規則、不新增額外提示、熱鍵或存檔欄位。付款／採納／俘虜釋放及宣戰規則不改。
+- 驗收為九案加正常多人案共十份完整22208-byte區塊／258-byte RNG、返還ID及存檔讀回，
+  真實滑鼠逐則肖像／停時／順序、對話raw槽回歸、舊漏返還及只恢復舊順序的錯版拒絕、
+  冷測／vet與共享回報／野戰抽驗。Go仍在對話入列前結算，原版在結果確認後，不稱中間相位一致。
+
+十份完整區塊／RNG、返還ID及存檔讀回全等。九條滑鼠147項／77圖、共享停戰／外交官協力兩條26項／13圖、
+全專案冷測／vet及野戰62項／9圖通過；舊漏返還GUI及只還原舊順序的錯版均拒絕。
+已抽看原版與Go返還通報、本人請罪及最後宣戰六框，文字raw37／434／487回歸也驗證順序。
+初次GUI憑印象假設編號12為呂布，原始資料實為袁術；已查表修正驗證，原失敗保留。
+GUI用seed1自然13時驗操作與實際款項，精確數值由十份同入口完整RNG對照負責，
+不稱中間寫回相位或鏡頭／校訂文字逐像素一致。詳見
+[re12](../re/12-diplomacy-dialogue.md#2026-11-16事件2返還先於宣戰)及
+[整合收據](../../workplace/scratch/closeout-cooperation-captive-20261116/integration.json)。

@@ -2305,3 +2305,19 @@
   未改存檔格式、熱鍵、強化AI或HD。文件初次用已證實起頭使生成器略過整列，依來源契約改為明示人工分支未知。
 - 來源、READY、原版／HD及前批不變、65條歷史缺鏈基準、擁有權與Docker清理見
   [整合收據](workplace/scratch/closeout-envoy-captive-20261116/integration.json)；commit／push另見repository.json。
+
+## 2026-11-16：事件2返還先於宣戰
+
+- 以已驗N8正常產生事件2的predispatch存檔為底，固定完整258-byte RNG，Source0／Invader12／Victim2，
+  九案涵蓋無俘虜、雙向／多人、10000付費、拒絕、30000超額與原已交戰。合法Duty4及舊主將數明列。
+  直接131AE原版12時與正常四槽多人13時各自比較，十份完整22208-byte區塊／RNG、返還ID及存檔讀回全等。
+- 唯讀稽核確認13258的135ED／150D7先完成，1325D才13526宣戰；四函式逐條bytes對回EXE，無新增逆向切片。
+  READY後僅把協力分支接至既有WithReturnees，呈現層先排返回者再排宣戰，付款／採納／釋放與宣戰規則不改。
+- 九條滑鼠147項／77圖、共享事件3／7兩條26項／13圖、全專案冷測／vet及野戰62項／9圖通過。
+  舊版4則不足6則、舊binary先宣戰而漏返還，以及只還原舊次序的錯版均被拒絕；已抽看原版／Go六個返還、請罪及宣戰框。
+- 初次GUI把編號12憑印象寫成呂布，實際原始資料是袁術。查表後改由raw槽回歸核文字，GUI核順序、肖像與停時；
+  同環境同命令乾淨重跑九條及兩錯版通過，原失敗保留。Go入列前、原版確認後的中間結算相位差異仍明列。
+- 未改格式、熱鍵、強化AI或HD，既有1119筆研究分流未改，遠端Issue只讀。
+  本地worklist既有一筆過期verify條件與65條歷史缺鏈分開記錄，不冒稱兩個入口全綠。
+  來源、READY、原版／HD及前批不變、擁有權、Docker清理見
+  [整合收據](workplace/scratch/closeout-cooperation-captive-20261116/integration.json)；commit／push另見repository.json。

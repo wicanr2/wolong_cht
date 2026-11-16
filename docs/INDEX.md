@@ -205,7 +205,7 @@
 | [`docs/re/117-c-ruler-sortie-restoration.md`](re/117-c-ruler-sortie-restoration.md) | 117：C 君主出陣與自動編成 | CONFORMED。14 個 C 函式、501 條原始指令通過局部同狀態驗證。 | 2026-10-09 |
 | [`docs/re/118-c-city-list-restoration.md`](re/118-c-city-list-restoration.md) | 118：C 據點清單與遷都 | CONFORMED。18 函式與 5 個 raw 入口通過同狀態驗證。 | 2026-10-09 |
 | [`docs/re/119-c-list-families-restoration.md`](re/119-c-list-families-restoration.md) | 119：C 軍團、武將與勢力清單 | CONFORMED。11 函式／12 raw，O0／O2 各 804 組完整狀態一致。 | 2026-10-09 |
-| [`docs/re/12-diplomacy-dialogue.md`](re/12-diplomacy-dialogue.md) | 12 — 停戰說服訊息索引：#190–#198 | 三變體與停戰說服索引已證實。2026-11-16補證事件6／7正常回報與返還； 13138固定CF0，原始calle… | 2026-08-09 |
+| [`docs/re/12-diplomacy-dialogue.md`](re/12-diplomacy-dialogue.md) | 12 — 停戰說服訊息索引：#190–#198 | 三變體與停戰說服索引已證實。2026-11-16補證事件2／3／6／7的返還對話； 13138固定CF0，原始cal… | 2026-08-09 |
 | [`docs/re/120-c-player-formation-restoration.md`](re/120-c-player-formation-restoration.md) | 120：玩家軍團編成的 C 還原 | CONFORMED。七函式，O0／O2 各 200 完整裝置案例與十錯版通過。 | 2026-10-09 |
 | [`docs/re/121-c-personnel-restoration.md`](re/121-c-personnel-restoration.md) | 121：原人事選單與內政官、外交官任免的 C | CONFORMED。七函式，O0／O2 各 2,332 完整裝置與十二錯版通過。 | 2026-10-09 |
 | [`docs/re/122-c-detail-panels-restoration.md`](re/122-c-detail-panels-restoration.md) | 122：據點資訊與軍團面板的原始 C | CONFORMED。十函式，O0／O2各700完整裝置與十二錯版通過。 | 2026-10-09 |

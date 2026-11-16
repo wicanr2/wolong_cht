@@ -210,11 +210,12 @@ func (g *game) enqueueDiplomacyTalk(c state.DiplomacyChoice, result state.Diplom
 			})
 		}
 	}
-	for _, notice := range result.TalkNotices {
-		g.enqueueTalkNotice(notice)
-	}
+	// 13258的135ED先等所有150D7返還對白，1325D才13526宣戰。
 	for _, id := range result.ReleasedGenerals {
 		g.enqueueReleasedGeneral(id)
+	}
+	for _, notice := range result.TalkNotices {
+		g.enqueueTalkNotice(notice)
 	}
 }
 

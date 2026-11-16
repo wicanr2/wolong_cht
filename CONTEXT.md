@@ -264,6 +264,7 @@ GPU最多兩頁快取，其他季節、液晶、未選頁與讀圖失敗沿原�
 
 | 日期／目前程式 | 最近驗證 | 狀態 | 交付物 |
 |---|---|---|---|
+| 2026-11-16；wlgame-closeout-cooperation-captive-r1 | 事件2九案及正常多人讀檔，共10份完整區塊／RNG／返還／存檔相同；滑鼠147項／77圖、共享回歸26項／13圖、冷測／vet與野戰62項／9圖，兩錯版拒絕 | 已補協力選擇後的逐名返還，全部返還確認後才宣戰。原已交戰不重複宣戰，拒絕／超額不返還；中間結算相位仍有限制 | [spec220](docs/spec/220-c-modal-control.md)、[re12](docs/re/12-diplomacy-dialogue.md)、[本輪收據](workplace/scratch/closeout-cooperation-captive-20261116/integration.json) |
 | 2026-11-16；wlgame-closeout-envoy-captive-r1 | 事件6八案、事件7兩案及正常多人讀檔，共11份完整區塊／RNG／通知／返還相同；滑鼠104項／42圖、共享3/9回歸20項／10圖、冷測／vet與野戰62項／9圖，兩錯版拒絕 | 已補外交官回報後的逐人返還；13138固定CF0已補證，移除誤設俘虜旗標而產生的72／76。相關formatter一列轉證據保留，其他1118列不變；中間結算相位仍有限制 | [spec220](docs/spec/220-c-modal-control.md)、[re12](docs/re/12-diplomacy-dialogue.md)、[本輪收據](workplace/scratch/closeout-envoy-captive-20261116/integration.json) |
 | 2026-11-16；wlgame-closeout-captive-r1 | 停戰俘虜七案與正常原版多人讀檔案，完整區塊／RNG及返還ID八份相同；滑鼠99項／54圖、共享事件9三案14項／4圖、冷測／vet與野戰62項／9圖，舊漏對話錯版拒絕 | 已補停戰後逐名返還通報與本人請罪，返回對方與拒絕維持靜默。原版AH七案皆0，未猜接72；中間資金／人事寫回相位及其他caller仍有限制 | [spec220](docs/spec/220-c-modal-control.md)、[本輪收據](workplace/scratch/closeout-captive-20261116/integration.json) |
 | 2026-11-16；wlgame-closeout-warning-zero-r1 | 事件13五個歸零邊界及正常原版讀檔49案，完整區塊／RNG六案相同；五條滑鼠29項／14圖、冷測／vet與野戰62項／9圖；三種錯版拒絕 | 修正輸入已零漏敗北、錯讀褒獎及敗北蓋住報告。先確認報告再顯示逐出；沿既有敗北外殼回launcher，原版恰好50的無關編組與中間扣Trust相位差異明列 | [spec219](docs/spec/219-c-event-handlers.md)、[re19勘誤](docs/re/19-outcome.md)、[本輪收據](workplace/scratch/closeout-warning-zero-20261116/integration.json) |

@@ -5,6 +5,7 @@ import (
 	"testing"
 
 	"github.com/wicanr2/wolong_cht/internal/assets/library"
+	"github.com/wicanr2/wolong_cht/internal/rules/diplomacy"
 	"github.com/wicanr2/wolong_cht/internal/state"
 )
 
@@ -21,6 +22,40 @@ func adoptedDiplomacyResultForTest(c state.DiplomacyChoice, option state.Diploma
 		}
 	}
 	return r
+}
+
+// 原版13258的返還對話全部完成後，1325D才宣戰。
+func TestCooperationReturnsCaptivesBeforeDeclaration(t *testing.T) {
+	lib, err := library.LoadWithOptions("../../workplace/orig/dosv", library.LoadOptions{
+		TalkJSON: "../../translations/talk-dosv-corrected.json",
+	})
+	if err != nil {
+		t.Fatal(err)
+	}
+	w, err := state.LoadScenario("../../workplace/orig/dosv/SINARIO.DAT", 0)
+	if err != nil {
+		t.Fatal(err)
+	}
+	w.Player, w.Trust = 0, 255
+	w.Factions[0].InvasionTarget = diplomacy.NoTarget
+	w.Friendship[0][12], w.Friendship[12][0] = diplomacy.Peace(40), diplomacy.Peace(50)
+	w.Generals[39].Faction, w.Generals[39].Captor = 2, 0
+	w.Generals[39].Duty, w.Generals[39].TalkVariant = state.DutyCaptive, 4
+	c := state.DiplomacyChoice{Kind: state.DiplomacyCooperation, Source: 0, Invader: 12, Target: 2,
+		InitialResponse: 1, InitialAmount: 20000, OfferAmount: 20000}
+	w.BeginDiplomacyChoice(c)
+	result, applied := w.ResolveDiplomacyWithResult(state.DiplomacyAcceptFree)
+	if !applied {
+		t.Fatal("cooperation not applied")
+	}
+	g := &game{lib: lib, world: w}
+	vars := g.diplomacyTalkVars(c, -1)
+	returned, _ := w.TalkNoticeVars(state.TalkNotice{General: 39, City: -1, Faction: -1, Amount: -1}, big5)
+	declared, _ := w.TalkNoticeVars(state.TalkNotice{General: w.Factions[0].Lord, Faction: 12, City: -1, Amount: -1}, big5)
+	assertTalkPairSample(t, lib, w,
+		[]int{377, g.diplomacyTalkPromptIndex(c) + 10, 47, 37, 434, 487},
+		[]map[byte]string{vars, vars, vars, returned, returned, declared}, "cooperation return before declaration",
+		func(g *game) { g.enqueueDiplomacyTalk(c, result) })
 }
 
 // 原版13262→135ED→150D7：停戰結果之後才依序通報返還與本人請罪。
