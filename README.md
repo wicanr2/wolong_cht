@@ -28,8 +28,9 @@ Android 不在這次桌面修正版範圍。
 
 開發中的桌面操作採[全滑鼠工具列](docs/spec/266-mouse-only-desktop-toolbar.md)，
 清單[按住拖曳與放開提交](docs/spec/274-original-list-scrollbar-drag.md)已完成正常流程抽驗。
-[HD規劃](docs/spec/275-hd-toolbar-portraits-and-tools.md)包含工具列模式切換、HD頭像、
-可選戰術AI加成與武將能力編輯，目前仍在設計階段。現行程式與證據以[CONTEXT](CONTEXT.md)為準。
+[HD與工具設計](docs/spec/275-hd-toolbar-portraits-and-tools.md)中的模式切換、頭像、戰略地圖、
+橫幅與部分據點景觀已接入桌面版；可選戰術AI加成與武將能力編輯仍在設計階段。
+現行程式與證據以[CONTEXT](CONTEXT.md)為準。
 HD美術方向已確認，以原版造型、視角、配置與強化原色為基準，樣本見[本機原版與HD重繪對照](workplace/hd-redraw-local-20261104/faithful/index.html)，直接雙擊HTML即可離線開啟。
 另有[大地圖HD本機預覽](workplace/hd-redraw-local-20261104/faithful/world/index.html)，三十五區試繪已覆蓋原版全圖，可切換區域、縮放與平移；局部美術仍待修整，正式遊戲已接範圍見下方。
 頭像已有[原版與HD本機對照](workplace/hd-redraw-local-20261104/faithful/portraits/index.html)，可檢視146張原圖參考重繪小樣。已接入可選桌面頭像模式，首次原版、切換後記住選擇，缺圖回原圖；正常新遊戲與勢力情報窗抽驗通過，尚未逐張取得美術接受。
@@ -44,6 +45,70 @@ HD美術方向已確認，以原版造型、視角、配置與強化原色為基
 加`-hd-locations workplace/hd-redraw-local-20261104/faithful`可把已同意的五組城池景觀接到情報窗。
 沿原版頁碼取圖，保留96×96位置與尺寸；未選頁、其他季節及液晶沿原圖。
 [景觀實際遊戲畫面](workplace/scratch/ui-windows-20261104/hd-location-game-review.html)包含五城、共用頁碼與原圖回退抽驗。
+
+## 原版／HD 畫面總覽
+
+人物、城池與地圖各四組，左側為松崗 DOS/V 原版素材，右側為依原圖重繪的 HD 選稿。
+這些是美術展示排版，為方便比較而放大，不是遊戲介面的實際尺寸，也不作像素對拍。
+原圖保留像素邊緣；HD 保留原版造型、視角與配置，強化線條、材質及原有色彩。
+點圖可看大圖。原始素材與可載入的 HD 圖庫仍留在本機，這裡只收展示渲染結果。
+
+### 人物
+
+已接入桌面 HD 頭像切換。以下是現行選稿，尚未逐張取得美術接受。
+
+| 曹操 | 關羽 |
+|---|---|
+| ![曹操：左原版，右HD重繪](docs/images/readme-hd-person-50.png) | ![關羽：左原版，右HD重繪](docs/images/readme-hd-person-114.png) |
+
+| 諸葛亮 | 劉備 |
+|---|---|
+| ![諸葛亮：左原版，右HD重繪](docs/images/readme-hd-person-125.png) | ![劉備：左原版，右HD重繪](docs/images/readme-hd-person-94.png) |
+
+### 城池
+
+選用已確認的四座據點景觀，分別對應原版景觀頁 6、14、2、5。
+遊戲情報窗沿用原版景觀位置與尺寸；此處放大展示重繪細節。
+
+| 許昌 | 滎陽 |
+|---|---|
+| ![許昌據點景觀：左原版，右HD重繪](docs/images/readme-hd-city-82.png) | ![滎陽據點景觀：左原版，右HD重繪](docs/images/readme-hd-city-63.png) |
+
+| 舞陽 | 虎牢關 |
+|---|---|
+| ![舞陽據點景觀：左原版，右HD重繪](docs/images/readme-hd-city-87.png) | ![虎牢關據點景觀：左原版，右HD重繪](docs/images/readme-hd-city-72.png) |
+
+### 地圖
+
+兩側使用相同的原世界取景範圍，展示四區地貌。這是區域選稿比較，未疊加遊戲中的城名、
+部隊與介面。正式戰略地圖已可切換 HD；接縫、局部美術與其他季節仍有待修整。
+
+| 中原 | 中原西北 |
+|---|---|
+| ![中原地圖：左原版，右HD重繪](docs/images/readme-hd-map-central.png) | ![中原西北地圖：左原版，右HD重繪](docs/images/readme-hd-map-northwest.png) |
+
+| 中原西南 | 東側外緣 |
+|---|---|
+| ![中原西南地圖：左原版，右HD重繪](docs/images/readme-hd-map-southwest.png) | ![東側外緣地圖：左原版，右HD重繪](docs/images/readme-hd-map-far-east.png) |
+
+### 戰場
+
+**戰場地形、城牆與單兵尚未 HD 重繪。** 以下四張是重製引擎沿用原版素材的現況，
+不是 HD 預覽。圖片來自受控場景重播與既有展示截圖，用來展示畫面，不代表自然遊玩或整場戰鬥驗收。
+戰術對話可使用 HD 頭像，這項能力不等於戰場圖庫已 HD 化。
+
+| 攻城進攻方 | 攻城防守方 |
+|---|---|
+| ![攻城進攻方現況，沿用原版戰場素材](docs/images/readme-battle-siege-attack.png) | ![攻城防守方現況，沿用原版戰場素材](docs/images/readme-battle-siege-defense.png) |
+
+| 部隊展開（既有截圖，未重拍） | 野戰退卻 |
+|---|---|
+| ![攻城部隊展開的既有截圖，沿用原版戰場素材](docs/images/readme-battle-deployment.png) | ![野戰退卻現況，沿用原版戰場素材](docs/images/readme-battle-retreat.png) |
+
+每張圖的本機來源、尺寸與 SHA-256 收錄於[展示圖來源清單](tools/readme-gallery.json)，
+由[展示圖排版工具](tools/readme_gallery.py)重生。HD 範圍見[設計與接線紀錄](docs/spec/275-hd-toolbar-portraits-and-tools.md)。
+
+## 還原證據摘要
 
 比對式反編譯的來源與證據也保存在本 repo：
 

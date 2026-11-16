@@ -2339,3 +2339,26 @@
   已回覆按四組對照整理並寫入CONTEXT，這輪未開始圖像整理或README修改。
 - 來源、READY、前批／原版／HD不變、覆蓋binary範圍、Docker清理與擁有權見
   [整合收據](workplace/scratch/closeout-diplomacy-confirm-20261116/integration.json)；commit／push另見repository.json。
+
+## 2026-11-16：README 原版／HD 畫面總覽
+
+- 依使用者指定優先整理人物、城池、地圖、戰場各四張。人物選曹操、關羽、諸葛亮、劉備；
+  城池選許昌、滎陽、舞陽、虎牢關景觀；地圖選中原、中原西北、中原西南、東側外緣。
+  前三類各四組左右對照，原圖採最近鄰、HD縮小展示，不產生新美術或修改選稿。
+- 戰場地形、城牆與單兵尚無HD重繪。三張取正式繪製器受控重播，部隊展開採既有README截圖並標記未重拍。
+  未用已否決的SVG概念圖補成HD，未宣稱自然GUI、正常戰鬥完成或新原版對拍。
+- 展示渲染結果共16張、約6.5MB，依專案docs/images展示截圖例外保存；原圖、HD原生輸出與字型不入Git。
+  [來源清單](tools/readme-gallery.json)固定28份來源的SHA、尺寸、取景與證據入口；
+  [排版工具](tools/readme_gallery.py)只排版及縮放，README與CONTEXT同時收錄入口。
+- 沿用hr-go-ebiten:1.26.7-2.9.9-r1與Pillow，自備中文字型唯讀掛載；本機收據保存工具、字型與清單雜湊。
+  Docker內呼叫`python3 tools/readme_gallery.py --font /host-fonts/truetype/moe/MoeStandardSong.ttf --receipt /output/render.json`；
+  圖像產生時`/repo`唯讀，僅docs/images與本輪輸出掛載可寫；文件檢查另容許docs生成索引。
+  掛載設定保存於本輪收尾收據，檢查流程保存在本輪驗證腳本。
+- 16張PNG可解碼、16個README圖片連結存在、28份來源雜湊一致；另目錄重生16張與正式展示逐byte相同。
+  已抽看總覽、人物、城池與戰場單圖。過期斷言、自我測試、資產掃描、1119筆研究分流檢查通過。
+  官方check.sh --docs仍停在既有65條缺鏈；幽靈掃描356筆與HEAD逐項比較未增加，本地worklist原有一筆過期條件仍在。
+- 首次額外自測遇到唯讀workplace根目錄，屬驗證環境問題。只將TemporaryDirectory轉到本輪可寫目錄，
+  不改自測邏輯或產品；同工具鏈乾淨重跑通過，未開放原版素材與凍結收據寫入。
+- 本輪未改遊戲程式、規則、存檔或原始美術，不重跑無關的遊戲測試。未commit／push，遠端Issue只讀。
+  [排版收據](workplace/scratch/readme-gallery-20261116/render.json)、[抽驗結果](workplace/scratch/readme-gallery-20261116/qa.json)
+  與本輪輸出目錄保存重生圖、檢查紀錄及Docker／擁有權收尾資訊。

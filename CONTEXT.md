@@ -9,9 +9,12 @@
 
 ## 目前工作：先完成 remake
 
-2026-11-16下一輪優先：使用者要求「總攬圖(HD/原版)整理好放到 README.md，人物／城池／地圖／戰場各四張」。
-本輪回覆按每類四組原版／HD對照整理；尚未產生或更新README圖像。下一輪先處理此項，
-保留既有原版操作與HD畫風決策，先核對現行素材／實際畫面與README的現有入口。
+2026-11-16 README總覽已整理：人物、城池、地圖各四組原版／HD對照，戰場四張現況展示，共16張。
+入口為[README畫面總覽](README.md#原版hd-畫面總覽)，來源與雜湊見[展示圖清單](tools/readme-gallery.json)，
+排版工具為[readme_gallery.py](tools/readme_gallery.py)。依專案README展示截圖例外，僅將排版渲染結果放入docs/images，
+原始美術及字型維持本機。戰場地形／城牆／單兵尚無HD重繪，README明示此限制，不以歷史概念圖補成HD；
+人物與地圖選稿也不宣稱逐張接受或像素parity。三張戰場來自正式繪製器受控重播，部隊展開沿用既有截圖並標記未重拍。
+這輪未改遊戲程式、規則、存檔、原圖或HD選稿；[本輪排版收據](workplace/scratch/readme-gallery-20261116/render.json)保留28項來源與輸出資訊的索引。
 
 使用者於 2026-11-02 指定依序完成 remake、HD 版本、手機版。目前先修正原版操作差異，
 驗收方式依下方最新裁定。既有 C 研究作查證來源，不再以增加還原函式數作本輪目標。
@@ -268,6 +271,7 @@ GPU最多兩頁快取，其他季節、液晶、未選頁與讀圖失敗沿原�
 
 | 日期／目前程式 | 最近驗證 | 狀態 | 交付物 |
 |---|---|---|---|
+| 2026-11-16；README展示圖 | 四類各4張、16個圖片連結、28份來源雜湊及16張重生一致；資產與過期斷言檢查通過，文件65條缺鏈／356筆幽靈引用與HEAD相比未增加 | 人物／城池／地圖為原版與HD選稿對照；戰場為原版素材現況，明示HD未重繪。未改遊戲程式或素材 | [README總覽](README.md#原版hd-畫面總覽)、[來源清單](tools/readme-gallery.json)、[驗證收據](workplace/scratch/readme-gallery-20261116/qa.json) |
 | 2026-11-16；wlgame-closeout-diplomacy-confirm-r1 | 玩家外交六案確認前／後12份完整區塊／RNG、同步等價／一次性續行／存檔通過；正式滑鼠114項／53圖、共享俘虜31項／17圖、冷測／vet與野戰62項／9圖；兩錯版拒絕 | 已把付款及超額扣信賴延至中央結果確認，受控側欄50000→60000可見；同步API與規則不變。採納骰、逐名返還／war及事件6／7的中間相位仍有限制 | [spec220](docs/spec/220-c-modal-control.md)、[re12](docs/re/12-diplomacy-dialogue.md)、[本輪收據](workplace/scratch/closeout-diplomacy-confirm-20261116/integration.json) |
 | 2026-11-16；wlgame-closeout-cooperation-captive-r1 | 事件2九案及正常多人讀檔，共10份完整區塊／RNG／返還／存檔相同；滑鼠147項／77圖、共享回歸26項／13圖、冷測／vet與野戰62項／9圖，兩錯版拒絕 | 已補協力選擇後的逐名返還，全部返還確認後才宣戰。原已交戰不重複宣戰，拒絕／超額不返還；中間結算相位仍有限制 | [spec220](docs/spec/220-c-modal-control.md)、[re12](docs/re/12-diplomacy-dialogue.md)、[本輪收據](workplace/scratch/closeout-cooperation-captive-20261116/integration.json) |
 | 2026-11-16；wlgame-closeout-envoy-captive-r1 | 事件6八案、事件7兩案及正常多人讀檔，共11份完整區塊／RNG／通知／返還相同；滑鼠104項／42圖、共享3/9回歸20項／10圖、冷測／vet與野戰62項／9圖，兩錯版拒絕 | 已補外交官回報後的逐人返還；13138固定CF0已補證，移除誤設俘虜旗標而產生的72／76。相關formatter一列轉證據保留，其他1118列不變；中間結算相位仍有限制 | [spec220](docs/spec/220-c-modal-control.md)、[re12](docs/re/12-diplomacy-dialogue.md)、[本輪收據](workplace/scratch/closeout-envoy-captive-20261116/integration.json) |

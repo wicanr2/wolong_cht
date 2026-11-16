@@ -1,0 +1,455 @@
+{
+  "purpose": "README展示渲染結果；原始美術與字型不入版控。",
+  "rights": "依專案 AGENTS.md §10 的 docs/images README展示截圖例外；非素材包。",
+  "limits": "12組原版/HD美術對照、4張原版素材戰場重播。原版一詞指原版素材，不宣稱原版執行器擷取。人物與地圖未逐張取得接受；戰場未有HD重繪。",
+  "images": [
+    {
+      "category": "人物",
+      "title": "曹操",
+      "file": "readme-hd-person-50.png",
+      "note": "原圖參考重繪選稿；展示尺寸一致，非像素對拍",
+      "record": "workplace/hd-redraw-local-20261104/faithful/portraits/portrait-50-r1.json",
+      "sources": [
+        {
+          "path": "workplace/hd-redraw-local-20261104/faithful/portraits/portrait-50-original.png",
+          "label": "原版像素",
+          "mode": "original",
+          "sha256": "03ea5e0bb69d257c403b1a0793c30f725be0847ec2d2c73d9a63f87d2f83fcc3",
+          "size": [
+            64,
+            64
+          ]
+        },
+        {
+          "path": "workplace/hd-redraw-local-20261104/faithful/portraits/portrait-50-hd-r1.png",
+          "label": "HD 重繪",
+          "mode": "hd",
+          "sha256": "785a55b8475ca76cc34a4ec60fc063f7d59ac3d099f1b338ee3254e42afcdbda",
+          "size": [
+            1254,
+            1254
+          ]
+        }
+      ]
+    },
+    {
+      "category": "人物",
+      "title": "關羽",
+      "file": "readme-hd-person-114.png",
+      "note": "原圖參考重繪選稿；展示尺寸一致，非像素對拍",
+      "record": "workplace/hd-redraw-local-20261104/faithful/portraits/portrait-114-r1.json",
+      "sources": [
+        {
+          "path": "workplace/hd-redraw-local-20261104/faithful/portraits/portrait-114-original.png",
+          "label": "原版像素",
+          "mode": "original",
+          "sha256": "74448b178850104f5ac35582161154658d88df4508d38beee8bced98042a58b8",
+          "size": [
+            64,
+            64
+          ]
+        },
+        {
+          "path": "workplace/hd-redraw-local-20261104/faithful/portraits/portrait-114-hd-r1.png",
+          "label": "HD 重繪",
+          "mode": "hd",
+          "sha256": "cb33562c5807d80067a729d9a614cd6ef2895e661cd5a25144d49b87e101427f",
+          "size": [
+            1254,
+            1254
+          ]
+        }
+      ]
+    },
+    {
+      "category": "人物",
+      "title": "諸葛亮",
+      "file": "readme-hd-person-125.png",
+      "note": "原圖參考重繪選稿；展示尺寸一致，非像素對拍",
+      "record": "workplace/hd-redraw-local-20261104/faithful/portraits/portrait-125-r2.json",
+      "sources": [
+        {
+          "path": "workplace/hd-redraw-local-20261104/faithful/portraits/portrait-125-original.png",
+          "label": "原版像素",
+          "mode": "original",
+          "sha256": "e9d6332f80948aa5b8dfb18309739b99dfafb33c6c6869e7b5b606d9ecc04037",
+          "size": [
+            64,
+            64
+          ]
+        },
+        {
+          "path": "workplace/hd-redraw-local-20261104/faithful/portraits/portrait-125-hd-r2.png",
+          "label": "HD 重繪",
+          "mode": "hd",
+          "sha256": "3c5e9c68edc161e64ee886ea43e3b0a62c6f1cc59ad6b391d7fcf39fe47aaf34",
+          "size": [
+            1254,
+            1254
+          ]
+        }
+      ]
+    },
+    {
+      "category": "人物",
+      "title": "劉備",
+      "file": "readme-hd-person-94.png",
+      "note": "原圖參考重繪選稿；展示尺寸一致，非像素對拍",
+      "record": "workplace/hd-redraw-local-20261104/faithful/portraits/portrait-94-r1.json",
+      "sources": [
+        {
+          "path": "workplace/hd-redraw-local-20261104/faithful/portraits/portrait-94-original.png",
+          "label": "原版像素",
+          "mode": "original",
+          "sha256": "38518fe93c71434f6e8e6e38571eba93de881215fa1d0709a2d1b436615ba66a",
+          "size": [
+            64,
+            64
+          ]
+        },
+        {
+          "path": "workplace/hd-redraw-local-20261104/faithful/portraits/portrait-94-hd-r1.png",
+          "label": "HD 重繪",
+          "mode": "hd",
+          "sha256": "bcd02eef72c9222bdbd8197014b443b851ac7d84b087cbd116313570c98ee78c",
+          "size": [
+            1254,
+            1254
+          ]
+        }
+      ]
+    },
+    {
+      "category": "城池",
+      "title": "許昌・據點景觀",
+      "file": "readme-hd-city-82.png",
+      "note": "原版景觀頁 6；HD 沿原圖構圖重繪",
+      "record": "workplace/hd-redraw-local-20261104/faithful/manifest.json",
+      "sources": [
+        {
+          "path": "workplace/hd-redraw-local-20261104/faithful/city-82-scene-original.png",
+          "label": "原版像素",
+          "mode": "original",
+          "sha256": "66e58d23f7470b3a561037ca3782c154e1b6f247c44f38a237c427927a6feef7",
+          "size": [
+            96,
+            96
+          ]
+        },
+        {
+          "path": "workplace/hd-redraw-local-20261104/faithful/hd-generated/xuchang-scene-hd-r2.png",
+          "label": "HD 重繪",
+          "mode": "hd",
+          "sha256": "e019af55ca00e54808a90652ed81d95fc42ec43cb7481db6cdc573c6f596591e",
+          "size": [
+            1254,
+            1254
+          ]
+        }
+      ]
+    },
+    {
+      "category": "城池",
+      "title": "滎陽・據點景觀",
+      "file": "readme-hd-city-63.png",
+      "note": "原版景觀頁 14；HD 沿原圖構圖重繪",
+      "record": "workplace/hd-redraw-local-20261104/faithful/manifest.json",
+      "sources": [
+        {
+          "path": "workplace/hd-redraw-local-20261104/faithful/city-63-scene-original.png",
+          "label": "原版像素",
+          "mode": "original",
+          "sha256": "16531fc9895cff427ca9760a32695832f90dbe318e4b821092b9ea9275058dc8",
+          "size": [
+            96,
+            96
+          ]
+        },
+        {
+          "path": "workplace/hd-redraw-local-20261104/faithful/hd-generated/city-63-scene-hd-r1.png",
+          "label": "HD 重繪",
+          "mode": "hd",
+          "sha256": "ed8370abe05b90291bdb318735252861696571d698c8c47bea776f5630ce0aab",
+          "size": [
+            1254,
+            1254
+          ]
+        }
+      ]
+    },
+    {
+      "category": "城池",
+      "title": "舞陽・據點景觀",
+      "file": "readme-hd-city-87.png",
+      "note": "原版景觀頁 2；HD 沿原圖構圖重繪",
+      "record": "workplace/hd-redraw-local-20261104/faithful/manifest.json",
+      "sources": [
+        {
+          "path": "workplace/hd-redraw-local-20261104/faithful/city-87-scene-original.png",
+          "label": "原版像素",
+          "mode": "original",
+          "sha256": "f5d0e53f72e19aa59edeefb1a89f3fab61c802cd4f560c958ee6bb9b0834151c",
+          "size": [
+            96,
+            96
+          ]
+        },
+        {
+          "path": "workplace/hd-redraw-local-20261104/faithful/hd-generated/city-87-scene-hd-r1.png",
+          "label": "HD 重繪",
+          "mode": "hd",
+          "sha256": "924fbce0ea33af00841ff0b414448d1d2f5fb17bbfcec8328ef3ac00d725d6bd",
+          "size": [
+            1254,
+            1254
+          ]
+        }
+      ]
+    },
+    {
+      "category": "城池",
+      "title": "虎牢關・據點景觀",
+      "file": "readme-hd-city-72.png",
+      "note": "原版景觀頁 5；HD 沿原圖構圖重繪",
+      "record": "workplace/hd-redraw-local-20261104/faithful/manifest.json",
+      "sources": [
+        {
+          "path": "workplace/hd-redraw-local-20261104/faithful/city-72-scene-original.png",
+          "label": "原版像素",
+          "mode": "original",
+          "sha256": "04a589eda713f7cc97f0823132ec3f05da6b74a5ec7cd438b41f4348c26cf7e4",
+          "size": [
+            96,
+            96
+          ]
+        },
+        {
+          "path": "workplace/hd-redraw-local-20261104/faithful/hd-generated/city-72-scene-hd-r1.png",
+          "label": "HD 重繪",
+          "mode": "hd",
+          "sha256": "fa4c2b98d7181bac704f34226b3dc008dc46a716329a6596035d45eebe252359",
+          "size": [
+            1254,
+            1254
+          ]
+        }
+      ]
+    },
+    {
+      "category": "地圖",
+      "title": "中原",
+      "file": "readme-hd-map-central.png",
+      "note": "同一原世界取景範圍；區域美術選稿，非完整遊戲截圖",
+      "record": "workplace/hd-redraw-local-20261104/faithful/world/manifest-central-r1.json",
+      "world_rect": [
+        2880,
+        1536,
+        928,
+        784
+      ],
+      "sources": [
+        {
+          "path": "workplace/hd-redraw-local-20261104/faithful/world/region-original.png",
+          "label": "原版地圖",
+          "mode": "original",
+          "sha256": "170c57524fbe0594dca742c23f8849c46dad7a6576f3779b46b92b7556d7bdc7",
+          "size": [
+            928,
+            784
+          ]
+        },
+        {
+          "path": "workplace/hd-redraw-local-20261104/faithful/world/region-hd-r1.png",
+          "label": "HD 重繪",
+          "mode": "hd",
+          "sha256": "d0ea55e67af754381907486defd14c3c3021cccf68279097b333bce46b2fb511",
+          "size": [
+            1364,
+            1153
+          ]
+        }
+      ]
+    },
+    {
+      "category": "地圖",
+      "title": "中原西北",
+      "file": "readme-hd-map-northwest.png",
+      "note": "同一原世界取景範圍；區域美術選稿，非完整遊戲截圖",
+      "record": "workplace/hd-redraw-local-20261104/faithful/world/northwest-r1.json",
+      "world_rect": [
+        1952,
+        752,
+        992,
+        848
+      ],
+      "sources": [
+        {
+          "path": "workplace/hd-redraw-local-20261104/faithful/world/northwest-original.png",
+          "label": "原版地圖",
+          "mode": "original",
+          "sha256": "1aaefa9f2313d0ed90eef9ed59a82945377af5462fcf491dd0ede17fb5dc67c4",
+          "size": [
+            992,
+            848
+          ]
+        },
+        {
+          "path": "workplace/hd-redraw-local-20261104/faithful/world/northwest-hd-r1.png",
+          "label": "HD 重繪",
+          "mode": "hd",
+          "sha256": "122ab238e9ef5b6ae6af2ccc3eb4cf71d99b74cb091021f9a31fd7b33b54d8b4",
+          "size": [
+            1356,
+            1159
+          ]
+        }
+      ]
+    },
+    {
+      "category": "地圖",
+      "title": "中原西南",
+      "file": "readme-hd-map-southwest.png",
+      "note": "同一原世界取景範圍；區域美術選稿，非完整遊戲截圖",
+      "record": "workplace/hd-redraw-local-20261104/faithful/world/southwest-r1.json",
+      "world_rect": [
+        1952,
+        2256,
+        992,
+        848
+      ],
+      "sources": [
+        {
+          "path": "workplace/hd-redraw-local-20261104/faithful/world/southwest-original.png",
+          "label": "原版地圖",
+          "mode": "original",
+          "sha256": "c9a483964197b11a8a25d5a062d911568fe0b33770b0114e0078901e1af7819d",
+          "size": [
+            992,
+            848
+          ]
+        },
+        {
+          "path": "workplace/hd-redraw-local-20261104/faithful/world/southwest-hd-r1.png",
+          "label": "HD 重繪",
+          "mode": "hd",
+          "sha256": "534758bef735c8c27d819e429c86ec1863e4266ea9233ca7869d908182a50abe",
+          "size": [
+            1356,
+            1159
+          ]
+        }
+      ]
+    },
+    {
+      "category": "地圖",
+      "title": "東側外緣",
+      "file": "readme-hd-map-far-east.png",
+      "note": "同一原世界取景範圍；區域美術選稿，非完整遊戲截圖",
+      "record": "workplace/hd-redraw-local-20261104/faithful/world/far-east-r1.json",
+      "world_rect": [
+        4672,
+        1472,
+        992,
+        912
+      ],
+      "sources": [
+        {
+          "path": "workplace/hd-redraw-local-20261104/faithful/world/far-east-original.png",
+          "label": "原版地圖",
+          "mode": "original",
+          "sha256": "0c6efde8757e6ac80b45d62f4a07005d125756040a8586dfa0d68a8df5d6878e",
+          "size": [
+            992,
+            912
+          ]
+        },
+        {
+          "path": "workplace/hd-redraw-local-20261104/faithful/world/far-east-hd-r1.png",
+          "label": "HD 重繪",
+          "mode": "hd",
+          "sha256": "2f3270283782e4c2798b2ccda75c09224e6c06f3335e7dd9ba667e1a7e0fda5e",
+          "size": [
+            1308,
+            1202
+          ]
+        }
+      ]
+    },
+    {
+      "category": "戰場",
+      "title": "攻城・進攻方",
+      "file": "readme-battle-siege-attack.png",
+      "note": "戰場 HD 尚未重繪；此圖為原版素材的受控重播",
+      "sources": [
+        {
+          "path": "workplace/scratch/ui-windows-20261104/cao-talkphase677-formal-attacker-ui-392.png",
+          "label": "重製版現況・沿用原版地形與單兵",
+          "mode": "original",
+          "sha256": "a147fbd9f05518dbb675f0ba11ba046ab7abf24a6d2d416560557bb9300f7cbc",
+          "size": [
+            640,
+            400
+          ]
+        }
+      ],
+      "record": "workplace/scratch/ui-windows-20261104/cao-talkphase677-integration.json"
+    },
+    {
+      "category": "戰場",
+      "title": "攻城・防守方",
+      "file": "readme-battle-siege-defense.png",
+      "note": "戰場 HD 尚未重繪；此圖為原版素材的受控重播",
+      "sources": [
+        {
+          "path": "workplace/scratch/ui-windows-20261104/cao-chrome320-formal-ui-300.png",
+          "label": "重製版現況・沿用原版地形與單兵",
+          "mode": "original",
+          "sha256": "e8be2f8064469bc9e794a69d5aa6506c26660bc26bb1f3f5efd360681866b372",
+          "size": [
+            640,
+            400
+          ]
+        }
+      ],
+      "record": "workplace/scratch/ui-windows-20261104/cao-chrome320-integration.json"
+    },
+    {
+      "category": "戰場",
+      "title": "攻城・部隊展開",
+      "file": "readme-battle-deployment.png",
+      "note": "既有展示截圖，未重拍；戰場 HD 尚未重繪",
+      "sources": [
+        {
+          "path": "docs/images/wlgame-battle.png",
+          "label": "重製版既有截圖・沿用原版戰場素材",
+          "mode": "original",
+          "sha256": "8e00041101c2557669f7a14e8c7c74676b6deb62ae0f0edc04e3626d4711c9e1",
+          "size": [
+            1600,
+            900
+          ]
+        }
+      ],
+      "record": "tools/readme_shots.sh"
+    },
+    {
+      "category": "戰場",
+      "title": "野戰・退卻",
+      "file": "readme-battle-retreat.png",
+      "note": "戰場 HD 尚未重繪；此圖為原版素材的受控重播",
+      "sources": [
+        {
+          "path": "workplace/scratch/ui-windows-20261104/cao-duel-matrix-retreat-formal-ui-735.png",
+          "label": "重製版現況・沿用原版地形與單兵",
+          "mode": "original",
+          "sha256": "1141ba4e6c4e168479758e7515399b3438766e3b0828cedb793c69b9afd4a77c",
+          "size": [
+            640,
+            400
+          ]
+        }
+      ],
+      "record": "workplace/scratch/ui-windows-20261104/cao-duel-matrix-integration.json"
+    }
+  ]
+}
