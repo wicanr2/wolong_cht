@@ -189,3 +189,32 @@ A只保留警告、一次確認，B連異常提示保留、兩次確認。兩案
 裁定保存於[本輪決策紀錄](../../workplace/scratch/closeout-ceasefire-20261116/warning-A-decision.json)。
 推論等級為已證實上述四次原版觀測；低於或等於50的退出與全部caller仍不由本片代證。
 原始軌跡與畫面沿[整合收據](../../workplace/scratch/closeout-capital-warning-20261116/integration.json)。
+
+## 2026-11-16：赤字警告歸零邊界
+
+**狀態：CONFORMED，限事件13的歸零與既有敗北外殼接線。** READY快照先於程式修改，見本輪收據。
+
+- 輸入身分沿本頁DOS/V KI.EXE；dosgolem `f79eab6db8c64a524a06535e53e5d32b0bbcf7c8`，位址為原版IDA linear。
+  [五案原版收據](../../workplace/scratch/closeout-warning-zero-20261116/run.json)從同一快照事前設定
+  Trust0／1／49／50／51、事件13、完整258-byte固定RNG及事件延遲1，執行真實131AE／13507／13DC9與右鍵等待。
+  計量期間不改記憶體、不用視窗stub。致命案停在11CB1入口，不執行合成呼叫框架的非區域退出。
+- 已證實：五案先由147顯示51赤字報告。扣過零的0／1／49選019E群組、玩家君主raw1／肖像50，
+  實際文字槽471；扣至零的50仍選0軍隊編組提示，確認後同樣走11CB1；51降至1並正常返回。
+  原版完整22208-byte區塊只改Trust與事件游標，258-byte RNG不變。
+- [正常讀檔正對照](../../workplace/scratch/closeout-warning-zero-20261116/run-normal-warning.json)
+  從標題與四槽載入受控Trust49存檔，主循環自然進131AE，兩次右鍵後走11CB1。
+  此案原版時間7時，直接入口五案6時，分開比較，不冒稱完整同時畫面一致。
+- 正式修改：事件13扣50後Trust為0必須latch敗北，含輸入已為0。共用AdjustTrust其他caller的
+  既有零值政策不改，因13DC9另有CX=FFFF的caller差異。
+- 既有敗北外殼必須等前置TALK確認後才接收輸入及繪製。019E須按玩家君主原始說話類型
+  展開為470+raw並由既有TalkNoticeVars代軍師姓名；不得讀414的褒獎文字。缺參數／素材保留原因句fallback。
+- 不改存檔格式、不加熱鍵。確認後回launcher仍是既有remake呈現政策。原版Trust50的無關編組文字
+  不進正式敗北框，該案顯示敗北原因屬外殼差異；使用者A僅已驗非致命51／80／255，不能稱其涵蓋此邊界。
+- 驗收：五案及正常讀檔同入口完整區塊／RNG、outcome、Bytes／LoadBlock；訊息選擇與軍師參數；
+  正常滑鼠讀檔、報告確認、敗北確認與回標題；受影響冷測、原有錯版拒絕。不稱整款敗北流程exact。
+
+六案完整區塊／RNG與存檔讀回通過。五條滑鼠29項／14圖、全專案冷測／vet及野戰62項／9圖通過，
+舊零值、舊文字與舊優先序被回歸拒絕。原版肖像框與Go敗北框仍不同；原版通報後扣Trust，Go入列前扣，
+不稱中間寫回相位或視窗像素相同。來源、負對照、畫面及限制見
+[re19](../re/19-outcome.md#2026-11-16事件13歸零抽驗與勘誤)與
+[整合收據](../../workplace/scratch/closeout-warning-zero-20261116/integration.json)。

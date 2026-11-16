@@ -1071,6 +1071,11 @@ func (g *game) updateWithPointer(pushX, pushY int) error {
 		return g.updateEnding()
 	}
 	if g.world != nil && g.world.Outcome() != state.InProgress {
+		// 原版先等赤字報告等前置TALK確認，才顯示逐出原因並退出。
+		if g.messageActive() {
+			g.updateMessageOnly()
+			return nil
+		}
 		return g.updateOutcome()
 	}
 	// ⭐ **訊息先於戰場**：原版遭遇時 `sub_14EB9`（訊息框）在 `sub_11B5A`
@@ -1484,7 +1489,7 @@ func (g *game) Draw(screen *ebiten.Image) {
 	if g.messageActive() {
 		g.drawMessage(screen)
 	}
-	if g.world.Outcome() != state.InProgress {
+	if g.world.Outcome() != state.InProgress && !g.messageActive() {
 		g.drawOutcome(screen)
 	}
 

@@ -41,7 +41,20 @@ func (g *game) outcomeLines() []string {
 	var out []string
 	if g != nil && g.world != nil {
 		if sel, ok := g.world.OutcomeMessageSelector(); ok {
-			if lines, ok := g.talkLines(int(sel), map[byte]string{}); ok {
+			index, vars := int(sel), map[byte]string{}
+			if sel >= talkVariantGroupBase {
+				player := g.world.Player
+				if player >= 0 && player < len(g.world.Factions) {
+					notice := state.TalkNotice{Index: index,
+						General: g.world.Factions[player].Lord,
+						City:    -1, Faction: -1, Amount: -1}
+					index = g.noticeTalkIndex(notice)
+					vars, _ = g.world.TalkNoticeVars(notice, big5)
+				} else {
+					index = -1
+				}
+			}
+			if lines, ok := g.talkLines(index, vars); ok {
 				out = append(out, lines...)
 			}
 		}
@@ -58,8 +71,8 @@ func (g *game) outcomeLines() []string {
 	return out
 }
 
-// updateOutcome 是 outcome latch 後唯一接受的遊戲內輸入：Enter／Space 或
-// modal 內左鍵確認。它不重開同一局；回 launcher 是 remake 的呈現政策，
+// updateOutcome 在前置TALK確認完後接收工具列確認或modal內左鍵。
+// 它不重開同一局；回launcher是remake的呈現政策，
 // 原版 sub_11CB1 之後是 unknown。
 func (g *game) updateOutcome() error {
 	if g == nil || g.world == nil || g.world.Outcome() == state.InProgress {

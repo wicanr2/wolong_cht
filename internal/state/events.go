@@ -506,6 +506,11 @@ func (w *World) dispatchQueuedEvent(ev *Event) {
 		// sub_13507 固定把 AL 設成 0x32，再進 sub_13DC9；DX
 		// 只供訊息 formatter 使用，不是扣除量。
 		w.AdjustTrust(-50)
+		// 這個 caller 的 CX=0；即使進入時已為零，13DC9借位後仍走11CB1。
+		// 不改其他caller的AdjustTrust零值政策（docs/spec/219）。
+		if w.Trust == 0 {
+			w.latchOutcome(DefeatTrustZero)
+		}
 		if ev != nil {
 			// sub_13507 的固定 CX=33h 對應 TALK.DAT #51；
 			// 這是玩家深度赤字事件的君主警告，不是另一個信賴度欄位。

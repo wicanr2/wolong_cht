@@ -1,6 +1,7 @@
 package state
 
 import (
+	"fmt"
 	"os"
 	"reflect"
 	"testing"
@@ -8,6 +9,29 @@ import (
 	"github.com/wicanr2/wolong_cht/internal/rules/combat"
 	"github.com/wicanr2/wolong_cht/internal/rules/rng"
 )
+
+// 原版13507→13DC9：0／1／49／50都走11CB1，51降至1並返回。
+func TestDeficitWarningTrustZeroBoundary(t *testing.T) {
+	for _, trust := range []int{0, 1, 49, 50, 51} {
+		t.Run(fmt.Sprint(trust), func(t *testing.T) {
+			w := load(t, 0)
+			w.Player, w.Trust = 0, trust
+			w.events[0] = QueuedEvent{Code: 13}
+			ev := Event{}
+			w.dispatchQueuedEvent(&ev)
+			want := InProgress
+			if trust <= 50 {
+				want = DefeatTrustZero
+			}
+			if w.Outcome() != want || w.Trust != max(0, trust-50) {
+				t.Fatalf("Trust%d: trust=%d outcome=%v want=%v", trust, w.Trust, w.Outcome(), want)
+			}
+			if len(ev.TalkNotices) != 1 || ev.TalkNotices[0].Index != 51 {
+				t.Fatalf("missing original reporter warning: %+v", ev.TalkNotices)
+			}
+		})
+	}
+}
 
 func TestOutcomeTrustZeroLatchesAtMutationBoundary(t *testing.T) {
 	w := &World{Trust: 1}
