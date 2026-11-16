@@ -331,6 +331,7 @@ func (g *game) readSave(slot int) error {
 	battlesetup.AttachTerrain(w, worldMapOf(g.lib))
 	battlesetup.AttachAIHoldSources(w, chromeOf(g.lib), worldMapOf(g.lib))
 	g.world = w
+	w.SetDiplomacyReportConfirmation(true)
 	g.resetMapZoom()
 	g.view = nil
 	g.saveBase = g.saveFile

@@ -143,7 +143,7 @@ func textDecodeBig5(raw []byte) string {
 }
 
 func (g *game) enqueueEventMessages(ev state.Event) {
-	for _, notice := range ev.TalkNotices {
+	for index, notice := range ev.TalkNotices {
 		// 事件 2／3 的 base TALK 不是獨立 modal。原版
 		// sub_13902 → sub_13C99 會把 base 與 General +0x1E 的變體、
 		// 肖像、IVENTGRF 場景及三選一一次畫出；pending choice 的
@@ -153,6 +153,14 @@ func (g *game) enqueueEventMessages(ev state.Event) {
 			continue
 		}
 		g.enqueueTalkNotice(notice)
+		if report := ev.DiplomacyReport; report != nil && report.AfterNotice == index {
+			// 1336A／133D6的中央結果返回後才135ED付款與返還。
+			g.afterTalk(func() {
+				for _, id := range report.Confirm() {
+					g.enqueueReleasedGeneral(id)
+				}
+			})
+		}
 	}
 	if ev.Diplomacy != nil {
 		// 原版13C99先等待君主提問的右鍵，再由13B7E開三列選單。

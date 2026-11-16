@@ -16,6 +16,9 @@
 人物與地圖選稿也不宣稱逐張接受或像素parity。三張戰場來自正式繪製器受控重播，部隊展開沿用既有截圖並標記未重拍。
 這輪未改遊戲程式、規則、存檔、原圖或HD選稿；[本輪排版收據](workplace/scratch/readme-gallery-20261116/render.json)保留28項來源與輸出資訊的索引。
 
+上述README更新已依使用者指示commit並push，提交為`b8a8cc1`。
+接續原版收尾已補事件6／7桌面主要結果確認後的付款與返還結算，範圍及限制見下方最新狀態列。
+
 使用者於 2026-11-02 指定依序完成 remake、HD 版本、手機版。目前先修正原版操作差異，
 驗收方式依下方最新裁定。既有 C 研究作查證來源，不再以增加還原函式數作本輪目標。
 使用者同時指定參考 `~/cht/rich2` 製作工具列，並確認全程滑鼠操作，只保留文字輸入。
@@ -271,6 +274,7 @@ GPU最多兩頁快取，其他季節、液晶、未選頁與讀圖失敗沿原�
 
 | 日期／目前程式 | 最近驗證 | 狀態 | 交付物 |
 |---|---|---|---|
+| 2026-11-16；wlgame-closeout-envoy-confirm-r1 | 外交官六案十一份結果前／收尾完整區塊與RNG全等；同步等價、一次性與存檔；滑鼠66項／22圖、共享31項／17圖、野戰62項／9圖、冷測／vet／建置及兩錯版拒絕 | 事件6／7桌面結果確認後才付款與既有返還／停戰／協力收尾；CLI／手機預設同步。引見前條件骰、逐名返還及war細相位仍有限制，未改規則／格式／HD或強化AI | [spec220](docs/spec/220-c-modal-control.md#2026-11-16外交官回報的結果確認結算)、[原版等待點](workplace/scratch/closeout-envoy-confirm-20261116/original-phase-proof.json)、[滑鼠抽驗](workplace/scratch/closeout-envoy-confirm-20261116/GUI-summary.json)、[本輪收據目錄](workplace/scratch/closeout-envoy-confirm-20261116/) |
 | 2026-11-16；README展示圖 | 四類各4張、16個圖片連結、28份來源雜湊及16張重生一致；資產與過期斷言檢查通過，文件65條缺鏈／356筆幽靈引用與HEAD相比未增加 | 人物／城池／地圖為原版與HD選稿對照；戰場為原版素材現況，明示HD未重繪。未改遊戲程式或素材 | [README總覽](README.md#原版hd-畫面總覽)、[來源清單](tools/readme-gallery.json)、[驗證收據](workplace/scratch/readme-gallery-20261116/qa.json) |
 | 2026-11-16；wlgame-closeout-diplomacy-confirm-r1 | 玩家外交六案確認前／後12份完整區塊／RNG、同步等價／一次性續行／存檔通過；正式滑鼠114項／53圖、共享俘虜31項／17圖、冷測／vet與野戰62項／9圖；兩錯版拒絕 | 已把付款及超額扣信賴延至中央結果確認，受控側欄50000→60000可見；同步API與規則不變。採納骰、逐名返還／war及事件6／7的中間相位仍有限制 | [spec220](docs/spec/220-c-modal-control.md)、[re12](docs/re/12-diplomacy-dialogue.md)、[本輪收據](workplace/scratch/closeout-diplomacy-confirm-20261116/integration.json) |
 | 2026-11-16；wlgame-closeout-cooperation-captive-r1 | 事件2九案及正常多人讀檔，共10份完整區塊／RNG／返還／存檔相同；滑鼠147項／77圖、共享回歸26項／13圖、冷測／vet與野戰62項／9圖，兩錯版拒絕 | 已補協力選擇後的逐名返還，全部返還確認後才宣戰。原已交戰不重複宣戰，拒絕／超額不返還；中間結算相位仍有限制 | [spec220](docs/spec/220-c-modal-control.md)、[re12](docs/re/12-diplomacy-dialogue.md)、[本輪收據](workplace/scratch/closeout-cooperation-captive-20261116/integration.json) |

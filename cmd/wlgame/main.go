@@ -2363,6 +2363,7 @@ func (g *game) startWorld(path string, slot int, player int, overridePlayer, new
 	}
 
 	g.world = w
+	w.SetDiplomacyReportConfirmation(true)
 	g.resetMapZoom()
 	g.roads = g.buildRoads(w)
 	if g.roads != nil {

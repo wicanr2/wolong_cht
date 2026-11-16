@@ -459,6 +459,9 @@ type World struct {
 	diplomacy *DiplomacyChoice
 	// funding 是事件 4／5 的玩家撥款互動；它是 runtime 狀態，不進存檔。
 	funding *FundingChoice
+	// 桌面以主要結果訊息的確認續行事件6／7；其他caller維持同步。
+	// 只影響runtime呈現邊界，不進存檔。
+	confirmDiplomacyReports bool
 	// rng 是給戰術層用的亂數源，開戰時記下來。
 	rng combat.Rand
 
@@ -969,6 +972,9 @@ type Event struct {
 	// 它只保存原版索引與可回查的 state 目標，不把文字、編碼或排版塞進
 	// state；索引與 marker 來源見 docs/re/07 §18、docs/formats/01。
 	TalkNotices []TalkNotice
+	// DiplomacyReport將事件6／7結算掛到指定結果notice的確認。
+	// 只有明確開啟桌面確認模式才有值，不序列化續行。
+	DiplomacyReport *DiplomacyReport `json:"-"`
 
 	// HourFaction 是這個 tick 輪到的勢力編號，−1 表示這個 tick 沒有輪到誰。
 	// 原版每「時」只處理一個勢力，22 個勢力輪一圈（docs/re/08 §1）。

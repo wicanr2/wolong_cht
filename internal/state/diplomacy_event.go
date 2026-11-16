@@ -6,6 +6,39 @@ const maxDiplomacyOffer = 0x7530
 // 這是玩家輸入超過原始要求時的信賴度扣除，不是一般拒絕（response=2）。
 const diplomacyOverOfferTrustPenalty = -0x1E
 
+// DiplomacyReport只保存主要結果notice的位置與一次性結算，不是存檔資料。
+type DiplomacyReport struct {
+	AfterNotice int
+	Confirm     func() []int
+}
+
+// SetDiplomacyReportConfirmation由桌面在新局／讀檔綁定世界時開啟。
+// 預設false保留CLI、手機及其他同步caller的行為。
+func (w *World) SetDiplomacyReportConfirmation(enabled bool) {
+	w.confirmDiplomacyReports = enabled
+}
+
+func (w *World) finishDiplomacyReport(ev *Event, settle func() []int) {
+	if !w.confirmDiplomacyReports || ev == nil {
+		released := settle()
+		if ev != nil {
+			ev.ReleasedGenerals = append(ev.ReleasedGenerals, released...)
+		}
+		return
+	}
+	settled := false
+	ev.DiplomacyReport = &DiplomacyReport{
+		AfterNotice: len(ev.TalkNotices) - 1,
+		Confirm: func() []int {
+			if settled {
+				return nil
+			}
+			settled = true
+			return settle()
+		},
+	}
+}
+
 // editAmount 是 sub_17C6E 的數值核心：數字鍵把目前值左移一位再加數字，
 // 另有 00／退位／最大／清零／結束輸入動作；所有結果都鉗在呼叫端給的上限。
 //

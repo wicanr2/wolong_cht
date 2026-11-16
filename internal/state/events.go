@@ -372,10 +372,11 @@ func (w *World) dispatchQueuedEvent(ev *Event) {
 		w.appendDiplomacyEnvoyNotice(ev, 0x2B+response, source, noticeAmount)
 		// 13138的cmp ax,ax固定清CF，137D8回AH0，不會產生次要72。
 		if response < 2 {
-			_, released := w.finishQueuedCeasefireWithReturnees(w.Player, source, response, amount)
-			if ev != nil {
-				ev.ReleasedGenerals = append(ev.ReleasedGenerals, released...)
-			}
+			player := w.Player
+			w.finishDiplomacyReport(ev, func() []int {
+				_, released := w.finishQueuedCeasefireWithReturnees(player, source, response, amount)
+				return released
+			})
 		}
 	case 7:
 		// sub_13388 的字高是協力方，Param 低 byte 是協力方要攻擊的
@@ -404,10 +405,11 @@ func (w *World) dispatchQueuedEvent(ev *Event) {
 		w.appendDiplomacyEnvoyNotice(ev, 0x2F+response, source, noticeAmount)
 		// 與事件6相同的固定AH0，不以俘虜統計合成戰鬥選單76。
 		if response < 2 {
-			_, released := w.finishQueuedCooperationWithReturnees(source, invader, w.Player, response, amount)
-			if ev != nil {
-				ev.ReleasedGenerals = append(ev.ReleasedGenerals, released...)
-			}
+			player := w.Player
+			w.finishDiplomacyReport(ev, func() []int {
+				_, released := w.finishQueuedCooperationWithReturnees(source, invader, player, response, amount)
+				return released
+			})
 		}
 	case 8:
 		if source < 0 || source >= numFactions || source == w.Player || !w.Factions[source].Alive {
