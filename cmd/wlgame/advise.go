@@ -7,6 +7,7 @@ import (
 	"github.com/wicanr2/wolong_cht/internal/state"
 	"github.com/wicanr2/wolong_cht/internal/ui/chrome"
 	"github.com/wicanr2/wolong_cht/internal/ui/talkmenu"
+	"github.com/wicanr2/wolong_cht/internal/ui/textdraw"
 )
 
 // 進言（說明書 3.2、3.9）。
@@ -78,14 +79,20 @@ func (g *game) openAdvise() {
 	g.sessCur = 0
 	g.ally = -1
 	g.target = -1
+	g.adviseDispatch = nil
 	g.clearAdviseBoxes()
 }
 
 func (g *game) closeAdvise() {
+	notice := g.adviseDispatch
+	g.adviseDispatch = nil
 	g.advise = adviseNone
 	g.adviseMenuStale = false
 	g.sess = nil
 	g.clearAdviseBoxes()
+	if notice != nil {
+		g.enqueueTalkNotice(*notice)
+	}
 }
 
 // adviseSpeaker 是進言畫面上的兩個講話框。**原版靠框的位置與肖像
@@ -114,7 +121,7 @@ type adviseStep struct {
 // adviseSay 把一句排進隊伍。查不到的索引直接不排——
 // **不顯示半句、也不把索引當文字**（同 talkLines 的 fail-closed）。
 func (g *game) adviseSay(who adviseSpeaker, index int) {
-	if len(g.legacyTalkLines(index, g.adviseTalkVars(), talkTextWidth)) == 0 {
+	if len(g.adviseTalkLines(index)) == 0 {
 		return
 	}
 	g.adviseQueue = append(g.adviseQueue, adviseStep{who: who, index: index})
@@ -127,7 +134,7 @@ func (g *game) adviseAdvance() bool {
 	}
 	step := g.adviseQueue[0]
 	g.adviseQueue = g.adviseQueue[1:]
-	lines := g.legacyTalkLines(step.index, g.adviseTalkVars(), talkTextWidth)
+	lines := g.adviseTalkLines(step.index)
 	if step.who == adviseLord {
 		g.adviseLordSaid = lines
 	} else {
@@ -139,6 +146,19 @@ func (g *game) adviseAdvance() bool {
 // adviseTalking 回報還有句子沒演完。**還在講話時不接受任何選擇**——
 // 原版也是這樣，選單要等對話走完才出現。
 func (g *game) adviseTalking() bool { return len(g.adviseQueue) > 0 }
+
+func (g *game) adviseTalkLines(index int) []string {
+	vars := g.adviseTalkVars()
+	var seq map[byte][]string
+	if g.adviseCmd == persuasion.Cooperate && index == persuasion.TalkBase(persuasion.Cooperate)+3 {
+		seq = map[byte][]string{'3': {vars['5'], vars['3']}}
+	}
+	lines, ok := g.talkLinesSeq(index, vars, seq)
+	if !ok {
+		return nil
+	}
+	return textdraw.WrapLines(lines, talkTextWidth)
+}
 
 // situation 把目前的世界狀態換成說服判定要的局勢。
 // 組法在 `internal/state`，桌面版與手機版共用同一份。
@@ -575,14 +595,12 @@ func (g *game) adjustTrust(delta int) {
 // adviseTalkVars 是進言那幾則的變數：`{3}` 交涉對象、`{4}` 軍師（玩家）、
 // `{6}` 排版標記（空字串，原版 handler 只調 X 不輸出字元）。
 func (g *game) adviseTalkVars() map[byte]string {
-	vars := map[byte]string{'6': ""}
-	if g.target >= 0 && g.target < len(g.world.Factions) {
-		vars['3'] = big5(g.world.LordName(g.target))
-	}
-	if p := g.world.Player; p >= 0 && p < len(g.world.Factions) {
-		if a := g.world.Factions[p].Advisor; a >= 0 && a < len(g.world.Generals) {
-			vars['4'] = big5(g.world.Generals[a].Name)
-		}
+	vars, _ := g.world.TalkNoticeVars(state.TalkNotice{
+		City: -1, Faction: g.target, General: -1, Amount: -1,
+	}, big5)
+	if g.adviseCmd == persuasion.Cooperate && g.ally >= 0 && g.ally < len(g.world.Factions) {
+		// 額外欄位供217的第一個君主名與共用換色器使用。
+		vars['5'] = big5(g.world.LordName(g.ally))
 	}
 	// 進言的兩個框同樣走 `sub_1075B`，所以代入的名字一樣是**定寬三格**
 	// （docs/spec/119 §3.1）——先前沒補白，兩字的名字就少一個全形空白。
@@ -594,16 +612,7 @@ func (g *game) adviseTalkVars() map[byte]string {
 // 標記的性質不是框的性質（docs/spec/119 §3.1）：進言的兩個框走的是
 // 同一支 `sub_1075B`，所以 `\4`（軍師）一樣是色 9、`\3`（君主）色 0x0C。
 func (g *game) adviseTalkFields() []talkField {
-	vars := map[byte]string{'6': ""}
-	if g.target >= 0 && g.target < len(g.world.Factions) {
-		vars['3'] = big5(g.world.LordName(g.target))
-	}
-	if p := g.world.Player; p >= 0 && p < len(g.world.Factions) {
-		if a := g.world.Factions[p].Advisor; a >= 0 && a < len(g.world.Generals) {
-			vars['4'] = big5(g.world.Generals[a].Name)
-		}
-	}
-	_, fields := padTalkVars(vars)
+	_, fields := padTalkVars(g.adviseTalkVars())
 	return fields
 }
 
@@ -626,6 +635,12 @@ func (g *game) commitAdvice() bool {
 		g.adviseLordSaid = []string{"局勢已變，這項進言", "沒有成立。"}
 		g.sess = nil
 		return false
+	}
+	if g.adviseCmd == persuasion.Cooperate {
+		g.adviseDispatch = &state.TalkNotice{
+			Index: 60, General: g.world.Factions[g.ally].Diplomat,
+			City: -1, Faction: -1, Amount: -1,
+		}
 	}
 	g.sess = nil
 	return true

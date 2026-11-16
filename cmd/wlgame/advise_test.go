@@ -6,11 +6,88 @@ import (
 
 	"github.com/wicanr2/wolong_cht/internal/assets/library"
 	"github.com/wicanr2/wolong_cht/internal/rules/army"
+	"github.com/wicanr2/wolong_cht/internal/rules/diplomacy"
 	"github.com/wicanr2/wolong_cht/internal/rules/persuasion"
 	"github.com/wicanr2/wolong_cht/internal/state"
 	"github.com/wicanr2/wolong_cht/internal/ui/listwin"
 	"github.com/wicanr2/wolong_cht/internal/ui/textdraw"
 )
+
+func cooperationProposalGame(t *testing.T) *game {
+	t.Helper()
+	lib, err := library.Load("../../workplace/orig/dosv")
+	if err != nil {
+		t.Skipf("沒有原版素材：%v", err)
+	}
+	w, err := state.LoadScenario("../../workplace/orig/dosv/SINARIO.DAT", 0)
+	if err != nil {
+		t.Fatal(err)
+	}
+	w.Player, w.Trust = 0, 80
+	w.Factions[0].Aggression, w.Factions[0].Cities = 0, 1
+	w.Factions[2].Cities, w.Factions[2].InvasionTarget = 20, 0
+	w.Factions[1].Diplomat, w.Generals[37].Duty = 37, 3
+	w.Friendship[0][1], w.Friendship[0][2] = diplomacy.Peace(100), diplomacy.Friendship(20)
+	w.Factions[0].Advisor = 127
+	for i := range w.AdvisorName {
+		w.AdvisorName[i] = []byte{0xA1, 0x40}[i%2]
+	}
+	return &game{world: w, lib: lib, advise: advisePersuade,
+		adviseCmd: persuasion.Cooperate, ally: 1, target: 2}
+}
+
+func TestCooperationProposalKeepsCustomAdvisorAndBothFactions(t *testing.T) {
+	g := cooperationProposalGame(t)
+	g.beginPersuasion()
+	if len(g.adviseLordSaid) == 0 || len(g.adviseQueue) != 2 {
+		t.Fatal("空白自訂軍師姓名造成君主首句被略過")
+	}
+	g.adviseAdvance()
+	line := strings.Join(g.adviseAdvisorSaid, "")
+	ally, target := big5(g.world.LordName(1)), big5(g.world.LordName(2))
+	if strings.Index(line, ally) < 0 || strings.Index(line, ally) >= strings.Index(line, target) {
+		t.Fatalf("原版217的協助方／攻擊方次序錯誤：%q", line)
+	}
+}
+
+func TestCooperationDispatchNoticeWaitsForDialogueClose(t *testing.T) {
+	for _, tc := range []struct {
+		name       string
+		friendship int
+		target     int
+		wantNotice bool
+	}{{"agree", 228, 2, true}, {"refuse", 128, 2, false}, {"same-faction", 228, 1, false}} {
+		t.Run(tc.name, func(t *testing.T) {
+			g := cooperationProposalGame(t)
+			g.world.Friendship[0][1] = diplomacy.Friendship(tc.friendship)
+			g.target = tc.target
+			g.beginPersuasion()
+			if len(g.messages) != 0 {
+				t.Fatal("派遣通報提前蓋住進言對話")
+			}
+			for g.adviseAdvance() {
+			}
+			if len(g.messages) != 0 {
+				t.Fatal("君主回覆尚未確認就顯示通報")
+			}
+			g.closeAdvise()
+			if !tc.wantNotice {
+				if len(g.messages) != 0 {
+					t.Fatal("拒絕／同一家不應顯示派遣通報")
+				}
+				return
+			}
+			if len(g.messages) != 1 || g.messages[0].portraitPage != 147 ||
+				!strings.Contains(strings.Join(g.messages[0].lines, ""), big5(g.world.Generals[37].Name)) {
+				t.Fatal("未顯示原版60的外交官姓名與通報者肖像")
+			}
+			g.closeAdvise()
+			if len(g.messages) != 1 {
+				t.Fatal("關閉進言重複顯示通報")
+			}
+		})
+	}
+}
 
 // sub_13D91／sub_13DC9 對 byte_10D00 在 0 與 255 飽和；GUI 的直接反應與
 // Session 理由路徑都必須共用這個邊界。

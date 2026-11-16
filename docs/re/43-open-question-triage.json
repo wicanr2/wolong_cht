@@ -649,19 +649,6 @@
       "reason": "畫面對拍 gate、群組覆蓋或 32 組門檻，併入 Issue #12。"
     },
     {
-      "file": "docs/playtest/102-help-second-step.md",
-      "item": "選完協同進攻對象之後",
-      "status": "這一份停在 #7 的畫面，**再選下去**（成案／被拒）還沒拍",
-      "section": "4. 未解",
-      "domain": "驗收",
-      "verdict": "靜態",
-      "occurrence": 0,
-      "id": "oq-62202bd4c45520eb7b33",
-      "classification": "actionable",
-      "github_issue": 26,
-      "reason": "協力／協同進攻的 ④b gate 或 Friendship 門檻，併入 Issue #26。"
-    },
-    {
       "file": "docs/playtest/103-advise-scene-parity.md",
       "item": "`sub_10C14(dx=3, bx=8, cx=0C13h)` 那個底",
       "status": "(48, 128) 304×192，比插圖大 8 px 一圈。**畫的是什麼還沒讀**——這一張上插圖蓋滿了它，看不出來",
@@ -3559,19 +3546,6 @@
       "classification": "evidence-only",
       "github_issue": null,
       "reason": "目前列只保留原版證據邊界，未命中現行玩家路徑、規則或交付 Issue；若影響範圍改變，先建立新 Issue 再調整分類。"
-    },
-    {
-      "file": "docs/playtest/95-diplomacy-preconditions.md",
-      "item": "協同進攻的對象選完之後",
-      "status": "#7 那一張已經有了（[`102`](102-help-second-step.md)），**再選下去**（成案／被拒）還沒拍",
-      "section": "5. 未解",
-      "domain": "驗收",
-      "verdict": "靜態",
-      "occurrence": 0,
-      "id": "oq-263dc5049ffd3edb9b22",
-      "classification": "actionable",
-      "github_issue": 26,
-      "reason": "協力／協同進攻的 ④b gate 或 Friendship 門檻，併入 Issue #26。"
     },
     {
       "file": "docs/playtest/95-diplomacy-preconditions.md",

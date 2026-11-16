@@ -264,6 +264,7 @@ GPU最多兩頁快取，其他季節、液晶、未選頁與讀圖失敗沿原�
 
 | 日期／目前程式 | 最近驗證 | 狀態 | 交付物 |
 |---|---|---|---|
+| 2026-11-16；wlgame-closeout-cooperation-r1 | 受控記憶體三分支的原版對話／派遣及完整結算區塊與RNG；三條實際滑鼠流程、冷測／vet及錯版反例 | 已修主動協力漏首句、協助方／攻擊方同名及成案後漏原版派遣通報。直接同意／拒絕／同一家收尾通過，事件7後續全部回報與其他事件仍另列；強化AI未啟用 | [spec268本片](docs/spec/268-advise-mouse-lists.md)、[抽驗及來源](workplace/scratch/closeout-cooperation-20261116/integration.json) |
 | 2026-11-16；原版AI核對收尾，wlgame-ai-diplomacy-r1 | 依原Goal逐條核對Issue #11／#29／#10／#26／#27，五項既定驗收條件均有原版定位、固定狀態收據及正式玩家路徑；本批冷測與七日期六表無回歸 | 原版AI核對範圍已滿足，封存／提交／推送收尾；全遊戲像素、事件7完整提案畫面及其他既有oracle限制不由此代證。遠端Issue仍OPEN且只讀；下一階段為已授權的強化AI工具列 | [逐條完成稽核](workplace/scratch/ai-diplomacy-20261116/goal-audit.json)、[整合及提交回條](workplace/scratch/ai-diplomacy-20261116/integration.json) |
 | 2026-11-16；wlgame-ai-diplomacy-r1 | 原版十函式bytes、192組產生閘、八個正常滑鼠結算分支全等；冷啟動同SAVE兩側均在13時派發；三錯版拒絕、全專案冷測／vet、協力滑鼠18項及野戰62項／9圖、七日期六表全0 | 已修不採納初始條件、請求方姓名、召見／提問順序、自訂軍師肖像與讀檔等待。#26機制條件補齊；全量視窗像素及事件7主動提案未由本片代證。強化AI未啟用 | [spec220玩家契約](docs/spec/220-c-modal-control.md)、[spec176讀檔相位](docs/spec/176-event-queue-cursor-not-restored.md)、[整合收據](workplace/scratch/ai-diplomacy-20261116/integration.json) |
 | 2026-11-16；wlgame-ai-neutral-r1 | 原版五函式bytes、6,096組完整區塊相同，舊Go拒224組；正常讀檔後事件1的完整收尾相同；兩錯版、producer／存讀檔、全專案冷測／vet、滑鼠62項／9圖與七日期六表全0 | 已保留135AB的36門檻與中立24別名國力比較，#27機制條件補齊。整體AI仍接#26正常外交視窗連續流程；強化AI未啟用 | [spec219宣戰反應契約](docs/spec/219-c-event-handlers.md)、[整合收據](workplace/scratch/ai-neutral-20261116/integration.json) |

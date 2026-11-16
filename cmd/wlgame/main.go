@@ -390,6 +390,8 @@ type game struct {
 
 	// adviseQueue 是還沒演到的句子（docs/spec/45 §1.1）。
 	adviseQueue []adviseStep
+	// 主動協力成案後，待進言三句結束才顯示原版派遣通報。
+	adviseDispatch *state.TalkNotice
 
 	// 進言畫面上兩個框各自的最新一句（docs/spec/45 §1）。
 	adviseLordSaid    []string // 上框：君主

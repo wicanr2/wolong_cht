@@ -366,6 +366,9 @@ func (s *desktopGame) writeTrace() {
 			"scene": d.scene, "upper": d.upper, "lower": d.lower, "portrait": d.portraitPage}
 	}
 	if g.world != nil {
+		if g.adviseActive() {
+			v["adviseLordLines"], v["adviseAdvisorLines"] = g.adviseLordSaid, g.adviseAdvisorSaid
+		}
 		if c := g.world.PendingDiplomacy(); c != nil {
 			v["diplomacy"] = c
 			v["diplomacyAmountEditing"] = g.diplomacyEditingAmount

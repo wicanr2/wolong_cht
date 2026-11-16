@@ -7,9 +7,9 @@
 
 現行工作與狀態由 GitHub [Issues](https://github.com/wicanr2/wolong_cht/issues) 管理；
 本地 [`docs/worklist.json`](../worklist.json) 與 `tools/worklist.py verify` 只作輔助。
-1127 列不是同數量的獨立 backlog；可執行項目已由完成的 Issue #28 分流，證據／歷史項目留在本索引。
+1125 列不是同數量的獨立 backlog；可執行項目已由完成的 Issue #28 分流，證據／歷史項目留在本索引。
 
-- 日期：2026-11-15
+- 日期：2026-11-16
 - 產生工具：`tools/re_open_questions.py`
 - 來源：`docs/` 底下所有文件的未解小節、表格裡標未解的列，與收尾是「…未解」的散句
 
@@ -22,7 +22,7 @@
 
 ## 0. ⚠ 這個數字在量什麼
 
-**1121 列分布在 456 份文件，平均每份 2.5 列。**
+**1119 列分布在 455 份文件，平均每份 2.5 列。**
 
 ⭐ **所以它比較接近「文件有多少份」，不是「原版還有多少沒解」。**
 每寫一份新文件就帶進約三列自己的未解——而 `check.sh --strict` 還會
@@ -48,10 +48,10 @@
 | 規則正確性 | 10 | 6 | 3 | 1 |
 | 資料保存 | 20 | 19 | 1 | 0 |
 | 程式碼理解 | 315 | 308 | 6 | 1 |
-| 驗收 | 245 | 220 | 25 | 0 |
+| 驗收 | 243 | 218 | 25 | 0 |
 | 外部資料 | 6 | 5 | 1 | 0 |
 | 其他 | 525 | 501 | 23 | 1 |
-| **合計** | **1121** | 1059 | 59 | 3 |
+| **合計** | **1119** | 1057 | 59 | 3 |
 
 ⚠ **這是列數，不是獨立問題數。** 索引檔的「現況」欄是別的文件的摘要，同一個缺口在那份文件自己的未解表裡還有一列——這類共 **0** 列（另有少數只是提到「未解」兩個字的圖例列）。
 
@@ -61,7 +61,7 @@
 |---|---:|
 | `docs/spec/` | 482 |
 | `docs/re/` | 315 |
-| `docs/playtest/` | 245 |
+| `docs/playtest/` | 243 |
 | `docs/release/` | 26 |
 | `docs/formats/` | 20 |
 | `docs/mobile/` | 11 |
@@ -429,7 +429,7 @@
 | [`re/99-c-hourly-update-restoration.md`](../re/99-c-hourly-update-restoration.md) | 正常玩家日期流、硬體等待與長程 | 未驗證，one-hour 直接入口不取代玩家垂直鏈 | 靜態 | evidence-only | — |
 | [`re/99-c-hourly-update-restoration.md`](../re/99-c-hourly-update-restoration.md) | C 機器碼匹配 | spec/255 已判手寫組語，C 機器碼匹配不可行；整檔匹配仍由組語基準提供 | 靜態 | merge-target | [#25](https://github.com/wicanr2/wolong_cht/issues/25) |
 
-## 2.4 驗收（245 條）
+## 2.4 驗收（243 條）
 
 | 出處 | 缺口 | 現況 | 裁決 | 分流 | Issue |
 |---|---|---|---|---|---|
@@ -441,7 +441,6 @@
 | [`playtest/100-video-mode-parity.md`](../playtest/100-video-mode-parity.md) | remake 多的兩列 | 「主君編成」與「損害報告」，已記錄的差異（`39`） | 靜態 | merge-target | [#12](https://github.com/wicanr2/wolong_cht/issues/12) |
 | [`playtest/101-quit-menu-parity.md`](../playtest/101-quit-menu-parity.md) | remake 要把游標的 hide／show 接在哪 | 規則已解（`../re/88`），但 54 個呼叫點還沒對應到 remake 的繪圖流程 | 靜態 | merge-target | [#12](https://github.com/wicanr2/wolong_cht/issues/12) |
 | [`playtest/101-quit-menu-parity.md`](../playtest/101-quit-menu-parity.md) | remake 多的兩列 | 「主君編成」「損害報告」是 remake 加的，`39` 已裁定保留 | 靜態 | merge-target | [#12](https://github.com/wicanr2/wolong_cht/issues/12) |
-| [`playtest/102-help-second-step.md`](../playtest/102-help-second-step.md) | 選完協同進攻對象之後 | 這一份停在 #7 的畫面，**再選下去**（成案／被拒）還沒拍 | 靜態 | actionable | [#26](https://github.com/wicanr2/wolong_cht/issues/26) |
 | [`playtest/103-advise-scene-parity.md`](../playtest/103-advise-scene-parity.md) | `sub_10C14(dx=3, bx=8, cx=0C13h)` 那個底 | (48, 128) 304×192，比插圖大 8 px 一圈。**畫的是什麼還沒讀**——這一張上插圖蓋滿了它，看不出來 | 靜態 | merge-target | [#12](https://github.com/wicanr2/wolong_cht/issues/12) |
 | [`playtest/103-advise-scene-parity.md`](../playtest/103-advise-scene-parity.md) | 說服迴圈的每一句 | 這一份停在開場三句，**選了理由之後**的畫面還沒拍 | 靜態 | merge-target | [#12](https://github.com/wicanr2/wolong_cht/issues/12) |
 | [`playtest/104-advise-verdict-parity.md`](../playtest/104-advise-verdict-parity.md) | 「君主出征中」那一句 | `openAdvise` 仍寫事件列，而**原版是 TALK #64 訊息框**（`../re/22` §3.4）——不是「該不該寫事件列」，是呈現方式用錯了。還沒拍 | 靜態 | merge-target | [#12](https://github.com/wicanr2/wolong_cht/issues/12) |
@@ -665,7 +664,6 @@
 | [`playtest/94-march-map-picker.md`](../playtest/94-march-map-picker.md) | 游標推到畫面邊緣時鏡頭跟過去 | 原版的滑鼠是**世界座標**，推出視野鏡頭會捲（`../re/84` §2）。remake 的滑鼠被視窗框住，還沒接 | 靜態 | merge-target | [#12](https://github.com/wicanr2/wolong_cht/issues/12) |
 | [`playtest/94-march-map-picker.md`](../playtest/94-march-map-picker.md) | 狀態列 #21（三選一） | 選完目標據點的下一張，還沒拍 | 靜態 | evidence-only | — |
 | [`playtest/94-march-map-picker.md`](../playtest/94-march-map-picker.md) | 別的狀態下的游標 | §2 | 靜態 | evidence-only | — |
-| [`playtest/95-diplomacy-preconditions.md`](../playtest/95-diplomacy-preconditions.md) | 協同進攻的對象選完之後 | #7 那一張已經有了（`102`），**再選下去**（成案／被拒）還沒拍 | 靜態 | actionable | [#26](https://github.com/wicanr2/wolong_cht/issues/26) |
 | [`playtest/95-diplomacy-preconditions.md`](../playtest/95-diplomacy-preconditions.md) | `sub_1304E` 的 `dx` 附加欄位 | 這兩個呼叫點都傳 `0FFFFh`（不比），別的呼叫點還沒逐一讀 | 靜態 | evidence-only | — |
 | [`playtest/95-diplomacy-preconditions.md`](../playtest/95-diplomacy-preconditions.md) | 原版擷取裡的滑鼠游標 | 兩張都是 95 px | 靜態 | evidence-only | — |
 | [`playtest/96-map-click.md`](../playtest/96-map-click.md) | 佔用圖 | 原版查的是 `cs:word_19872` 的佔用圖，remake 直接掃軍團表比座標。結果相同但來源不同 | 靜態 | evidence-only | — |
