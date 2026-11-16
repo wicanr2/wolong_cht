@@ -213,6 +213,9 @@ func (g *game) enqueueDiplomacyTalk(c state.DiplomacyChoice, result state.Diplom
 	for _, notice := range result.TalkNotices {
 		g.enqueueTalkNotice(notice)
 	}
+	for _, id := range result.ReleasedGenerals {
+		g.enqueueReleasedGeneral(id)
+	}
 }
 
 // 只取已由共用TALK排版器建立的視窗，供同一場景保留上下框。

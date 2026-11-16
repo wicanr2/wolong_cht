@@ -23,6 +23,40 @@ func adoptedDiplomacyResultForTest(c state.DiplomacyChoice, option state.Diploma
 	return r
 }
 
+// 原版13262→135ED→150D7：停戰結果之後才依序通報返還與本人請罪。
+func TestCeasefireReturnsCaptiveTalkAfterResult(t *testing.T) {
+	lib, err := library.LoadWithOptions("../../workplace/orig/dosv", library.LoadOptions{
+		TalkJSON: "../../translations/talk-dosv-corrected.json",
+	})
+	if err != nil {
+		t.Fatal(err)
+	}
+	w, err := state.LoadScenario("../../workplace/orig/dosv/SINARIO.DAT", 0)
+	if err != nil {
+		t.Fatal(err)
+	}
+	w.Player, w.Trust = 0, 255
+	w.Generals[39].Faction, w.Generals[39].Captor = 3, 0
+	w.Generals[39].Duty, w.Generals[39].TalkVariant = state.DutyCaptive, 4
+	c := state.DiplomacyChoice{Kind: state.DiplomacyCeasefire, Source: 3, Target: 0,
+		InitialResponse: 1, InitialAmount: 29000, OfferAmount: 29000}
+	w.BeginDiplomacyChoice(c)
+	result, applied := w.ResolveDiplomacyWithResult(state.DiplomacyAcceptFree)
+	if !applied {
+		t.Fatal("ceasefire not applied")
+	}
+	g := &game{lib: lib, world: w}
+	vars := g.diplomacyTalkVars(c, -1)
+	returned, ok := w.TalkNoticeVars(state.TalkNotice{General: 39, City: -1, Faction: -1, Amount: -1}, big5)
+	if !ok {
+		t.Fatal("missing return parameters")
+	}
+	assertTalkPairSample(t, lib, w,
+		[]int{364, g.diplomacyTalkPromptIndex(c) + 10, 43, 37, 434},
+		[]map[byte]string{vars, vars, vars, returned, returned}, "ceasefire return",
+		func(g *game) { g.enqueueDiplomacyTalk(c, result) })
+}
+
 func TestDiplomacyTalkIndicesMatchRaw13902Branches(t *testing.T) {
 	tests := []struct {
 		name         string

@@ -177,22 +177,24 @@ func (g *game) enqueueEventMessages(ev state.Event) {
 		}
 	}
 	for _, id := range ev.ReleasedGenerals {
-		if id < 0 || id >= len(g.world.Generals) ||
-			g.world.Player < 0 || g.world.Player >= len(g.world.Factions) ||
-			g.world.Generals[id].Faction != g.world.Player {
-			// sub_150D7 只有在釋放後的 General +0x1C 等於玩家勢力
-			// （byte_10CFF）時，才建立 TALK #37 的玩家通知。
-			continue
-		}
-		g.enqueueTalkNotice(state.TalkNotice{
-			Index: 0x25, City: -1, Faction: -1, General: id, Amount: -1,
-		})
-		// 15110的199h是八格一組的編號，原始說話型3–7對應433–437。
-		// 先讓通報者說完，再由回來的武將本人請罪；空變體沿共用過濾。
-		g.enqueueTalkNotice(state.TalkNotice{
-			Index: 0x199, City: -1, Faction: -1, General: id, Amount: -1,
-		})
+		g.enqueueReleasedGeneral(id)
 	}
+}
+
+// enqueueReleasedGeneral共用事件9與停戰的150D7返回玩家對話。
+func (g *game) enqueueReleasedGeneral(id int) {
+	if id < 0 || id >= len(g.world.Generals) ||
+		g.world.Player < 0 || g.world.Player >= len(g.world.Factions) ||
+		g.world.Generals[id].Faction != g.world.Player {
+		return
+	}
+	g.enqueueTalkNotice(state.TalkNotice{
+		Index: 0x25, City: -1, Faction: -1, General: id, Amount: -1,
+	})
+	// 15110的199h按本人原始說話型展開，空文字沿既有過濾。
+	g.enqueueTalkNotice(state.TalkNotice{
+		Index: 0x199, City: -1, Faction: -1, General: id, Amount: -1,
+	})
 }
 
 func (g *game) enqueueTalk(index int, vars map[byte]string) {

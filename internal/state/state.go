@@ -953,6 +953,8 @@ type DiplomacyResult struct {
 	AdviceOption  DiplomacyOption
 	AdviceAdopted bool
 	TalkNotices   []TalkNotice
+	// 停戰實際釋放的武將，依135ED的記錄順序；僅runtime，不進存檔。
+	ReleasedGenerals []int
 }
 
 // Event 是一個 tick 裡發生的事，供呼叫端記錄或呈現。

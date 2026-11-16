@@ -2265,3 +2265,23 @@
 - 本輪來源、READY、證據、前批不變、65條歷史缺鏈基準、擁有權與Docker清理由
   [整合收據](workplace/scratch/closeout-warning-zero-20261116/integration.json)保存，commit／push與最終清理另見repository.json。
   遠端Issue只讀，既有1119筆研究分類未改，未新發行版本。
+
+## 2026-11-16：停戰後的俘虜返還與本人請罪
+
+- 以原版受控記憶體抽驗無俘虜、返玩家、返對方、雙向、多人、付費與拒絕七案，
+  另從標題與四槽正常讀檔跑多人返還。固定258-byte RNG，直接6時及正常7時分開比較，
+  完整22208-byte區塊／RNG、返還ID及存檔讀回八份相同。
+- 原版13C3D入口AH七案皆0，未自行合成72；135ED逐筆150D7返回玩家才有37通報及199h本人請罪。
+  READY後只補成功釋放ID的runtime結果，外交UI共用事件9的同一對話入口，付款與返還規則不改。
+- 首次fixture把Captor名稱直覺當關押方，且漏Duty4，舊診斷保留並排除。改按既有舊主語意建立
+  Faction／Captor／俘虜職務及扣除舊主人數，核對39／45返玩家、49返對方才列正式驗收。
+  唯讀稽核agent只回傳既有證據入口，未改檔、建置、commit、push或清理。
+- 七條真實滑鼠99項／54圖、事件9共享三案14項／4圖、全專案冷測／vet及野戰62項／9圖通過。
+  舊版單測3則不足5則，舊binary的滑鼠返還等待亦被拒絕；已抽看原版／Go通報與本人肖像四張。
+  共享fixture初選了不存在的other-faction名稱，查實際cases清單改選other後通過，屬準備腳本問題。
+- Go仍在回覆入列前結算，原版在結果確認後；校訂文字、鏡頭與場景邊緣差異仍明列。
+  未改格式、熱鍵、強化AI或HD，未代證事件6及所有次要對白。現行Issue只讀，不改1119筆歷史分類。
+- 本地worklist輔助verify仍有既有parity-extend-past-summons條件過期一筆，對應playtest119；
+  與本輪停戰對照分開記錄，未稱該輔助入口通過，亦未改遠端Issue或JSON。
+- 文件、65條歷史缺鏈基準、原版／HD與前批證據不變、擁有權與Docker清理由
+  [本輪整合收據](workplace/scratch/closeout-captive-20261116/integration.json)保存；commit／push與最終清理見repository.json。

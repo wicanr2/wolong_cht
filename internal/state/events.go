@@ -837,15 +837,19 @@ func (w *World) releaseGeneral(generalID int) bool {
 
 // releaseDiplomaticCaptives 是 sub_135ED → sub_150D7 的配對狀態部分。
 // 和平成立後，兩方互相俘虜的武將回到原 Captor 勢力；若原勢力已滅，
-// 則回到在野。畫面通知仍屬尚未接入的 UI 層，這裡只寫回已證實欄位。
-func (w *World) releaseDiplomaticCaptives(a, b int) {
+// 則回到在野。回傳成功釋放的記錄順序，供呈現層沿150D7顯示返還對話。
+func (w *World) releaseDiplomaticCaptives(a, b int) []int {
+	var released []int
 	for i := range w.Generals {
 		g := &w.Generals[i]
 		if !g.Alive || !((g.Faction == a && g.Captor == b) || (g.Faction == b && g.Captor == a)) {
 			continue
 		}
-		w.releaseGeneral(i)
+		if w.releaseGeneral(i) {
+			released = append(released, i)
+		}
 	}
+	return released
 }
 
 // applyQueuedCeasefire 是 sub_13262 的狀態部分。
@@ -917,8 +921,13 @@ func (w *World) ceasefireTerms(source, target int) (response, amount int, ok boo
 // finishQueuedCeasefire 是 sub_135ED 與 sub_145F8／sub_14236／
 // sub_13669 的狀態收尾；response 由 AI 計算或玩家三選一提供。
 func (w *World) finishQueuedCeasefire(source, target, response, amount int) bool {
+	applied, _ := w.finishQueuedCeasefireWithReturnees(source, target, response, amount)
+	return applied
+}
+
+func (w *World) finishQueuedCeasefireWithReturnees(source, target, response, amount int) (bool, []int) {
 	if response < 0 || response >= 2 {
-		return false
+		return false, nil
 	}
 	// sub_135ED(AL=1) 的兩個 24 位資金更新；AL=0 仍會釋放俘虜，
 	// 但不轉帳。World 的 Funds 已是有號整數，ClampFunds 對應原版
@@ -927,7 +936,7 @@ func (w *World) finishQueuedCeasefire(source, target, response, amount int) bool
 		w.Factions[target].Funds = economy.ClampFunds(w.Factions[target].Funds + amount)
 		w.Factions[source].Funds = economy.ClampFunds(w.Factions[source].Funds - amount)
 	}
-	w.releaseDiplomaticCaptives(source, target)
+	released := w.releaseDiplomaticCaptives(source, target)
 
 	// sub_145F8：只清掉彼此互指的侵攻目標。
 	if w.Factions[source].InvasionTarget == target {
@@ -955,7 +964,7 @@ func (w *World) finishQueuedCeasefire(source, target, response, amount int) bool
 	}
 	w.Friendship[source][target] = diplomacy.Peace(value)
 	w.Friendship[target][source] = diplomacy.Peace(value)
-	return true
+	return true, released
 }
 
 // applyQueuedDeclaration 是 sub_1320C → sub_13526 的狀態部分。

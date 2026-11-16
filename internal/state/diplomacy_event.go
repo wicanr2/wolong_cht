@@ -178,7 +178,7 @@ func (w *World) ResolveDiplomacyWithResult(option DiplomacyOption) (DiplomacyRes
 	case DiplomacyCooperation:
 		applied = w.finishQueuedCooperation(choice.Source, choice.Invader, choice.Target, result.Response, result.Amount)
 	case DiplomacyCeasefire:
-		applied = w.finishQueuedCeasefire(choice.Source, choice.Target, result.Response, result.Amount)
+		applied, result.ReleasedGenerals = w.finishQueuedCeasefireWithReturnees(choice.Source, choice.Target, result.Response, result.Amount)
 	}
 	if applied && declarationNotice {
 		result.TalkNotices = append(result.TalkNotices, TalkNotice{

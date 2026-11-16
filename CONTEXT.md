@@ -264,6 +264,7 @@ GPU最多兩頁快取，其他季節、液晶、未選頁與讀圖失敗沿原�
 
 | 日期／目前程式 | 最近驗證 | 狀態 | 交付物 |
 |---|---|---|---|
+| 2026-11-16；wlgame-closeout-captive-r1 | 停戰俘虜七案與正常原版多人讀檔案，完整區塊／RNG及返還ID八份相同；滑鼠99項／54圖、共享事件9三案14項／4圖、冷測／vet與野戰62項／9圖，舊漏對話錯版拒絕 | 已補停戰後逐名返還通報與本人請罪，返回對方與拒絕維持靜默。原版AH七案皆0，未猜接72；中間資金／人事寫回相位及其他caller仍有限制 | [spec220](docs/spec/220-c-modal-control.md)、[本輪收據](workplace/scratch/closeout-captive-20261116/integration.json) |
 | 2026-11-16；wlgame-closeout-warning-zero-r1 | 事件13五個歸零邊界及正常原版讀檔49案，完整區塊／RNG六案相同；五條滑鼠29項／14圖、冷測／vet與野戰62項／9圖；三種錯版拒絕 | 修正輸入已零漏敗北、錯讀褒獎及敗北蓋住報告。先確認報告再顯示逐出；沿既有敗北外殼回launcher，原版恰好50的無關編組與中間扣Trust相位差異明列 | [spec219](docs/spec/219-c-event-handlers.md)、[re19勘誤](docs/re/19-outcome.md)、[本輪收據](workplace/scratch/closeout-warning-zero-20261116/integration.json) |
 | 2026-11-16；wlgame-closeout-ceasefire-r1 | 原版事件3八案完整區塊／RNG、四函式bytes；停戰GUI109項／57圖、兩錯版、全專案冷測／vet與野戰62項／9圖；事件13 A三案回歸 | 已修來使結果肖像、超額君主警告與選列提問的姓名著色。A已採用，只省無關編成提示；停戰交易中間寫回相位與俘虜次要對白仍明列限制 | [spec220事件3](docs/spec/220-c-modal-control.md)、[A裁定與本輪收據](workplace/scratch/closeout-ceasefire-20261116/integration.json) |
 | 2026-11-16；沿wlgame-closeout-release-r1 | 遷都八案、非致命赤字三案完整區塊／RNG；遷都GUI39項／13圖，現行警告GUI12項／3圖；另正常原版7時警告與完整結算對拍 | 遷都情報閘／肖像與語氣抽驗通過，程式未改且494份Go來源相同。原版赤字會多開無關編成提示；使用者已選A，只留警告、一次確認回圖。扣信賴50與格式不變，現行程式符合，明列原版異常修正 | [遷都補證](docs/spec/64-capital-relocation-report.md)、[警告觀測](docs/spec/219-c-event-handlers.md)、[收據](workplace/scratch/closeout-capital-warning-20261116/integration.json) |
