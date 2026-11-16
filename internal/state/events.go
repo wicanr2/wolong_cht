@@ -277,36 +277,6 @@ func (w *World) appendDiplomacyEnvoyNotice(ev *Event, index, faction, amount int
 	ev.TalkNotices[len(ev.TalkNotices)-1].SpeakerPortrait = valid
 }
 
-// diplomacyCaptiveFlags 是 sub_137D8 → sub_13138 的兩個方向 bit。
-// sub_13138 不檢查 General 的 active byte，只比 +1Dh（Captor）與 +1Ch
-// （Faction）；因此這裡也保留 raw record 的欄位語意，不擅自加 Alive gate。
-func (w *World) diplomacyCaptiveFlags(a, b int) uint8 {
-	var flags uint8
-	for _, g := range w.Generals {
-		if g.Captor == a && g.Faction == b {
-			flags |= 1
-		}
-		if g.Captor == b && g.Faction == a {
-			flags |= 2
-		}
-		if flags == 3 {
-			break
-		}
-	}
-	return flags
-}
-
-func appendDiplomacySecondaryNotice(ev *Event, index int, noPortrait bool, rawWord int, rawWordValid bool) {
-	if ev == nil {
-		return
-	}
-	ev.TalkNotices = append(ev.TalkNotices, TalkNotice{
-		Index: index, City: -1, Faction: -1, General: -1, Amount: -1,
-		RawFormatterWord: rawWord, RawFormatterWordValid: rawWordValid,
-		Secondary: true, NoPortrait: noPortrait,
-	})
-}
-
 func (w *World) dispatchQueuedEvent(ev *Event) {
 	e, ok := w.takeNextQueuedEvent()
 	if !ok {
@@ -400,17 +370,12 @@ func (w *World) dispatchQueuedEvent(ev *Event) {
 			noticeAmount = amount
 		}
 		w.appendDiplomacyEnvoyNotice(ev, 0x2B+response, source, noticeAmount)
-		// sub_13C3D 的第二次直接呼叫條件：AH（雙向俘虜關係）非零，
-		// 且 AL 不是 2／3。索引是 CX+1Dh = #72。第一個 formatter 呼叫
-		// 讀 SS:[SP] 的保存 DI；返回後第二個呼叫沿用恢復的 DI，`\\2`
-		// 會讀 SS:[DI]。那是當次 DOS stack 的暫存 word，不能由 faction
-		// record 或持久 World state 重建；保留 raw index，但沒有動態 trace
-		// 捕捉 payload 時一律明確 invalid，讓呈現層 fail-closed。
-		if response < 2 && w.diplomacyCaptiveFlags(source, w.Player) != 0 {
-			appendDiplomacySecondaryNotice(ev, 0x48, false, -1, false)
-		}
+		// 13138的cmp ax,ax固定清CF，137D8回AH0，不會產生次要72。
 		if response < 2 {
-			w.finishQueuedCeasefire(w.Player, source, response, amount)
+			_, released := w.finishQueuedCeasefireWithReturnees(w.Player, source, response, amount)
+			if ev != nil {
+				ev.ReleasedGenerals = append(ev.ReleasedGenerals, released...)
+			}
 		}
 	case 7:
 		// sub_13388 的字高是協力方，Param 低 byte 是協力方要攻擊的
@@ -437,14 +402,12 @@ func (w *World) dispatchQueuedEvent(ev *Event) {
 			noticeAmount = amount
 		}
 		w.appendDiplomacyEnvoyNotice(ev, 0x2F+response, source, noticeAmount)
-		// 同一個 sub_13C3D 條件；事件 7 的 CX+1Dh 是 #76。
-		// #76 本身沒有 formatter marker，原版是直接文字／選單樣式
-		// TALK，因此不附帶玩家君主肖像。
-		if response < 2 && w.diplomacyCaptiveFlags(source, w.Player) != 0 {
-			appendDiplomacySecondaryNotice(ev, 0x4C, true, -1, false)
-		}
+		// 與事件6相同的固定AH0，不以俘虜統計合成戰鬥選單76。
 		if response < 2 {
-			w.finishQueuedCooperation(source, invader, w.Player, response, amount)
+			_, released := w.finishQueuedCooperationWithReturnees(source, invader, w.Player, response, amount)
+			if ev != nil {
+				ev.ReleasedGenerals = append(ev.ReleasedGenerals, released...)
+			}
 		}
 	case 8:
 		if source < 0 || source >= numFactions || source == w.Player || !w.Factions[source].Alive {
@@ -693,8 +656,13 @@ func (w *World) cooperationTerms(source, invader, target int) (response, amount 
 // sub_13526 的狀態部分。它不再重算條件，方便玩家三選一沿用同一個
 // 原版 payload；numeric input 尚未在此猜測。
 func (w *World) finishQueuedCooperation(source, invader, target, response, amount int) bool {
+	applied, _ := w.finishQueuedCooperationWithReturnees(source, invader, target, response, amount)
+	return applied
+}
+
+func (w *World) finishQueuedCooperationWithReturnees(source, invader, target, response, amount int) (bool, []int) {
 	if response < 0 || response >= 2 {
-		return false
+		return false, nil
 	}
 	// sub_135ED(AL=1) 的資金方向是 SI（合作方）增加、DI（被侵攻方）
 	// 減少；AL=0 仍會釋放兩方俘虜但不轉帳。
@@ -702,11 +670,11 @@ func (w *World) finishQueuedCooperation(source, invader, target, response, amoun
 		w.Factions[source].Funds = economy.ClampFunds(w.Factions[source].Funds + amount)
 		w.Factions[target].Funds = economy.ClampFunds(w.Factions[target].Funds - amount)
 	}
-	w.releaseDiplomaticCaptives(source, target)
+	released := w.releaseDiplomaticCaptives(source, target)
 
 	// sub_13220 最後以 DL=Param 低 byte 呼叫 sub_13526；這裡重用已接入
 	// 的事件 1 狀態收尾，保留玩家不直接寫 +0x19 的原版邊界。
-	return w.applyQueuedDeclaration(source, invader)
+	return w.applyQueuedDeclaration(source, invader), released
 }
 
 // applyQueuedCooperationReport 是事件 7（sub_13388）的狀態轉接。

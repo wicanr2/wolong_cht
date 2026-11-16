@@ -231,3 +231,35 @@ READY首稿把526稱空槽的診斷保留於快照，實作目標raw1／527與�
 舊binary的實際滑鼠流程也因缺返還報告被拒絕。已抽看玩家ID39的原版／Go通報與本人肖像，
 未聲稱校訂文字、鏡頭及全畫面逐像素相同。詳細入口、來源與限制見
 [本輪整合收據](../../workplace/scratch/closeout-captive-20261116/integration.json)。
+
+## 2026-11-16：外交官回報返還與固定CF零勘誤
+
+**狀態：CONFORMED，限事件6／7回報的返還UI與不會成立的次要通知。** READY快照早於正式修改封存。
+
+- 輸入沿本頁DOS/V KI.EXE，原始IDA9.4 linear。既有c-events匯出SHA-256為
+  `bf23824d9dc80547f2abeab9d550213c542839f3054db429e3ce34cbf5588ee3` 的完整正確值與五函式bytes
+  由[原始指令收據](../../workplace/scratch/closeout-envoy-captive-20261116/code-proof.json)保存；
+  每條指令對回原始EXE檔案偏移，非.asm搜尋或自訂符號推論。
+- 已證實：13167 `cmp ax,ax` 後13169必跳1316D `clc`，即13138無論累計多少記錄都回CF0。
+  137D8的137DF／137E9兩次jnb均略過or DH，137F1回AH0。不能把正確的俘虜配對統計
+  當成原版的true回傳。spec219原有契約已要求保留這個cmp ax,ax，本輪修正Go先前的過度推論。
+- dosgolem版本 `f79eab6db8c64a524a06535e53e5d32b0bbcf7c8`。十案真實131AE、13327／13388、
+  13C3D、135ED及150D7，事前固定同一258-byte RNG、delay1及明列合法captives，量測中不寫結果。
+  事件6取無俘虜、返玩家、返對方、雙向、多人、付費、拒絕、無外交官八案，事件7取已證實
+  成功場景的免費及付費雙向兩案；初選source3協力實際拒絕與單向診斷另保留，不計正式成功覆蓋。
+  原版AH皆0且無72／76。成功返回玩家的每人依記錄順序顯示37及199h，本人raw4；返對方靜默。
+- 原版正常標題／四槽載入多人事件6作正對照，不direct-entry。直接原版6時與正常原版7時各比完整
+  22208-byte區塊及258-byte RNG，不能混作同一鏡頭。
+- 正式接線：事件6沿既有finishQueuedCeasefireWithReturnees，事件7由同一協力規則新增回傳實際返還
+  ID的接縫，原bool入口仍轉同一實作；將ID交既有Event.ReleasedGenerals，由前批共用150D7 UI顯示。
+  移除依持久俘虜配對合成72／76的producer與只供該錯式使用的helper，保留通用raw formatter安全邊界。
+- 不改付款、和平／宣戰、返還規則、存檔格式、熱鍵、強化AI或HD。事件2合作選單的返還UI仍未由本節代證。
+- 驗收：十案加正常多人案共十一份原版快照的完整區塊、RNG、主通知索引、實際返還ID及存檔讀回；
+  十條正常讀檔滑鼠、舊binary拒絕、冷測／vet與受影響事件3／9及野戰抽驗。
+  Go仍在報告入列前結算，原版在結果確認後結算，本節不稱中間資金／人事寫回相位或全畫面逐像素一致。
+
+十一份完整區塊／RNG、通知及返還順序、存檔讀回全等。十條滑鼠104項／42圖、事件3及9共享回歸20項／10圖、
+冷測／vet及野戰62項／9圖通過；舊binary漏返還及多出戰鬥選單兩錯版均拒絕。已抽看原版與Go返還／請罪框。
+GUI用seed1、自然7時核對畫面報價與實際付款；精確原版報價由同入口完整RNG對照負責，不冒稱這兩組條件相同。
+[re12勘誤](../re/12-diplomacy-dialogue.md#2026-11-16事件67返還與固定cf零)及
+[整合收據](../../workplace/scratch/closeout-envoy-captive-20261116/integration.json)保存來源、限制與單一研究列的evidence-only分流。

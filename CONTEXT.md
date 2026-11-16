@@ -264,6 +264,7 @@ GPU最多兩頁快取，其他季節、液晶、未選頁與讀圖失敗沿原�
 
 | 日期／目前程式 | 最近驗證 | 狀態 | 交付物 |
 |---|---|---|---|
+| 2026-11-16；wlgame-closeout-envoy-captive-r1 | 事件6八案、事件7兩案及正常多人讀檔，共11份完整區塊／RNG／通知／返還相同；滑鼠104項／42圖、共享3/9回歸20項／10圖、冷測／vet與野戰62項／9圖，兩錯版拒絕 | 已補外交官回報後的逐人返還；13138固定CF0已補證，移除誤設俘虜旗標而產生的72／76。相關formatter一列轉證據保留，其他1118列不變；中間結算相位仍有限制 | [spec220](docs/spec/220-c-modal-control.md)、[re12](docs/re/12-diplomacy-dialogue.md)、[本輪收據](workplace/scratch/closeout-envoy-captive-20261116/integration.json) |
 | 2026-11-16；wlgame-closeout-captive-r1 | 停戰俘虜七案與正常原版多人讀檔案，完整區塊／RNG及返還ID八份相同；滑鼠99項／54圖、共享事件9三案14項／4圖、冷測／vet與野戰62項／9圖，舊漏對話錯版拒絕 | 已補停戰後逐名返還通報與本人請罪，返回對方與拒絕維持靜默。原版AH七案皆0，未猜接72；中間資金／人事寫回相位及其他caller仍有限制 | [spec220](docs/spec/220-c-modal-control.md)、[本輪收據](workplace/scratch/closeout-captive-20261116/integration.json) |
 | 2026-11-16；wlgame-closeout-warning-zero-r1 | 事件13五個歸零邊界及正常原版讀檔49案，完整區塊／RNG六案相同；五條滑鼠29項／14圖、冷測／vet與野戰62項／9圖；三種錯版拒絕 | 修正輸入已零漏敗北、錯讀褒獎及敗北蓋住報告。先確認報告再顯示逐出；沿既有敗北外殼回launcher，原版恰好50的無關編組與中間扣Trust相位差異明列 | [spec219](docs/spec/219-c-event-handlers.md)、[re19勘誤](docs/re/19-outcome.md)、[本輪收據](workplace/scratch/closeout-warning-zero-20261116/integration.json) |
 | 2026-11-16；wlgame-closeout-ceasefire-r1 | 原版事件3八案完整區塊／RNG、四函式bytes；停戰GUI109項／57圖、兩錯版、全專案冷測／vet與野戰62項／9圖；事件13 A三案回歸 | 已修來使結果肖像、超額君主警告與選列提問的姓名著色。A已採用，只省無關編成提示；停戰交易中間寫回相位與俘虜次要對白仍明列限制 | [spec220事件3](docs/spec/220-c-modal-control.md)、[A裁定與本輪收據](workplace/scratch/closeout-ceasefire-20261116/integration.json) |
@@ -1142,6 +1143,12 @@ DOSBox-X 那條路**不刪**：它是這一條的正對照，而且 PC-98 版只
 ---
 
 ## 6. 已被推翻的斷言
+
+### 2026-11-16：持有俘虜會觸發外交回報72／76
+
+先前只追137D8的or DH分支，沒有追13138的CF回傳，錯把配對統計當成true。原指令13167
+cmp ax,ax固定跳1316D清CF，137D8回AH0；十案原版及正常讀檔亦無72／76。
+舊Go的配對flag及通知已移除，事件7不再多開戰鬥選單。詳見[re12勘誤](docs/re/12-diplomacy-dialogue.md#2026-11-16事件67返還與固定cf零)。
 
 ### 2026-11-15：Stage1必須保存上一拍DI才能重現原版
 

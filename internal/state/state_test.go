@@ -1268,8 +1268,9 @@ func TestQueuedDiplomacySecondaryTalkConditions(t *testing.T) {
 	w.Factions[other].Diplomat = 1
 	w.Factions[other].Aggression = 1
 	w.Generals[1] = General{Alive: true, Politics: 8, Faction: other, Captor: noFaction}
-	// sub_13138 的第一個方向：回報方曾俘虜玩家方武將。
+	// 即使有配對記錄，13138的cmp ax,ax仍固定清CF。
 	w.Generals[2] = General{Faction: player, Captor: other}
+	w.Generals[39].Faction, w.Generals[39].Captor, w.Generals[39].Duty = other, player, DutyCaptive
 	w.Factions[player].Funds = 50_000
 	w.Factions[other].Funds = 10_000
 	w.Factions[player].InvasionTarget = other
@@ -1280,15 +1281,12 @@ func TestQueuedDiplomacySecondaryTalkConditions(t *testing.T) {
 	w.eventCursor, w.eventDelay = 0, 1
 	ev := &Event{}
 	w.dispatchQueuedEvent(ev)
-	if len(ev.TalkNotices) != 3 {
-		t.Fatalf("事件 6 有俘虜關係時應有第二次 TALK：%#v", ev.TalkNotices)
+	if len(ev.TalkNotices) != 2 || ev.TalkNotices[0].Index != 57 ||
+		ev.TalkNotices[1].Index < 43 || ev.TalkNotices[1].Index > 44 {
+		t.Fatalf("事件6只能有引見及成功回報，不得合成72：%#v", ev.TalkNotices)
 	}
-	got := ev.TalkNotices[2]
-	if got.Index != 0x48 || !got.Secondary || got.NoPortrait {
-		t.Fatalf("事件 6 次要 TALK raw 邊界錯誤：%#v", got)
-	}
-	if got.RawFormatterWordValid || got.RawFormatterWord != -1 {
-		t.Fatalf("事件 6 次要 TALK 未捕捉到原版 SS:[DI] payload 時必須 fail-closed：%#v", got)
+	if !reflect.DeepEqual(ev.ReleasedGenerals, []int{39}) {
+		t.Fatalf("事件6遺漏實際返還：%v", ev.ReleasedGenerals)
 	}
 
 	w = load(t, 0)
@@ -1299,6 +1297,7 @@ func TestQueuedDiplomacySecondaryTalkConditions(t *testing.T) {
 	w.Factions[ally].Aggression = 1
 	w.Generals[1] = General{Alive: true, Politics: 8, Faction: ally, Captor: noFaction}
 	w.Generals[2] = General{Faction: player, Captor: ally}
+	w.Generals[39].Faction, w.Generals[39].Captor, w.Generals[39].Duty = ally, player, DutyCaptive
 	w.Factions[player].Funds = 50_000
 	w.Factions[ally].Funds = 10_000
 	w.Factions[ally].InvasionTarget = diplomacy.NoTarget
@@ -1314,15 +1313,12 @@ func TestQueuedDiplomacySecondaryTalkConditions(t *testing.T) {
 	w.eventCursor, w.eventDelay = 0, 1
 	ev = &Event{}
 	w.dispatchQueuedEvent(ev)
-	if len(ev.TalkNotices) != 3 {
-		t.Fatalf("事件 7 有俘虜關係時應有第二次 TALK：%#v", ev.TalkNotices)
+	if len(ev.TalkNotices) != 2 || ev.TalkNotices[0].Index != 57 ||
+		ev.TalkNotices[1].Index < 47 || ev.TalkNotices[1].Index > 48 {
+		t.Fatalf("事件7只能有引見及成功回報，不得合成76：%#v", ev.TalkNotices)
 	}
-	if got := ev.TalkNotices[2]; !sameNotice(got, TalkNotice{
-		Index: 0x4C, City: -1, Faction: -1, General: -1, Amount: -1,
-		RawFormatterWord: -1,
-		Secondary:        true, NoPortrait: true,
-	}) {
-		t.Fatalf("事件 7 次要 TALK raw 邊界錯誤：%#v", got)
+	if !reflect.DeepEqual(ev.ReleasedGenerals, []int{39}) {
+		t.Fatalf("事件7遺漏實際返還：%v", ev.ReleasedGenerals)
 	}
 }
 

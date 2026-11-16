@@ -214,7 +214,7 @@
 | [`re/12-diplomacy-dialogue.md`](../re/12-diplomacy-dialogue.md) | `AH` 的完整欄位名稱 | 語意由日中原文並列確認，欄位名本身未定（§3） | 靜態 | evidence-only | — |
 | [`re/12-diplomacy-dialogue.md`](../re/12-diplomacy-dialogue.md) | #367–#372／#380–#385 的 AH／信賴度次要回覆 | 未解，不可當成完整的原版對話流程（§8） | 靜態 | evidence-only | — |
 | [`re/12-diplomacy-dialogue.md`](../re/12-diplomacy-dialogue.md) | #73／#77 | 未定位，不得拿來補接事件 6／7（§9） | 靜態 | actionable | [#22](https://github.com/wicanr2/wolong_cht/issues/22) |
-| [`re/12-diplomacy-dialogue.md`](../re/12-diplomacy-dialogue.md) | 事件 6／7 次要 TALK 的 formatter 參數契約 | 缺參數且語意未知，維持 fail-closed（§10） | 靜態 | actionable | [#22](https://github.com/wicanr2/wolong_cht/issues/22) |
+| [`re/12-diplomacy-dialogue.md`](../re/12-diplomacy-dialogue.md) | 事件 6／7 次要 TALK 的 formatter 參數契約 | 僅人工強制分支的formatter來源未定；13138固定CF0使AH0，正常事件6／7不觸發72／76，不阻塞remake | 靜態 | evidence-only | — |
 | [`re/120-c-player-formation-restoration.md`](../re/120-c-player-formation-restoration.md) | 正常玩家長程 | 不由局部控制流與 C 語意代證 | 靜態 | evidence-only | — |
 | [`re/121-c-personnel-restoration.md`](../re/121-c-personnel-restoration.md) | 自然玩家長程、非法分派 | 不由局部 C 語意代證 | 靜態 | evidence-only | — |
 | [`re/122-c-detail-panels-restoration.md`](../re/122-c-detail-panels-restoration.md) | 軍團行軍指令上游、自然長程 | 不由資訊繪製代證 | 靜態 | evidence-only | — |

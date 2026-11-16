@@ -1,7 +1,7 @@
 # 12 — 停戰說服訊息索引：`#190`–`#198`
 
-**狀態：三變體槽位與停戰說服這條索引路徑已證實；事件 6／7 的次要呼叫已定位，
-但 formatter 參數契約與完整可見語意仍未知。**
+**狀態：三變體與停戰說服索引已證實。2026-11-16補證事件6／7正常回報與返還；
+13138固定CF0，原始caller不會觸發72／76，相關formatter不構成玩家阻塞。**
 
 - 日期：2026-08-09
 - 輸入：`workplace/ida/dosv/KI.EXE.i64` 與同目錄 `KI.EXE`
@@ -190,10 +190,9 @@ call sub_18810
 
 ### 8.2 `AH` 不是信賴度，也沒有證明是城市索引
 
-`sub_137D8`（`000137D8`）先呼叫 `sub_13138`（`00013138`）兩次，將兩個方向的
-結果寫入 `AH` bit 0／bit 1。`sub_13138` 逐筆掃描勢力／武將表，將輸入勢力與
-General 記錄的 `+0x1D`（俘虜／原勢力關係）及 `+0x1C`（目前擁有勢力）比較；
-這是俘虜關係旗標的 raw 資料流，不是 `byte_10D00` 信賴度。
+`sub_137D8`兩次呼叫13138後，只有CF1才會設DH的bit0／bit1，最後137F1寫AH=DH。
+13138雖掃描Faction／Captor並計數，13167卻是 `cmp ax,ax`，接著固定跳1316D清CF。
+所以DOS/V這條原始caller的AH固定0。舊稿把配對統計當成true回傳，已由本頁2026-11-16補證推翻。
 
 `sub_1084A` 的 `\\2` handler（`000108DB` 附近）會從 `SS:[DI]` 取一個 word、
 遞增 `DI` 兩次，再把它轉成城市繪圖索引。第一個 formatter 呼叫把 `DI=SP`，
@@ -205,7 +204,7 @@ General 記錄的 `+0x1D`（俘虜／原勢力關係）及 `+0x1C`（目前擁�
 
 本輪不新增 #72／#76 的 `TalkNotice`，不把 `AH` 轉成城市、勢力或其他 state 欄位，
 也不把 #73／#77 當成替代訊息。這是 **已證實 raw index／呼叫條件 + 已證實
-formatter 缺參數 + 語意未知** 的明確邊界；事件 6／7 次要 TALK 仍列未完成。
+formatter 缺參數 + 語意未知** 的明確邊界；這是當時尚未追查13138回傳契約的歷史邊界；目前原始caller的AH固定0，不形成玩家缺口。
 
 曾以 Docker 內的暫時存檔嘗試直接進入 PC-98 事件 oracle，但啟動流程仍停在
 `NEW GAME`／讀檔選擇畫面，沒有取得有效的事件畫面；這次嘗試是 inconclusive，
@@ -213,22 +212,12 @@ formatter 缺參數 + 語意未知** 的明確邊界；事件 6／7 次要 TALK 
 
 ## 9. 2026-08-10 接線勘誤：事件 6／7 raw 次要 TALK
 
-上一節的「不新增 `TalkNotice`」是接線前的研究結論；本輪已在保留同一證據界線的
-前提下完成 raw consumer，並以 state／呈現單測固定結果：
-
-- 事件 6 `sub_13327` 在 `AH != 0` 且 response 不是 2／3 時，追加
-  `Index=0x48`（TALK #72）、`Secondary=true`。
-- 事件 7 `sub_13388` 在同一條件下，追加 `Index=0x4C`（TALK #76）、
-  `Secondary=true`、`NoPortrait=true`；#76 是直接文字／選單樣式，不套玩家君主肖像。
-- `sub_13C3D` 第二次呼叫仍沒有重建第一次的 `DI=SP` formatter stack。DOS/V TALK
-  #72 的 `\\2` 不能由目前 state 安全推導城市，因此 `cmd/wlgame` 缺少該 marker 時
-  整則 fail-closed；不會顯示半句，也不會把 `AH` 猜成城市／勢力／信賴度。
-- `TestQueuedDiplomacySecondaryTalkConditions` 固定事件 6／7 的條件、索引、順序與
-  portrait policy；`TestSecondaryTalkUsesCapturedRawFormatterWord`、
-  `TestSecondaryTalk76UsesNoPortraitMode` 固定呈現層邊界。
-
-因此本輪完成的是「事件 6／7 次要 TALK 的 raw 索引、條件、佇列順序與安全呈現接縫」；
-#72 原版缺失 formatter payload 的不可重現記憶內容仍是明示差異，沒有被猜測填補。
+本節曾在Go按俘虜配對新增72／76的raw consumer，但誤認137D8的旗標會被設起。
+2026-11-16已由13138原指令與真實事件6／7推翻，舊producer及專用配對helper已移除。
+13C3D內的條件、CX+1Dh算術與formatter讀SS:DI仍保留作程式定位，不能當成正常玩家會看見的通知。
+`TestQueuedDiplomacySecondaryTalkConditions`現在驗證有配對俘虜也不產生72／76，並核對實際返還ID。
+`TestSecondaryTalkUsesCapturedRawFormatterWord`及 `TestSecondaryTalk76UsesNoPortraitMode`只驗證通用
+呈現接縫，不作原始事件6／7的觸發證據。
 
 ## 10. 2026-08-12 勘誤：#72 不得合成 raw word `0`
 
@@ -252,18 +241,18 @@ cmp ah, 0FFh
 add ax, 4240h
 ```
 
-因此事件 6 的第二次 #72 呼叫會讀 `SS:[還原後 DI]`。在非玩家回報路徑，`sub_13C3D`
+只有人工強制AH非零而走進第二次#72時，才會讀 `SS:[還原後 DI]`。在非玩家回報路徑，`sub_13C3D`
 先把 `DI=SI`，這個 runtime stack word 沒有可由持久 World state 重建的資料流；把 Go
 零值 `0` 當成一個可用 formatter payload 是錯誤斷言。
 
 - **已證實：** #72／#76 的 index、條件與第二次 handler 的 `SS:[DI]` 讀取。
 - **強推論：** 這個 transient word 可能是有意義的 runtime payload；沒有動態 trace 前不能
   把它稱作垃圾或固定城市。
-- **未知：** 原版自然執行時 `SS:[DI]` 的值與對應城市。
+- **已證實不構成玩家阻塞：** 原版13138固定CF0，事件6／7不會自然走進該次要呼叫。
 
-remake 因而把事件 6 的 `RawFormatterWord` 改為 `-1` 且
-`RawFormatterWordValid=false`，與事件 7 一樣讓缺 payload 的訊息整則 fail-closed。
-`TestQueuedDiplomacySecondaryTalkConditions` 固定這個邊界；
+早期remake曾把事件6的raw payload標成invalid以略過通知；事件7的76沒有marker卻仍會誤顯示。
+2026-11-16改為不建立原始caller不會產生的通知。通用raw formatter仍維持安全參數邊界。
+
 `TestSecondaryTalkUsesCapturedRawFormatterWord` 只測呈現層對「真正已擷取的」通用 raw payload
 是否能畫出，不可被引用為事件 6 已知 payload 的證據。
 
@@ -274,7 +263,7 @@ remake 因而把事件 6 的 `RawFormatterWord` 改為 `-1` 且
 [spec220](../spec/220-c-modal-control.md#2026-11-16事件3停戰俘虜返還對話)。
 
 七案原版13262→13C3D的AH皆0，含單向、雙向及多名俘虜，未觸發72；因此不能依俘虜存在
-自行替事件3加暴動訊息。這不推翻§8–10對AH非零分支及事件6／7的證據邊界。
+自行替事件3加暴動訊息。後續事件6／7及13138回傳補證見下一節，已證實相同固定AH0來源。
 135ED依記錄順序呼叫150D7，返回玩家的39／45各先顯示37，再由本人raw4、肖像49／24
 顯示199h群組的434。49返回勢力3時無玩家訊息，拒絕停戰不呼叫150D7。
 
@@ -283,6 +272,21 @@ Go原先已釋放但漏返還UI，現在以runtime ReleasedGenerals串到事件9
 RNG及ID順序相同；直接6時與正常7時各自比較。Go仍在回覆入列前結算，原版在結果確認後，
 不稱中間資金／人事寫回相位一致。校訂文字、鏡頭與部分場景邊緣差異仍保留。
 
+## 2026-11-16：事件6／7返還與固定CF零
+
+本節CONFORMED，規格與版本入口見[spec220](../spec/220-c-modal-control.md#2026-11-16外交官回報返還與固定cf零勘誤)。
+[原始指令收據](../../workplace/scratch/closeout-envoy-captive-20261116/code-proof.json)核對五函式每條bytes與EXE檔案偏移，
+保留13167 `cmp ax,ax`、13169跳轉、1316D `clc`，以及137DF／137E9的jnb。不是把原作者疑似錯字改成cmp ax,0。
+
+原版事件6八案與事件7免費／付費雙向兩案、正常讀檔多人案，11份完整22208-byte區塊、258-byte RNG、
+主通知索引、返還ID及存檔讀回相同。所有13C3D入口AH0，無72／76；成功返玩家先37再199h，
+拒絕及無外交官不返還，返對方無玩家對話。Go先前既漏返還，還會在事件7多開戰鬥選單76，現已補正。
+
+十條滑鼠104項／42圖、事件3與9共享回歸20項／10圖、冷測／vet與野戰62項／9圖通過。
+原版同狀態數值比較固定完整RNG；GUI另用seed1與正常7時驗證畫面報價及實際付款方向，
+不把該報價和直接原版6時的另一份RNG條件混比。原版直接/正常時鐘、鏡頭、校訂文字及入列前後寫回相位限制
+均留在[整合收據](../../workplace/scratch/closeout-envoy-captive-20261116/integration.json)。
+
 ## 11. 未解
 
 | 項目 | 現況 |
@@ -290,4 +294,4 @@ RNG及ID順序相同；直接6時與正常7時各自比較。Go仍在回覆入�
 | `AH` 的完整欄位名稱 | 語意由日中原文並列確認，欄位名本身未定（§3）|
 | #367–#372／#380–#385 的 AH／信賴度次要回覆 | 未解，不可當成完整的原版對話流程（§8）|
 | #73／#77 | 未定位，不得拿來補接事件 6／7（§9）|
-| 事件 6／7 次要 TALK 的 formatter 參數契約 | 缺參數且語意未知，維持 fail-closed（§10）|
+| 事件 6／7 次要 TALK 的 formatter 參數契約 | 僅人工強制分支的formatter來源未定；13138固定CF0使AH0，正常事件6／7不觸發72／76，不阻塞remake |

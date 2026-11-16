@@ -2285,3 +2285,23 @@
   與本輪停戰對照分開記錄，未稱該輔助入口通過，亦未改遠端Issue或JSON。
 - 文件、65條歷史缺鏈基準、原版／HD與前批證據不變、擁有權與Docker清理由
   [本輪整合收據](workplace/scratch/closeout-captive-20261116/integration.json)保存；commit／push與最終清理見repository.json。
+
+## 2026-11-16：外交官回報的返還與固定CF零
+
+- 事件6八案、事件7成功免費／付費雙向兩案及正常標題／四槽多人案，共11份完整區塊／RNG、
+  主通知索引、返還ID及存檔讀回相同。直接6時與正常7時分開，原版測量中不注入結果或用callee stub。
+- 只追137D8曾誤推AH會設俘虜旗標；唯讀agent回查13138發現13167 cmp ax,ax固定跳CLC。
+  spec219原本已保留該指令，這次核對五函式逐條bytes並對EXE檔案偏移；十案13C3D均AH0。
+  READY後補6／7的實際返還ID，原bool入口仍共用同一規則，移除錯誤72／76 producer與專用helper。
+- 初選source3協力場景實際拒絕，改沿既有成功source1/target2場景，並明示雙向captives與舊主將數；
+  拒絕與單向診斷保留，未計正式成功覆蓋。初讀cases.json路徑不存在，查實際腳本後沿用既有入口。
+- 滑鼠十條104項／42圖、共享事件3及9兩條20項／10圖、全專案冷測／vet及野戰62項／9圖通過。
+  舊binary漏返還與多出戰鬥選單兩錯版均拒絕。已目視原版與Go返還通報、本人raw4肖像四框。
+- 初次GUI誤把seed1自然7時的報價和原版固定raw RNG直接6時混比，付費出現19000/27000差異。
+  此為驗證條件問題；精確數值由相同入口完整RNG的11份對照負責，GUI改核對畫面實際報價與付款方向，
+  同環境同命令乾淨重跑十條通過，原失敗及通過資料均保留。Go入列前、原版確認後結算的相位差異仍明列。
+- re12人工分支的formatter來源仍留研究證據，正常事件不會觸發；該列轉evidence-only，保留fingerprint
+  新舊對照及其他1118列，未動遠端Issue。本地worklist既有一筆過期verify條件另記，不冒稱該入口全綠。
+  未改存檔格式、熱鍵、強化AI或HD。文件初次用已證實起頭使生成器略過整列，依來源契約改為明示人工分支未知。
+- 來源、READY、原版／HD及前批不變、65條歷史缺鏈基準、擁有權與Docker清理見
+  [整合收據](workplace/scratch/closeout-envoy-captive-20261116/integration.json)；commit／push另見repository.json。
