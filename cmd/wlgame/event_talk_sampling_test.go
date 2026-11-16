@@ -159,8 +159,12 @@ func TestEvent2To5FullTalkPageSampling(t *testing.T) {
 			}
 			indices := []int{tc.indices[0], g.diplomacyTalkPromptIndex(tc.c) + 10, tc.indices[1]}
 			if result.Response == 3 {
-				index := resolveBattleTalkIndex(0x1A5, 0)
-				penaltyVars := g.diplomacyTalkVars(tc.c, -1)
+				lord := w.Factions[w.Player].Lord
+				index := 526 + w.Generals[lord].TalkVariant
+				penaltyVars, ok := w.TalkNoticeVars(state.TalkNotice{Index: 0x1A5, City: -1, Faction: tc.c.Source, General: lord, Amount: -1}, big5)
+				if !ok {
+					t.Fatal("warning parameters missing")
+				}
 				lines, _ := lib.Talk.Lines(index, penaltyVars)
 				visible := false
 				for _, line := range lines {

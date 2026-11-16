@@ -238,42 +238,56 @@ func TestIgnoredCooperationTalkUsesActualTermsAndVictim(t *testing.T) {
 	}
 }
 
-// 結果句由**派駐的外交官**回報，不是一般通知的那張臉（原版 sub_13C3D）。
-func TestDiplomacyResultUsesEnvoyPortrait(t *testing.T) {
+// 原版13262在13C3D入口使用接收方SI，玩家收到來使時仍由147報告。
+func TestIncomingCeasefireResultUsesReporterPortrait(t *testing.T) {
 	w, err := state.LoadScenario("../../workplace/orig/dosv/SINARIO.DAT", 0)
 	if err != nil {
-		t.Skipf("沒有原版素材：%v", err)
+		t.Fatal(err)
 	}
 	w.Player = 0
+	w.Factions[3].Diplomat = 37
 	g := &game{world: w}
-	other := 1
-	c := state.DiplomacyChoice{Kind: state.DiplomacyCeasefire, Source: other, Invader: other}
-
-	// 沒有外交官（開局全 0xFF）→ 退回預設，不畫錯人。
-	w.Factions[other].Diplomat = 0xFF
-	if got := g.diplomacyResultPortrait(c); got != defaultPortraitPage {
-		t.Errorf("沒有外交官時 = %d，want %d", got, defaultPortraitPage)
+	c := state.DiplomacyChoice{Kind: state.DiplomacyCeasefire, Source: 3, Target: 0}
+	if got := g.diplomacyResultPortrait(c); got != 147 {
+		t.Fatalf("incoming ceasefire portrait=%d want147", got)
 	}
+	c = state.DiplomacyChoice{Kind: state.DiplomacyCooperation, Source: 0, Invader: 12, Target: 3}
+	if got := g.diplomacyResultPortrait(c); got != 147 {
+		t.Fatalf("player cooperation portrait=%d want147", got)
+	}
+}
 
-	// 有外交官 → 用那名武將的頭像。
-	envoy := -1
-	for i := range w.Generals {
-		if w.Generals[i].Alive {
-			envoy = i
-			break
+func TestDiplomacyExcessOfferWarningUsesRawLordVariant(t *testing.T) {
+	lib, err := library.Load("../../workplace/orig/dosv")
+	if err != nil {
+		t.Fatal(err)
+	}
+	w, err := state.LoadScenario("../../workplace/orig/dosv/SINARIO.DAT", 0)
+	if err != nil {
+		t.Fatal(err)
+	}
+	w.Player = 0
+	lord := w.Factions[0].Lord
+	c := state.DiplomacyChoice{Kind: state.DiplomacyCeasefire, Source: 3, Target: 0, InitialAmount: 29000, OfferAmount: 30000}
+	for _, v := range []int{0, 1} {
+		w.Generals[lord].TalkVariant = v
+		g := &game{lib: lib, world: w}
+		g.enqueueDiplomacyTalk(c, state.DiplomacyResult{AdviceOption: state.DiplomacyOfferFunds, AdviceAdopted: true, Response: 3, Amount: 30000})
+		want := 4
+		if len(g.messages) != want {
+			t.Fatalf("raw%d messages=%d want%d", v, len(g.messages), want)
 		}
-	}
-	if envoy < 0 {
-		t.Skip("劇本裡沒有活著的武將")
-	}
-	w.Factions[other].Diplomat = envoy
-	if got, want := g.diplomacyResultPortrait(c), w.Generals[envoy].Portrait; got != want {
-		t.Errorf("外交官的頭像 = %d，want %d", got, want)
-	}
-
-	// 對方就是玩家自己 → 預設。
-	c.Source, c.Invader = w.Player, w.Player
-	if got := g.diplomacyResultPortrait(c); got != defaultPortraitPage {
-		t.Errorf("對方是自己時 = %d，want %d", got, defaultPortraitPage)
+		{
+			last := g.messages[3]
+			vars, ok := w.TalkNoticeVars(state.TalkNotice{Index: 0x1A5, City: -1, Faction: 3, General: lord, Amount: -1}, big5)
+			if !ok {
+				t.Fatal("warning parameters missing")
+			}
+			padded, _ := padTalkVars(vars)
+			lines, ok := g.talkLines(526+v, padded)
+			if !ok || strings.Join(last.lines, "\n") != strings.Join(layoutMessageLines(lines), "\n") || last.portraitPage != w.Generals[lord].Portrait {
+				t.Fatal("raw1 excess-offer warning does not match original527/lord portrait")
+			}
+		}
 	}
 }

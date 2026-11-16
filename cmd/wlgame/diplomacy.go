@@ -203,7 +203,12 @@ func (g *game) enqueueDiplomacyTalk(c state.DiplomacyChoice, result state.Diplom
 	g.enqueueTalkWithPortrait(resultBase+response,
 		g.diplomacyTalkVars(c, resultAmount), g.diplomacyResultPortrait(c))
 	if result.Response == 3 {
-		g.enqueueTalkWithPortrait(resolveBattleTalkIndex(0x1A5, 0), g.diplomacyTalkVars(c, -1), g.playerLordPortrait())
+		if g.world != nil && g.world.Player >= 0 && g.world.Player < len(g.world.Factions) {
+			g.enqueueTalkNotice(state.TalkNotice{
+				Index: 0x1A5, City: -1, Faction: c.Source,
+				General: g.world.Factions[g.world.Player].Lord, Amount: -1,
+			})
+		}
 	}
 	for _, notice := range result.TalkNotices {
 		g.enqueueTalkNotice(notice)
@@ -222,20 +227,17 @@ func (g *game) diplomacySceneMessage(index int, vars map[byte]string, portrait i
 	return &d
 }
 
-// diplomacyResultPortrait 是結果句的講話者（原版 `sub_13C3D` 開頭）：
-//
-//	bl = 93h                       ; 預設
-//	cmp si, cs:word_10CFD / jz →   ; si 就是玩家的勢力 ⇒ 用預設
-//	bh = [si+2Ah]                  ; 那個勢力的「派駐外交官」
-//	bl = [bx+4241h]                ; ★ 那名武將的 +0x01 頭像
-//
-// **回報結果的是派去的外交官**，不是一般通知的那張臉。
-// 沒有外交官（原版 `+0x2A` 寫 `0xFF`）就退回預設，不畫錯人。
+// diplomacyResultPortrait沿sub_13C3D入口的SI取說話者：停戰是Target，合作是Source。
+// SI等於玩家勢力時使用147；其他勢力才從該勢力+2Ah取外交官肖像。
 func (g *game) diplomacyResultPortrait(c state.DiplomacyChoice) int {
 	if g == nil || g.world == nil {
 		return defaultPortraitPage
 	}
 	id := c.Source
+	if c.Kind == state.DiplomacyCeasefire {
+		// 13262在13C3D入口的SI是停戰接收方，玩家收到來使時用通報者。
+		id = c.Target
+	}
 	if id < 0 || id >= len(g.world.Factions) || id == g.world.Player {
 		return defaultPortraitPage
 	}
@@ -272,10 +274,10 @@ func (g *game) diplomacyChoiceLines(c state.DiplomacyChoice) []string {
 // `(80,176)` 數值面板。
 func (g *game) drawDiplomacy(screen *ebiten.Image, c *state.DiplomacyChoice) {
 	g.drawIventScene(screen, 0)
-	prompt := g.legacyTalkLines(g.diplomacyTalkPromptIndex(*c),
-		g.diplomacyTalkVars(*c, -1), talkTextWidth)
-	g.drawLegacyTalkBox(screen, talkUpperBoxX, talkUpperBoxY, talkBoxW, talkBoxH,
-		prompt, g.playerLordPortrait())
+	vars, fields := padTalkVars(g.diplomacyTalkVars(*c, -1))
+	prompt := g.legacyTalkLines(g.diplomacyTalkPromptIndex(*c), vars, talkTextWidth)
+	g.drawLegacyTalkBoxFields(screen, talkUpperBoxX, talkUpperBoxY, talkBoxW, talkBoxH,
+		prompt, g.playerLordPortrait(), fields)
 	if g.diplomacyEditingAmount {
 		g.drawAmountPanel(screen, c.OfferAmount, true)
 		return
