@@ -187,6 +187,11 @@ func (g *game) enqueueEventMessages(ev state.Event) {
 		g.enqueueTalkNotice(state.TalkNotice{
 			Index: 0x25, City: -1, Faction: -1, General: id, Amount: -1,
 		})
+		// 15110的199h是八格一組的編號，原始說話型3–7對應433–437。
+		// 先讓通報者說完，再由回來的武將本人請罪；空變體沿共用過濾。
+		g.enqueueTalkNotice(state.TalkNotice{
+			Index: 0x199, City: -1, Faction: -1, General: id, Amount: -1,
+		})
 	}
 }
 
@@ -214,7 +219,7 @@ func (g *game) enqueueTalkWithPortraitSeq(index int, vars map[byte]string, seq m
 	}
 	if !visible {
 		// TALK.DAT 的空槽仍可能保留一個資料上的空行；它不應變成
-		// 玩家看得到的空白 modal（事件 9 的 #409 就是這種情況）。
+		// 玩家看得到的空白 modal。組編號須先展開，才檢查實際文字槽。
 		return
 	}
 	lineWidth := messageContentWidth

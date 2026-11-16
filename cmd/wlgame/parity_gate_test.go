@@ -214,7 +214,7 @@ func TestProjectileParityGate(t *testing.T) {
 }
 
 // TestEvent9ShortFixtureGate 是事件 9 的最小正常通知路徑：state 已先
-// 證實釋放結果；這裡驗證只有玩家勢力收到 #37，#409 空槽不會生成空白 modal。
+// 證實釋放結果；這裡驗證玩家通報37與本人437，以及原始空槽不生成訊息。
 func TestEvent9ShortFixtureGate(t *testing.T) {
 	lib, err := library.Load("../../workplace/orig/dosv")
 	if err != nil {
@@ -236,12 +236,13 @@ func TestEvent9ShortFixtureGate(t *testing.T) {
 		t.Fatal("找不到事件 9 釋放武將 fixture")
 	}
 
+	w.Generals[general].TalkVariant = 7
 	for _, tc := range []struct {
 		name       string
 		faction    int
 		wantNotice int
 	}{
-		{"player-faction", w.Player, 1},
+		{"player-faction", w.Player, 2},
 		{"other-faction", (w.Player + 1) % len(w.Factions), 0},
 	} {
 		t.Run(tc.name, func(t *testing.T) {
@@ -253,7 +254,7 @@ func TestEvent9ShortFixtureGate(t *testing.T) {
 					len(g.messages), tc.wantNotice, g.messages)
 			}
 			if tc.wantNotice != 0 {
-				assertTalkModalContract(t, g, 1)
+				assertTalkModalContract(t, g, 2)
 			}
 		})
 	}

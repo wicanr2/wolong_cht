@@ -133,11 +133,12 @@ func TestReleasedGeneralTalkOnlyTargetsPlayerFaction(t *testing.T) {
 	if general < 0 {
 		t.Fatal("找不到可測試的釋放武將")
 	}
+	w.Generals[general].TalkVariant = 7
 	g := &game{lib: lib, world: w}
 	ev := state.Event{ReleasedGenerals: []int{general}}
 	w.Generals[general].Faction = w.Player
 	g.enqueueEventMessages(ev)
-	if len(g.messages) != 1 || len(g.messages[0].lines) == 0 {
+	if len(g.messages) != 2 || len(g.messages[0].lines) == 0 || g.messages[1].portraitPage != w.Generals[general].Portrait {
 		t.Fatalf("玩家勢力釋放武將沒有產生 #37 通知：%#v", g.messages)
 	}
 
@@ -149,7 +150,7 @@ func TestReleasedGeneralTalkOnlyTargetsPlayerFaction(t *testing.T) {
 	}
 }
 
-func TestReleasedGeneralRawFollowup409IsEmptyNoOp(t *testing.T) {
+func TestReleasedGeneralLiteral409IsEmptyBeforeGroupExpansion(t *testing.T) {
 	lib, err := library.Load("../../workplace/orig/dosv")
 	if err != nil {
 		t.Fatal(err)
