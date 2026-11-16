@@ -164,6 +164,14 @@ func (g *game) enqueueEventMessages(ev state.Event) {
 			g.messages = append(g.messages, *prompt)
 		}
 	}
+	if ev.Funding != nil {
+		c := *ev.Funding
+		if prompt := g.diplomacySceneMessage(g.fundingOfficerTalkIndex(c, fundingTalkPromptIndex(c)),
+			g.fundingTalkVars(c, c.RequestedAmount), g.fundingOfficerPortrait(c)); prompt != nil {
+			prompt.upper, prompt.scene = true, 1
+			g.messages = append(g.messages, *prompt)
+		}
+	}
 	for _, id := range ev.ReleasedGenerals {
 		if id < 0 || id >= len(g.world.Generals) ||
 			g.world.Player < 0 || g.world.Player >= len(g.world.Factions) ||

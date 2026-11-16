@@ -1477,7 +1477,7 @@ func (g *game) Draw(screen *ebiten.Image) {
 	if choice := g.world.PendingDiplomacy(); choice != nil {
 		g.drawDiplomacy(screen, choice)
 	}
-	if choice := g.world.PendingFunding(); choice != nil {
+	if choice := g.world.PendingFunding(); choice != nil && !g.messageActive() {
 		g.drawFunding(screen, choice)
 	}
 	g.drawBattleReport(screen)

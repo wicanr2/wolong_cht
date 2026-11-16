@@ -374,6 +374,16 @@ func (s *desktopGame) writeTrace() {
 			v["diplomacyAmountEditing"] = g.diplomacyEditingAmount
 		}
 		v["trust"] = g.world.Trust
+		if c := g.world.PendingFunding(); c != nil {
+			v["funding"], v["fundingAmountEditing"] = c, g.fundingEditingAmount
+		}
+		budgets := map[int]int{}
+		for id, official := range g.world.Generals {
+			if official.Duty == state.DutyGovernor || official.Duty == state.DutyDiplomat {
+				budgets[id] = official.Budget
+			}
+		}
+		v["officialBudgets"] = budgets
 		snapshot := g.world.TakeSnapshot()
 		v["eventCursor"], v["eventDelay"] = snapshot.EventCursor, snapshot.EventDelay
 		funds, targets := []int{}, []int{}

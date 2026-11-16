@@ -126,3 +126,10 @@ jb  → 玩家取消，不要寫回                ; CF ＝ 取消
 `sub_17D5F` 讀十八個 raw byte 去呼叫 `sub_1E3D7` 建熱區。原始 writer／reader
 證據見 [re/103](../re/103-c-hotspot-restoration.md)。舊灰表的 glyph 前提已被直接記憶體證據否定，
 不再掛成這支 caller 的未讀工作；實際圖形 primitive 與正常玩家 UI 邊界仍保留。
+
+## 2026-11-16 撥款caller的起值與取消回填
+
+已證實：DOS/V的139E8呼叫17C6E每次以0開始；CF取消經13A86回第一列，重開仍從0起。
+原先Go沿用要求金額及取消列已修正。實際數值器滑鼠與右鍵抽驗包含0、10000、相等、30000及取消重開，
+依[spec220撥款本片](220-c-modal-control.md)及[整合收據](../../workplace/scratch/closeout-funding-20261116/integration.json)。
+此證據限事件4／5非零要求caller，不修改其他數值器的既定上限或新增快捷鍵。

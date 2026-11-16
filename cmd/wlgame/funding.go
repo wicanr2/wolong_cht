@@ -1,8 +1,6 @@
 package main
 
 import (
-	"fmt"
-
 	"github.com/hajimehoshi/ebiten/v2"
 
 	"github.com/wicanr2/wolong_cht/internal/state"
@@ -20,6 +18,9 @@ func (g *game) updateFunding() {
 	if g.fundingEditingAmount {
 		if g.cancelled() {
 			g.fundingEditingAmount = false
+			g.amountCursorActive = false
+			g.fundingRow = 0
+			g.world.SetFundingAmount(c.RequestedAmount)
 			return
 		}
 		if button, ok := g.amountPointerButton(); ok {
@@ -61,8 +62,7 @@ func (g *game) updateFunding() {
 	if row, ok := g.talkChoiceInput(&g.fundingRow, len(g.fundingChoiceLines(*c))); ok {
 		g.fundingRow = row
 		if row == int(state.FundingSetAmount) {
-			g.fundingEditingAmount = true
-			g.beginAmountEditor(amountCursorFunding, amountAnchorEventX, amountAnchorEventY)
+			g.beginFundingAmount()
 			return
 		}
 		g.resolveFunding(*c, state.FundingOption(row))
@@ -91,16 +91,19 @@ func (g *game) updateFunding() {
 	option := state.FundingOption(g.fundingRow)
 	if option == state.FundingSetAmount &&
 		(g.confirmed()) {
-		g.fundingEditingAmount = true
-		g.beginAmountEditor(amountCursorFunding, amountAnchorEventX, amountAnchorEventY)
+		g.beginFundingAmount()
 		return
 	}
 	g.resolveFunding(*c, option)
 }
 
+func (g *game) beginFundingAmount() {
+	g.world.SetFundingAmount(0)
+	g.fundingEditingAmount = true
+	g.beginAmountEditor(amountCursorFunding, amountAnchorEventX, amountAnchorEventY)
+}
+
 func (g *game) resolveFunding(c state.FundingChoice, option state.FundingOption) {
-	kind := c.Kind
-	ok := g.world.ResolveFunding(option)
 	g.fundingRow = 0
 	g.fundingEditingAmount = false
 	g.amountCursorActive = false
@@ -108,18 +111,22 @@ func (g *game) resolveFunding(c state.FundingChoice, option state.FundingOption)
 	// 的狀態結果，但兩者仍有各自已證實的 TALK 分支，不能落入泛用錯誤訊息。
 	knownTalk := option == state.FundingReject ||
 		(option == state.FundingSetAmount && c.OfferAmount == 0)
-	if ok || knownTalk {
-		g.enqueueFundingTalk(c, option)
+	g.enqueueFundingTalk(c, option)
+	// 原版139AD9在官員最後答覆確認後才撥款；等待期間保留pending以暫停世界。
+	g.afterTalk(func() {
+		ok := g.world.ResolveFunding(option)
+		if !ok && !knownTalk {
+			g.setEvent(fundingTitle(c.Kind) + "：撥款未成立")
+			return
+		}
 		g.lastEvent = ""
-		return
-	}
-	g.setEvent(fundingTitle(kind) + "：撥款未成立")
+	})
 }
 
 // fundingTalkIndices 是 sub_139E8 的 TALK.DAT base+offset 映射。
 // 事件 4 base=0x116（#278），事件 5 base=0x13F（#319）。指定金額
 // 的 code 依序是：等於初值 0、低於初值 1、零 2、高於初值 3；
-// 原版的收尾則只看三選一的原始列號。
+// 139A9F／139AA6／139A98同時改寫回應的兩個byte，收尾也使用正規化後的code。
 func fundingTalkIndices(c state.FundingChoice, option state.FundingOption) (int, int) {
 	base := 0x116
 	if c.Kind == state.FundingDiplomat {
@@ -141,7 +148,7 @@ func fundingTalkIndices(c state.FundingChoice, option state.FundingOption) (int,
 		case amount > c.RequestedAmount:
 			code = 3
 		}
-		return base + 6 + code, base + 15
+		return base + 6 + code, base + 10 + code*5
 	default:
 		return -1, -1
 	}
@@ -162,21 +169,35 @@ func fundingTalkPromptIndex(c state.FundingChoice) int {
 	return fundingTalkBase(c)
 }
 
-func (g *game) fundingTalkVars(c state.FundingChoice, amount int) map[byte]string {
-	vars := map[byte]string{'6': "", '7': fmt.Sprintf("%d", amount)}
-	if c.Kind == state.FundingGovernor {
-		if c.Subject >= 0 && c.Subject < len(g.world.Cities) {
-			vars['2'] = big5(g.world.Cities[c.Subject].Name)
-		}
-		if g.world.Player >= 0 && g.world.Player < len(g.world.Factions) {
-			advisor := g.world.Factions[g.world.Player].Advisor
-			if advisor >= 0 && advisor < len(g.world.Generals) && g.world.Generals[advisor].Alive {
-				vars['4'] = big5(g.world.Generals[advisor].Name)
-			}
-		}
-	} else if c.Subject >= 0 && c.Subject < len(g.world.Factions) {
-		vars['3'] = big5(g.world.LordName(c.Subject))
+func (g *game) fundingOfficerPortrait(c state.FundingChoice) int {
+	if g.world != nil && c.Officer >= 0 && c.Officer < len(g.world.Generals) {
+		return g.world.Generals[c.Officer].Portrait
 	}
+	return g.playerLordPortrait()
+}
+
+func (g *game) fundingOfficerTalkIndex(c state.FundingChoice, index int) int {
+	if g.world == nil || c.Officer < 0 || c.Officer >= len(g.world.Generals) {
+		return index
+	}
+	raw := g.world.Generals[c.Officer].TalkVariant
+	if raw < 0 || raw > 7 {
+		return index
+	}
+	if raw >= 3 {
+		raw -= 3 // 13C99只減一次；合法raw7應讀base+4。
+	}
+	return index + raw
+}
+
+func (g *game) fundingTalkVars(c state.FundingChoice, amount int) map[byte]string {
+	notice := state.TalkNotice{City: -1, Faction: -1, General: -1, Amount: amount}
+	if c.Kind == state.FundingGovernor {
+		notice.City = c.Subject
+	} else {
+		notice.Faction = c.Subject
+	}
+	vars, _ := g.world.TalkNoticeVars(notice, big5)
 	return vars
 }
 
@@ -190,8 +211,23 @@ func (g *game) enqueueFundingTalk(c state.FundingChoice, option state.FundingOpt
 		amount = c.OfferAmount
 	}
 	vars := g.fundingTalkVars(c, amount)
-	g.enqueueTalk(first, vars)
-	g.enqueueTalk(second, vars)
+	prompt := g.diplomacySceneMessage(g.fundingOfficerTalkIndex(c, fundingTalkPromptIndex(c)),
+		g.fundingTalkVars(c, c.RequestedAmount), g.fundingOfficerPortrait(c))
+	if prompt != nil {
+		prompt.upper, prompt.scene = true, 1
+	}
+	before := len(g.messages)
+	g.enqueueAdvisorTalk(first, vars, 1)
+	var advisor *messageDialog
+	if len(g.messages) > before {
+		g.messages[len(g.messages)-1].underlay = prompt
+		copy := g.messages[len(g.messages)-1]
+		advisor = &copy
+	}
+	if reply := g.diplomacySceneMessage(g.fundingOfficerTalkIndex(c, second), vars, g.fundingOfficerPortrait(c)); reply != nil {
+		reply.upper, reply.scene, reply.underlay = true, 1, advisor
+		g.messages = append(g.messages, *reply)
+	}
 }
 
 func fundingTitle(kind state.FundingKind) string {
@@ -212,16 +248,10 @@ func (g *game) fundingChoiceLines(c state.FundingChoice) []string {
 // 官員／TALK、三列選項；指定金額列確認後才顯示原版數值器。
 func (g *game) drawFunding(screen *ebiten.Image, c *state.FundingChoice) {
 	g.drawIventScene(screen, 1)
-	vars := g.fundingTalkVars(*c, c.RequestedAmount)
-	prompt := g.legacyTalkLines(fundingTalkPromptIndex(*c), vars, talkTextWidth)
-	portrait := -1
-	if c.Officer >= 0 && c.Officer < len(g.world.Generals) {
-		portrait = g.world.Generals[c.Officer].Portrait
-	} else {
-		portrait = g.playerLordPortrait()
-	}
-	g.drawLegacyTalkBox(screen, talkUpperBoxX, talkUpperBoxY, talkBoxW, talkBoxH,
-		prompt, portrait)
+	vars, fields := padTalkVars(g.fundingTalkVars(*c, c.RequestedAmount))
+	prompt := g.legacyTalkLines(g.fundingOfficerTalkIndex(*c, fundingTalkPromptIndex(*c)), vars, talkTextWidth)
+	g.drawLegacyTalkBoxFields(screen, talkUpperBoxX, talkUpperBoxY, talkBoxW, talkBoxH,
+		prompt, g.fundingOfficerPortrait(*c), fields)
 	if g.fundingEditingAmount {
 		g.drawAmountPanel(screen, c.OfferAmount, true)
 		return

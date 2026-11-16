@@ -176,6 +176,7 @@ func TestEvent2To5FullTalkPageSampling(t *testing.T) {
 		})
 	}
 
+	w.Generals[0].TalkVariant = 0 // 此表驗證原始索引；官員變體另以原版 raw7 抽驗。
 	fundingCases := []struct {
 		label   string
 		c       state.FundingChoice
@@ -183,16 +184,16 @@ func TestEvent2To5FullTalkPageSampling(t *testing.T) {
 		indices []int
 	}{
 		{"event4-full", state.FundingChoice{Kind: state.FundingGovernor, Subject: 0, RequestedAmount: 6000, OfferAmount: 6000}, state.FundingFullAmount, []int{284, 288}},
-		{"event4-equal", state.FundingChoice{Kind: state.FundingGovernor, Subject: 0, RequestedAmount: 6000, OfferAmount: 6000}, state.FundingSetAmount, []int{284, 293}},
+		{"event4-equal", state.FundingChoice{Kind: state.FundingGovernor, Subject: 0, RequestedAmount: 6000, OfferAmount: 6000}, state.FundingSetAmount, []int{284, 288}},
 		{"event4-less", state.FundingChoice{Kind: state.FundingGovernor, Subject: 0, RequestedAmount: 6000, OfferAmount: 5000}, state.FundingSetAmount, []int{285, 293}},
-		{"event4-zero", state.FundingChoice{Kind: state.FundingGovernor, Subject: 0, RequestedAmount: 6000, OfferAmount: 0}, state.FundingSetAmount, []int{286, 293}},
-		{"event4-more", state.FundingChoice{Kind: state.FundingGovernor, Subject: 0, RequestedAmount: 6000, OfferAmount: 7000}, state.FundingSetAmount, []int{287, 293}},
+		{"event4-zero", state.FundingChoice{Kind: state.FundingGovernor, Subject: 0, RequestedAmount: 6000, OfferAmount: 0}, state.FundingSetAmount, []int{286, 298}},
+		{"event4-more", state.FundingChoice{Kind: state.FundingGovernor, Subject: 0, RequestedAmount: 6000, OfferAmount: 7000}, state.FundingSetAmount, []int{287, 303}},
 		{"event4-reject", state.FundingChoice{Kind: state.FundingGovernor, Subject: 0, RequestedAmount: 6000, OfferAmount: 6000}, state.FundingReject, []int{286, 298}},
 		{"event5-full", state.FundingChoice{Kind: state.FundingDiplomat, Subject: 1, RequestedAmount: 6000, OfferAmount: 6000}, state.FundingFullAmount, []int{325, 329}},
-		{"event5-equal", state.FundingChoice{Kind: state.FundingDiplomat, Subject: 1, RequestedAmount: 6000, OfferAmount: 6000}, state.FundingSetAmount, []int{325, 334}},
+		{"event5-equal", state.FundingChoice{Kind: state.FundingDiplomat, Subject: 1, RequestedAmount: 6000, OfferAmount: 6000}, state.FundingSetAmount, []int{325, 329}},
 		{"event5-less", state.FundingChoice{Kind: state.FundingDiplomat, Subject: 1, RequestedAmount: 6000, OfferAmount: 5000}, state.FundingSetAmount, []int{326, 334}},
-		{"event5-zero", state.FundingChoice{Kind: state.FundingDiplomat, Subject: 1, RequestedAmount: 6000, OfferAmount: 0}, state.FundingSetAmount, []int{327, 334}},
-		{"event5-more", state.FundingChoice{Kind: state.FundingDiplomat, Subject: 1, RequestedAmount: 6000, OfferAmount: 7000}, state.FundingSetAmount, []int{328, 334}},
+		{"event5-zero", state.FundingChoice{Kind: state.FundingDiplomat, Subject: 1, RequestedAmount: 6000, OfferAmount: 0}, state.FundingSetAmount, []int{327, 339}},
+		{"event5-more", state.FundingChoice{Kind: state.FundingDiplomat, Subject: 1, RequestedAmount: 6000, OfferAmount: 7000}, state.FundingSetAmount, []int{328, 344}},
 		{"event5-reject", state.FundingChoice{Kind: state.FundingDiplomat, Subject: 1, RequestedAmount: 6000, OfferAmount: 6000}, state.FundingReject, []int{327, 339}},
 	}
 	for _, tc := range fundingCases {

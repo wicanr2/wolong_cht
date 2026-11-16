@@ -18,16 +18,16 @@ func TestFundingTalkIndicesMatchRaw139E8Branches(t *testing.T) {
 		wantFollowUp int
 	}{
 		{"governor-full", state.FundingGovernor, state.FundingFullAmount, 6000, 284, 288},
-		{"governor-equal", state.FundingGovernor, state.FundingSetAmount, 6000, 284, 293},
+		{"governor-equal", state.FundingGovernor, state.FundingSetAmount, 6000, 284, 288},
 		{"governor-less", state.FundingGovernor, state.FundingSetAmount, 5000, 285, 293},
-		{"governor-zero", state.FundingGovernor, state.FundingSetAmount, 0, 286, 293},
-		{"governor-more", state.FundingGovernor, state.FundingSetAmount, 7000, 287, 293},
+		{"governor-zero", state.FundingGovernor, state.FundingSetAmount, 0, 286, 298},
+		{"governor-more", state.FundingGovernor, state.FundingSetAmount, 7000, 287, 303},
 		{"governor-reject", state.FundingGovernor, state.FundingReject, 6000, 286, 298},
 		{"diplomat-full", state.FundingDiplomat, state.FundingFullAmount, 6000, 325, 329},
-		{"diplomat-equal", state.FundingDiplomat, state.FundingSetAmount, 6000, 325, 334},
+		{"diplomat-equal", state.FundingDiplomat, state.FundingSetAmount, 6000, 325, 329},
 		{"diplomat-less", state.FundingDiplomat, state.FundingSetAmount, 5000, 326, 334},
-		{"diplomat-zero", state.FundingDiplomat, state.FundingSetAmount, 0, 327, 334},
-		{"diplomat-more", state.FundingDiplomat, state.FundingSetAmount, 7000, 328, 334},
+		{"diplomat-zero", state.FundingDiplomat, state.FundingSetAmount, 0, 327, 339},
+		{"diplomat-more", state.FundingDiplomat, state.FundingSetAmount, 7000, 328, 344},
 		{"diplomat-reject", state.FundingDiplomat, state.FundingReject, 6000, 327, 339},
 	}
 	for _, tt := range tests {
@@ -95,5 +95,21 @@ func TestFundingTalkExpansionUsesOriginalMarkers(t *testing.T) {
 	result := strings.Join(g.messages[0].lines, "\n")
 	if strings.Contains(result, "{") || !strings.Contains(result, "7000") {
 		t.Fatalf("事件 4 指定超額 TALK 展開錯誤：%q", result)
+	}
+}
+
+// 原版13C99只減一次3；夏侯淵37在原版樣本的raw7必須使用base+4。
+func TestFundingOfficerVariantUsesSingleOriginalFold(t *testing.T) {
+	w, err := state.LoadScenario("../../workplace/orig/dosv/SINARIO.DAT", 0)
+	if err != nil {
+		t.Fatal(err)
+	}
+	g := &game{world: w}
+	c := state.FundingChoice{Officer: 37}
+	for _, sample := range []struct{ raw, want int }{{0, 278}, {2, 280}, {3, 278}, {5, 280}, {6, 281}, {7, 282}} {
+		w.Generals[37].TalkVariant = sample.raw
+		if got := g.fundingOfficerTalkIndex(c, 278); got != sample.want {
+			t.Fatalf("raw%d: index=%d want%d", sample.raw, got, sample.want)
+		}
 	}
 }
