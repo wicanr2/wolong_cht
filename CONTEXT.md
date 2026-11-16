@@ -264,6 +264,7 @@ GPU最多兩頁快取，其他季節、液晶、未選頁與讀圖失敗沿原�
 
 | 日期／目前程式 | 最近驗證 | 狀態 | 交付物 |
 |---|---|---|---|
+| 2026-11-16；沿wlgame-closeout-release-r1 | 遷都八案、非致命赤字三案完整區塊／RNG；遷都GUI39項／13圖，現行警告GUI12項／3圖；另正常原版7時警告與完整結算對拍 | 遷都情報閘／肖像與語氣抽驗通過，程式未改且494份Go來源相同。原版赤字會多開無關編成提示，呈現A／B比較已做好，待使用者裁定，不稱已對齊 | [遷都補證](docs/spec/64-capital-relocation-report.md)、[警告觀測](docs/spec/219-c-event-handlers.md)、[收據](workplace/scratch/closeout-capital-warning-20261116/integration.json) |
 | 2026-11-16；wlgame-closeout-release-r1 | 原版事件9十案完整區塊及RNG、兩函式bytes；十條滑鼠51項／15圖、兩錯版、全專案冷測／vet及野戰62項／9圖 | 已補通報後由武將本人請罪，保留原始說話型與肖像。raw0–2沿既有空框省略，明列少一次右鍵；非玩家／在野維持靜默，其他事件另列 | [spec219事件9](docs/spec/219-c-event-handlers.md)、[抽驗與來源](workplace/scratch/closeout-release-20261116/integration.json) |
 | 2026-11-16；wlgame-closeout-funding-auto-r1 | 原版零要求／官員離任六案完整區塊及RNG、唯讀BP2重跑；滑鼠42項／18圖、前輪11案回歸、兩錯版、全專案冷測／vet與野戰62項／9圖 | 已補零要求三句通報，取消多餘選單並保留官員既有經費；離任官員維持靜默。原版零路徑未初始化SS的限制另記，不代證任意SS或其他事件 | [spec220零要求](docs/spec/220-c-modal-control.md)、[抽驗與來源](workplace/scratch/closeout-funding-auto-20261116/integration.json) |
 | 2026-11-16；wlgame-closeout-funding-r1 | 原版五函式bytes、事件4／5十一案完整區塊及RNG；撥款滑鼠145項／58圖、兩錯版、全專案冷測／vet及正常野戰62項／9圖 | 已修提問確認、官員上下框／說話型、輸入從零、取消回第一列、金額收尾及最後確認才扣款。非零要求本片通過；要求0自動分支及其他事件仍另列 | [spec220本片](docs/spec/220-c-modal-control.md)、[抽驗與來源](workplace/scratch/closeout-funding-20261116/integration.json) |
