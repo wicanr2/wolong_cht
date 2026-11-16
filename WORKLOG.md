@@ -2321,3 +2321,21 @@
   本地worklist既有一筆過期verify條件與65條歷史缺鏈分開記錄，不冒稱兩個入口全綠。
   來源、READY、原版／HD及前批不變、擁有權、Docker清理見
   [整合收據](workplace/scratch/closeout-cooperation-captive-20261116/integration.json)；commit／push另見repository.json。
+
+## 2026-11-16：玩家結果確認後才結算資金及信賴
+
+- 原版六案每次真實輸入等待前擷取完整狀態，中央結果44／48及破裂45／49時尚未付款／扣信賴，
+  與來源同值；確認後135ED或13DC9才寫回。原始caller與bytes、完整階段檔及固定258-byte RNG明列。
+- READY後將既有決定與結算分開，PrepareDiplomacy取得預覽及一次性續行；同步API立即續行保持舊語意。
+  桌面掛到中央結果的afterTalk，結算後才入列警告／返還／宣戰後續，不重擲或另寫規則，不進存檔。
+- 原版十二份確認前／後完整22208-byte與258-byte RNG全等，同步等價、重複續行保護與存檔讀回通過。
+  正式GUI六條114項／53圖、共享俘虜兩條31項／17圖、全專案冷測／vet及野戰62項／9圖通過；
+  舊binary的提前付款與扣信賴均由正常滑鼠檢查拒絕。
+- 另用只多一行開hudFaction位元的覆蓋binary取一案，結果時側欄50000、確認後60000，數字區像素改變，
+  已抽看兩圖。此受控視覺抽樣與正式binary正常GUI分開，未冒稱原版側欄組合或逐像素一致。
+- 採納骰在軍師回覆前的內部相位、逐名返還、宣戰war寫入與事件6／7仍保留邊界。未改金額／採納規則、
+  RNG總取數、格式、熱鍵、強化AI或HD。遠端Issue只讀，1119筆分流不變，既有worklist一筆過期與65條缺鏈另記。
+- 使用者在本輪指定下一輪優先整理README總覽，人物／城池／地圖／戰場各四張，含原版／HD；
+  已回覆按四組對照整理並寫入CONTEXT，這輪未開始圖像整理或README修改。
+- 來源、READY、前批／原版／HD不變、覆蓋binary範圍、Docker清理與擁有權見
+  [整合收據](workplace/scratch/closeout-diplomacy-confirm-20261116/integration.json)；commit／push另見repository.json。

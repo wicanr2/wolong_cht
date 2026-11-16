@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"strings"
 	"testing"
 
@@ -8,6 +9,46 @@ import (
 	"github.com/wicanr2/wolong_cht/internal/rules/diplomacy"
 	"github.com/wicanr2/wolong_cht/internal/state"
 )
+
+func TestDiplomacySettlementWaitsForCentralResult(t *testing.T) {
+	lib, err := library.LoadWithOptions("../../workplace/orig/dosv", library.LoadOptions{
+		TalkJSON: "../../translations/talk-dosv-corrected.json",
+	})
+	if err != nil {
+		t.Fatal(err)
+	}
+	for _, amount := range []int{10000, 30000} {
+		t.Run(fmt.Sprint(amount), func(t *testing.T) {
+			w, err := state.LoadScenario("../../workplace/orig/dosv/SINARIO.DAT", 0)
+			if err != nil {
+				t.Fatal(err)
+			}
+			w.Player, w.Trust = 0, 255
+			w.Factions[0].Funds, w.Factions[3].Funds = 50000, 50000
+			c := state.DiplomacyChoice{Kind: state.DiplomacyCeasefire, Source: 3, Target: 0,
+				InitialResponse: 1, InitialAmount: 20000, OfferAmount: amount}
+			w.BeginDiplomacyChoice(c)
+			g := &game{world: w, lib: lib, pointerAction: desktopConfirm}
+			g.resolveDiplomacy(c, state.DiplomacyOfferFunds)
+			for page := 0; page < 3; page++ {
+				if w.Factions[0].Funds != 50000 || w.Factions[3].Funds != 50000 || w.Trust != 255 {
+					t.Fatalf("central result未確認就結算：page=%d funds=%d/%d trust=%d", page, w.Factions[0].Funds, w.Factions[3].Funds, w.Trust)
+				}
+				if !g.messageActive() || g.timeRuns() {
+					t.Fatal("待確認訊息必須保留並凍結世界")
+				}
+				g.updateMessageOnly()
+			}
+			if amount == 10000 {
+				if w.Factions[0].Funds != 60000 || w.Factions[3].Funds != 40000 {
+					t.Fatal("確認中央結果後未付款")
+				}
+			} else if w.Trust != 225 || !g.messageActive() {
+				t.Fatal("中央結果確認後才應扣信賴並顯示警告")
+			}
+		})
+	}
+}
 
 // 渲染測試的已採納結果fixture；規則另由state及真實原版分支驗證。
 func adoptedDiplomacyResultForTest(c state.DiplomacyChoice, option state.DiplomacyOption) state.DiplomacyResult {

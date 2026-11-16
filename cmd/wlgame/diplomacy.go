@@ -104,8 +104,8 @@ func (g *game) beginDiplomacyAmount() {
 }
 
 func (g *game) resolveDiplomacy(c state.DiplomacyChoice, option state.DiplomacyOption) {
-	result, _ := g.world.ResolveDiplomacyWithResult(option)
-	g.enqueueDiplomacyTalk(c, result)
+	result, settle := g.world.PrepareDiplomacy(option)
+	g.enqueueDiplomacyTalkWithSettlement(c, result, settle)
 	g.diplomacyRow = 0
 	g.diplomacyEditingAmount = false
 	g.amountCursorActive = false
@@ -168,6 +168,11 @@ func (g *game) diplomacyTalkVars(c state.DiplomacyChoice, amount int) map[byte]s
 // enqueueDiplomacyTalk 接回 sub_13902 的已證實文字索引與
 // sub_13C3D 的主要結果句；原版次要信賴度／AH 分支仍留在未完成邊界。
 func (g *game) enqueueDiplomacyTalk(c state.DiplomacyChoice, result state.DiplomacyResult) {
+	g.enqueueDiplomacyTalkWithSettlement(c, result, nil)
+}
+
+func (g *game) enqueueDiplomacyTalkWithSettlement(c state.DiplomacyChoice, result state.DiplomacyResult,
+	settle func() (state.DiplomacyResult, bool)) {
 	choiceAmount := -1
 	if result.AdviceOption == state.DiplomacyOfferFunds {
 		choiceAmount = c.OfferAmount
@@ -202,6 +207,18 @@ func (g *game) enqueueDiplomacyTalk(c state.DiplomacyChoice, result state.Diplom
 	}
 	g.enqueueTalkWithPortrait(resultBase+response,
 		g.diplomacyTalkVars(c, resultAmount), g.diplomacyResultPortrait(c))
+	if settle != nil {
+		// 13C6E的中央結果確認後，才付款或13DC9扣信賴。
+		g.afterTalk(func() {
+			settled, _ := settle()
+			g.enqueueDiplomacyConsequences(c, settled)
+		})
+		return
+	}
+	g.enqueueDiplomacyConsequences(c, result)
+}
+
+func (g *game) enqueueDiplomacyConsequences(c state.DiplomacyChoice, result state.DiplomacyResult) {
 	if result.Response == 3 {
 		if g.world != nil && g.world.Player >= 0 && g.world.Player < len(g.world.Factions) {
 			g.enqueueTalkNotice(state.TalkNotice{

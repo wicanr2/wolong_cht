@@ -138,10 +138,20 @@ func (w *World) ResolveDiplomacy(option DiplomacyOption) bool {
 // ResolveDiplomacyWithResult按原版13902保留初始回應及一次採納骰。
 // 回傳的實際條件供UI報告，不能以玩家建議推定君主最後決定。
 func (w *World) ResolveDiplomacyWithResult(option DiplomacyOption) (DiplomacyResult, bool) {
+	result, settle := w.PrepareDiplomacy(option)
+	if settle == nil {
+		return result, false
+	}
+	return settle()
+}
+
+// PrepareDiplomacy決定回覆，但把資金、Trust等寫回留給中央結果確認後。
+// 續行只能執行一次；不重擲採納骰，不進存檔。同步caller沿上方入口。
+func (w *World) PrepareDiplomacy(option DiplomacyOption) (DiplomacyResult, func() (DiplomacyResult, bool)) {
 	result := DiplomacyResult{Response: 2, AdviceOption: option}
 	choice := w.diplomacy
 	if choice == nil || option > DiplomacyReject {
-		return result, false
+		return result, nil
 	}
 	w.diplomacy = nil
 	if option == DiplomacyOfferFunds && choice.OfferAmount == 0 {
@@ -153,7 +163,7 @@ func (w *World) ResolveDiplomacyWithResult(option DiplomacyOption) (DiplomacyRes
 		roll = w.rng.Next() & 0xFF
 	}
 	if choice.InitialAmount < 0 || choice.OfferAmount < 0 {
-		return result, false
+		return result, nil
 	}
 	result.Response, result.Amount = choice.InitialResponse, choice.InitialAmount
 	result.AdviceAdopted = roll <= clampU8(w.Trust)
@@ -164,8 +174,22 @@ func (w *World) ResolveDiplomacyWithResult(option DiplomacyOption) (DiplomacyRes
 		}
 		if option == DiplomacyOfferFunds && choice.OfferAmount > choice.InitialAmount {
 			result.Response = 3
-			w.AdjustTrust(diplomacyOverOfferTrustPenalty)
 		}
+	}
+	decided := *choice
+	settled := false
+	return result, func() (DiplomacyResult, bool) {
+		if settled {
+			return result, false
+		}
+		settled = true
+		return w.applyDiplomacyResult(decided, result)
+	}
+}
+
+func (w *World) applyDiplomacyResult(choice DiplomacyChoice, result DiplomacyResult) (DiplomacyResult, bool) {
+	if result.Response == 3 {
+		w.AdjustTrust(diplomacyOverOfferTrustPenalty)
 	}
 	if result.Response >= 2 {
 		return result, false
