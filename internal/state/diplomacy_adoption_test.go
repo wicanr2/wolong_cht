@@ -10,6 +10,26 @@ type diplomacyRoll struct{ value, calls int }
 
 func (r *diplomacyRoll) Next() int { r.calls++; return r.value }
 
+func TestCeasefireDiscountUsesSignedTotal(t *testing.T) {
+	for _, tc := range []struct{ friendship, amount int }{{20, 14000}, {46, 1000}, {48, 0}, {60, 0}} {
+		w := load(t, 0)
+		w.Player = 0
+		w.Factions[1].Lord, w.Factions[1].Diplomat = 1, 1
+		w.Factions[1].Aggression, w.Factions[1].InvasionTarget = 0, 255
+		for i := range w.Generals {
+			if w.Generals[i].Faction == 1 {
+				w.Generals[i].Duty = DutyCorpsLeader
+			}
+		}
+		w.Generals[1] = General{Alive: true, Politics: 8, Faction: 1, Captor: 255}
+		w.Friendship[1][0] = diplomacy.Peace(tc.friendship)
+		response, amount, ok := w.ceasefireTerms(0, 1)
+		if !ok || amount != tc.amount || (response == 0) != (tc.amount == 0) {
+			t.Fatalf("交友%d：回應%d、金額%d，原版136F0需先加折扣再鉗零", tc.friendship, response, amount)
+		}
+	}
+}
+
 func TestImportedEventDelayAndNativeSnapshot(t *testing.T) {
 	w := cooperationTestWorld(t, 0)
 	loaded, err := LoadBlock(w.Bytes())

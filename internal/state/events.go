@@ -263,6 +263,20 @@ func appendDiplomacyReportNotice(ev *Event, index, faction, general, amount int)
 	})
 }
 
+// sub_13C3D及1335B／133C7由外交官本人回報；57引見仍用147通報者。
+func (w *World) appendDiplomacyEnvoyNotice(ev *Event, index, faction, amount int) {
+	if ev == nil {
+		return
+	}
+	general := w.Factions[faction].Diplomat
+	valid := general >= 0 && general < len(w.Generals)
+	if !valid {
+		general = -1
+	}
+	appendDiplomacyReportNotice(ev, index, faction, general, amount)
+	ev.TalkNotices[len(ev.TalkNotices)-1].SpeakerPortrait = valid
+}
+
 // diplomacyCaptiveFlags 是 sub_137D8 → sub_13138 的兩個方向 bit。
 // sub_13138 不檢查 General 的 active byte，只比 +1Dh（Captor）與 +1Ch
 // （Faction）；因此這裡也保留 raw record 的欄位語意，不擅自加 Alive gate。
@@ -378,14 +392,14 @@ func (w *World) dispatchQueuedEvent(ev *Event) {
 		appendDiplomacyReportNotice(ev, 0x39, source, w.Factions[source].Diplomat, -1)
 		response, amount, ok := w.ceasefireTerms(w.Player, source)
 		if !ok {
-			appendDiplomacyReportNotice(ev, 0x3A, -1, -1, -1)
+			w.appendDiplomacyEnvoyNotice(ev, 0x3A, source, -1)
 			return
 		}
 		noticeAmount := -1
 		if response == 1 {
 			noticeAmount = amount
 		}
-		appendDiplomacyReportNotice(ev, 0x2B+response, source, -1, noticeAmount)
+		w.appendDiplomacyEnvoyNotice(ev, 0x2B+response, source, noticeAmount)
 		// sub_13C3D 的第二次直接呼叫條件：AH（雙向俘虜關係）非零，
 		// 且 AL 不是 2／3。索引是 CX+1Dh = #72。第一個 formatter 呼叫
 		// 讀 SS:[SP] 的保存 DI；返回後第二個呼叫沿用恢復的 DI，`\\2`
@@ -415,14 +429,14 @@ func (w *World) dispatchQueuedEvent(ev *Event) {
 		appendDiplomacyReportNotice(ev, 0x39, source, w.Factions[source].Diplomat, -1)
 		response, amount, ok := w.cooperationTerms(source, invader, w.Player)
 		if !ok {
-			appendDiplomacyReportNotice(ev, 0x3A, -1, -1, -1)
+			w.appendDiplomacyEnvoyNotice(ev, 0x3A, source, -1)
 			return
 		}
 		noticeAmount := -1
 		if response == 1 {
 			noticeAmount = amount
 		}
-		appendDiplomacyReportNotice(ev, 0x2F+response, source, -1, noticeAmount)
+		w.appendDiplomacyEnvoyNotice(ev, 0x2F+response, source, noticeAmount)
 		// 同一個 sub_13C3D 條件；事件 7 的 CX+1Dh 是 #76。
 		// #76 本身沒有 formatter marker，原版是直接文字／選單樣式
 		// TALK，因此不附帶玩家君主肖像。
@@ -878,9 +892,7 @@ func (w *World) ceasefireTerms(source, target int) (response, amount int, ok boo
 		adjusted = 0
 	}
 	bonus := 30 - adjusted
-	if bonus < 0 {
-		bonus = 0
-	}
+	// 136F0先加可為負的折扣，136F2才把總額歸零。
 	amount = politics + bonus
 	if amount < 0 {
 		amount = 0

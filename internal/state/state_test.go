@@ -1218,7 +1218,7 @@ func TestQueuedDiplomacyReportTalkNotices(t *testing.T) {
 	w.dispatchQueuedEvent(event6)
 	want6 := []TalkNotice{
 		{Index: 0x39, City: -1, Faction: other, General: 1, Amount: -1},
-		{Index: 0x2C, City: -1, Faction: other, General: -1, Amount: 14_000},
+		{Index: 0x2C, City: -1, Faction: other, General: 1, Amount: 14_000, SpeakerPortrait: true},
 	}
 	if !reflect.DeepEqual(event6.TalkNotices, want6) {
 		t.Fatalf("事件 6 TALK 通知錯誤：got %#v want %#v", event6.TalkNotices, want6)
@@ -1253,7 +1253,7 @@ func TestQueuedDiplomacyReportTalkNotices(t *testing.T) {
 	w.dispatchQueuedEvent(event7)
 	want7 := []TalkNotice{
 		{Index: 0x39, City: -1, Faction: ally, General: 1, Amount: -1},
-		{Index: 0x30, City: -1, Faction: ally, General: -1, Amount: 15_000},
+		{Index: 0x30, City: -1, Faction: ally, General: 1, Amount: 15_000, SpeakerPortrait: true},
 	}
 	if !reflect.DeepEqual(event7.TalkNotices, want7) {
 		t.Fatalf("事件 7 TALK 通知錯誤：got %#v want %#v", event7.TalkNotices, want7)

@@ -374,6 +374,8 @@ func (s *desktopGame) writeTrace() {
 			v["diplomacyAmountEditing"] = g.diplomacyEditingAmount
 		}
 		v["trust"] = g.world.Trust
+		snapshot := g.world.TakeSnapshot()
+		v["eventCursor"], v["eventDelay"] = snapshot.EventCursor, snapshot.EventDelay
 		funds, targets := []int{}, []int{}
 		for _, f := range g.world.Factions {
 			funds, targets = append(funds, f.Funds), append(targets, f.InvasionTarget)
