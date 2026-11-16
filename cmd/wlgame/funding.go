@@ -109,7 +109,7 @@ func (g *game) resolveFunding(c state.FundingChoice, option state.FundingOption)
 	g.amountCursorActive = false
 	// sub_139E8 的選項 2（拒絕）與指定金額 0 都會回傳「未完成」類似
 	// 的狀態結果，但兩者仍有各自已證實的 TALK 分支，不能落入泛用錯誤訊息。
-	knownTalk := option == state.FundingReject ||
+	knownTalk := c.RequestedAmount == 0 || option == state.FundingReject ||
 		(option == state.FundingSetAmount && c.OfferAmount == 0)
 	g.enqueueFundingTalk(c, option)
 	// 原版139AD9在官員最後答覆確認後才撥款；等待期間保留pending以暫停世界。
@@ -131,6 +131,10 @@ func fundingTalkIndices(c state.FundingChoice, option state.FundingOption) (int,
 	base := 0x116
 	if c.Kind == state.FundingDiplomat {
 		base = 0x13F
+	}
+	if c.RequestedAmount == 0 {
+		// 13A31–13A45：只確認官員通報，不進入三選一。
+		return base + 35, base + 36
 	}
 	switch option {
 	case state.FundingFullAmount:
@@ -166,6 +170,9 @@ func fundingTalkBase(c state.FundingChoice) int {
 // 對一般事件要求已套用 500 下限，因此這是目前可進入 pending UI 的
 // 主要 prompt；要求為零的原版自動分支另保留在 state／TALK 索引表。
 func fundingTalkPromptIndex(c state.FundingChoice) int {
+	if c.RequestedAmount == 0 {
+		return fundingTalkBase(c) + 30
+	}
 	return fundingTalkBase(c)
 }
 

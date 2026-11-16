@@ -171,6 +171,10 @@ func (g *game) enqueueEventMessages(ev state.Event) {
 			prompt.upper, prompt.scene = true, 1
 			g.messages = append(g.messages, *prompt)
 		}
+		if c.RequestedAmount == 0 {
+			// 13A2B的零要求路徑只走三句對話，最後確認才消費pending。
+			g.resolveFunding(c, state.FundingFullAmount)
+		}
 	}
 	for _, id := range ev.ReleasedGenerals {
 		if id < 0 || id >= len(g.world.Generals) ||

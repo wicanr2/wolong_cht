@@ -3306,3 +3306,46 @@ func TestEventCursorSkipsAlreadyDispatched(t *testing.T) {
 		t.Errorf("游標為 0 時取到 %#04x（ok=%v），want 0x0301", e.Code, ok)
 	}
 }
+
+// 原版131AE→139E8零要求的四個樣本均不撥款，既有經費91也保留。
+func TestZeroFundingRequestAcknowledgementPreservesBudget(t *testing.T) {
+	for _, kind := range []FundingKind{FundingGovernor, FundingDiplomat} {
+		w := load(t, 0)
+		w.Player = 0
+		w.Factions[0].Funds = 50000
+		w.Generals[37].Budget = 91
+		code := uint16(0x5204)
+		if kind == FundingGovernor {
+			w.Cities[82].Governor = 37
+		} else {
+			w.Factions[1].Diplomat = 37
+			code = 0x0105
+		}
+		w.events = [eventQueueEntries]QueuedEvent{}
+		w.events[0] = QueuedEvent{Code: code}
+		w.eventCursor, w.eventDelay = 0, 1
+		ev := Event{}
+		w.dispatchQueuedEvent(&ev)
+		if ev.Funding == nil || len(ev.TalkNotices) != 1 {
+			t.Fatalf("kind%d: missing automatic report: %+v", kind, ev)
+		}
+		clock := w.Clock
+		w.Tick(rng.NewFixed(1))
+		if w.Clock != clock {
+			t.Fatal("report advanced time before acknowledgement")
+		}
+		if w.ResolveFunding(FundingFullAmount) || w.PendingFunding() != nil {
+			t.Fatal("acknowledgement must finish without payment")
+		}
+		if w.Factions[0].Funds != 50000 || w.Generals[37].Budget != 91 {
+			t.Fatalf("kind%d: funds%d budget%d", kind, w.Factions[0].Funds, w.Generals[37].Budget)
+		}
+		saved, err := LoadBlock(w.Bytes())
+		if err != nil {
+			t.Fatal(err)
+		}
+		if saved.Factions[0].Funds != 50000 || saved.Generals[37].Budget != 91 || saved.PendingFunding() != nil {
+			t.Fatal("acknowledged state did not survive save round-trip")
+		}
+	}
+}

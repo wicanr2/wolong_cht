@@ -113,3 +113,55 @@ func TestFundingOfficerVariantUsesSingleOriginalFold(t *testing.T) {
 		}
 	}
 }
+
+// 原版零要求的順序是引見→官員報告→軍師回答→官員答覆，沒有選列。
+func TestZeroFundingRequestQueuesOriginalAcknowledgements(t *testing.T) {
+	lib, err := library.Load("../../workplace/orig/dosv")
+	if err != nil {
+		t.Fatal(err)
+	}
+	w, err := state.LoadScenario("../../workplace/orig/dosv/SINARIO.DAT", 0)
+	if err != nil {
+		t.Fatal(err)
+	}
+	w.Player = 0
+	w.Generals[37].TalkVariant = 7
+	for _, sample := range []struct {
+		kind                                state.FundingKind
+		subject, intro, prompt, first, last int
+	}{
+		{state.FundingGovernor, 82, 56, 312, 313, 318},
+		{state.FundingDiplomat, 1, 57, 353, 354, 359},
+	} {
+		c := state.FundingChoice{Kind: sample.kind, Subject: sample.subject, Officer: 37}
+		n := state.TalkNotice{Index: sample.intro, City: -1, Faction: -1, General: 37, Amount: -1}
+		if sample.kind == state.FundingGovernor {
+			n.City = sample.subject
+		} else {
+			n.Faction = sample.subject
+		}
+		g := &game{lib: lib, world: w}
+		g.enqueueEventMessages(state.Event{Funding: &c, TalkNotices: []state.TalkNotice{n}})
+		if len(g.messages) != 4 {
+			t.Fatalf("kind%d: messages=%d want4", sample.kind, len(g.messages))
+		}
+		vars, _ := padTalkVars(g.fundingTalkVars(c, 0))
+		for i, index := range []int{sample.prompt, sample.first, sample.last} {
+			m := g.messages[i+1]
+			want := g.legacyTalkLines(index, vars, talkTextWidth)
+			if strings.Join(m.lines, "\n") != strings.Join(want, "\n") || m.scene != 1 {
+				t.Fatalf("kind%d message%d does not match native TALK%d", sample.kind, i, index)
+			}
+			if i == 1 {
+				if !m.lower || m.portraitPage != g.playerAdvisorPortrait() {
+					t.Fatal("advisor reply not in lower box")
+				}
+			} else if !m.upper || m.portraitPage != 62 {
+				t.Fatal("officer reply not in upper box")
+			}
+		}
+		if g.messages[3].then == nil || g.messages[2].underlay == nil || g.messages[3].underlay == nil {
+			t.Fatal("acknowledgement lost final continuation or previous reply")
+		}
+	}
+}

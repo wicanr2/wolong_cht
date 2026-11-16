@@ -106,7 +106,9 @@ func (w *World) ResolveFunding(option FundingOption) bool {
 		return false
 	}
 	w.funding = nil
-	if option == FundingReject {
+	if option == FundingReject || choice.RequestedAmount == 0 {
+		// 139E8的零要求是官員完成通報。受控原版樣本保留既有經費，
+		// 沒有玩家付款選項；不可把確認通報當作全額0而清除經費。
 		return false
 	}
 	if w.Player < 0 || w.Player >= numFactions {

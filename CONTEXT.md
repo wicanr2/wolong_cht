@@ -264,6 +264,7 @@ GPU最多兩頁快取，其他季節、液晶、未選頁與讀圖失敗沿原�
 
 | 日期／目前程式 | 最近驗證 | 狀態 | 交付物 |
 |---|---|---|---|
+| 2026-11-16；wlgame-closeout-funding-auto-r1 | 原版零要求／官員離任六案完整區塊及RNG、唯讀BP2重跑；滑鼠42項／18圖、前輪11案回歸、兩錯版、全專案冷測／vet與野戰62項／9圖 | 已補零要求三句通報，取消多餘選單並保留官員既有經費；離任官員維持靜默。原版零路徑未初始化SS的限制另記，不代證任意SS或其他事件 | [spec220零要求](docs/spec/220-c-modal-control.md)、[抽驗與來源](workplace/scratch/closeout-funding-auto-20261116/integration.json) |
 | 2026-11-16；wlgame-closeout-funding-r1 | 原版五函式bytes、事件4／5十一案完整區塊及RNG；撥款滑鼠145項／58圖、兩錯版、全專案冷測／vet及正常野戰62項／9圖 | 已修提問確認、官員上下框／說話型、輸入從零、取消回第一列、金額收尾及最後確認才扣款。非零要求本片通過；要求0自動分支及其他事件仍另列 | [spec220本片](docs/spec/220-c-modal-control.md)、[抽驗與來源](workplace/scratch/closeout-funding-20261116/integration.json) |
 | 2026-11-16；wlgame-closeout-envoy-r1 | 原版五函式bytes、事件6／7七案完整區塊及RNG；回報滑鼠54項／12圖、兩錯版、全專案冷測／vet、正常野戰62項／9圖與七日期六表 | 已修外交官回報錯用通報者肖像，以及高交友停戰誤付6000。免費／付費／拒絕及外交官消失的本片範圍通過；其他事件及次要俘虜對話仍另列 | [spec219本片](docs/spec/219-c-event-handlers.md)、[對拍與來源](workplace/scratch/closeout-envoy-20261116/integration.json) |
 | 2026-11-16；wlgame-closeout-cooperation-r1 | 受控記憶體三分支的原版對話／派遣及完整結算區塊與RNG；三條實際滑鼠流程、冷測／vet及錯版反例 | 已修主動協力漏首句、協助方／攻擊方同名及成案後漏原版派遣通報。直接同意／拒絕／同一家收尾通過，事件7後續全部回報與其他事件仍另列；強化AI未啟用 | [spec268本片](docs/spec/268-advise-mouse-lists.md)、[抽驗及來源](workplace/scratch/closeout-cooperation-20261116/integration.json) |
