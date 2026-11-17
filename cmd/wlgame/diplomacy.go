@@ -219,6 +219,10 @@ func (g *game) enqueueDiplomacyTalkWithSettlement(c state.DiplomacyChoice, resul
 }
 
 func (g *game) enqueueDiplomacyConsequences(c state.DiplomacyChoice, result state.DiplomacyResult) {
+	if result.Settlement != nil {
+		g.enqueueDiplomacySettlement(result.Settlement)
+		return
+	}
 	if result.Response == 3 {
 		if g.world != nil && g.world.Player >= 0 && g.world.Player < len(g.world.Factions) {
 			g.enqueueTalkNotice(state.TalkNotice{

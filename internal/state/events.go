@@ -373,9 +373,8 @@ func (w *World) dispatchQueuedEvent(ev *Event) {
 		// 13138的cmp ax,ax固定清CF，137D8回AH0，不會產生次要72。
 		if response < 2 {
 			player := w.Player
-			w.finishDiplomacyReport(ev, func() []int {
-				_, released := w.finishQueuedCeasefireWithReturnees(player, source, response, amount)
-				return released
+			w.finishDiplomacyReport(ev, func() *DiplomacySettlement {
+				return w.prepareQueuedCeasefire(player, source, response, amount)
 			})
 		}
 	case 7:
@@ -406,9 +405,8 @@ func (w *World) dispatchQueuedEvent(ev *Event) {
 		// 與事件6相同的固定AH0，不以俘虜統計合成戰鬥選單76。
 		if response < 2 {
 			player := w.Player
-			w.finishDiplomacyReport(ev, func() []int {
-				_, released := w.finishQueuedCooperationWithReturnees(source, invader, player, response, amount)
-				return released
+			w.finishDiplomacyReport(ev, func() *DiplomacySettlement {
+				return w.prepareQueuedCooperation(source, invader, player, response, amount)
 			})
 		}
 	case 8:
@@ -663,20 +661,7 @@ func (w *World) finishQueuedCooperation(source, invader, target, response, amoun
 }
 
 func (w *World) finishQueuedCooperationWithReturnees(source, invader, target, response, amount int) (bool, []int) {
-	if response < 0 || response >= 2 {
-		return false, nil
-	}
-	// sub_135ED(AL=1) 的資金方向是 SI（合作方）增加、DI（被侵攻方）
-	// 減少；AL=0 仍會釋放兩方俘虜但不轉帳。
-	if response == 1 {
-		w.Factions[source].Funds = economy.ClampFunds(w.Factions[source].Funds + amount)
-		w.Factions[target].Funds = economy.ClampFunds(w.Factions[target].Funds - amount)
-	}
-	released := w.releaseDiplomaticCaptives(source, target)
-
-	// sub_13220 最後以 DL=Param 低 byte 呼叫 sub_13526；這裡重用已接入
-	// 的事件 1 狀態收尾，保留玩家不直接寫 +0x19 的原版邊界。
-	return w.applyQueuedDeclaration(source, invader), released
+	return w.prepareQueuedCooperation(source, invader, target, response, amount).resolve()
 }
 
 // applyQueuedCooperationReport 是事件 7（sub_13388）的狀態轉接。
@@ -810,16 +795,29 @@ func (w *World) releaseGeneral(generalID int) bool {
 // 則回到在野。回傳成功釋放的記錄順序，供呈現層沿150D7顯示返還對話。
 func (w *World) releaseDiplomaticCaptives(a, b int) []int {
 	var released []int
-	for i := range w.Generals {
-		g := &w.Generals[i]
-		if !g.Alive || !((g.Faction == a && g.Captor == b) || (g.Faction == b && g.Captor == a)) {
-			continue
+	next := w.diplomaticCaptiveReleases(a, b)
+	for {
+		id, ok := next()
+		if !ok {
+			return released
 		}
-		if w.releaseGeneral(i) {
-			released = append(released, i)
-		}
+		released = append(released, id)
 	}
-	return released
+}
+
+func (w *World) diplomaticCaptiveReleases(a, b int) func() (int, bool) {
+	index := 0
+	return func() (int, bool) {
+		for index < len(w.Generals) {
+			i := index
+			index++
+			g := &w.Generals[i]
+			if g.Alive && ((g.Faction == a && g.Captor == b) || (g.Faction == b && g.Captor == a)) && w.releaseGeneral(i) {
+				return i, true
+			}
+		}
+		return -1, false
+	}
 }
 
 // applyQueuedCeasefire 是 sub_13262 的狀態部分。
@@ -896,45 +894,7 @@ func (w *World) finishQueuedCeasefire(source, target, response, amount int) bool
 }
 
 func (w *World) finishQueuedCeasefireWithReturnees(source, target, response, amount int) (bool, []int) {
-	if response < 0 || response >= 2 {
-		return false, nil
-	}
-	// sub_135ED(AL=1) 的兩個 24 位資金更新；AL=0 仍會釋放俘虜，
-	// 但不轉帳。World 的 Funds 已是有號整數，ClampFunds 對應原版
-	// sub_15609／sub_1563B 的上下限。
-	if response == 1 {
-		w.Factions[target].Funds = economy.ClampFunds(w.Factions[target].Funds + amount)
-		w.Factions[source].Funds = economy.ClampFunds(w.Factions[source].Funds - amount)
-	}
-	released := w.releaseDiplomaticCaptives(source, target)
-
-	// sub_145F8：只清掉彼此互指的侵攻目標。
-	if w.Factions[source].InvasionTarget == target {
-		w.Factions[source].InvasionTarget = diplomacy.NoTarget
-	}
-	if w.Factions[target].InvasionTarget == source {
-		w.Factions[target].InvasionTarget = diplomacy.NoTarget
-	}
-
-	// sub_14236：只有執行期 Owner 與記錄 OwnerRecorded 都落在兩方
-	// 時才同步記錄欄位，其他歷史／資料瑕疵保留不動。
-	for i := range w.Cities {
-		c := &w.Cities[i]
-		ownerInPair := c.Owner == source || c.Owner == target
-		recordedInPair := c.OwnerRecorded == source || c.OwnerRecorded == target
-		if ownerInPair && recordedInPair {
-			c.OwnerRecorded = c.Owner
-		}
-	}
-
-	// sub_13669：取兩個方向的 7-bit 交友度較小值，設回和平位元。
-	value := w.Friendship[source][target].Value()
-	if other := w.Friendship[target][source].Value(); other < value {
-		value = other
-	}
-	w.Friendship[source][target] = diplomacy.Peace(value)
-	w.Friendship[target][source] = diplomacy.Peace(value)
-	return true, released
+	return w.prepareQueuedCeasefire(source, target, response, amount).resolve()
 }
 
 // applyQueuedDeclaration 是 sub_1320C → sub_13526 的狀態部分。
@@ -942,7 +902,7 @@ func (w *World) finishQueuedCeasefireWithReturnees(source, target, response, amo
 // 事件字高 byte 是發起勢力，參數低 byte 是目標；參數高 byte 在事件 1
 // 的 handler 不參與判定。玩家勢力不會被自動填入侵攻目標，但仍會走
 // 原版的回頭宣戰與雙向交戰值更新路徑。
-func (w *World) applyQueuedDeclaration(source, target int) bool {
+func (w *World) canApplyQueuedDeclaration(source, target int) bool {
 	if source < 0 || source >= numFactions || target < 0 || target > diplomacy.NoTarget {
 		return false
 	}
@@ -957,6 +917,13 @@ func (w *World) applyQueuedDeclaration(source, target int) bool {
 	// sub_1351A 以存在旗標重新驗證兩邊；中立（24）沒有勢力記錄，
 	// 原版事件 1 仍可把它寫成目標，但不進交友度矩陣。
 	if w.Factions[source].InvasionTarget < combat.NeutralFaction {
+		return false
+	}
+	return true
+}
+
+func (w *World) applyQueuedDeclaration(source, target int) bool {
+	if !w.canApplyQueuedDeclaration(source, target) {
 		return false
 	}
 	if source != w.Player {

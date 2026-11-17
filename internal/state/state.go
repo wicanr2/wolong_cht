@@ -459,7 +459,7 @@ type World struct {
 	diplomacy *DiplomacyChoice
 	// funding 是事件 4／5 的玩家撥款互動；它是 runtime 狀態，不進存檔。
 	funding *FundingChoice
-	// 桌面以主要結果訊息的確認續行事件6／7；其他caller維持同步。
+	// 桌面以訊息確認續行外交結算；其他caller維持同步。
 	// 只影響runtime呈現邊界，不進存檔。
 	confirmDiplomacyReports bool
 	// rng 是給戰術層用的亂數源，開戰時記下來。
@@ -958,6 +958,8 @@ type DiplomacyResult struct {
 	TalkNotices   []TalkNotice
 	// 停戰實際釋放的武將，依135ED的記錄順序；僅runtime，不進存檔。
 	ReleasedGenerals []int
+	// 桌面分段續行；同步API仍回傳完整ReleasedGenerals／TalkNotices。
+	Settlement *DiplomacySettlement `json:"-"`
 }
 
 // Event 是一個 tick 裡發生的事，供呼叫端記錄或呈現。

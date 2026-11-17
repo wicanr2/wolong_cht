@@ -156,9 +156,7 @@ func (g *game) enqueueEventMessages(ev state.Event) {
 		if report := ev.DiplomacyReport; report != nil && report.AfterNotice == index {
 			// 1336A／133D6的中央結果返回後才135ED付款與返還。
 			g.afterTalk(func() {
-				for _, id := range report.Confirm() {
-					g.enqueueReleasedGeneral(id)
-				}
+				g.enqueueDiplomacySettlement(report.Confirm())
 			})
 		}
 	}
@@ -186,6 +184,34 @@ func (g *game) enqueueEventMessages(ev state.Event) {
 	}
 	for _, id := range ev.ReleasedGenerals {
 		g.enqueueReleasedGeneral(id)
+	}
+}
+
+// 下一名武將只在前一名全部對話確認後釋放；最後才收尾和平／宣戰。
+func (g *game) enqueueDiplomacySettlement(settlement *state.DiplomacySettlement) {
+	if settlement == nil {
+		return
+	}
+	for {
+		id, ok := settlement.NextReturnee()
+		if !ok {
+			before := len(g.messages)
+			if notice := settlement.CompletionNotice(); notice != nil {
+				g.enqueueTalkNotice(*notice)
+			}
+			if len(g.messages) > before {
+				g.afterTalk(func() { settlement.Complete() })
+			} else {
+				settlement.Complete()
+			}
+			return
+		}
+		before := len(g.messages)
+		g.enqueueReleasedGeneral(id)
+		if len(g.messages) > before {
+			g.afterTalk(func() { g.enqueueDiplomacySettlement(settlement) })
+			return
+		}
 	}
 }
 

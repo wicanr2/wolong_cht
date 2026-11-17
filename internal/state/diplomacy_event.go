@@ -9,7 +9,7 @@ const diplomacyOverOfferTrustPenalty = -0x1E
 // DiplomacyReport只保存主要結果notice的位置與一次性結算，不是存檔資料。
 type DiplomacyReport struct {
 	AfterNotice int
-	Confirm     func() []int
+	Confirm     func() *DiplomacySettlement
 }
 
 // SetDiplomacyReportConfirmation由桌面在新局／讀檔綁定世界時開啟。
@@ -18,9 +18,9 @@ func (w *World) SetDiplomacyReportConfirmation(enabled bool) {
 	w.confirmDiplomacyReports = enabled
 }
 
-func (w *World) finishDiplomacyReport(ev *Event, settle func() []int) {
+func (w *World) finishDiplomacyReport(ev *Event, prepare func() *DiplomacySettlement) {
 	if !w.confirmDiplomacyReports || ev == nil {
-		released := settle()
+		_, released := prepare().resolve()
 		if ev != nil {
 			ev.ReleasedGenerals = append(ev.ReleasedGenerals, released...)
 		}
@@ -29,12 +29,12 @@ func (w *World) finishDiplomacyReport(ev *Event, settle func() []int) {
 	settled := false
 	ev.DiplomacyReport = &DiplomacyReport{
 		AfterNotice: len(ev.TalkNotices) - 1,
-		Confirm: func() []int {
+		Confirm: func() *DiplomacySettlement {
 			if settled {
 				return nil
 			}
 			settled = true
-			return settle()
+			return prepare()
 		},
 	}
 }
@@ -171,7 +171,7 @@ func (w *World) ResolveDiplomacy(option DiplomacyOption) bool {
 // ResolveDiplomacyWithResult按原版13902保留初始回應及一次採納骰。
 // 回傳的實際條件供UI報告，不能以玩家建議推定君主最後決定。
 func (w *World) ResolveDiplomacyWithResult(option DiplomacyOption) (DiplomacyResult, bool) {
-	result, settle := w.PrepareDiplomacy(option)
+	result, settle := w.prepareDiplomacy(option, false)
 	if settle == nil {
 		return result, false
 	}
@@ -181,6 +181,10 @@ func (w *World) ResolveDiplomacyWithResult(option DiplomacyOption) (DiplomacyRes
 // PrepareDiplomacy決定回覆，但把資金、Trust等寫回留給中央結果確認後。
 // 續行只能執行一次；不重擲採納骰，不進存檔。同步caller沿上方入口。
 func (w *World) PrepareDiplomacy(option DiplomacyOption) (DiplomacyResult, func() (DiplomacyResult, bool)) {
+	return w.prepareDiplomacy(option, w.confirmDiplomacyReports)
+}
+
+func (w *World) prepareDiplomacy(option DiplomacyOption, staged bool) (DiplomacyResult, func() (DiplomacyResult, bool)) {
 	result := DiplomacyResult{Response: 2, AdviceOption: option}
 	choice := w.diplomacy
 	if choice == nil || option > DiplomacyReject {
@@ -216,32 +220,32 @@ func (w *World) PrepareDiplomacy(option DiplomacyOption) (DiplomacyResult, func(
 			return result, false
 		}
 		settled = true
-		return w.applyDiplomacyResult(decided, result)
+		return w.applyDiplomacyResult(decided, result, staged)
 	}
 }
 
-func (w *World) applyDiplomacyResult(choice DiplomacyChoice, result DiplomacyResult) (DiplomacyResult, bool) {
+func (w *World) applyDiplomacyResult(choice DiplomacyChoice, result DiplomacyResult, staged bool) (DiplomacyResult, bool) {
 	if result.Response == 3 {
 		w.AdjustTrust(diplomacyOverOfferTrustPenalty)
 	}
 	if result.Response >= 2 {
 		return result, false
 	}
-	declarationNotice := choice.Kind == DiplomacyCooperation && choice.Source == w.Player &&
-		choice.Source >= 0 && choice.Source < numFactions && choice.Invader >= 0 && choice.Invader < numFactions &&
-		!w.Friendship[choice.Source][choice.Invader].AtWar()
-	applied := false
+	var settlement *DiplomacySettlement
 	switch choice.Kind {
 	case DiplomacyCooperation:
-		applied, result.ReleasedGenerals = w.finishQueuedCooperationWithReturnees(choice.Source, choice.Invader, choice.Target, result.Response, result.Amount)
+		settlement = w.prepareQueuedCooperation(choice.Source, choice.Invader, choice.Target, result.Response, result.Amount)
 	case DiplomacyCeasefire:
-		applied, result.ReleasedGenerals = w.finishQueuedCeasefireWithReturnees(choice.Source, choice.Target, result.Response, result.Amount)
+		settlement = w.prepareQueuedCeasefire(choice.Source, choice.Target, result.Response, result.Amount)
 	}
-	if applied && declarationNotice {
-		result.TalkNotices = append(result.TalkNotices, TalkNotice{
-			Index: 0x1A0, City: -1, Faction: choice.Invader,
-			General: w.Factions[choice.Source].Lord, Amount: -1, SpeakerPortrait: true,
-		})
+	if staged {
+		result.Settlement = settlement
+		return result, settlement != nil
+	}
+	applied, released, notice := settlement.resolveResult()
+	result.ReleasedGenerals = released
+	if applied && notice != nil {
+		result.TalkNotices = append(result.TalkNotices, *notice)
 	}
 	return result, applied
 }

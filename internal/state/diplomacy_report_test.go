@@ -43,12 +43,13 @@ func TestEnvoyReportConfirmationPreservesSynchronousResult(t *testing.T) {
 			if w.Factions[0].Funds != 50000 || w.Factions[3].Funds != 50000 || !w.Friendship[0][3].AtWar() {
 				t.Fatal("主要結果未確認就付款或停戰")
 			}
-			released := ev.DiplomacyReport.Confirm()
+			settlement := ev.DiplomacyReport.Confirm()
+			_, released := settlement.resolve()
 			if !bytes.Equal(w.Bytes(), synchronous.Bytes()) || !reflect.DeepEqual(released, syncEvent.ReleasedGenerals) {
 				t.Fatal("確認後與同步原規則結果不同")
 			}
 			before := append([]byte(nil), w.Bytes()...)
-			if len(ev.DiplomacyReport.Confirm()) != 0 || !bytes.Equal(before, w.Bytes()) {
+			if ev.DiplomacyReport.Confirm() != nil || !bytes.Equal(before, w.Bytes()) {
 				t.Fatal("重複確認再次結算")
 			}
 			if _, err := json.Marshal(ev); err != nil {

@@ -5,7 +5,7 @@
 >
 > 硬規則、目標、工作紀律在 [`CLAUDE.md`](./CLAUDE.md)。這份只管**狀態**。
 >
-> 最後更新：2026-11-16
+> 最後更新：2026-11-17
 
 ## 目前工作：先完成 remake
 
@@ -18,6 +18,7 @@
 
 上述README更新已依使用者指示commit並push，提交為`b8a8cc1`。
 接續原版收尾已補事件6／7桌面主要結果確認後的付款與返還結算，範圍及限制見下方最新狀態列。
+2026-11-17已接續補齊逐名返回與最後和平／宣戰的確認順序；舊停止線由最新狀態列與spec220收斂，不重開原版AI核對。
 
 使用者於 2026-11-02 指定依序完成 remake、HD 版本、手機版。目前先修正原版操作差異，
 驗收方式依下方最新裁定。既有 C 研究作查證來源，不再以增加還原函式數作本輪目標。
@@ -274,6 +275,7 @@ GPU最多兩頁快取，其他季節、液晶、未選頁與讀圖失敗沿原�
 
 | 日期／目前程式 | 最近驗證 | 狀態 | 交付物 |
 |---|---|---|---|
+| 2026-11-17；wlgame-closeout-diplomacy-stages-r1 | 七案34份主要結果／逐人／宣戰／結尾完整區塊及RNG全等，同步等價、防重入、存檔；滑鼠113項／56圖、事件9回歸6項／2圖、野戰62項／9圖、冷測／vet／建置 | 事件2／3／6／7桌面每人對話完成才返回下一人，全部完成後才和平／協力；玩家1A0確認後才宣戰。既有侵攻目標閘已共用；條件骰前相位仍有限制，未改規則／格式／HD或強化AI | [spec220](docs/spec/220-c-modal-control.md#2026-11-17逐名返還與宣戰確認)、[同狀態比對](workplace/scratch/closeout-diplomacy-stages-20261117/comparison.json)、[滑鼠抽驗](workplace/scratch/closeout-diplomacy-stages-20261117/GUI-summary.json) |
 | 2026-11-16；wlgame-closeout-envoy-confirm-r1 | 外交官六案十一份結果前／收尾完整區塊與RNG全等；同步等價、一次性與存檔；滑鼠66項／22圖、共享31項／17圖、野戰62項／9圖、冷測／vet／建置及兩錯版拒絕 | 事件6／7桌面結果確認後才付款與既有返還／停戰／協力收尾；CLI／手機預設同步。引見前條件骰、逐名返還及war細相位仍有限制，未改規則／格式／HD或強化AI | [spec220](docs/spec/220-c-modal-control.md#2026-11-16外交官回報的結果確認結算)、[原版等待點](workplace/scratch/closeout-envoy-confirm-20261116/original-phase-proof.json)、[滑鼠抽驗](workplace/scratch/closeout-envoy-confirm-20261116/GUI-summary.json)、[本輪收據目錄](workplace/scratch/closeout-envoy-confirm-20261116/) |
 | 2026-11-16；README展示圖 | 四類各4張、16個圖片連結、28份來源雜湊及16張重生一致；資產與過期斷言檢查通過，文件65條缺鏈／356筆幽靈引用與HEAD相比未增加 | 人物／城池／地圖為原版與HD選稿對照；戰場為原版素材現況，明示HD未重繪。未改遊戲程式或素材 | [README總覽](README.md#原版hd-畫面總覽)、[來源清單](tools/readme-gallery.json)、[驗證收據](workplace/scratch/readme-gallery-20261116/qa.json) |
 | 2026-11-16；wlgame-closeout-diplomacy-confirm-r1 | 玩家外交六案確認前／後12份完整區塊／RNG、同步等價／一次性續行／存檔通過；正式滑鼠114項／53圖、共享俘虜31項／17圖、冷測／vet與野戰62項／9圖；兩錯版拒絕 | 已把付款及超額扣信賴延至中央結果確認，受控側欄50000→60000可見；同步API與規則不變。採納骰、逐名返還／war及事件6／7的中間相位仍有限制 | [spec220](docs/spec/220-c-modal-control.md)、[re12](docs/re/12-diplomacy-dialogue.md)、[本輪收據](workplace/scratch/closeout-diplomacy-confirm-20261116/integration.json) |
