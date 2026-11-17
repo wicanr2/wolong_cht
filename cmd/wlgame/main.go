@@ -1503,71 +1503,33 @@ func (g *game) Draw(screen *ebiten.Image) {
 	g.maybeSaveShot(screen)
 }
 
-// drawDisasterOverlay 把 state 的 runtime 災害 marker 接到戰略地圖。
-//
-// 事件 12 的火災／暴動物件現在使用 MMAP.MCH 原版矩陣與 16×16 平面圖塊：
-// sub_123FF 寫入 object type 1／2，sub_12533 以 CS:985Ah 查表取 8 相位，
-// 再由 loc_1D51F 置中寫入 40×23 的戰略地圖 cell buffer。remake 在同一個
-// 地圖格座標上合成圖像；相位時鐘是呈現層的固定 frame clock，因為目前
-// runtime object 的 [si+0F]／[si+0C] 已由 state 保存為非存檔欄位，
-// 由 map-loop timer 驅動；這裡只負責把本次 render 取得的相位交給 MCH。
+// drawDisasterOverlay 依原版槽序繪製 SAVE 中的 MCH 物件。
+// sub_12533 使用物件自己的 type、座標與舊相位，不查據點的災害種類；
+// 讀檔後也不能依 runtime marker 過濾或按據點去重（docs/spec/146 §7）。
+// 相位與計時欄位由 state 保存並寫回原物件記錄，此處只取呈現快照。
 //
 // 暴風雨事件 11 的據點 +0x15 是災害強度，範圍用來影響雲的漂移；
 // 原版地圖不另畫範圍框或據點符號（docs/spec/81 §6）。火災／暴動
 // 在 MCH 缺檔時才退回向量 marker；這個 fallback 不算原版 parity。
 func (g *game) drawDisasterOverlay(screen *ebiten.Image) {
-	mapW, mapH := g.mapSourceBounds()
-	objects := g.world.RenderDisasterObjects()
-	objectByCity := make(map[int]state.DisasterObjectSnapshot, len(objects))
-	for _, object := range objects {
-		// ⭐ type 0 是**會飄的雲**，不掛在據點上，自己畫（docs/spec/146）。
-		if object.TypeCode == 0 {
-			g.drawMapObject(screen, object)
-			continue
-		}
-		// 原版掃描順序是 slot 0→31；同城重複時第一筆先被呈現層取用。
-		if _, exists := objectByCity[object.City]; !exists {
-			objectByCity[object.City] = object
-		}
+	for _, object := range g.world.RenderDisasterObjects() {
+		g.drawMapObject(screen, object)
 	}
+	if g.lib != nil && g.lib.MCH != nil {
+		return
+	}
+	mapW, mapH := g.mapSourceBounds()
 	for cityID, city := range g.world.Cities {
 		marker, ok := g.world.DisasterMarkerAt(cityID)
-		if !ok || marker.Kind == economy.Storm {
+		if !ok || marker.Kind != economy.Fire && marker.Kind != economy.Riot {
 			continue
 		}
 		x := (city.X - g.camX) * world.TileSize
 		y := strategyMapY + (city.Y-g.camY)*world.TileSize
-		phase := uint8(1)
-		if object, exists := objectByCity[cityID]; exists {
-			phase = object.Phase
-		}
-		if img := g.disasterImage(marker.Kind, int(phase)); img != nil {
-			w, h := img.Bounds().Dx(), img.Bounds().Dy()
-			drawX := x + world.TileSize/2 - w/2
-			drawY := y + world.TileSize/2 - h/2
-			if drawX+w <= 0 || drawX >= mapW || drawY+h <= strategyMapY || drawY >= mapH {
-				continue
-			}
-			op := &ebiten.DrawImageOptions{}
-			op.GeoM.Translate(float64(drawX), float64(drawY))
-			screen.DrawImage(img, op)
-			continue
-		}
 		if x+world.TileSize <= 0 || x >= mapW || y+world.TileSize <= strategyMapY || y >= mapH {
 			continue
 		}
 		g.drawDisasterMarker(screen, x, y, marker)
-	}
-}
-
-func disasterObjectType(kind economy.Disaster) (int, bool) {
-	switch kind {
-	case economy.Fire:
-		return 1, true // sub_134B1 的 AH=1
-	case economy.Riot:
-		return 2, true // sub_134B1 的 AH=2
-	default:
-		return 0, false
 	}
 }
 
@@ -1620,14 +1582,6 @@ func (g *game) mapObjectImage(objectType, phase int) *ebiten.Image {
 	result := ebiten.NewImageFromImage(img)
 	g.disasterImages[key] = result
 	return result
-}
-
-func (g *game) disasterImage(kind economy.Disaster, phase int) *ebiten.Image {
-	objectType, ok := disasterObjectType(kind)
-	if !ok {
-		return nil
-	}
-	return g.mapObjectImage(objectType, phase)
 }
 
 func (g *game) drawDisasterMarker(screen *ebiten.Image, x, y int, marker state.DisasterMarker) {

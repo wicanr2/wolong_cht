@@ -4,9 +4,9 @@ import (
 	"github.com/wicanr2/wolong_cht/internal/rules/economy"
 )
 
-// 原版 sub_123FF 配置 32 筆、每筆 0x10 byte 的 runtime 物件記錄。
-// 這些欄位不在 SINARIO／SAVE 區塊裡；只保存原版 map loop 需要的動畫
-// 時序，不把它誤寫成持久化遊戲規則。
+// 原版 sub_123FF 配置 32 筆、每筆 0x10 byte 的物件記錄。
+// 記錄保存在 SINARIO／SAVE 區塊的 mapObjectBase，包含 map loop 的
+// 動畫相位與計時欄位；loadMapObjects／writeMapObjects 對應同一段 bytes。
 const (
 	disasterObjectSlots    = 32
 	disasterObjectInterval = 0x10

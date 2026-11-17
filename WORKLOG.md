@@ -2429,3 +2429,14 @@
 - 十案100%完整地圖皆0px；50%／100%／200%共30圖。舊renderer於游標移開與關閉兩案各多41px，反例拒絕。正常桌面滑鼠45項／10圖、renderer與狀態冷測、縮放GPU、HD GPU、vet及建置通過。
 - 勘誤回填spec53、spec74、spec149、re67及playtest50，原觀察與舊計數仍保留。前輪暴風雨收據不改寫；spec81追加49px的真正原因。現行機制見[spec53 §8](docs/spec/53-city-tile-by-ownership.md#8-地圖選取框勘誤)，[本輪收據](workplace/scratch/closeout-capital-cloud-20261117/)保存輸入、IDA匯出雜湊與抽驗限制。
 - 文件檢查仍有65條既有缺鏈、356筆幽靈引用及一筆本地過期待辦，本輪未新增。原版素材、HD選稿與README圖庫按既有清單核對；輸出擁有權、容器清理與提交狀態記入本輪收據。
+
+
+## 2026-11-17：讀檔後恢復火災與暴動動畫
+
+- 路由命中復古remake驗收；核對現況與遠端Issue23，未重開已完成的首都框或外交切片。唯讀審查確認LoadBlock已載入MCH物件，UI卻按City去重並查未保存的runtime種類，因此略過有效火災／暴動。原版12533只讀物件存在、type、座標與phase。
+- READY先於實作封存。drawDisasterOverlay改依active槽序呼叫既有drawMapObject，使用原記錄座標與舊相位；不猜補災害種類、不補造動畫。MCH缺檔時保留原runtime向量fallback。另訂正物件不在SAVE的舊註解，規則／計時／格式不變。
+- dosgolem重生十案兩次重畫，完整RNG事前固定，量測中不改結果。正式LoadBlock未注入runtime種類，兩次繪製間實際Bytes／LoadBlock，完整地圖二十份0px，三倍率40圖及60次物件表寫回相同；表外持久資料不變。槽序交換正對照294px；舊renderer十六個災害畫面反例皆拒絕。
+- 正常滑鼠由標題LOAD DATA進入兩種災害存檔，停手觀察動畫前進，再儲存與重讀。合計28項／12張成功畫面通過，共用state／renderer冷測、縮放GPU、HD GPU、vet與建置通過。
+- GUI腳本初次漏匯入shutil，尚未執行遊戲；修正後又誤用標題畫面停用的工具列讀檔鈕。查launcher原有LOAD DATA列後修正腳本，同一image重跑通過，沒有為腳本錯誤改遊戲；兩份失敗log獨立保留。
+- [spec146 §7](docs/spec/146-map-cloud-objects.md#7-讀檔後依物件槽恢復火災與暴動)與[本機收據](workplace/scratch/closeout-disaster-load-20261117/)保存輸入、位址、原版與正常GUI的驗證界線。未關閉Issue23的自然生命週期、音效與大量疊圖限制，未修改HD選稿或強化AI。
+- 文件檢查與HEAD相比未新增問題，仍有65條既有缺鏈、356筆幽靈引用及一筆本地過期待辦。原始輸入、HD圖像與README圖庫、輸出擁有權與容器清理另存本輪收據。
