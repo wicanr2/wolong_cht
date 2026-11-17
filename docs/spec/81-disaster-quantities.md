@@ -50,3 +50,21 @@ remake 已實作；本輪修掉一處距離算錯（min → max）。**
 | 項目 | 現況 |
 |---|---|
 | 事件 11 在風暴期間被重排的節奏 | 產生端一次排 32–60 延遲；期間事件 11 重擲強度的觸發頻率沒逐格讀（推定隨佇列輪到）|
+
+## 6. 暴風雨地圖呈現的受控抽驗
+
+**狀態：CONFORMED。** READY 契約先於實作封存。本節只修正額外圖形，不更動災害規則、存檔格式與雲時序。
+
+- 輸入：上述 DOS/V `KI.EXE`，工具為 dosgolem `f79eab6db8c64a524a06535e53e5d32b0bbcf7c8`。
+- 位址：IDA Pro 9.4 database linear `0x11C8D`，保留原 CS 呼叫原始地圖重畫鏈。
+- 條件：鏡頭 `(186,102)`；暴風雨範圍 `(201,109)` 至 `(211,119)`；據點 82 的 runtime `+0x15` 強度 31；有雲時配置 type 0、phase 0、中心 `(206,114)`。
+- 四案各自恢復同一機器狀態。完整 258-byte RNG 於執行前固定，量測中不寫狀態、不替換原程式。
+- 結果：無雲時開關暴風雨為 0 差異像素；有同一朵雲時也是 0。加入雲的正對照為 12,077 差異像素。原版未畫青色範圍框或據點藍色符號，推論等級為此受控呈現狀態下的 **confirmed**。
+- 實作契約：`drawDisasterOverlay` 不為暴風雨強度另畫符號，移除 `drawStormArea`。保留原版 MCH 雲、火災、暴動，以及素材缺漏時既有的火災／暴動 fallback。
+- 驗證契約：同狀態 remake 地圖抽驗涵蓋 50%、100%、200%；舊 renderer 必須被畫面差異拒絕；既有災害規則、物件動畫及存檔抽測維持通過。
+- 證據入口：[本機抽驗目錄](../../workplace/scratch/closeout-storm-visuals-20261117/)，含 `prepare.py`、`sample.go`、`native-pixels.json` 與四案 source／end 快照。完整收據留在本機，不散布原版素材。
+
+此抽驗不代表自然暴風雨事件、長程雲軌跡或整場遊戲對拍完成。
+舊 [playtest/86](../playtest/86-general-faction-cells-parity.md) 將灰白網點解讀為暴風雨的說法，已由 [playtest/87](../playtest/87-map-clouds.md) 推翻；不可據此新增網點圖層。
+
+實作後以相同來源區塊及對應的 runtime 災害狀態抽驗正式 `drawStrategyMap`：50%、100%、200% 各四圖，暴風雨開關六組全部 0 差異像素。原 renderer 六組分別多出 360、1,441、1,200 像素，負對照全數拒絕。無雲兩案的 100% 地圖與原版逐像素相同；有雲兩案仍各有 49 個既有差異像素，限於據點 82 的一格，不宣稱完整雲合成 parity。災害狀態與存檔回歸、冷測、`go vet` 及建置通過，詳見本機 `gui-results.json`、`same-state-map.json`、`checks.json`。

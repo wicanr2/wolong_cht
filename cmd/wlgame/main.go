@@ -1512,9 +1512,9 @@ func (g *game) Draw(screen *ebiten.Image) {
 // runtime object 的 [si+0F]／[si+0C] 已由 state 保存為非存檔欄位，
 // 由 map-loop timer 驅動；這裡只負責把本次 render 取得的相位交給 MCH。
 //
-// 暴風雨事件 11 的已證實 handler 只更新據點 +0x15 與範圍，不會呼叫
-// sub_123FF；所以它仍畫範圍輪廓。若 MCH 缺檔，才退回低干擾向量 marker，
-// 不把 fallback 說成原版 parity。
+// 暴風雨事件 11 的據點 +0x15 是災害強度，範圍用來影響雲的漂移；
+// 原版地圖不另畫範圍框或據點符號（docs/spec/81 §6）。火災／暴動
+// 在 MCH 缺檔時才退回向量 marker；這個 fallback 不算原版 parity。
 func (g *game) drawDisasterOverlay(screen *ebiten.Image) {
 	mapW, mapH := g.mapSourceBounds()
 	objects := g.world.RenderDisasterObjects()
@@ -1532,7 +1532,7 @@ func (g *game) drawDisasterOverlay(screen *ebiten.Image) {
 	}
 	for cityID, city := range g.world.Cities {
 		marker, ok := g.world.DisasterMarkerAt(cityID)
-		if !ok {
+		if !ok || marker.Kind == economy.Storm {
 			continue
 		}
 		x := (city.X - g.camX) * world.TileSize
@@ -1557,9 +1557,6 @@ func (g *game) drawDisasterOverlay(screen *ebiten.Image) {
 			continue
 		}
 		g.drawDisasterMarker(screen, x, y, marker)
-	}
-	if area, ok := g.world.StormAreaSnapshot(); ok {
-		g.drawStormArea(screen, area)
 	}
 }
 
@@ -1649,30 +1646,7 @@ func (g *game) drawDisasterMarker(screen *ebiten.Image, x, y int, marker state.D
 			color.RGBA{196, 56, 170, alpha}, false)
 		vector.DrawFilledRect(screen, float32(x+11), float32(y+1), 3, 7,
 			color.RGBA{255, 224, 92, alpha}, false)
-	case economy.Storm:
-		vector.DrawFilledRect(screen, float32(x+10), float32(y+2), 5, 5,
-			color.RGBA{64, 180, 226, alpha}, false)
-		vector.DrawFilledRect(screen, float32(x+12), float32(y+1), 2, 7,
-			color.RGBA{190, 242, 255, alpha}, false)
 	}
-}
-
-func (g *game) drawStormArea(screen *ebiten.Image, area economy.StormArea) {
-	// 範圍本身只畫輪廓，避免把地圖地形整片蓋掉；據點 marker 才是目前
-	// 受影響據點的狀態提示。座標與 StormArea 同樣以地圖格為單位。
-	x := (area.MinX - g.camX) * world.TileSize
-	y := strategyMapY + (area.MinY-g.camY)*world.TileSize
-	w := (area.MaxX - area.MinX + 1) * world.TileSize
-	h := (area.MaxY - area.MinY + 1) * world.TileSize
-	mapW, mapH := g.mapSourceBounds()
-	if w <= 0 || h <= 0 || x+w <= 0 || x >= mapW || y+h <= strategyMapY || y >= mapH {
-		return
-	}
-	c := color.RGBA{80, 194, 232, 150}
-	vector.DrawFilledRect(screen, float32(x), float32(y), float32(w), 2, c, false)
-	vector.DrawFilledRect(screen, float32(x), float32(y+h-2), float32(w), 2, c, false)
-	vector.DrawFilledRect(screen, float32(x), float32(y), 2, float32(h), c, false)
-	vector.DrawFilledRect(screen, float32(x+w-2), float32(y), 2, float32(h), c, false)
 }
 
 // maybeSaveShot 在達到目標幀後的第一個 Draw 取像素，下一次 Update 才結束。
