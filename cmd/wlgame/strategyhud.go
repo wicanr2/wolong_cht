@@ -1086,17 +1086,12 @@ func (g *game) cityMarks() []world.CityMark {
 		return nil
 	}
 	marks := make([]world.CityMark, 0, len(g.world.Cities))
-	capital := -1
-	if p := g.world.Player; p >= 0 && p < len(g.world.Factions) {
-		capital = g.world.Factions[p].Capital
-	}
 	for i := range g.world.Cities {
 		c := &g.world.Cities[i]
 		marks = append(marks, world.CityMark{
-			X:       c.X + world.CityCentreDX,
-			Y:       c.Y,
-			Own:     world.OwnershipOf(c.Owner, g.world.Player),
-			Capital: i == capital,
+			X:   c.X + world.CityCentreDX,
+			Y:   c.Y,
+			Own: world.OwnershipOf(c.Owner, g.world.Player),
 		})
 	}
 	return marks

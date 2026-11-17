@@ -68,3 +68,5 @@ remake 已實作；本輪修掉一處距離算錯（min → max）。**
 舊 [playtest/86](../playtest/86-general-faction-cells-parity.md) 將灰白網點解讀為暴風雨的說法，已由 [playtest/87](../playtest/87-map-clouds.md) 推翻；不可據此新增網點圖層。
 
 實作後以相同來源區塊及對應的 runtime 災害狀態抽驗正式 `drawStrategyMap`：50%、100%、200% 各四圖，暴風雨開關六組全部 0 差異像素。原 renderer 六組分別多出 360、1,441、1,200 像素，負對照全數拒絕。無雲兩案的 100% 地圖與原版逐像素相同；有雲兩案仍各有 49 個既有差異像素，限於據點 82 的一格，不宣稱完整雲合成 parity。災害狀態與存檔回歸、冷測、`go vet` 及建置通過，詳見本機 `gui-results.json`、`same-state-map.json`、`checks.json`。
+
+後續定位：上述 49 像素來自被誤稱首都徽記的游標選取框。原版以游標旗標在其他疊圖後合成；remake 額外固定在首都的框已移除。原版初始化後的十案同狀態抽驗與界線見 [spec/53 §8](53-city-tile-by-ownership.md#8-地圖選取框勘誤)。本節保留前輪收據，不將舊原版快取狀態換名為新驗收。

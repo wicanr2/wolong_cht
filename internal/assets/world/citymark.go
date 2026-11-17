@@ -90,11 +90,12 @@ func CityCentreTile(base byte, own Ownership) byte {
 	}
 }
 
-// CapitalOverlayTile 是首都中心格要疊上去的 `MMAP.MCH` 圖塊。
-//
-// 112 個不透明點，疊在自勢力那一張（203）上與原版逐像素相同；
-// 非首都疊上去反而差 75 點，所以**只有首都疊**。
-const CapitalOverlayTile = 0xFF
+// MapCursorTile 是地圖游標選取框，含 112 個不透明點（docs/spec/53 §8）。
+const MapCursorTile = 0xFF
+
+// CapitalOverlayTile 保留舊名稱的數值相容性。
+// Deprecated: 此圖塊是游標選取框，不是首都徽記，請使用 MapCursorTile。
+const CapitalOverlayTile = MapCursorTile
 
 // CorpsMark 是一支軍團要疊在大地圖上的圖塊（docs/spec/74）。
 //
@@ -128,8 +129,9 @@ func CorpsTile(faction, heading int) byte {
 // CityMark 是一座據點要在大地圖上改的東西。
 type CityMark struct {
 	// X、Y 是**中心格**的地圖座標（＝據點記錄座標 + CityCentreDX）。
-	X, Y    int
-	Own     Ownership
+	X, Y int
+	Own  Ownership
+	// Deprecated: Capital 不再觸發固定疊圖；選取框由游標位置決定。
 	Capital bool
 }
 
@@ -166,18 +168,10 @@ func (m *Map) applyDecor(mark CityMark, base byte, put func(x, y int, tile byte)
 	}
 }
 
-// markerTables 與 Render 相同，但先照 marks 換掉據點中心（與大城的四個角）
-// 的圖塊，再把首都的 MCH 圖塊疊上去，最後疊 corps（docs/spec/74）。
-//
-// ⚠ **同一格同時有首都與軍團時只畫軍團**（docs/spec/74 §4.05）——
-// 不是疊上去。原版 `probe-march/e5.png` 的許昌是這樣，而軍團圖塊的
-// 外圈是透明的，疊或不疊在畫面上分得出來。
-//
-// mch 可以是 nil（沒載到 `MMAP.MCH`）——那樣少的是首都與軍團那幾張，
-// 其餘照畫，不要整張失敗。
-func (m *Map) markerTables(marks []CityMark, corps []CorpsMark) (swap, overlay, corpsAt map[int]byte) {
+// markerTables 先依歸屬換據點中心與裝飾圖塊，再收集軍團疊圖。
+// 地圖選取框由呈現層依游標位置繪製，不屬於據點標記（docs/spec/53 §8）。
+func (m *Map) markerTables(marks []CityMark, corps []CorpsMark) (swap, corpsAt map[int]byte) {
 	swap = make(map[int]byte, len(marks)*5)
-	overlay = make(map[int]byte, len(marks))
 	put := func(x, y int, tile byte) { swap[y*Width+x] = tile }
 	for _, mark := range marks {
 		base, err := m.Tile(mark.X, mark.Y)
@@ -188,19 +182,11 @@ func (m *Map) markerTables(marks []CityMark, corps []CorpsMark) (swap, overlay, 
 		}
 		put(mark.X, mark.Y, CityCentreTile(base, mark.Own))
 		m.applyDecor(mark, base, put)
-		if mark.Capital {
-			overlay[mark.Y*Width+mark.X] = CapitalOverlayTile
-		}
 	}
 
 	corpsAt = make(map[int]byte, len(corps))
 	for _, c := range corps {
 		corpsAt[c.Y*Width+c.X] = c.Tile
-		// ⭐ **軍團站在首都中心格時，首都疊圖不畫**（docs/spec/74 §4.05）。
-		// 原版 e5.png 的許昌逐格窮舉過：512 種組合裡只有「據點中心 ＋
-		// 軍團圖塊、不疊首都」是 0 px；疊上去差 40 px，全落在軍團圖塊
-		// 透明的那一圈——那一圈露的是底下哪一層，兩邊就差在這裡。
-		delete(overlay, c.Y*Width+c.X)
 	}
 	return
 }
@@ -208,7 +194,7 @@ func (m *Map) markerTables(marks []CityMark, corps []CorpsMark) (swap, overlay, 
 // RenderMarked renders the original ground and shared dynamic marker tables.
 func (m *Map) RenderMarked(ts *TileSet, mch *MCH, pal *palette.Palette, bank,
 	x0, y0, cols, rows int, marks []CityMark, corps []CorpsMark) (*image.RGBA, error) {
-	swap, overlay, corpsAt := m.markerTables(marks, corps)
+	swap, corpsAt := m.markerTables(marks, corps)
 	img := image.NewRGBA(image.Rect(0, 0, cols*TileSize, rows*TileSize))
 	for ry := 0; ry < rows; ry++ {
 		for rx := 0; rx < cols; rx++ {
@@ -229,10 +215,7 @@ func (m *Map) RenderMarked(ts *TileSet, mch *MCH, pal *palette.Palette, bank,
 					img.SetRGBA(rx*TileSize+px, ry*TileSize+py, tile.RGBAAt(px, py))
 				}
 			}
-			if id, ok := overlay[my*Width+mx]; ok {
-				blitMCH(img, mch, pal, bank, id, rx, ry)
-			}
-			// 軍團那一層（首都疊圖已經在建 corpsAt 時被拿掉了）。
+			// 軍團那一層。
 			if id, ok := corpsAt[my*Width+mx]; ok {
 				blitMCH(img, mch, pal, bank, id, rx, ry)
 			}
@@ -246,7 +229,7 @@ func (m *Map) RenderMarked(ts *TileSet, mch *MCH, pal *palette.Palette, bank,
 // the changed-pixel rectangle plus a one-pixel border (spec275 third slice).
 func (m *Map) RenderMarkers(ts *TileSet, mch *MCH, pal *palette.Palette, bank,
 	x0, y0, cols, rows int, marks []CityMark, corps []CorpsMark) (*image.RGBA, error) {
-	swap, overlay, corpsAt := m.markerTables(marks, corps)
+	swap, corpsAt := m.markerTables(marks, corps)
 	img := image.NewRGBA(image.Rect(0, 0, cols*TileSize, rows*TileSize))
 	for ry := 0; ry < rows; ry++ {
 		for rx := 0; rx < cols; rx++ {
@@ -280,9 +263,6 @@ func (m *Map) RenderMarkers(ts *TileSet, mch *MCH, pal *palette.Palette, bank,
 						draw.Draw(img, box.Add(offset), b, box.Min, draw.Src)
 					}
 				}
-			}
-			if id, ok := overlay[key]; ok {
-				blitMCH(img, mch, pal, bank, id, rx, ry)
 			}
 			if id, ok := corpsAt[key]; ok {
 				blitMCH(img, mch, pal, bank, id, rx, ry)

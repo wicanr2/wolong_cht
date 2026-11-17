@@ -1,4 +1,6 @@
-# 53 — 據點中心的圖塊跟著歸屬換，首都再疊一張
+# 53 — 據點歸屬圖塊與地圖選取框
+
+**2026-11-17勘誤：** 歸屬換圖塊的規則保留；「首都再疊一張」已被 §8 的原版指令與游標反例推翻。MCH 255 是游標選取框，不能依首都位置固定繪製。下方保留當時觀察，現行契約以 §8 為準。
 
 **狀態：CONFORMED。** 規則是拿松崗實機的九座據點、四種歸屬狀態逐格比對
 `MMAP.MDL`／`MMAP.MCH` 得到的，每一座都**逐像素 0 差**。
@@ -108,3 +110,20 @@ remake 在載入時**逐座檢查**那一格是不是 205／208／211，
 | 單元測試 | `TestOwnershipOf`：`0x18` ＝ 無所屬 |
 | 單元測試 | `TestCityCentreIsRecordCoordinate`：原版 `MMAP.MAP` 全圖**剛好 192 格**是據點中心，而且每一格就落在據點記錄座標上（`CityCentreDX = 0`）|
 | 對拍 ✅ | [`../playtest/37`](../playtest/37-main-screen-parity.md)：地圖區從 0.53% 降到 **0.00%**，`command`／`minimap`／`faction` 三區也一起 PASS |
+
+## 8. 地圖選取框勘誤
+
+**狀態：CONFORMED。** READY 契約先於實作封存。只修正錯誤的固定首都框；既有跟隨滑鼠的選取框、歸屬圖塊、軍團、災害規則與存檔格式維持原契約。
+
+- 輸入為松崗 DOS/V `KI.EXE`，SHA-256 `fffeba985231cda4d636e93d10f598470b1f691d00275e4aa38e285893d43868`；工具為 IDA Pro 9.4 與 dosgolem `f79eab6db8c64a524a06535e53e5d32b0bbcf7c8`。以下位址皆為 IDA database linear。
+- 正常主迴圈 `0x11C24` 查熱區；AL=0 時於 `0x11C4E` 呼叫 `sub_11F30`，一般地圖 hover 就有選取框，不限選點模式。
+- `0x11F30` 讀游標所在畫面格，扣除上方兩列後呼叫 `sub_1D4A3`。`0x1D4C2` 對該顯示格設 `0xE0`，包含本次選取的 bit 7。
+- `sub_1D66A` 依入口旗標在其他疊圖之後，於 `0x1D735`／`0x1D73C` 合成 MCH 255。記錄的 bit 7 已於 `0x1D6E3`／`0x1D71B` 清除，後續未重新選取就不再保留框。
+- MCH 255 與現有 `mappick.go` 黑白遮罩的 256 點完全相同：56 白、56 黑、144 透明。上述控制流與素材語意為 **confirmed**；原「首都徽記」及「軍團壓住首都徽記」的解釋為 **SUPERSEDED**。舊畫面剛好把游標停在首都，無法分辨這兩種解釋。
+- `CityMark.Capital` 與 `CapitalOverlayTile` 保留為舊呼叫端的相容名稱，前者不再觸發固定疊圖，後者只保留 255 的數值別名，不作首都語意的證據。`RenderMarked` 與 HD 的 `RenderMarkers` 共用此修正，手機沿共用 renderer 移除固定框；本輪不新增手機操作。
+- 驗證採原版 `1D483 → 1D4A3 → 11C8D`，無選取時省略 `1D4A3`。十案含雲兩相位、非首都、火災、暴動、駐軍，以及選取移開／關閉；固定完整 258-byte RNG，只在執行前配置資料，不替換原始指令或寫量測結果。100% 比完整地圖，50%／200% 抽驗顯示與裁切，舊 renderer 必須被拒絕。
+- 原始資料 → 既有 parser → 共用標記 renderer → 桌面原版／HD與手機；規則與存檔資料不變。正常 hover 沿用既有路徑；原版受控渲染不代證自然事件、完整玩家流程或手機實機驗收。
+
+證據與重跑入口留在[本機抽驗目錄](../../workplace/scratch/closeout-capital-cloud-20261117/)，含 `prepare.py`、`sample.go`、`cases-r2.json`、`ida-evidence.json` 與 `native-r2/`。既有 IDA 匯出分別為 `c-main`、`c-resume`、`c-scene` 的 `ida/ida-probe.json`，雜湊存於 `ida-evidence.json`；相關原始繪製閉包見 [re/114](../re/114-c-world-map-cells-restoration.md) 與 [re/116](../re/116-c-scene-resume-restoration.md)。
+
+驗證結果：十案的 640×368 地圖皆 0 差異像素，50%／100%／200% 共 30 張受控畫面通過；舊 renderer 在游標移開、關閉兩案各多出 41 像素，反例均拒絕。正常桌面滑鼠 45 項／10 圖、共用 renderer／狀態冷測、縮放 GPU、HD GPU、`go vet` 與建置通過。早期八案保留在 `native/`；那組沒有重建游標快取，不能用來證明首都圖層或宣稱駐軍規則不同。正式比較使用 `native-r2/` 的原版初始化與游標入口。

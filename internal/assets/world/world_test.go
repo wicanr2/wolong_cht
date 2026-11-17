@@ -512,16 +512,8 @@ func TestRenderMarkedDrawsCorps(t *testing.T) {
 	dumpPNG(t, with, "corps-overlay.png")
 }
 
-// TestCorpsSuppressesCapitalOverlay 釘住 docs/spec/74 §4.05：
-// 軍團站在首都中心格時，**首都疊圖不畫**。
-//
-// 判準不是「有沒有變」，是**兩者的取捨**：疊上去與不疊在畫面上差 40 px，
-// 全落在軍團圖塊透明的那一圈。原版 `probe-march/e5.png` 的許昌對過
-// 512 種組合，只有「不疊首都」是 0 px。
-//
-// ⚠ 這一支要能分辨「首都疊圖被拿掉」與「軍團剛好蓋滿它」。
-// 所以同時驗一個必要條件：**只畫首都疊圖**與**只畫軍團**兩張圖不相等——
-// 不相等才代表兩者的可見範圍不同，這個測試才有鑑別力。
+// TestCorpsSuppressesCapitalOverlay 保留舊測試名稱，訂正舊首都框假說。
+// Capital 相容欄位不應加上游標框；軍團仍必須正常繪製（docs/spec/53 §8）。
 func TestCorpsSuppressesCapitalOverlay(t *testing.T) {
 	m, ts, mch, pal := loadWorldForTest(t)
 	// 找一格真的是據點中心的位置，才會走到疊圖那條路。
@@ -548,11 +540,15 @@ func TestCorpsSuppressesCapitalOverlay(t *testing.T) {
 		return img.Pix
 	}
 	capitalOnly := render(mark, nil)
+	cityOnly := render([]CityMark{{X: cx, Y: cy, Own: OwnedBySelf}}, nil)
 	corpsOnly := render([]CityMark{{X: cx, Y: cy, Own: OwnedBySelf}}, corps)
 	both := render(mark, corps)
 
-	if bytes.Equal(capitalOnly, corpsOnly) {
-		t.Fatal("首都疊圖與軍團疊圖畫出來一樣，這一支分辨不了取捨——換一張圖塊")
+	if !bytes.Equal(capitalOnly, cityOnly) {
+		t.Fatal("Capital 相容欄位不應畫出固定游標框")
+	}
+	if bytes.Equal(cityOnly, corpsOnly) {
+		t.Fatal("軍團沒有改變畫面，無法驗證同格軍團的繪製")
 	}
 	if !bytes.Equal(both, corpsOnly) {
 		t.Error("同一格有首都也有軍團時，畫出來的應該等於只有軍團那一張")

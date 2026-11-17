@@ -546,7 +546,7 @@
 | [`docs/spec/50-corps-upkeep-charges-funds.md`](spec/50-corps-upkeep-charges-funds.md) | 50 — 軍費直接扣資金，不進「本月支出」 | CONFORMED。 | 2026-08-17 |
 | [`docs/spec/51-vga-dac-palette-scale.md`](spec/51-vga-dac-palette-scale.md) | 51 — DOS/V 的顏色到不了滿刻度：4 bit → VGA 6 bit DAC → 8 bit | CONFORMED。 | 2026-08-17 |
 | [`docs/spec/52-main-screen-camera-and-banner-date.md`](spec/52-main-screen-camera-and-banner-date.md) | 52 — 開局的鏡頭位置與橫幅日期 | CONFORMED。 | 2026-08-17 |
-| [`docs/spec/53-city-tile-by-ownership.md`](spec/53-city-tile-by-ownership.md) | 53 — 據點中心的圖塊跟著歸屬換，首都再疊一張 | CONFORMED。 | 2026-08-17 |
+| [`docs/spec/53-city-tile-by-ownership.md`](spec/53-city-tile-by-ownership.md) | 53 — 據點歸屬圖塊與地圖選取框 | CONFORMED。 | 2026-08-17 |
 | [`docs/spec/54-ui-colours-from-palette.md`](spec/54-ui-colours-from-palette.md) | 54 — 介面顏色一律查調色盤，命令列的底是黑的 | CONFORMED。 | 2026-08-17 |
 | [`docs/spec/55-minimap-view-box.md`](spec/55-minimap-view-box.md) | 55 — 縮小地圖的視野框是點陣，而且解開了「差四格」 | CONFORMED。 | 2026-08-17 |
 | [`docs/spec/56-battlefield-rotation.md`](spec/56-battlefield-rotation.md) | 56 — 戰場轉 180 度：什麼時候轉、轉的時候圖塊值要換 | CONFORMED。三段算式都接上了，並用原版的許昌攻防戰驗過： field 區 87.8% → 46.1%、小地圖… | 2026-08-17 |
