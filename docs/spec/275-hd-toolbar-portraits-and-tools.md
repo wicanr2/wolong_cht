@@ -1894,3 +1894,11 @@ ImageGen 木料材質原稿 SHA-256 為 `d4d52dbade013701f47ea5abc7b74b47311441b
 ```text
 Create one original opaque square seamless wood-grain material for an isometric historical East Asian strategy game. Use the supplied independent gouache road swatch only for matte brush handling, restrained warm colors, and detail scale. Depict one continuous surface of weathered warm honey-brown and ochre wood, long subtle fine graining left to right along the X axis, soft dry-brush ridges, a few irregular fibers and small scale natural shade variations. The swatch is the surface of the wood itself, no plank outlines or joints, nails, knots, beams, bridge drawing, fencing silhouette, cracks across the whole tile, perspective, surrounding scenery, surface glare, strong shadows, text, borders or existing game assets. Fill corner to corner. Match color and stroke density at both opposite edges for repeat tiling. Keep strokes legible when downsampled, give the timber believable amber overtones, and retain an even diffuse matte finish. Supply only this one opaque material.
 ```
+
+### 戰場葉叢手繪稿
+
+ImageGen 葉叢材質原稿 SHA-256 為 `24e8c98dfc9a8acc2a2b41b586ef9657f24a246890c2c7a13e21eac17cd77d6f`。
+
+```text
+Create one independently designed, opaque, square, seamless hand-painted foliage material swatch for the illuminated surfaces of small historic East Asian game trees and shrubs. Use the supplied independently painted grass material only as a reference for the matte gouache brush handling and restrained warm color. Imagine looking into densely clustered small deciduous leaves under hazy sun, from directly above. Use a rich olive, sage and yellow-green range with soft darker pine-green recesses. Small irregular layered brush marks, naturally grouped into loose clusters with softly broken highlights, visible fine leaf structure and gentle midscale color variation. Fill the square completely with foliage that tiles continuously on all four edges, with a balanced distribution of light and shade. The swatch will be blended into existing geometry, so do not paint any whole trees, silhouettes, large branches, bare ground, flower dots, rocks, hard cast shadows, borders, gradients to the edges, perspective landmarks, text, UI or commercial game art.
+```
