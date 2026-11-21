@@ -1807,3 +1807,13 @@ Generate one independently designed square gouache material swatch for an origin
 ```text
 Generate one independently designed square gouache material swatch for an original historical East Asian strategy environment. Use the supplied independent stone study only for its dry-brush handling and restrained gray-ochre palette. Depict an upright face of fine-grained ochre-gray sandstone laid in low, long staggered courses. Invent a fresh arrangement. Use a muted honey and taupe surface with charcoal-brown narrow mortar and a few chipped corners. Use a clear but moderate relief contrast so the same artwork can later be drawn on a brighter plane and a shaded plane and both stay readable at 64-pixel scale. Flat straight-on view, even ambient light across the swatch, opaque matte paint. The material should continue without a border at all sides. Fill the entire square. No perspective, crenellation, gate or building silhouette, flora, existing game assets, characters, interface or labels.
 ```
+
+### 戰場水面材質
+
+使用內建 ImageGen 以獨立四材質研究稿右下的水面為筆觸與配色參照。原稿 `battle-water-gouache-r1.png` 為 1254×1254 PNG，SHA-256 `46e40671d399261affa0e8413207340ce545f6b6a9664678eeceede55ddcacff`。原稿留在本機。
+
+水面完整提示詞。
+
+```text
+Create one independently designed gouache river-water material swatch for an original historical strategy environment. Use only the lower-right blue water panel of the provided independent four-material study as reference for dry-brush handling and the navy, blue and softened teal palette. Fill a single opaque square edge to edge with a flat overhead view of deep still river water. Use large quiet cobalt and indigo blue masses and scattered low-contrast horizontal ripple marks in slate blue with sparse subdued celadon highlights. The marks should read when the image is reduced to a small 64 by 32 sample. Keep an even distribution and soft diffuse daylight, with no shoreline, wakes, foam, objects, reflection of structures, perspective, gradient across the full texture, frame, gutters, text, other materials, or existing game assets. Left and right as well as top and bottom should continue naturally in a repeat. Produce only this one material, with no sample sheet.
+```
