@@ -58,7 +58,7 @@ func (g *game) drawSpeedToast(dst *ebiten.Image, l dosvBattleLayout) {
 //
 // 說明書 4.1：「**戦闘中は絶対に時間を止められません**」——
 // 所以這裡**沒有暫停鍵**，指令要在時間流動中下達。
-func (g *game) updateBattle() {
+func (g *game) updateBattle(allowPointer bool) {
 	p := g.world.PendingBattle()
 	b := p.Battle
 	// 遭遇直接進戰場（docs/spec/105），開戰喊話在第一幀就要武裝好。
@@ -87,19 +87,19 @@ func (g *game) updateBattle() {
 		g.startBattleTalk(p)
 		// 右鍵先過熱區表（docs/spec/32 §2.1）。放在對白推進之前，
 		// 因為原版的右鍵分派（0x1C01D）不看對白狀態。
-		if g.cancelled() {
+		if allowPointer && g.cancelled() {
 			if x, y := cursorPosition(); handleBattleRightClick(b, x, y) {
 				return
 			}
 		}
-		talkAdvanced := g.advanceBattleTalkInput()
+		talkAdvanced := allowPointer && g.advanceBattleTalkInput()
 		// 開場 50 tick ＋ 整段單挑是**不可打斷的 modal**（原版全在
 		// `sub_1A1C5` 裡，主迴圈的輸入分派還沒開始，docs/spec/80 §3）。
 		if b.OpeningActive() {
 			talkAdvanced = true
 		}
 		// 六個戰術指令。編號與原版一致（docs/re/11 §5.8b）。
-		if !talkAdvanced {
+		if allowPointer && !talkAdvanced {
 			for i, k := range []ebiten.Key{
 				ebiten.Key1, ebiten.Key2, ebiten.Key3,
 				ebiten.Key4, ebiten.Key5, ebiten.Key6,
@@ -164,10 +164,10 @@ func (g *game) updateBattle() {
 	// ⚠ 用 `JustPressed` 不是 `Pressed`：戰鬥是用滑鼠下令的，
 	// 最後一個指令那一下如果還按著，用「持續按著」判定會讓結果畫面
 	// 在出現的同一幀就被關掉——玩家根本看不到它。
-	clicked := inpututil.IsMouseButtonJustPressed(ebiten.MouseButtonLeft) ||
+	clicked := allowPointer && (g.confirmed() || inpututil.IsMouseButtonJustPressed(ebiten.MouseButtonLeft) ||
 		inpututil.IsMouseButtonJustPressed(ebiten.MouseButtonRight) ||
-		inpututil.IsMouseButtonJustPressed(ebiten.MouseButtonMiddle)
-	if g.battleResult.ready(b, g.battleResultSeconds, time.Now(), g.confirmed() || clicked) {
+		inpututil.IsMouseButtonJustPressed(ebiten.MouseButtonMiddle))
+	if g.battleResult.ready(b, g.battleResultSeconds, time.Now(), clicked) {
 		if ev := g.world.ResolvePending(g.rng); ev != nil {
 			g.recordBattleReport(*ev)
 		}

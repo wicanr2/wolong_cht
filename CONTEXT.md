@@ -275,6 +275,7 @@ GPU最多兩頁快取，其他季節、液晶、未選頁與讀圖失敗沿原�
 
 | 日期／目前程式 | 最近驗證 | 狀態 | 交付物 |
 |---|---|---|---|
+| 2026-11-21，戰場工具列 | 受控野戰與攻城各通過 8 項滑鼠檢查。桌面及規則套件冷測、建置與 vet 通過 | 按住工具列時戰場繼續推進。戰報預設不彈出。選勢力後只顯示首都情報。從開局重播到接戰前達等待上限 | [操作規格](docs/spec/266-mouse-only-desktop-toolbar.md#戰場上的工具列與勢力定位提示) |
 | 2026-11-21，桌面提示複核 | 月結分派、同拍對話、冷測與正常滑鼠 45 項通過 | 移除例行月結摘要。保留操作錯誤與事件對話。戰報短提示預設關閉 | [操作規格](docs/spec/266-mouse-only-desktop-toolbar.md#例行月結摘要)、[抽驗紀錄](workplace/scratch/quiet-monthly-desktop/gui/mouse-toolbar-gui.json) |
 | 2026-11-21，Linux 桌面音訊 | 正常啟動兩案、滑鼠輸入、44.1 kHz PCM 擷取及 Go 測試通過 | ALSA 無法開啟時以靜音繼續；虛擬裝置可播放，實體裝置與其他平台待測 | [音訊規格](docs/spec/29-audio.md#9-linux-桌面播放裝置檢查)、[驗證收據](workplace/scratch/desktop-audio-device/result.json) |
 | 2026-11-21；wlgame-closeout-capacity-r1 | 原版十案完整地圖0px；三倍率30圖／30次物件表相同；正常滑鼠45項／10圖，冷測／GPU／vet／建置通過，五個舊版畫面反例拒絕 | 物件每格最多五層，矩陣FF不計數、同ID仍計數，沿槽序與單格軍團共用配額。清理舊模型與Python快取共5檔、2136729530 bytes；原圖、HD選稿與收據保留。軍團矩陣與保護視窗仍有限制 | [spec146 §8](docs/spec/146-map-cloud-objects.md#8-每格物件疊圖容量)、[同狀態結果](workplace/scratch/closeout-object-capacity-20261121/gui-results.json)、[清理紀錄](workplace/scratch/closeout-object-capacity-20261121/cleanup.json) |

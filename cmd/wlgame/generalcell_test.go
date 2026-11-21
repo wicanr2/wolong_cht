@@ -67,6 +67,9 @@ func TestFactionCellFocusesCapital(t *testing.T) {
 	}
 	g.listPick(1)
 
+	if g.lastEvent != "" {
+		t.Errorf("勢力定位不應另開摘要，收到 %q", g.lastEvent)
+	}
 	if g.camX != 40-centreCol || g.camY != 30-centreRow {
 		t.Errorf("鏡頭 (%d,%d)，want (%d,%d)",
 			g.camX, g.camY, 40-centreCol, 30-centreRow)

@@ -730,6 +730,18 @@ def run(binary, orig, font, output, mode="desktop"):
                         click(496, 344, exact=True)
                         wait(lambda s: s.get("battle", {}).get("standing") == 4, "field guard command by mouse")
                         shot("field-guard")
+                        move(320, 2-state()["barHeight"])
+                        wait(lambda s: s["barVisible"] and s["pointerReady"], "toolbar opens during field battle")
+                        report = state()["toolbar"]["report"]
+                        move((report[0]+report[2])//2, (report[1]+report[3])//2-state()["barHeight"])
+                        command("mousedown", 1)
+                        try:
+                            held = wait(lambda s: s["buttons"][0] and s["y"] < 0 and s.get("battle"), "disabled battle report button owns pointer")
+                            wait(lambda s: s["buttons"][0] and s.get("battle", {}).get("frame", 0) >= held["battle"]["frame"]+3
+                                 and s["battle"]["standing"] == 4 and not s.get("battleReport", {}).get("open"),
+                                 "battle continues while holding toolbar without changing order")
+                        finally:
+                            command("mouseup", 1)
                         retreat_trace_offset = trace.stat().st_size
                         click(496, 360, exact=True)
 
@@ -750,6 +762,9 @@ def run(binary, orig, font, output, mode="desktop"):
 
                         wait(field_retreat_observed, "field retreat command by mouse")
                         wait(lambda s: not s.get("battle"), "field retreat resolves normally", 90)
+                        wait(lambda s: s.get("battleReport") and not s["battleNotices"] and
+                             not s["battleReport"]["open"] and not s["battleReport"]["toastVisible"],
+                             "default battle report stays available without a pop-up")
                     if mode == "defend":
                         end = time.monotonic()+120
                         while not state().get("battle"):

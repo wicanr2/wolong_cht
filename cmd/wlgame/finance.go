@@ -451,7 +451,6 @@ func (g *game) openFactionList() {
 	}
 	g.factionList(rows, mouseHint(mouseSelect),
 		func(f int) bool {
-			g.lastEvent = big5(g.world.LordName(f)) + " 軍"
 			if c := g.world.Factions[f].Capital; c >= 0 && c < len(g.world.Cities) {
 				g.focusCity(c)
 			}

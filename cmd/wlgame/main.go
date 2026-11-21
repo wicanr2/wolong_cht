@@ -1087,7 +1087,7 @@ func (g *game) updateWithPointer(pushX, pushY int) error {
 	}
 	// 戰場畫面獨佔一切——戰鬥中不能停時間，也不能開別的視窗。
 	if g.battleActive() {
-		g.updateBattle()
+		g.updateBattle(true)
 		return nil
 	}
 	// 事件前置報告可能與外交／撥款 pending 同一個 tick 產生；原版先

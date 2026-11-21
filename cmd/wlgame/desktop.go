@@ -265,6 +265,7 @@ func (s *desktopGame) Update() error {
 	if visible := autoBarVisible(s.barVisible, x, y+s.barHeight(), down, s.bar.previous, s.bar.owned, false); visible != s.barVisible {
 		s.setBarVisible(visible)
 		g.idleGate.Pause()
+		s.advanceBattleWithoutPointer()
 		return nil
 	}
 	wasOwned := s.bar.owned[0] || s.bar.owned[1] || s.bar.owned[2]
@@ -288,6 +289,7 @@ func (s *desktopGame) Update() error {
 	}
 	g.idleGate.Pause()
 	if action == desktopNone || !g.desktopEnabled(action) {
+		s.advanceBattleWithoutPointer()
 		return nil
 	}
 	switch action {
@@ -320,6 +322,15 @@ func (s *desktopGame) Update() error {
 		return g.updateWithPointer(0, 0)
 	}
 	return nil
+}
+
+// The toolbar owns this gesture, but it does not stop an active battle.
+func (s *desktopGame) advanceBattleWithoutPointer() {
+	g := s.g
+	if g.world != nil && g.world.Outcome() == state.InProgress &&
+		g.battleActive() && !g.messageActive() && !g.quitting && !g.endingActive() {
+		g.updateBattle(false)
+	}
 }
 
 // 只讀取實際玩家狀態，供正常 GUI 驗收同步；不注入輸入、時間或亂數。
