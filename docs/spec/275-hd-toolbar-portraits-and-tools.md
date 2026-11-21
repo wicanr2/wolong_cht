@@ -1918,3 +1918,11 @@ ImageGen 屋瓦材質原稿 SHA-256 為 `7f8f9239d2d999cc4b9ed78b0f96b70f0f85f8c
 ```text
 Create one independent hand-painted opaque square material swatch of aged charcoal-blue fired clay for the surfaces of traditional East Asian roof tiles. Use the supplied independently painted stone material only as a reference for matte gouache brushwork and subdued historical coloring. The swatch will be masked into existing tile shapes; paint only the fine texture of the fired clay, with subtle streaky glaze, tiny weathered gray slate flecks, restrained indigo and blue-black mottling, slight copper-grey warmth, and fine broken dry-brush highlights. Coherent soft lighting and evenly distributed brush detail, with moderate texture visible at small scale. The material must repeat continuously at all four edges. No separate tile outlines, repeated roof layout, curves or edges of a roof, repeating stripes, masonry bricks, buildings, sky, vegetation, perspective, letters, frames, figures, or commercial game art. Matte gouache, fully opaque throughout.
 ```
+
+### 水戰船板手繪稿
+
+ImageGen 船板材質原稿 SHA-256 為 `35c5321c72af775669cd07856e07cfb4766cb1e417b08ac619038d1d1f707a41`。
+
+```text
+Create one independently hand-painted opaque, square, seamlessly repeating material swatch of old riverboat timber under hazy daylight, in matte gouache. Use the supplied independent timber study only as a reference for the brush style. The surface is a close-up of warm pale amber and golden chestnut wood finely weathered by water, with restrained amber streaks, soft occasional grey-brown flecks, tiny broken grain marks and a few diffuse patches of bleached fibers. Grain gently runs left to right, with enough variation to stay visible when downsampled and no strong repeating bands. Fill the entire surface; edges match continuously in value and stroke density. Do not paint individual board outlines, seams, lines of nails, ropes, water, oars, curved hulls, a boat scene, color gradients to the edges, text, figures, painted symbols, or commercial game art. Opaque throughout.
+```
