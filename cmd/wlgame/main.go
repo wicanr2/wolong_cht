@@ -1512,13 +1512,23 @@ func (g *game) Draw(screen *ebiten.Image) {
 // 原版地圖不另畫範圍框或據點符號（docs/spec/81 §6）。火災／暴動
 // 在 MCH 缺檔時才退回向量 marker；這個 fallback 不算原版 parity。
 func (g *game) drawDisasterOverlay(screen *ebiten.Image) {
+	mapW, mapH := g.mapSourceBounds()
+	cols := (mapW + world.TileSize - 1) / world.TileSize
+	rows := (mapH - strategyMapY + world.TileSize - 1) / world.TileSize
+	layers := make([]uint8, cols*rows)
+	// sub_1D4C7 先推軍團單格圖示，物件沿用同一格的既有計數。
+	for _, corps := range g.corpsMarks() {
+		x, y := corps.X-g.camX, corps.Y-g.camY
+		if x >= 0 && x < cols && y >= 0 && y < rows && layers[y*cols+x] < 4 {
+			layers[y*cols+x]++
+		}
+	}
 	for _, object := range g.world.RenderDisasterObjects() {
-		g.drawMapObject(screen, object)
+		g.drawMapObjectWithLayers(screen, object, layers, cols)
 	}
 	if g.lib != nil && g.lib.MCH != nil {
 		return
 	}
-	mapW, mapH := g.mapSourceBounds()
 	for cityID, city := range g.world.Cities {
 		marker, ok := g.world.DisasterMarkerAt(cityID)
 		if !ok || marker.Kind != economy.Fire && marker.Kind != economy.Riot {
@@ -1536,6 +1546,12 @@ func (g *game) drawDisasterOverlay(screen *ebiten.Image) {
 // drawMapObject 依原版 `sub_12533` 把一筆 MCH 物件畫上去：
 // 左上角 ＝ `(X − 寬/2, Y − 高/2)`，圖塊自帶 mask 所以是半透明的網點。
 func (g *game) drawMapObject(screen *ebiten.Image, o state.DisasterObjectSnapshot) {
+	g.drawMapObjectWithLayers(screen, o, nil, 0)
+}
+
+// drawMapObjectWithLayers 重現 sub_1D51F 的每格容量5（docs/spec/146 §8）。
+// source tile FF 不佔配額；其他圖塊不依像素遮罩或重複ID去重。
+func (g *game) drawMapObjectWithLayers(screen *ebiten.Image, o state.DisasterObjectSnapshot, layers []uint8, viewCols int) {
 	img := g.mapObjectImage(int(o.TypeCode), int(o.Phase))
 	if img == nil {
 		return
@@ -1552,7 +1568,48 @@ func (g *game) drawMapObject(screen *ebiten.Image, o state.DisasterObjectSnapsho
 	}
 	op := &ebiten.DrawImageOptions{}
 	op.GeoM.Translate(float64(x), float64(y))
-	screen.DrawImage(img, op)
+	viewport := screen.SubImage(image.Rect(0, strategyMapY, mapW, mapH)).(*ebiten.Image)
+	if layers == nil {
+		viewport.DrawImage(img, op)
+		return
+	}
+	pattern, ok := g.lib.MCH.PatternFor(int(o.TypeCode), int(o.Phase))
+	if !ok {
+		return
+	}
+	accepted := make([]bool, len(pattern.Tiles))
+	blocked := false
+	viewRows := len(layers) / viewCols
+	for row := 0; row < rows; row++ {
+		for col := 0; col < cols; col++ {
+			i := row*cols + col
+			cx, cy := x/world.TileSize+col, (y-strategyMapY)/world.TileSize+row
+			if pattern.Tiles[i] == world.MCHTransparent || cx < 0 || cx >= viewCols || cy < 0 || cy >= viewRows {
+				continue
+			}
+			cell := cy*viewCols + cx
+			if layers[cell] >= 5 {
+				blocked = true
+				continue
+			}
+			layers[cell]++
+			accepted[i] = true
+		}
+	}
+	if !blocked {
+		viewport.DrawImage(img, op)
+		return
+	}
+	for i, keep := range accepted {
+		if !keep {
+			continue
+		}
+		px, py := i%cols*world.TileSize, i/cols*world.TileSize
+		tile := img.SubImage(image.Rect(px, py, px+world.TileSize, py+world.TileSize)).(*ebiten.Image)
+		op.GeoM.Reset()
+		op.GeoM.Translate(float64(x+px), float64(y+py))
+		viewport.DrawImage(tile, op)
+	}
 }
 
 // mapObjectImage 取某個物件 type／相位的圖，含季節調色盤與快取。

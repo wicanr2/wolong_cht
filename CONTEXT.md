@@ -5,7 +5,7 @@
 >
 > 硬規則、目標、工作紀律在 [`CLAUDE.md`](./CLAUDE.md)。這份只管**狀態**。
 >
-> 最後更新：2026-11-17
+> 最後更新：2026-11-21
 
 ## 目前工作：先完成 remake
 
@@ -275,6 +275,7 @@ GPU最多兩頁快取，其他季節、液晶、未選頁與讀圖失敗沿原�
 
 | 日期／目前程式 | 最近驗證 | 狀態 | 交付物 |
 |---|---|---|---|
+| 2026-11-21；wlgame-closeout-capacity-r1 | 原版十案完整地圖0px；三倍率30圖／30次物件表相同；正常滑鼠45項／10圖，冷測／GPU／vet／建置通過，五個舊版畫面反例拒絕 | 物件每格最多五層，矩陣FF不計數、同ID仍計數，沿槽序與單格軍團共用配額。清理舊模型與Python快取共5檔、2136729530 bytes；原圖、HD選稿與收據保留。軍團矩陣與保護視窗仍有限制 | [spec146 §8](docs/spec/146-map-cloud-objects.md#8-每格物件疊圖容量)、[同狀態結果](workplace/scratch/closeout-object-capacity-20261121/gui-results.json)、[清理紀錄](workplace/scratch/closeout-object-capacity-20261121/cleanup.json) |
 | 2026-11-17；wlgame-closeout-disaster-load-r1 | 十案二十次完整地圖0px、60次物件表寫回相同，三倍率40圖；正常讀檔／停手動畫／存讀檔28項／12圖；冷測／GPU／vet／建置通過，16個舊版畫面反例拒絕 | 火災／暴動依active物件槽的座標與相位繪製，讀檔不再被未保存的runtime種類擋住，同城物件不去重。未改傷害、時鐘、存檔格式或HD素材；自然生命週期與大量疊圖容量仍有限制 | [spec146 §7](docs/spec/146-map-cloud-objects.md#7-讀檔後依物件槽恢復火災與暴動)、[同狀態結果](workplace/scratch/closeout-disaster-load-20261117/gui-results.json)、[本輪收據](workplace/scratch/closeout-disaster-load-20261117/) |
 | 2026-11-17；wlgame-closeout-capital-r1 | 原版十案完整地圖皆0px；三種縮放30圖；正常滑鼠45項／10圖；冷測／GPU／vet／建置通過，兩錯版反例拒絕 | 移除誤認為首都徽記的固定框。MCH255是游標選取框，原版一般hover已有此框；既有跟隨滑鼠路徑保留。前輪49px限制已定位並修正，未改規則／存檔／HD素材 | [spec53 §8](docs/spec/53-city-tile-by-ownership.md#8-地圖選取框勘誤)、[同狀態結果](workplace/scratch/closeout-capital-cloud-20261117/gui-results.json)、[正常滑鼠](workplace/scratch/closeout-capital-cloud-20261117/normal-gui/mouse-toolbar-gui.json) |
 | 2026-11-17；wlgame-closeout-storm-r1 | 原版四案確認暴風雨不另畫圖形；remake 50%／100%／200%共12圖，六組開關比較全0px；舊renderer六組拒絕；災害回歸、冷測／vet／建置通過 | 移除額外青框與據點藍色符號，保留雲與災害規則。無雲兩案地圖與原版0px；有雲各留49px既有差異，未宣稱完整雲合成一致 | [spec81 §6](docs/spec/81-disaster-quantities.md#6-暴風雨地圖呈現的受控抽驗)、[地圖比較](workplace/scratch/closeout-storm-visuals-20261117/same-state-map.json)、[畫面抽驗](workplace/scratch/closeout-storm-visuals-20261117/gui-results.json) |
