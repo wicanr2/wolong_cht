@@ -1902,3 +1902,11 @@ ImageGen 葉叢材質原稿 SHA-256 為 `24e8c98dfc9a8acc2a2b41b586ef9657f24a246
 ```text
 Create one independently designed, opaque, square, seamless hand-painted foliage material swatch for the illuminated surfaces of small historic East Asian game trees and shrubs. Use the supplied independently painted grass material only as a reference for the matte gouache brush handling and restrained warm color. Imagine looking into densely clustered small deciduous leaves under hazy sun, from directly above. Use a rich olive, sage and yellow-green range with soft darker pine-green recesses. Small irregular layered brush marks, naturally grouped into loose clusters with softly broken highlights, visible fine leaf structure and gentle midscale color variation. Fill the square completely with foliage that tiles continuously on all four edges, with a balanced distribution of light and shade. The swatch will be blended into existing geometry, so do not paint any whole trees, silhouettes, large branches, bare ground, flower dots, rocks, hard cast shadows, borders, gradients to the edges, perspective landmarks, text, UI or commercial game art.
 ```
+
+### 戰場坡面手繪稿
+
+ImageGen 坡面材質原稿 SHA-256 為 `f0255ac2b3999c8fe2447c9eae87378f009d58c9c91adf84f143c84f61013740`。
+
+```text
+Produce one independently hand-painted, opaque, square, seamlessly repeating material swatch for exposed ochre soil and weathered sandstone on small embankment faces. Use the supplied independently generated packed dirt swatch only as a style and warm color reference. Paint subtle rust-gold and tawny umber, warm orange light and darker brown creases, very small natural stone grains, and short softly broken oblique erosion strokes. Use restrained mottled contrast, soft matte gouache with fine dry-brush marks, and midsized low-contrast clusters distributed evenly to read when downsampled. The entire swatch is the surface shown straight on. Continuous values and stroke density across all four edges. No horizon, perspective, whole boulders, cobblestones, masonry, cliffs viewed as a silhouette, grass, moss, plants, faces, figures, text, frames, objects, boundary lines, or commercial game art. Opaque throughout.
+```
