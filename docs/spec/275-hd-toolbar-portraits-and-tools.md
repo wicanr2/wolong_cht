@@ -1731,3 +1731,26 @@ Create one new square, opaque, tileable material concept for an original histori
 ```text
 Create one new square, opaque masonry material concept for an original historical East Asian strategy game environment. Use the supplied original four-panel gouache study solely as a reference for the approved brushwork and the gray-ochre stone palette in its top-left panel. Invent a different arrangement of horizontal, large hand-cut rectangular stone blocks with staggered joints, subdued charcoal mortar, small warm mineral stains, and a few chipped corners. Orthographic close-up of the wall face, diffuse daylight, no depth gradient, no scene or perspective. Preserve broad readable stone faces, tight dry-brush surface detail, crisp edge transitions and a moderate value range suitable for reduced display. Design a repeating surface: stone courses must continue across the left and right edges and the top and bottom edges must meet as repeating rows. One edge-to-edge texture fills the entire square. No perimeter frame, gate opening, façade, tower, brush lettering, icons, interface, copied arrangement, or an existing game's art.
 ```
+
+### 戰場材質接縫修稿
+
+ImageGen 分別以各自的第一稿原創材質為輸入。兩張修稿皆為 1254×1254 PNG，原樣保存於本機。
+
+| 材質 | 修稿 SHA-256 | 左右接縫色差 | 上下接縫色差 |
+|---|---|---:|---:|
+| 草地與夯土 `battle-ground-gouache-r2.png` | `d693044ed5ccfd74cd0b221ee78c0caa3379377d8cb5cab88aa0719e712542df` | 6.75 → 9.93 | 6.68 → 10.60 |
+| 灰赭石牆 `battle-stone-gouache-r2.png` | `75af82656d21f00f857f5320886f783c53f6d228c9a2ce344f410a075d0972b5` | 7.24 → 8.23 | 9.70 → 10.49 |
+
+數值為相對邊對應像素的 RGB 通道平均絕對差，依序列出第一稿與修稿。兩種材質繼續以第一稿為平鋪候選。正式圖塊仍待接縫驗收。
+
+草地與夯土接縫修稿的完整提示詞。
+
+```text
+Edit the supplied original hand-painted grass-and-ochre-earth texture to improve the seams when the square repeats. Keep the approved olive-green and yellow-ochre palette, brush size, surface coverage, diffuse flat light, and the existing center as recognizable as possible. Focus on the four edges: make small grass blades and ochre dirt patches continue across the left/right join and top/bottom join with the same texture density and local contrast as the interior. Match the four corners, and spread the edge changes gently into the image. No border, gutter, vignette, focal path, tonal rim, overlaid labels, side-by-side sample sheet, or scene. Return one square opaque texture filled to the edge.
+```
+
+灰赭石牆接縫修稿的完整提示詞。
+
+```text
+Edit the supplied original gouache masonry texture to improve its wraparound seams while preserving its approved gray-ochre stone faces, dry-brush handling, block scale, alternating course layout, and flat orthographic view. Concentrate changes on the perimeter and preserve the recognizable central stonework and contrast. Treat the canvas as a continuous repeating surface: the last row and first row must join in the same narrow charcoal mortar joint so that the upper and lower rows together form one ordinary mortar line, the same width and value as the interior joints. Match the level of the horizontal course lines where the left and right edges meet; avoid a vertical edge shadow or a bright perimeter rim. All four corners belong to that same wraparound masonry pattern. Keep the square filled edge to edge, opaque, without a frame or gutter. Return a single flat square texture with no writing, no side-by-side sample sheet, and no mockup or game content.
+```
