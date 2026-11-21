@@ -1700,3 +1700,13 @@ Sites私人網站只上傳新製素材與網站程式，未放入原版EXE、遊
 | HD正式素材產製與接線 | 五城十張已同意，其中五組景觀已接情報窗；35區／22接縫、146頭像及色盤0橫幅已接，未新增逐張接受聲明 | 已接範圍限定抽驗通過；其餘十頁景觀、其他色盤／場景、局部美術及其餘正常視窗待完成 |
 | HD世界鏡頭與固定介面 | 正式地圖已接50%～200%，色盤0可用HD全圖；視野、焦點、邊界與命中抽驗通過，介面固定 | 不阻塞已接範圍；其他季節與液晶HD仍沿原圖 |
 | 編輯套用時機、取消及存檔衍生欄位 | 待設計／證據審查 | 是，先做單人垂直鏈草稿 |
+
+## 戰場材質 ImageGen 提示詞
+
+2026-11-21 使用內建 ImageGen 產生一張手繪風材質研究稿。生成時未提供參考圖。四格依序為石牆、屋瓦、草地與夯土、水面。這張用於討論筆觸與色彩，正式圖塊須另行驗收。
+
+本機輸出 `battle-materials-gouache-r1.png`，1254×1254 PNG。SHA-256 為 `7f56b7e982a64c24e4a2f2989ade6ddac3afbbb85f2690735a5c613473e8fd21`。
+
+```text
+Create a square, high-resolution, fully original hand-painted concept sheet of environmental materials for a historical East Asian strategy battlefield. This is a painterly material study, not a scene, texture atlas for any existing game, or remake of a reference image. No reference image is supplied. Use a clean 2 by 2 layout with four equal edge-to-edge square study panels and only a thin, straight, dark warm-gray divider. Upper left: newly designed gray-ochre wall stonework, irregular large cut blocks, restrained dark joints and mineral flecks. Upper right: newly designed dark blue-gray curved ceramic roof tiles, repeating tile courses with subtle terracotta undertones. Lower left: a mix of muted olive grass and warm yellow-beige packed earth, small clusters of brushwork and legible ground shapes. Lower right: deep indigo river water with sparse blue-green ripples and short reflected highlights. Treat each panel as an orthographic close-up surface material with no perspective horizon. Use opaque gouache and a dry brush look, crisp intentional edges and restrained texture detail readable at small sizes. Keep the warm mineral and earth hues distinct from the cool blue water and roof. Use quiet, consistent diffuse daylight and keep large readable color shapes. Fill all four panels with useful samples. No people, characters, gates, buildings, castle silhouette, user interface, map layout, border ornaments, graphic symbols, text, numbers or watermarks. Avoid photorealism, 3D-render gloss, blurred airbrush gradients, and imitation of any specific existing game asset.
+```
