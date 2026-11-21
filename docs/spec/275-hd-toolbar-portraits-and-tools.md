@@ -1784,3 +1784,26 @@ This is a flat orthographic square of original gouache-painted olive grass and o
 ```text
 This is a flat orthographic square of original gouache-painted gray ochre rectangular stone courses. The canvas has been offset so both original repeat joins are now inside the image, at exactly 50% width and 50% height. Repair the faint vertical join down the middle by continuing individual stone face brushwork and horizontal mortar through it. Repair the horizontal join across the middle by painting one continuous narrow dark mortar joint, aligned to the existing top edge of the lower center course and bottom edge of the upper center course. Work only in a narrow cross-shaped region around those joins. Keep the registration of existing mortar, individual stone shapes, gray-gold color and dry-brush paint, square crop, and edge pixels unchanged as far as possible. No shading band, no new large stones, frame, marks, perspective or text. Return a single opaque square image of the repaired same surface.
 ```
+
+### 牆頂與立面材質
+
+使用內建 ImageGen 分別建立兩張獨立材質。共同風格參照為先前獨立製作的 `battle-stone-gouache-r3.png`，SHA-256 `5fd8299d08f3393452131250fd65c9fdbbdf2feeaa4c3c8ee9733541394a5524`。兩張原稿皆為 1254×1254 PNG，留在本機。
+
+| 材質 | SHA-256 |
+|---|---|
+| 暖赭牆頂 `wall-cap-gouache-r1.png` | `aed40ba416734b641cdf3b9b727fbab52147b72616e5a422b066f535dda37546` |
+| 灰赭立面 `wall-face-gouache-r1.png` | `f89605b84cfd835efb585acb7d9e8fc4e249c675eb61200b5baf1a8b645adbda` |
+
+本機等角小樣在同一組獨立牆面形體上切換單材質及分面材質。50% 時分面牆頂、受光立面、背光立面的平均亮度依序為 158.83、116.30、89.29。單材質依序為 113.34、118.86、115.39。分面亮度量測來自畫布內部取樣，許昌同影格的正式裁片驗證待接續。
+
+牆頂完整提示詞。
+
+```text
+Generate one independently designed square gouache material swatch for an original historical East Asian strategy environment. Use the supplied independent stone study only as a reference for opaque dry-brush handling, grain and restrained gray-ochre color. Depict the upper, sunlit surface of a simple masonry wall as an overhead flat cut of broad honed golden-ochre coping slabs, with offset joints, shallow chips and some light warm mineral variation. Keep the surface noticeably warmer and lighter than gray-ochre upright masonry. Preserve crisp medium-scale seams that remain legible in a 64-pixel rendering. Light is diffuse and even across the swatch. Design a repeat with no perimeter line, gutters, tonal gradient or distinctive central slab. Fill the whole opaque square with one top-facing material. No perspective, wall silhouette, game assets, UI, figures, text, scenery, or image of an entire wall.
+```
+
+立面完整提示詞。
+
+```text
+Generate one independently designed square gouache material swatch for an original historical East Asian strategy environment. Use the supplied independent stone study only for its dry-brush handling and restrained gray-ochre palette. Depict an upright face of fine-grained ochre-gray sandstone laid in low, long staggered courses. Invent a fresh arrangement. Use a muted honey and taupe surface with charcoal-brown narrow mortar and a few chipped corners. Use a clear but moderate relief contrast so the same artwork can later be drawn on a brighter plane and a shaded plane and both stay readable at 64-pixel scale. Flat straight-on view, even ambient light across the swatch, opaque matte paint. The material should continue without a border at all sides. Fill the entire square. No perspective, crenellation, gate or building silhouette, flora, existing game assets, characters, interface or labels.
+```
