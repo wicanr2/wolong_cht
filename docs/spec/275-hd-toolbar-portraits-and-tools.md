@@ -1886,3 +1886,11 @@ Create one original transparent 2D historical strategy game effects sheet, exact
 ```text
 Generate one independently designed seamless game terrain material swatch, a perfectly opaque square top-down patch of compacted dry ochre footpath soil. Use the supplied independent hand-painted grass texture only as a reference for gouache brush handling and restrained warm East Asian historic terrain palette. Surface only: dusty golden tan, small diffuse bands of packed brown soil, a few tiny limestone granules and restrained dry-brush texture, evenly spread diffuse daylight. Avoid strong large stones, cracks, tracked wheel ruts, cobblestone patterns, grass, vegetation, directional shadows, perspective, roads seen as a strip, scenery, figures, borders, checkerboard, words and any commercial game art. Tile naturally edge-to-edge across both axes: color and stroke density should stay continuous across all four borders. Readable whole-square appearance at small scale. Matte opaque gouache, original material.
 ```
+
+### 戰場木料手繪稿
+
+ImageGen 木料材質原稿 SHA-256 為 `d4d52dbade013701f47ea5abc7b74b47311441b386e36a672e6af2a242c4aeea`。
+
+```text
+Create one original opaque square seamless wood-grain material for an isometric historical East Asian strategy game. Use the supplied independent gouache road swatch only for matte brush handling, restrained warm colors, and detail scale. Depict one continuous surface of weathered warm honey-brown and ochre wood, long subtle fine graining left to right along the X axis, soft dry-brush ridges, a few irregular fibers and small scale natural shade variations. The swatch is the surface of the wood itself, no plank outlines or joints, nails, knots, beams, bridge drawing, fencing silhouette, cracks across the whole tile, perspective, surrounding scenery, surface glare, strong shadows, text, borders or existing game assets. Fill corner to corner. Match color and stroke density at both opposite edges for repeat tiling. Keep strokes legible when downsampled, give the timber believable amber overtones, and retain an even diffuse matte finish. Supply only this one opaque material.
+```
