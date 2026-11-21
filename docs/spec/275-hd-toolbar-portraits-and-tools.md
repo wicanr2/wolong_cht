@@ -1910,3 +1910,11 @@ ImageGen 坡面材質原稿 SHA-256 為 `f0255ac2b3999c8fe2447c9eae87378f009d58c
 ```text
 Produce one independently hand-painted, opaque, square, seamlessly repeating material swatch for exposed ochre soil and weathered sandstone on small embankment faces. Use the supplied independently generated packed dirt swatch only as a style and warm color reference. Paint subtle rust-gold and tawny umber, warm orange light and darker brown creases, very small natural stone grains, and short softly broken oblique erosion strokes. Use restrained mottled contrast, soft matte gouache with fine dry-brush marks, and midsized low-contrast clusters distributed evenly to read when downsampled. The entire swatch is the surface shown straight on. Continuous values and stroke density across all four edges. No horizon, perspective, whole boulders, cobblestones, masonry, cliffs viewed as a silhouette, grass, moss, plants, faces, figures, text, frames, objects, boundary lines, or commercial game art. Opaque throughout.
 ```
+
+### 戰場屋瓦手繪稿
+
+ImageGen 屋瓦材質原稿 SHA-256 為 `7f8f9239d2d999cc4b9ed78b0f96b70f0f85f8c741333bc93967e2491942f8d1`。
+
+```text
+Create one independent hand-painted opaque square material swatch of aged charcoal-blue fired clay for the surfaces of traditional East Asian roof tiles. Use the supplied independently painted stone material only as a reference for matte gouache brushwork and subdued historical coloring. The swatch will be masked into existing tile shapes; paint only the fine texture of the fired clay, with subtle streaky glaze, tiny weathered gray slate flecks, restrained indigo and blue-black mottling, slight copper-grey warmth, and fine broken dry-brush highlights. Coherent soft lighting and evenly distributed brush detail, with moderate texture visible at small scale. The material must repeat continuously at all four edges. No separate tile outlines, repeated roof layout, curves or edges of a roof, repeating stripes, masonry bricks, buildings, sky, vegetation, perspective, letters, frames, figures, or commercial game art. Matte gouache, fully opaque throughout.
+```
