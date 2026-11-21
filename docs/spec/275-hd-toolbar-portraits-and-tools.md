@@ -1754,3 +1754,33 @@ Edit the supplied original hand-painted grass-and-ochre-earth texture to improve
 ```text
 Edit the supplied original gouache masonry texture to improve its wraparound seams while preserving its approved gray-ochre stone faces, dry-brush handling, block scale, alternating course layout, and flat orthographic view. Concentrate changes on the perimeter and preserve the recognizable central stonework and contrast. Treat the canvas as a continuous repeating surface: the last row and first row must join in the same narrow charcoal mortar joint so that the upper and lower rows together form one ordinary mortar line, the same width and value as the interior joints. Match the level of the horizontal course lines where the left and right edges meet; avoid a vertical edge shadow or a bright perimeter rim. All four corners belong to that same wraparound masonry pattern. Keep the square filled edge to edge, opaque, without a frame or gutter. Return a single flat square texture with no writing, no side-by-side sample sheet, and no mockup or game content.
 ```
+
+### 戰場材質置中補繪
+
+以本機 Chromium 將各自的第一稿循環平移 627 像素，擷取 1254×1254 參考圖。原本的相對邊在中央交會。內建 ImageGen 補繪中央兩道接縫。兩張修稿皆為 1254×1254 PNG，存於本機。
+
+| 材質 | 置中參考 SHA-256 | 第三稿 SHA-256 |
+|---|---|---|
+| 草地與夯土 | `11dde3250d80f224d7c21266238eb5e5cccc96ecab43c7fa8d58bd900798e847` | `e58917ddb1103d2dce9e1c2563984f87c864a8b1d584f028c76b867b9146014b` |
+| 灰赭石牆 | `b0b3bb2ed810a2718ce7f453afd1a931ece14f86938b3275d65f77e6dd39e198` | `5fd8299d08f3393452131250fd65c9fdbbdf2feeaa4c3c8ee9733541394a5524` |
+
+本機 HTML 在置中參考上疊合第三稿的中央補繪區，向外淡出以保留連續的外邊。以下以 1254×1254 瀏覽器截圖量測，單位與前一輪相同。
+
+| 材質 | 第一稿外邊 左右／上下 | 局部合成外邊 左右／上下 | 局部合成中央 左右／上下 |
+|---|---:|---:|---:|
+| 草地與夯土 | 6.75／6.68 | 4.49／3.87 | 3.88／3.41 |
+| 灰赭石牆 | 7.24／9.70 | 4.21／3.79 | 3.19／3.69 |
+
+離線頁提供每格 16、32、64 像素的縮小預覽，局部合成圖片於選取時載入。結果適用於材質平鋪預覽。戰場圖塊裁片、透明度與同影格驗收仍待做。
+
+草地與夯土置中補繪的完整提示詞。
+
+```text
+This is a flat orthographic square of original gouache-painted olive grass and ochre packed earth. The canvas has been offset so the two original repeat joins are now inside the image: a thin unwelcome vertical edge at exactly 50% width and a thin unwelcome horizontal edge at exactly 50% height. Repair both of those internal joins and the crossing by repainting the adjacent small grass blade and dry ochre brush marks across them. Their density, contrast and orientation should be continuous across the joins. Work only in a narrow cross-shaped region centered on the joins. Keep the image registration, individual tufts and dirt shapes away from the joins, surface scale, unframed square crop, and edge pixels as close to the supplied image as possible. There must be no visible plus-sign or added path. Return a single square opaque image of the repaired same surface, no other content.
+```
+
+灰赭石牆置中補繪的完整提示詞。
+
+```text
+This is a flat orthographic square of original gouache-painted gray ochre rectangular stone courses. The canvas has been offset so both original repeat joins are now inside the image, at exactly 50% width and 50% height. Repair the faint vertical join down the middle by continuing individual stone face brushwork and horizontal mortar through it. Repair the horizontal join across the middle by painting one continuous narrow dark mortar joint, aligned to the existing top edge of the lower center course and bottom edge of the upper center course. Work only in a narrow cross-shaped region around those joins. Keep the registration of existing mortar, individual stone shapes, gray-gold color and dry-brush paint, square crop, and edge pixels unchanged as far as possible. No shading band, no new large stones, frame, marks, perspective or text. Return a single opaque square image of the repaired same surface.
+```
