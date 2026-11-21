@@ -2912,15 +2912,6 @@ func configureDirectFixtures(g *game, openWin int, openList bool, listPickRow in
 }
 
 func (g *game) processWorldEvent(ev state.Event) {
-	if ev.Settled {
-		g.lastEvent = "月結"
-		if n := len(ev.Disaster); n > 0 {
-			g.lastEvent += fmt.Sprintf("　災害%d", n)
-		}
-		if ev.Storm != nil {
-			g.lastEvent += "　暴風雨"
-		}
-	}
 	for _, i := range ev.Eliminated {
 		g.lastEvent = big5(g.world.LordName(i)) + " 滅亡"
 	}

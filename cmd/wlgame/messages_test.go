@@ -135,16 +135,16 @@ func TestReleasedGeneralTalkOnlyTargetsPlayerFaction(t *testing.T) {
 	}
 	w.Generals[general].TalkVariant = 7
 	g := &game{lib: lib, world: w}
-	ev := state.Event{ReleasedGenerals: []int{general}}
+	ev := state.Event{Settled: true, ReleasedGenerals: []int{general}}
 	w.Generals[general].Faction = w.Player
-	g.enqueueEventMessages(ev)
-	if len(g.messages) != 2 || len(g.messages[0].lines) == 0 || g.messages[1].portraitPage != w.Generals[general].Portrait {
+	g.processWorldEvent(ev)
+	if g.lastEvent != "" || len(g.messages) != 2 || len(g.messages[0].lines) == 0 || g.messages[1].portraitPage != w.Generals[general].Portrait {
 		t.Fatalf("玩家勢力釋放武將沒有產生 #37 通知：%#v", g.messages)
 	}
 
 	g.messages = nil
 	w.Generals[general].Faction = (w.Player + 1) % len(w.Factions)
-	g.enqueueEventMessages(ev)
+	g.processWorldEvent(ev)
 	if len(g.messages) != 0 {
 		t.Fatalf("非玩家勢力釋放武將不應產生 #37：%#v", g.messages)
 	}

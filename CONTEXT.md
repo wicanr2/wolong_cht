@@ -275,6 +275,7 @@ GPU最多兩頁快取，其他季節、液晶、未選頁與讀圖失敗沿原�
 
 | 日期／目前程式 | 最近驗證 | 狀態 | 交付物 |
 |---|---|---|---|
+| 2026-11-21，桌面提示複核 | 月結分派、同拍對話、冷測與正常滑鼠 45 項通過 | 移除例行月結摘要。保留操作錯誤與事件對話。戰報短提示預設關閉 | [操作規格](docs/spec/266-mouse-only-desktop-toolbar.md#例行月結摘要)、[抽驗紀錄](workplace/scratch/quiet-monthly-desktop/gui/mouse-toolbar-gui.json) |
 | 2026-11-21，Linux 桌面音訊 | 正常啟動兩案、滑鼠輸入、44.1 kHz PCM 擷取及 Go 測試通過 | ALSA 無法開啟時以靜音繼續；虛擬裝置可播放，實體裝置與其他平台待測 | [音訊規格](docs/spec/29-audio.md#9-linux-桌面播放裝置檢查)、[驗證收據](workplace/scratch/desktop-audio-device/result.json) |
 | 2026-11-21；wlgame-closeout-capacity-r1 | 原版十案完整地圖0px；三倍率30圖／30次物件表相同；正常滑鼠45項／10圖，冷測／GPU／vet／建置通過，五個舊版畫面反例拒絕 | 物件每格最多五層，矩陣FF不計數、同ID仍計數，沿槽序與單格軍團共用配額。清理舊模型與Python快取共5檔、2136729530 bytes；原圖、HD選稿與收據保留。軍團矩陣與保護視窗仍有限制 | [spec146 §8](docs/spec/146-map-cloud-objects.md#8-每格物件疊圖容量)、[同狀態結果](workplace/scratch/closeout-object-capacity-20261121/gui-results.json)、[清理紀錄](workplace/scratch/closeout-object-capacity-20261121/cleanup.json) |
 | 2026-11-17；wlgame-closeout-disaster-load-r1 | 十案二十次完整地圖0px、60次物件表寫回相同，三倍率40圖；正常讀檔／停手動畫／存讀檔28項／12圖；冷測／GPU／vet／建置通過，16個舊版畫面反例拒絕 | 火災／暴動依active物件槽的座標與相位繪製，讀檔不再被未保存的runtime種類擋住，同城物件不去重。未改傷害、時鐘、存檔格式或HD素材；自然生命週期與大量疊圖容量仍有限制 | [spec146 §7](docs/spec/146-map-cloud-objects.md#7-讀檔後依物件槽恢復火災與暴動)、[同狀態結果](workplace/scratch/closeout-disaster-load-20261117/gui-results.json)、[本輪收據](workplace/scratch/closeout-disaster-load-20261117/) |
