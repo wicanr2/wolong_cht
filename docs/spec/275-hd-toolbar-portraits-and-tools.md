@@ -1710,3 +1710,24 @@ Sites私人網站只上傳新製素材與網站程式，未放入原版EXE、遊
 ```text
 Create a square, high-resolution, fully original hand-painted concept sheet of environmental materials for a historical East Asian strategy battlefield. This is a painterly material study, not a scene, texture atlas for any existing game, or remake of a reference image. No reference image is supplied. Use a clean 2 by 2 layout with four equal edge-to-edge square study panels and only a thin, straight, dark warm-gray divider. Upper left: newly designed gray-ochre wall stonework, irregular large cut blocks, restrained dark joints and mineral flecks. Upper right: newly designed dark blue-gray curved ceramic roof tiles, repeating tile courses with subtle terracotta undertones. Lower left: a mix of muted olive grass and warm yellow-beige packed earth, small clusters of brushwork and legible ground shapes. Lower right: deep indigo river water with sparse blue-green ripples and short reflected highlights. Treat each panel as an orthographic close-up surface material with no perspective horizon. Use opaque gouache and a dry brush look, crisp intentional edges and restrained texture detail readable at small sizes. Keep the warm mineral and earth hues distinct from the cool blue water and roof. Use quiet, consistent diffuse daylight and keep large readable color shapes. Fill all four panels with useful samples. No people, characters, gates, buildings, castle silhouette, user interface, map layout, border ornaments, graphic symbols, text, numbers or watermarks. Avoid photorealism, 3D-render gloss, blurred airbrush gradients, and imitation of any specific existing game asset.
 ```
+
+### 戰場 HD 風格定稿與平鋪候選
+
+使用者確認以前一張材質研究稿的筆觸與配色作為戰場 HD 美術方向。灰赭石色、暖土色、橄欖綠與具辨識度的乾筆觸用於後續選稿。兩張候選用內建 ImageGen 生成，參考輸入只用已確認的原創材質研究稿。
+
+- 草地與夯土 `battle-ground-gouache-r1.png`，1254×1254，SHA-256 `9cf807507480db3726cd678769a6971b95d54c96d4e88601baf41487be61a8b8`。
+- 灰赭石牆 `battle-stone-gouache-r1.png`，1254×1254，SHA-256 `065814b4f87d2f946a23237d10185a446e8977718a66c4f1c812ebd8b4d9c03e`。
+
+兩張 PNG 留在本機供平鋪和縮小檢視。相對邊的色差大於圖內相鄰取樣，石牆上下接縫尤需修整。風格已定稿，正式圖塊仍須通過接縫、配置與同影格驗收。
+
+草地與夯土的完整提示詞。
+
+```text
+Create one new square, opaque, tileable material concept for an original historical strategy game environment. Use the supplied original four-panel gouache study solely as a reference for its approved paint handling and colors. Focus only on the lower-left olive-grass and straw-ochre packed-earth palette. Produce a freshly composed, flat orthographic grass-and-earth surface with widely distributed small irregular grass tufts and ochre dirt breaks, without a prominent continuous path or large focal patch. Matte opaque gouache, visible short dry-brush marks, defined shapes, restrained green and earth contrast, legible when reduced. Flat, diffuse midday light, no cast shadows or perspective. The image is one edge-to-edge texture. The left and right edges must continue naturally into one another, and the top and bottom edges must continue naturally into one another, for a 2×2 repeat without obvious boundary lines. No borders, captions, characters, buildings, game interface, existing game tile, or copied composition from the reference sheet.
+```
+
+灰赭石牆的完整提示詞。
+
+```text
+Create one new square, opaque masonry material concept for an original historical East Asian strategy game environment. Use the supplied original four-panel gouache study solely as a reference for the approved brushwork and the gray-ochre stone palette in its top-left panel. Invent a different arrangement of horizontal, large hand-cut rectangular stone blocks with staggered joints, subdued charcoal mortar, small warm mineral stains, and a few chipped corners. Orthographic close-up of the wall face, diffuse daylight, no depth gradient, no scene or perspective. Preserve broad readable stone faces, tight dry-brush surface detail, crisp edge transitions and a moderate value range suitable for reduced display. Design a repeating surface: stone courses must continue across the left and right edges and the top and bottom edges must meet as repeating rows. One edge-to-edge texture fills the entire square. No perimeter frame, gate opening, façade, tower, brush lettering, icons, interface, copied arrangement, or an existing game's art.
+```
