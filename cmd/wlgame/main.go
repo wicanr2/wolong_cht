@@ -1912,12 +1912,7 @@ func main() {
 	player := flag.Int("player", 0, "玩家所仕的勢力編號（直接啟動／驗收用）")
 	directStart := flag.Bool("direct", false, "跳過一般玩家啟動殼層，直接啟動指定劇本／玩家（驗收用）")
 	fontDir := flag.String("font", defaultFontDir, "倚天點陣字目錄（請自備）")
-	// ⚠ 預設是空的（靜音）。Ebiten 的音訊錯誤沒有可查詢的 API，
-	// 沒有音效裝置時 `RunGame` 會直接帶著 ALSA 的錯誤結束——
-	// 無頭驗收與 CI 全部會掛。
-	//
-	// ⭐ 完整包會自己找執行檔旁邊的 `audio/`（docs/spec/75），
-	// 所以「留白＝靜音」這道防護在**驗收模式**另外補（見 flag.Parse 之後）。
+	// 完整包會自動尋找執行檔旁邊的 audio/（docs/spec/75）。
 	audioDir := flag.String("audio", "", "ogg 音檔目錄（先跑 tools/bgm2ogg.sh 產生；留白＝靜音；完整包會自己找旁邊的 audio/）")
 	speed := flag.Int("speed", 2, "戰略速度檔位 0–4（0 ＝ 最高速、4 ＝ 最低速）")
 	tacticalSpeed := flag.Int("tactical-speed", 2, "戰術速度檔位 0–4（0 ＝ 最高速、4 ＝ 最低速）")
@@ -2107,6 +2102,12 @@ func main() {
 		rec:      newRecorder(*framesDir, *framesN),
 		saveFile: *saveFile, saveBase: path, sound: sound.Open(*audioDir),
 		cmdCell: -1} // −1 ＝ 沒有指令流程在跑（零值 0 是「進言」）
+	if !silentAudio && g.sound.Available() {
+		if err := sound.CheckPlaybackDevice(); err != nil {
+			log.Printf("音訊已停用：%v", err)
+			silentAudio = true
+		}
+	}
 	g.sound.SetSilent(silentAudio)
 	if raw, err := os.ReadFile(filepath.Join(g.origDir, "SOUND.DAT")); err == nil {
 		if err := g.sound.SetEffectTimings(raw); err != nil {
