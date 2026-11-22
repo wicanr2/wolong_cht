@@ -2648,3 +2648,8 @@
 - 清除 Go 與 Gradle 專案快取、舊編譯產物、配音執行環境、影片中間檔與相同交付副本。保留模型、套件版本清單、原始聲畫、重播程式和現行封包。清理前後 47 項影片來源雜湊一致。[清理明細](workplace/desktop-package-v.1.2.0-20261122/cleanup-generated-result.json)
 - 47 組歷史追蹤檔與展示頁的 171 份相同副本改用唯讀硬連結，保留原路徑、內容與獨立的原始時間紀錄。兩項合計回收約 10.42 GiB。四平台封包、長短兩版影片及字幕逐檔校驗通過。[歷史檔合併紀錄](workplace/desktop-package-v.1.2.0-20261122/cleanup-dedupe-result.json)
 - 臥龍傳的 Docker 容器、專用映像與具名卷宗均為零。共享映像和 BuildKit 快取保留給其他專案。Git 工作樹保留本輪前的程式和文件變更。
+
+### GitHub 公開引擎發行
+
+- 公開 repo 的 README、16 張展示圖、HD 提示詞及 768 筆本機 HD 檔案與索引的雜湊清冊已核對。原版素材、本機圖庫與影片的權利範圍沿用本機交付分類。版號標籤指向 `344713f768b59fe8654736c293c3baafca642b11`。[素材清冊](docs/release/assets-v.1.2.0-20261122.json)
+- Linux、Windows、macOS 和 Android 公開引擎包經內容允許清單與 SHA-256 驗證。公開桌面主程式與前次驗收雜湊一致。Android APK 通過雙架構、簽章、16 KiB 對齊及 Android 15 模擬器冷啟動到匯入畫面。Go 冷測通過。GitHub 回報的六個附件雜湊與本機一致。[公開 Release](https://github.com/wicanr2/wolong_cht/releases/tag/v.1.2.0-20261122)
