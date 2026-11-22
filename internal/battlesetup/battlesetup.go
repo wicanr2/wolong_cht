@@ -6,6 +6,7 @@ package battlesetup
 import (
 	"fmt"
 	"os"
+	"sync"
 
 	"github.com/wicanr2/wolong_cht/internal/assets/battle"
 	"github.com/wicanr2/wolong_cht/internal/assets/world"
@@ -16,8 +17,13 @@ import (
 
 // Provider 是不依賴目前世界的戰場資產來源。
 type Provider struct {
-	lib *battle.Library
-	sp  *battle.Sprites
+	dir  string
+	warn func(string)
+
+	libraryOnce sync.Once
+	spritesOnce sync.Once
+	lib         *battle.Library
+	sp          *battle.Sprites
 }
 
 // Options 是 Load 要的東西。
@@ -50,17 +56,7 @@ func Load(opt Options) (*Provider, *state.TacticalSetup, error) {
 	if err != nil {
 		return nil, nil, fmt.Errorf("載不到陣形表：%w", err)
 	}
-	p := &Provider{}
-	p.lib = loadLibrary(opt.Dir, warn)
-	if raw, err := os.ReadFile(opt.Dir + "/BATTLE.SCH"); err == nil {
-		if sp, err := battle.ParseSprites(raw); err == nil {
-			p.sp = sp
-		} else {
-			warn(fmt.Sprintf("%v；兵會畫成色點", err))
-		}
-	} else {
-		warn(fmt.Sprintf("載不到 BATTLE.SCH（%v）；兵會畫成色點", err))
-	}
+	p := &Provider{dir: opt.Dir, warn: warn}
 	setup := &state.TacticalSetup{
 		Forms: forms,
 		Field: p.BuildField,
@@ -70,20 +66,37 @@ func Load(opt Options) (*Provider, *state.TacticalSetup, error) {
 			return battle.Category(field)
 		},
 		Script: func(field int, siege bool, tactic int, playerDefends bool) []byte {
-			if p.lib == nil {
+			lib := p.Library()
+			if lib == nil {
 				return nil
 			}
-			return p.lib.Script(tactic, battle.ScriptSlot(field, playerDefends))
+			return lib.Script(tactic, battle.ScriptSlot(field, playerDefends))
 		},
 	}
 	return p, setup, nil
 }
 
-// Library 是戰場地形與腳本，載不到就是 nil。
-func (p *Provider) Library() *battle.Library { return p.lib }
+// Library 首次需要戰場規則資料時才讀檔，載不到就是 nil。
+func (p *Provider) Library() *battle.Library {
+	p.libraryOnce.Do(func() { p.lib = loadLibrary(p.dir, p.warn) })
+	return p.lib
+}
 
-// Sprites 是人物圖形，載不到就是 nil（兵畫成色點）。
-func (p *Provider) Sprites() *battle.Sprites { return p.sp }
+// Sprites 首次建立戰場畫面時才讀人物圖形，載不到就是 nil。
+func (p *Provider) Sprites() *battle.Sprites {
+	p.spritesOnce.Do(func() {
+		raw, err := os.ReadFile(p.dir + "/BATTLE.SCH")
+		if err != nil {
+			p.warn(fmt.Sprintf("載不到 BATTLE.SCH（%v）；兵會畫成色點", err))
+			return
+		}
+		p.sp, err = battle.ParseSprites(raw)
+		if err != nil {
+			p.warn(fmt.Sprintf("%v；兵會畫成色點", err))
+		}
+	})
+	return p.sp
+}
 
 // AttachTerrain 把已解碼地圖掛到目前世界，也供讀檔及自動戰鬥使用。
 func AttachTerrain(w *state.World, m *world.Map) {
@@ -133,20 +146,24 @@ func loadLibrary(dir string, warn func(string)) *battle.Library {
 
 // BuildField 載入規則層已選定的戰場，不重新選場或消費亂數（spec273）。
 func (p *Provider) BuildField(n int, siege, rotate bool) *tactical.Field {
-	if p.lib == nil || n < 0 || n >= battle.NumFields {
+	if n < 0 || n >= battle.NumFields {
+		return SyntheticField(siege)
+	}
+	lib := p.Library()
+	if lib == nil {
 		return SyntheticField(siege)
 	}
 	// 用原始圖塊值建，不只用堆疊高度——城壁與門是從圖塊值認出來的，
 	// 而且打壞時要換圖塊再重算高度（docs/re/11 §5.9）。
 	// 再加上七層子圖塊表：兩個平面的地面圖與登城都靠它算（docs/spec/36）。
 	// 規則格號包含表頭與尾段，與士兵的原版Y一致（spec36）。
-	tiles, gate := p.lib.MinimapRows(n), p.lib.GateX(n)
+	tiles, gate := lib.MinimapRows(n), lib.GateX(n)
 	if rotate {
 		copy(tiles[1:len(tiles)-1], battle.Rotate180(tiles[1:len(tiles)-1]))
 		gate = battle.RotateGateX(gate)
 	}
 	return tactical.NewFieldFromTileLayers(
-		tiles, p.lib.Heights(n), p.lib.TileLayers(n), gate)
+		tiles, lib.Heights(n), lib.TileLayers(n), gate)
 }
 
 // SyntheticField 是沒有原版戰場資料時的替代品。幾何同尺寸，內容是自己生的。

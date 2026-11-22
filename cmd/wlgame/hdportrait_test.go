@@ -135,6 +135,8 @@ func TestHDDesktopSingleRowAllLanguages(t *testing.T) {
 				labels = desktopZoomLabels[lang][2:]
 			} else if a == desktopReport {
 				labels = []string{battleReportLabels[lang]["button"]}
+			} else if a == desktopTacticalAssist || a == desktopGeneralEditor {
+				labels = []string{desktopToolLabel(lang, a, false), desktopToolLabel(lang, a, true)}
 			} else {
 				labels = []string{desktopLabels[lang][int(a)-1]}
 			}

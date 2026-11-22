@@ -16,7 +16,7 @@ func TestDesktopPreferencesFileLifecycle(t *testing.T) {
 		t.Fatalf("缺檔應保留預設：%+v %v", got, err)
 	}
 	p := defaults
-	p.BattleResultSeconds, p.Sound, p.Language = 15, 4, "en"
+	p.BattleResultSeconds, p.Sound, p.Language, p.TacticalAssist = 15, 4, "en", true
 	for _, seconds := range []int{15, 3, 0} {
 		p.BattleResultSeconds = seconds
 		if err := writeDesktopPreferences(path, p); err != nil {

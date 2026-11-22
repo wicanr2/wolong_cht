@@ -8,8 +8,8 @@ import (
 	"github.com/hajimehoshi/ebiten/v2/vector"
 
 	"github.com/wicanr2/wolong_cht/internal/assets/library"
-	"github.com/wicanr2/wolong_cht/internal/assets/world"
 	"github.com/wicanr2/wolong_cht/internal/assets/text"
+	"github.com/wicanr2/wolong_cht/internal/assets/world"
 	"github.com/wicanr2/wolong_cht/internal/state"
 	"github.com/wicanr2/wolong_cht/internal/ui/chrome"
 	"github.com/wicanr2/wolong_cht/internal/ui/textdraw"
@@ -29,7 +29,7 @@ import (
 func inkVoid() color.RGBA { return chrome.Blank }
 
 // inkBar() 是狀態列與指令列的底：原版的命令列是**純黑，沒有龍紋**
-//（docs/spec/54 §2）。
+// （docs/spec/54 §2）。
 func inkBar() color.RGBA { return chrome.Blank }
 
 // inkPanel() 是選單／情報視窗的底：深藍 ＋ 龍紋。
@@ -48,7 +48,7 @@ func inkInk() color.RGBA { return chrome.Ink }
 func inkSelect() color.RGBA { return chrome.Select }
 
 // inkDim() 是次要文字。原版側欄的「君主名與『對』」用色 11
-//（docs/spec/31 §2.1），這裡沿用它當次要色。
+// （docs/spec/31 §2.1），這裡沿用它當次要色。
 func inkDim() color.RGBA { return palSecondary }
 
 // inkEdge() 是分隔線。沒有原版對應（原版用圖塊框，不畫線），
@@ -107,7 +107,6 @@ func (s *Session) Draw(dst *ebiten.Image, td *textdraw.Drawer) {
 	// 原版進戰術畫面時戰略畫面也整個換掉。
 	if s.BattleActive() {
 		s.drawBattle(dst, td)
-		s.drawStatusBar(dst, td)
 		return
 	}
 	s.drawMap(dst)
@@ -269,7 +268,7 @@ func (s *Session) drawAdvise(dst *ebiten.Image, td *textdraw.Drawer) {
 }
 
 // adviseTitle 說現在這一頁在做什麼。**選對象與說服長得很像**
-//（都是一排可點的列），沒有標題會分不出來。
+// （都是一排可點的列），沒有標題會分不出來。
 func (s *Session) adviseTitle() string {
 	name := adviseFallbackNames[s.advise.row]
 	if labels := s.adviseLabels(); s.advise.row < len(labels) {

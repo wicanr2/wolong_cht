@@ -35,7 +35,9 @@ func squadSlot(i int) int { return battle.BottomSlotSquad[i] }
 
 // battleState 是手機端的一場戰術戰鬥。
 type battleState struct {
-	view *isoview.View
+	view             *isoview.View
+	orderIcons       [len(battle.SideCommandRowCode)]*ebiten.Image
+	orderIconsLoaded bool
 
 	// squad 是選中的編成位置（0–5）。**選中是視覺狀態**：
 	// 下令要再點一次底列的命令（兩段式，docs/mobile/android-ux.md §3）。
@@ -101,8 +103,12 @@ func (s *Session) newBattleView() *isoview.View {
 	if err != nil {
 		return nil
 	}
+	lib := s.setup.Library()
+	if lib == nil {
+		return nil
+	}
 	return isoview.New(isoview.Options{
-		Lib:     s.setup.Library(),
+		Lib:     lib,
 		Palette: bank,
 		Sprites: s.setup.Sprites(),
 		Field:   p.FieldNumber,
@@ -120,15 +126,46 @@ func (s *Session) newBattleView() *isoview.View {
 // 原版的 480×368 視野才塞得進來——不然戰場會被裁掉一截，
 // 而「看得到多少戰場」是會影響決策的。
 const (
-	// BattleRowH 是六格與六命令那兩列的高度。
-	// 字放大 2 倍之後兩行字塞不下（戰場區要留給原版的 480×368 視野），
-	// 六格改成「位置 兵數」一行（docs/spec/100 §3）。
-	BattleRowH = FontH + 24
+	battleHeaderH = 32
+	// BattleRowH 是兩排的觸控高度，可見外框在格內置中。
+	BattleRowH        = 48
+	battleFaceH       = 33
+	battleFaceInset   = 6
+	battleMinimapSize = 96
 )
 
 // BattleFieldRect 是戰場畫面的可視區。
 func BattleFieldRect() (x, y, w, h int) {
-	return 0, StatusH, LogicalW, LogicalH - StatusH - BattleRowH*2
+	return 0, battleHeaderH, LogicalW, LogicalH - battleHeaderH - BattleRowH*2
+}
+
+func battleViewport() image.Rectangle {
+	x, y, w, h := BattleFieldRect()
+	viewportH := min(h, w*isoview.NativeH/isoview.NativeW)
+	viewportW := viewportH * isoview.NativeW / isoview.NativeH
+	left, top := x+(w-viewportW)/2, y+(h-viewportH)/2
+	return image.Rect(left, top, left+viewportW, top+viewportH)
+}
+
+// BattleViewportContains reports whether a touch is on the live battlefield.
+func (s *Session) BattleViewportContains(x, y int) bool {
+	r := battleViewport()
+	return s.BattleActive() && s.battle.view != nil && image.Pt(x, y).In(r)
+}
+
+// PinchZoom applies one level of zoom in the scene where the gesture began.
+func (s *Session) PinchZoom(direction, x, y int) {
+	if !s.BattleActive() {
+		s.SetZoom(s.zoom + direction)
+		return
+	}
+	if s.BattleViewportContains(x, y) {
+		r := battleViewport()
+		v := s.battle.view
+		focusX := (x - r.Min.X) * isoview.NativeW / r.Dx()
+		focusY := (y - r.Min.Y) * isoview.NativeH / r.Dy()
+		v.ZoomAt(v.ZoomPercent()+25*direction, focusX, focusY)
+	}
 }
 
 // SquadRect 是上排六格的第 i 格。
@@ -196,109 +233,138 @@ func (s *Session) drawBattle(dst *ebiten.Image, td *textdraw.Drawer) {
 	if b == nil {
 		return
 	}
+	td.SetScale(1)
 	fx, fy, fw, fh := BattleFieldRect()
 	fillRect(dst, fx, fy, fw, fh, inkVoid())
 
 	if s.battle.view != nil {
 		buf := s.battle.view.Render(b)
-		// 等比放大到塞得進戰場區為止。**只用整數倍**——
-		// 原版是點陣圖，非整數倍會糊（§3 的同一條理由）。
-		scale := 1
-		for (scale+1)*isoview.NativeW <= fw && (scale+1)*isoview.NativeH <= fh {
-			scale++
-		}
+		// Render returns the visible source crop, whose size changes with zoom.
+		// Project it into the same destination rectangle at every zoom level.
+		viewport := battleViewport()
 		op := &ebiten.DrawImageOptions{}
-		op.GeoM.Scale(float64(scale), float64(scale))
-		op.GeoM.Translate(float64(fx+(fw-scale*isoview.NativeW)/2),
-			float64(fy+(fh-scale*isoview.NativeH)/2))
-		dst.SubImage(rect(fx, fy, fw, fh)).(*ebiten.Image).DrawImage(buf, op)
+		op.GeoM.Scale(float64(viewport.Dx())/float64(buf.Bounds().Dx()),
+			float64(viewport.Dy())/float64(buf.Bounds().Dy()))
+		op.GeoM.Translate(float64(viewport.Min.X), float64(viewport.Min.Y))
+		dst.SubImage(viewport).(*ebiten.Image).DrawImage(buf, op)
 	}
-	s.drawBattleSides(dst, td, b, fx, fy, fw, fh)
+	s.drawBattleHeader(dst, td, b)
+	s.drawBattleMinimap(dst, fy)
+	fillRect(dst, 0, LogicalH-BattleRowH*2, LogicalW, BattleRowH*2, color.RGBA{26, 25, 20, 255})
+	fillRect(dst, 0, LogicalH-BattleRowH*2, LogicalW, 1, color.RGBA{146, 83, 71, 255})
 	s.drawSquadStrip(dst, td, b)
 	s.drawBattleCommands(dst, td)
 }
 
-// drawBattleSides 用戰場左右剩下的兩塊放原版側欄有的東西：
-// 兩軍的主將與兵力、戰場縮圖。
-//
-// ⚠ 原版的側欄在**右邊一整條**（docs/spec/31）。手機是橫向 16:9，
-// 480 px 的戰場置中之後左右各剩一塊，擺兩邊比擠成一條好讀——
-// **這是 remake 差異**，內容仍照原版那幾個欄位。
-func (s *Session) drawBattleSides(dst *ebiten.Image, td *textdraw.Drawer,
-	b *tactical.Battle, fx, fy, fw, fh int) {
-
-	margin := (fw - isoview.NativeW) / 2
-	if margin < 120 || td == nil || !td.Available() {
-		return
-	}
+func (s *Session) drawBattleHeader(dst *ebiten.Image, td *textdraw.Drawer, b *tactical.Battle) {
+	fillRect(dst, 0, 0, LogicalW, battleHeaderH, color.RGBA{27, 27, 22, 255})
+	fillRect(dst, 0, battleHeaderH-1, LogicalW, 1, color.RGBA{146, 83, 71, 255})
 	p := s.world.PendingBattle()
-	if p == nil {
+	if p == nil || !td.Available() {
 		return
 	}
-	name := func(corps int) string {
-		if corps < 0 || corps >= len(s.world.Generals) {
-			return "城兵"
+	for side, corps := range [2]int{p.Attacker, p.Defender} {
+		name := "城兵"
+		if corps >= 0 && corps < len(s.world.Generals) {
+			name = s.Localise(s.world.Generals[corps].Name)
 		}
-		return s.Localise(s.world.Generals[corps].Name)
-	}
-	// 左：攻守雙方。玩家那一側標出來——原版靠側欄換邊表達（docs/spec/56）。
-	rows := [][2]string{
-		{"攻", name(p.Attacker)},
-		{"", fmt.Sprintf("%d", b.Sides[tactical.AttackerSide].Alive()*tactical.MenPerSoldier)},
-		{"守", name(p.Defender)},
-		{"", fmt.Sprintf("%d", b.Sides[tactical.DefenderSide].Alive()*tactical.MenPerSoldier)},
-	}
-	for i, r := range rows {
-		y := fy + 16 + i*(LineH+2)
-		// 玩家那一側用色 15（白），對方用次要色——**不要用反白條的色 5**：
-		// 那是清單選取用的綠，拿來標「哪一側是我」會讀成「選中了它」。
-		ink := inkDim()
-		if (i < 2) == (s.playerSide() == tactical.AttackerSide) {
-			ink = inkText()
+		label := [2]string{"攻", "守"}[side]
+		label += " " + name + fmt.Sprintf(" %d", b.Sides[side].Alive()*tactical.MenPerSoldier)
+		x := 14
+		if side == tactical.DefenderSide {
+			x = LogicalW - 14 - td.Width(label)
 		}
-		if r[0] != "" {
-			td.Draw(dst, r[0], fx+16, y, inkDim())
+		ink := color.RGBA{221, 186, 118, 255}
+		if side == s.playerSide() {
+			ink = battleButtonInk
 		}
-		td.Draw(dst, r[1], fx+16+td.Width("攻")+8, y, ink)
+		td.Draw(dst, label, x, (battleHeaderH-td.FontH())/2, ink)
 	}
-	// 右：戰場縮圖。原版點它可以移動鏡頭；手機版目前只顯示。
+}
+
+func (s *Session) drawBattleMinimap(dst *ebiten.Image, y int) {
+	if s.battle.view == nil {
+		return
+	}
 	if mm := s.battle.view.Minimap(); mm != nil {
-		w, h := mm.Bounds().Dx(), mm.Bounds().Dy()
+		bounds := mm.Bounds()
 		op := &ebiten.DrawImageOptions{}
-		op.GeoM.Translate(float64(fx+fw-margin+(margin-w)/2), float64(fy+(fh-h)/2))
+		op.GeoM.Scale(float64(battleMinimapSize)/float64(bounds.Dx()), float64(battleMinimapSize)/float64(bounds.Dy()))
+		x, top := LogicalW-16-battleMinimapSize, y+13
+		op.GeoM.Translate(float64(x), float64(top))
 		dst.DrawImage(mm, op)
+		strokeRect(dst, x-1, top-1, battleMinimapSize+2, battleMinimapSize+2, color.RGBA{191, 167, 123, 255})
 	}
+}
+
+var battleButtonInk = color.RGBA{241, 230, 203, 255}
+
+func battleButtonFace(x, y, w, h int) image.Rectangle {
+	top := y + (h-battleFaceH)/2
+	return image.Rect(x+battleFaceInset, top, x+w-battleFaceInset, top+battleFaceH)
+}
+
+func drawBattleFace(dst *ebiten.Image, r image.Rectangle, selected, retreat bool) {
+	fill, border := color.RGBA{34, 34, 27, 255}, color.RGBA{81, 67, 51, 255}
+	if selected {
+		fill, border = color.RGBA{119, 47, 40, 255}, color.RGBA{220, 144, 116, 255}
+	} else if retreat {
+		border = color.RGBA{169, 107, 91, 255}
+	}
+	fillRect(dst, r.Min.X, r.Min.Y, r.Dx(), r.Dy(), fill)
+	strokeRect(dst, r.Min.X, r.Min.Y, r.Dx(), r.Dy(), border)
 }
 
 func (s *Session) drawSquadStrip(dst *ebiten.Image, td *textdraw.Drawer, b *tactical.Battle) {
 	side := s.playerSide()
 	for i := 0; i < army.Positions; i++ {
-		x, y, w, h := SquadRect(i)
-		// 選中的那一格用**反白條**（色 5），其餘是命令列的黑底——
-		// 原版底列六格的選取也是靠框與反白標的（docs/spec/33 §1.1）。
-		bg, ink := inkBar(), inkText()
-		if squadSlot(i) == s.battle.squad {
-			bg, ink = inkSelect(), inkInk()
-		}
-		s.window(dst, x, y, w, h, bg)
-		if td == nil || !td.Available() {
+		face := battleButtonFace(SquadRect(i))
+		squad := squadSlot(i)
+		drawBattleFace(dst, face, squad == s.battle.squad, false)
+		if !td.Available() {
 			continue
 		}
-		label := unitLabel(squadSlot(i)) + " " + fmt.Sprintf("%d", squadMen(b, side, squadSlot(i)))
-		td.Draw(dst, label, x+(w-td.Width(label))/2, y+(h-FontH)/2, ink)
+		label := unitLabel(squad) + " " + fmt.Sprintf("%d", squadMen(b, side, squad))
+		td.Draw(dst, label, face.Min.X+(face.Dx()-td.Width(label))/2, face.Min.Y+(face.Dy()-td.FontH())/2, battleButtonInk)
 	}
 }
 
 func (s *Session) drawBattleCommands(dst *ebiten.Image, td *textdraw.Drawer) {
+	if !s.battle.orderIconsLoaded {
+		for i, code := range battle.SideCommandRowCode {
+			if icon, err := s.lib.DOSVOrderIcon(code, 0); err == nil {
+				s.battle.orderIcons[i] = ebiten.NewImageFromImage(icon)
+			}
+		}
+		s.battle.orderIconsLoaded = true
+	}
 	for i := range battle.SideCommandRowCode {
 		c := battleCommandRow(i)
-		x, y, w, h := BattleCommandRect(i)
-		s.window(dst, x, y, w, h, inkBar())
-		if td == nil || !td.Available() {
-			continue
-		}
+		face := battleButtonFace(BattleCommandRect(i))
+		drawBattleFace(dst, face, false, c == tactical.Retreat)
 		label := c.String()
-		td.Draw(dst, label, x+(w-td.Width(label))/2, y+(h-FontH)/2, inkText())
+		width := 0
+		if td.Available() {
+			width = td.Width(label)
+		}
+		icon := s.battle.orderIcons[i]
+		if icon != nil {
+			width += icon.Bounds().Dx()
+			if td.Available() {
+				width += 5
+			}
+		}
+		x := face.Min.X + (face.Dx()-width)/2
+		if icon != nil {
+			bounds := icon.Bounds()
+			op := &ebiten.DrawImageOptions{}
+			op.GeoM.Translate(float64(x), float64(face.Min.Y+(face.Dy()-bounds.Dy())/2))
+			dst.DrawImage(icon, op)
+			x += bounds.Dx() + 5
+		}
+		if td.Available() {
+			td.Draw(dst, label, x, face.Min.Y+(face.Dy()-td.FontH())/2, battleButtonInk)
+		}
 	}
 }
 

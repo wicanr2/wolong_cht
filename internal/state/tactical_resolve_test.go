@@ -4,10 +4,41 @@ import (
 	"testing"
 
 	"github.com/wicanr2/wolong_cht/internal/rules/army"
+	"github.com/wicanr2/wolong_cht/internal/rules/combat"
 	"github.com/wicanr2/wolong_cht/internal/rules/economy"
 	"github.com/wicanr2/wolong_cht/internal/rules/rng"
 	"github.com/wicanr2/wolong_cht/internal/rules/tactical"
 )
+
+func TestPendingSettlementPresentsFateBeforeCapture(t *testing.T) {
+	w := load(t, 0)
+	factions := w.AliveFactions()
+	player, enemy := factions[0], factions[1]
+	w.Player = player
+	node := w.clampCity(w.Factions[enemy].Capital)
+	attacker := aiCorps(t, w, player, w.clampCity(w.Factions[player].Capital))
+	defender := aiCorps(t, w, enemy, node)
+	random := rng.NewFixed(1)
+	b := tactical.NewBattle(nil, nil, random, 0)
+	b.Done, b.Winner = true, 0
+	b.Sides[0].Reserve[0] = w.Corps[attacker].Men
+	w.pending = &Pending{Battle: b, Attacker: attacker, Defender: defender, Node: node, Mode: combat.Siege}
+
+	ev, capture := w.BeginPendingSettlement(random)
+	if ev == nil || capture == nil {
+		t.Fatal("successful siege did not provide its deferred capture")
+	}
+	if ev.Captured != -1 || w.Cities[node].Owner != enemy || len(ev.Destroyed) != 1 || ev.Destroyed[0] != defender {
+		t.Fatalf("city or defender already in the wrong state before dialogue: owner %d, event %+v", w.Cities[node].Owner, ev)
+	}
+	if next, again := w.BeginPendingSettlement(random); next != nil || again != nil {
+		t.Fatal("battle losses or fates could be resolved twice")
+	}
+	capture()
+	if w.Cities[node].Owner != player || ev.Captured != node {
+		t.Fatalf("capture did not transfer ownership: owner %d, event %+v", w.Cities[node].Owner, ev)
+	}
+}
 
 // TestTacticalBattleAlwaysResolves 是那個卡死的迴歸閘（docs/spec/62、63）。
 //

@@ -12,6 +12,7 @@ import (
 	"io"
 	"os"
 	"path/filepath"
+	"strings"
 )
 
 type hdPortraitEntry struct {
@@ -79,7 +80,7 @@ func readHDPNG(root, file string, width, height int, digest string) ([]byte, err
 		return nil, err
 	}
 	h := sha256.Sum256(b)
-	if hex.EncodeToString(h[:]) != digest {
+	if !strings.EqualFold(hex.EncodeToString(h[:]), digest) {
 		return nil, fmt.Errorf("HD SHA mismatch: %s", file)
 	}
 	c, err := png.DecodeConfig(bytes.NewReader(b))

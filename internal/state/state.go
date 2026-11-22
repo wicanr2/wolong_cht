@@ -1750,7 +1750,7 @@ func (w *World) Bytes() []byte {
 		copy(r[0x08:0x0E], []byte(g.Alias))
 		// 適性存的是 ×16 的值（讀進來時 >>4）。
 		for k := 0; k < 3; k++ {
-			r[0x0E+k] = byte(g.Aptitude[k] << 4)
+			r[0x0E+k] = r[0x0E+k]&0x0F | byte(g.Aptitude[k]<<4)
 		}
 		r[0x11] = byte(g.Martial)
 		r[0x12] = byte(g.Command)

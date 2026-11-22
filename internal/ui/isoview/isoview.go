@@ -11,11 +11,13 @@ package isoview
 import (
 	"image"
 	"image/color"
+	"log"
 
 	"github.com/hajimehoshi/ebiten/v2"
 	"github.com/hajimehoshi/ebiten/v2/vector"
 
 	"github.com/wicanr2/wolong_cht/internal/assets/battle"
+	"github.com/wicanr2/wolong_cht/internal/assets/library"
 	"github.com/wicanr2/wolong_cht/internal/rules/tactical"
 )
 
@@ -96,8 +98,8 @@ func isoProjectOriginal(x, y, z int) (col, row int) {
 // 而 s 與 h 恆同奇偶，所以 r ＝ floorDiv2(h)。
 func (v *View) cellOffset(x, y, z int) (dcol, drow int) {
 	oy := y + originalRowBias // 換成原版的框（鏡頭本來就存那個框）
-	return (x + oy) - (v.camWorldX + v.camWorldY),
-		floorDiv2((oy-x)-(v.camWorldY-v.camWorldX)) - z
+	return (x + oy) - (v.camWorldX + v.camWorldY) - v.zoomCol,
+		floorDiv2((oy-x)-(v.camWorldY-v.camWorldX)) - z - v.zoomRow
 }
 
 // floorDiv2 是原版的 `sar bx, 1`——算術右移，負數往下取整。
@@ -111,11 +113,17 @@ func floorDiv2(v int) int {
 
 // View 是戰場畫面的資源：解好的子圖塊圖與相機。
 type View struct {
-	compositeCache *[battleDisplayScanRows][battleDisplayAnchors]compositeTileCache
+	compositeCache []compositeTileCache
+	displayGrid    battleDisplayGrid
+	displayInfo    [][]battleDisplaySlotInfo
+	displayEntries []battleDisplayEntry
+	hdPack         *library.HDBattle
+	hdTiles        map[int]*ebiten.Image
+	materials      battleMaterials
 
 	observed       *tactical.Battle
-	retained       *battleDisplayGrid
-	retainedInfo   [battleDisplayGridRows][battleDisplayGridCols]battleDisplaySlotInfo
+	retained       battleDisplayGrid
+	retainedInfo   [][]battleDisplaySlotInfo
 	retainedCamera [2]int
 
 	lib   *battle.Library
@@ -127,8 +135,8 @@ type View struct {
 	tileRev int
 	cache   map[int]*ebiten.Image
 	pal     [16]color.RGBA
-	// buf 是原生解析度的離屏畫布，畫完再整張放大。
-	buf *ebiten.Image
+	// buf 和暫存合成圖共用目前的繪製倍率。
+	buf, encoded, unfolded *ebiten.Image
 
 	// sprites 是 `BATTLE.SCH` 的人物圖形，載不到就是 nil（兵畫成色點）。
 	sprites *battle.Sprites
@@ -164,6 +172,9 @@ type View struct {
 	// word_1D32E）。**與鏡頭是兩組變數**，只是被同一個點選一起改。
 	cursorX, cursorY int
 	camCol, camRow   int
+	zoom             int
+	zoomX, zoomY     float64
+	zoomCol, zoomRow int
 }
 
 // image 把一個子圖塊轉成 Ebiten 的圖，解過就快取起來。
@@ -271,6 +282,10 @@ func (v *View) sourceImage(raw int) *ebiten.Image {
 // 邊界裁切，負 row 也是有效相機狀態。
 func (v *View) applyCameraOrigin() {
 	v.camCol, v.camRow = isoProjectOriginal(v.camWorldX, v.camWorldY, 0)
+	x, y := v.zoomOrigin()
+	v.zoomCol, v.zoomRow = x*2, y
+	v.camCol += v.zoomCol
+	v.camRow += v.zoomRow
 }
 
 // SetCameraFromMiniMap 重現 DOS/V `0001C0C6` 起的縮圖點選公式。
@@ -288,6 +303,9 @@ func (v *View) SetCameraFromMiniMap(screenX, screenY int) {
 	v.cursorX = v.camWorldX + cursorBiasX
 	v.cursorY = v.camWorldY + cursorBiasY
 	v.applyCameraOrigin()
+	if v.ZoomPercent() != 100 && v.retainedCamera != [2]int{v.camWorldX, v.camWorldY} {
+		v.refreshZoomedDrawings()
+	}
 }
 
 // SetCameraWorld 直接指定鏡頭的世界格。**驗收用**：對拍時要讓 remake
@@ -365,12 +383,25 @@ func (v *View) drawTerrain(dst *ebiten.Image, ox, oy int) {
 // 兩者在鏡頭是奇數時對一半的格子差一列，而原版的物件走的就是這一條
 // （docs/spec/57 §2）。
 func (v *View) ScreenPos(ox, oy, x, y, z int) (int, int, bool) {
-	col, row := isoProjectOriginal(x, y, z)
-	if col < v.camCol || col >= v.camCol+isoCols ||
-		row < v.camRow || row >= v.camRow+isoRows {
+	px, py, ok := v.scenePosition(x, y, z)
+	if !ok {
 		return 0, 0, false
 	}
-	return ox + (col-v.camCol)*isoColPx, oy + (row-v.camRow)*isoRowPx, true
+	if v.ZoomPercent() == 100 {
+		return ox + px, oy + py, true
+	}
+	r := v.visibleScene()
+	return ox + (px-r.Min.X)*NativeW/r.Dx(), oy + (py-r.Min.Y)*NativeH/r.Dy(), image.Pt(px, py).In(r)
+}
+
+func (v *View) scenePosition(x, y, z int) (int, int, bool) {
+	col, row := isoProjectOriginal(x, y, z)
+	cols, rows := v.sourceUnits()
+	if col < v.camCol || col >= v.camCol+2*cols+1 ||
+		row < v.camRow || row >= v.camRow+rows+1 {
+		return 0, 0, false
+	}
+	return (col - v.camCol) * isoColPx, (row - v.camRow) * isoRowPx, true
 }
 
 // drawBattleIso 用原版的子圖塊畫戰場。
@@ -455,19 +486,28 @@ func (v *View) syncTiles(b *tactical.Battle) {
 	}
 }
 
-func (v *View) buildDisplayList(b *tactical.Battle) []battleDisplayEntry {
-	entries := make([]battleDisplayEntry, 0, 4096+2*tactical.SoldiersOnFoot)
+func (v *View) buildDisplayList(entries []battleDisplayEntry, b *tactical.Battle) []battleDisplayEntry {
+	cols, rows := v.sourceUnits()
+	gridCols, gridRows := displayGridSize(cols, rows)
 	order := 0
-	for y := 0; y < len(v.subs); y++ {
-		for x := 0; x < len(v.subs[y]); x++ {
-			for z, raw := range v.subs[y][x] {
-				col, row := isoProject(x, y, z)
-				dcol, drow := v.cellOffset(x, y, z)
-				entries = append(entries, battleDisplayEntry{kind: displayTerrain,
-					col: col, row: row, cellCol: dcol, cellRow: drow,
-					layer: z, lane: 0, x: x, y: y, z: z, raw: int(raw), order: order})
-				order++
+	for y, tiles := range v.subs {
+		for x, stack := range tiles {
+			dcol, drow := v.cellOffset(x, y, 0)
+			if dcol < 0 || dcol >= gridCols || drow < 0 || drow-len(stack)+1 >= gridRows {
+				order += len(stack)
+				continue
 			}
+			for z, raw := range stack {
+				cellRow := drow - z
+				if cellRow < 0 || cellRow >= gridRows {
+					continue
+				}
+				col, row := isoProject(x, y, z)
+				entries = append(entries, battleDisplayEntry{kind: displayTerrain,
+					col: col, row: row, cellCol: dcol, cellRow: cellRow,
+					layer: z, lane: 0, x: x, y: y, z: z, raw: int(raw), order: order + z})
+			}
+			order += len(stack)
 		}
 	}
 	frame := 0
@@ -479,7 +519,7 @@ func (v *View) buildDisplayList(b *tactical.Battle) []battleDisplayEntry {
 		col, row := isoProject(banner.X, banner.Y, banner.Z)
 		// 1DC03先檢查錨點；一般旗在lane0登錄下半raw+1及上列raw。
 		cellCol, cellRow := col-v.camCol, row-v.camRow
-		if cellCol < 0 || cellCol >= 31 || cellRow < 0 || cellRow >= 24 {
+		if cellCol < 0 || cellCol >= 2*cols+1 || cellRow < 0 || cellRow >= rows+1 {
 			continue
 		}
 		raw := banner.SourceTile(frame)
@@ -558,28 +598,41 @@ func (v *View) appendTallDisplayUnits(entries []battleDisplayEntry, order, col, 
 }
 
 type battleDisplaySlot struct {
-	entry battleDisplayEntry
-	set   bool
+	raw  int
+	kind displayEntryKind
+	set  bool
 }
 
-type battleDisplayGrid [battleDisplayGridRows][battleDisplayGridCols][battle.MaxStack][2]battleDisplaySlot
+type battleDisplayCell = [battle.MaxStack][2]battleDisplaySlot
+type battleDisplayGrid = [][]battleDisplayCell
+
+func displayGridSize(cols, rows int) (gridCols, gridRows int) {
+	return cols*2 + 2, rows + battleDisplayGridRows - battleDisplayScanRows
+}
+
+func newDisplayGrid[T any](rows, cols int) [][]T {
+	grid := make([][]T, rows)
+	cells := make([]T, rows*cols)
+	for row := range grid {
+		grid[row] = cells[row*cols : (row+1)*cols]
+	}
+	return grid
+}
 
 // makeDisplayGrid 重現 producer 的「槽位已佔用就不覆蓋」。目前 typed IR
 // 依原版初始化順序加入地形、場景旗、投射物、兵；同一槽只保留第一筆。
-func makeDisplayGrid(entries []battleDisplayEntry) battleDisplayGrid {
-	var grid battleDisplayGrid
+func fillDisplayGrid(grid battleDisplayGrid, entries []battleDisplayEntry) {
 	for _, e := range entries {
-		if e.cellCol < 0 || e.cellCol >= battleDisplayGridCols ||
-			e.cellRow < 0 || e.cellRow >= battleDisplayGridRows ||
+		if e.cellCol < 0 || e.cellCol >= len(grid[0]) ||
+			e.cellRow < 0 || e.cellRow >= len(grid) ||
 			e.layer < 0 || e.layer >= battle.MaxStack || e.lane < 0 || e.lane > 1 {
 			continue
 		}
 		s := &grid[e.cellRow][e.cellCol][e.layer][e.lane]
 		if !s.set {
-			s.entry, s.set = e, true
+			*s = battleDisplaySlot{raw: e.raw, kind: e.kind, set: true}
 		}
 	}
-	return grid
 }
 
 // battleDisplaySlotInfo 是顯示格表頭的兩個記帳欄位（`+1` 與 `+2`），
@@ -606,24 +659,23 @@ const battleSmallUnit = 0x20
 //
 // `start`（`+2`）維持只看 lane 0 的小 unit：那一格記的是地面，
 // 物件不該把起始深度往上推。
-func makeDisplayInfo(grid *battleDisplayGrid) [battleDisplayGridRows][battleDisplayGridCols]battleDisplaySlotInfo {
-	var info [battleDisplayGridRows][battleDisplayGridCols]battleDisplaySlotInfo
+func fillDisplayInfo(info [][]battleDisplaySlotInfo, grid battleDisplayGrid) {
 	for row := range grid {
+		clear(info[row])
 		for col := range grid[row] {
 			for z := 0; z < battle.MaxStack; z++ {
-				if s := grid[row][col][z][0]; s.set && s.entry.raw != 0 {
+				if s := grid[row][col][z][0]; !displaySlotEmpty(s) {
 					info[row][col].height = 2 * z
-					if s.entry.raw < battleSmallUnit {
+					if s.raw < battleSmallUnit {
 						info[row][col].start = 2 * z
 					}
 				}
-				if s := grid[row][col][z][1]; s.set && s.entry.raw != 0 {
+				if s := grid[row][col][z][1]; !displaySlotEmpty(s) {
 					info[row][col].height = 2*z + 1
 				}
 			}
 		}
 	}
-	return info
 }
 
 // displayDepthRange 回傳這個錨點要畫的深度範圍（含頭含尾），照 `sub_1DDB4`：
@@ -631,13 +683,13 @@ func makeDisplayInfo(grid *battleDisplayGrid) [battleDisplayGridRows][battleDisp
 //
 // 低於自己地面的深度被自己的地面擋住；要畫到最高的鄰居，
 // 因為高的鄰居有半截探進這一格的圖裡（docs/spec/58 §3）。
-func displayDepthRange(info *[battleDisplayGridRows][battleDisplayGridCols]battleDisplaySlotInfo,
+func displayDepthRange(info [][]battleDisplaySlotInfo,
 	row, anchor int) (z0, z1 int) {
 	high := info[row][anchor].height
 	for _, n := range [...][2]int{{row, anchor - 1}, {row, anchor + 1},
 		{row + 1, anchor - 1}, {row + 1, anchor + 1}} {
 		r, c := n[0], n[1]
-		if r < 0 || r >= battleDisplayGridRows || c < 0 || c >= battleDisplayGridCols {
+		if r < 0 || r >= len(info) || c < 0 || c >= len(info[r]) {
 			continue
 		}
 		if info[r][c].height > high {
@@ -659,6 +711,26 @@ func (v *View) rawImage(raw int) *ebiten.Image {
 	return v.sourceImage(raw)
 }
 
+func (v *View) displayImage(raw, scale int) *ebiten.Image {
+	if scale > 1 {
+		img, loaded := v.hdTiles[raw]
+		if !loaded {
+			native, err := v.hdPack.Image(v.set, raw)
+			if err != nil {
+				log.Printf("HD battle tile %d/%d fallback: %v", v.set, raw, err)
+			}
+			if native != nil {
+				img = ebiten.NewImageFromImage(native)
+			}
+			v.hdTiles[raw] = img
+		}
+		if img != nil {
+			return img
+		}
+	}
+	return v.rawImage(raw)
+}
+
 // drawDisplayGrid 是 sub_1DDB4／sub_1DE95 的可追溯高階移植。
 //
 // 每列掃 15 個奇數欄 anchor（1,3,…,29），每個 anchor 合成一張
@@ -666,15 +738,20 @@ func (v *View) rawImage(raw int) *ebiten.Image {
 // 0x30／0x20／0x10／0 分別選來源 unit 的第 24／16／8／0 列，
 // 各取 8 px 放到輸出第 0／8／16／24 列；目前 cell 則由 sub_1E085
 // 畫完整 32 px。這正是高物件跨相鄰菱形遮擋的來源。
-func (v *View) drawDisplayGrid(dst *ebiten.Image, entries []battleDisplayEntry) {
-	grid := makeDisplayGrid(entries)
+func (v *View) drawDisplayGrid(dst *ebiten.Image, entries []battleDisplayEntry, scale int) {
+	cols, rows := v.sourceUnits()
+	grid := v.displayGrid
+	for _, row := range grid {
+		clear(row)
+	}
+	fillDisplayGrid(grid, entries)
 	if v.retained != nil {
 		for row := range grid {
 			for col := range grid[row] {
 				for z := range grid[row][col] {
 					grid[row][col][z][1] = v.retained[row][col][z][1]
 					slot := &grid[row][col][z][0]
-					if slot.set && slot.entry.kind == displayProjectile && 2*z+1 < v.retainedInfo[row][col].start {
+					if slot.set && slot.kind == displayProjectile && 2*z+1 < v.retainedInfo[row][col].start {
 						*slot = battleDisplaySlot{}
 					}
 				}
@@ -682,29 +759,29 @@ func (v *View) drawDisplayGrid(dst *ebiten.Image, entries []battleDisplayEntry) 
 		}
 	}
 
-	info := makeDisplayInfo(&grid)
+	info := v.displayInfo
+	fillDisplayInfo(info, grid)
 	useCache := dst == v.buf && v.retained != nil && v.sprites != nil
 	if useCache && v.compositeCache == nil {
-		v.compositeCache = new([battleDisplayScanRows][battleDisplayAnchors]compositeTileCache)
+		v.compositeCache = make([]compositeTileCache, rows*cols)
 	}
 	// sub_1E085／sub_1E0E1 先在 16×32 的暫存格式合成；sub_1DFE8／
 	// sub_1E011 最後才把四段 16×8 重排成 VGA 上的 32×16。
-	encoded := ebiten.NewImage(battle.SubTileW, battle.SubTileH)
-	tile := ebiten.NewImage(battle.SubTileW*2, battle.SubTileH/2)
+	encoded, tile := v.encoded, v.unfolded
 	op := &ebiten.DrawImageOptions{}
-	for row := 0; row < battleDisplayScanRows; row++ {
-		for ai := 0; ai < battleDisplayAnchors; ai++ {
-
+	for row := 0; row < rows; row++ {
+		for ai := 0; ai < cols; ai++ {
+			origin := v.materials.origin.Add(image.Pt(ai*2*isoColPx, row*isoRowPx))
 			anchor := 1 + ai*2
-			z0, z1 := displayDepthRange(&info, row, anchor)
+			z0, z1 := displayDepthRange(info, row, anchor)
 			if useCache {
-				cell := &v.compositeCache[row][ai]
-				key := displayCompositeKey(&grid, row, anchor, z0, z1)
+				cell := &v.compositeCache[row*cols+ai]
+				key := displayCompositeKey(grid, row, anchor, z0, z1)
 				if cell.valid && cell.key == key {
 					continue
 				}
 				if cell.valid {
-					vector.DrawFilledRect(dst, float32(ai*battle.SubTileW*2), float32(row*isoRowPx), float32(battle.SubTileW*2), float32(isoRowPx), color.RGBA{16, 18, 20, 255}, false)
+					vector.DrawFilledRect(dst, float32(ai*battle.SubTileW*2*scale), float32(row*isoRowPx*scale), float32(battle.SubTileW*2*scale), float32(isoRowPx*scale), color.RGBA{16, 18, 20, 255}, false)
 				}
 				cell.key, cell.valid = key, true
 			}
@@ -713,17 +790,17 @@ func (v *View) drawDisplayGrid(dst *ebiten.Image, entries []battleDisplayEntry) 
 			// （`sub_1DDB4` ＋ `sub_1DE95`，docs/spec/58 §3）。
 			// 多畫低於地面的那幾層，城壁的面上會多出一排亮邊。
 			for layer := z0; layer <= z1; layer++ {
-				v.drawDisplaySlice(encoded, grid[row][anchor-1][layer], 24, 0)
-				v.drawDisplaySlice(encoded, grid[row][anchor+1][layer], 16, 8)
-				v.drawDisplayFull(encoded, grid[row][anchor][layer])
-				if row+1 < battleDisplayGridRows {
-					v.drawDisplaySlice(encoded, grid[row+1][anchor-1][layer], 8, 16)
-					v.drawDisplaySlice(encoded, grid[row+1][anchor+1][layer], 0, 24)
+				v.drawDisplaySlice(encoded, grid[row][anchor-1][layer], 24, 0, scale, origin)
+				v.drawDisplaySlice(encoded, grid[row][anchor+1][layer], 16, 8, scale, origin)
+				v.drawDisplayFull(encoded, grid[row][anchor][layer], scale, origin)
+				if row+1 < len(grid) {
+					v.drawDisplaySlice(encoded, grid[row+1][anchor-1][layer], 8, 16, scale, origin)
+					v.drawDisplaySlice(encoded, grid[row+1][anchor+1][layer], 0, 24, scale, origin)
 				}
 			}
-			unfoldDisplayTile(tile, encoded)
+			unfoldDisplayTile(tile, encoded, scale)
 			op.GeoM.Reset()
-			op.GeoM.Translate(float64(ai*battle.SubTileW*2), float64(row*isoRowPx))
+			op.GeoM.Translate(float64(ai*battle.SubTileW*2*scale), float64(row*isoRowPx*scale))
 			dst.DrawImage(tile, op)
 		}
 	}
@@ -731,15 +808,15 @@ func (v *View) drawDisplayGrid(dst *ebiten.Image, entries []battleDisplayEntry) 
 
 // unfoldDisplayTile 重現 sub_1E011 的四段搬移：encoded rows 0–7、8–15、
 // 16–23、24–31 依序成為輸出左上、右上、左下、右下。
-func unfoldDisplayTile(dst, encoded *ebiten.Image) {
+func unfoldDisplayTile(dst, encoded *ebiten.Image, scale int) {
 	dst.Clear()
 	for i := 0; i < 4; i++ {
-		srcY := i * (battle.SubTileH / 4)
-		part := encoded.SubImage(image.Rect(0, srcY, battle.SubTileW,
-			srcY+battle.SubTileH/4)).(*ebiten.Image)
+		srcY := i * displayBandRows * scale
+		part := encoded.SubImage(image.Rect(0, srcY, battle.SubTileW*scale,
+			srcY+displayBandRows*scale)).(*ebiten.Image)
 		dstX, dstY := displayUnfoldDestination(i)
 		op := &ebiten.DrawImageOptions{}
-		op.GeoM.Translate(float64(dstX), float64(dstY))
+		op.GeoM.Translate(float64(dstX*scale), float64(dstY*scale))
 		dst.DrawImage(part, op)
 	}
 }
@@ -759,38 +836,56 @@ func displayUnfoldDestination(part int) (x, y int) {
 // （docs/playtest/40 §12）。`makeDisplayInfo` 早就跳過 `raw == 0`，
 // 畫的那一邊漏了同一條。
 func displaySlotEmpty(s battleDisplaySlot) bool {
-	return !s.set || s.entry.raw == 0
+	return !s.set || s.raw == 0
 }
 
-func (v *View) drawDisplayFull(dst *ebiten.Image, slots [2]battleDisplaySlot) {
+func (v *View) drawDisplayFull(dst *ebiten.Image, slots [2]battleDisplaySlot, scale int, origin image.Point) {
 	for lane := 0; lane < 2; lane++ {
 		if displaySlotEmpty(slots[lane]) {
 			continue
 		}
-		if img := v.rawImage(slots[lane].entry.raw); img != nil {
-			dst.DrawImage(img, nil)
+		raw := slots[lane].raw
+		if v.materials.enabled(raw, scale) {
+			v.materials.drawFull(dst, origin, raw)
+			continue
+		}
+		if img := v.displayImage(raw, scale); img != nil {
+			ratio := float64(battle.SubTileW*scale) / float64(img.Bounds().Dx())
+			op := &ebiten.DrawImageOptions{}
+			op.GeoM.Scale(ratio, ratio)
+			dst.DrawImage(img, op)
 		}
 	}
 }
 
-func (v *View) drawDisplaySlice(dst *ebiten.Image, slots [2]battleDisplaySlot, srcY, dstY int) {
+func (v *View) drawDisplaySlice(dst *ebiten.Image, slots [2]battleDisplaySlot, srcY, dstY, scale int, origin image.Point) {
 	for lane := 0; lane < 2; lane++ {
 		if displaySlotEmpty(slots[lane]) {
 			continue
 		}
-		img := v.rawImage(slots[lane].entry.raw)
-		if img == nil {
+		raw := slots[lane].raw
+		if v.materials.enabled(raw, scale) && v.materials.drawBand(dst, origin, raw, srcY, dstY) {
 			continue
 		}
-		// ⭐ 一帶是 **8 列**不是 16：`sub_1E0E1` 的遮罩與四個色平面各只搬
-		// `mov cx, 8` 個 word。搬 16 列會讓下一帶的內容被上一帶蓋掉一半，
-		// 症狀是城壁的面上多出一排亮邊（docs/spec/58 §5）。
-		slice := img.SubImage(image.Rect(0, srcY, battle.SubTileW,
-			srcY+displayBandRows)).(*ebiten.Image)
-		op := &ebiten.DrawImageOptions{}
-		op.GeoM.Translate(0, float64(dstY))
-		dst.DrawImage(slice, op)
+		if img := v.displayImage(raw, scale); img != nil {
+			drawImageBand(dst, img, srcY, dstY, scale)
+		}
 	}
+}
+
+func drawImageBand(dst, img *ebiten.Image, srcY, dstY, scale int) {
+	// ⭐ 一帶是 **8 列**不是 16：`sub_1E0E1` 的遮罩與四個色平面各只搬
+	// `mov cx, 8` 個 word。搬 16 列會讓下一帶的內容被上一帶蓋掉一半，
+	// 症狀是城壁的面上多出一排亮邊（docs/spec/58 §5）。
+	width := img.Bounds().Dx()
+	sourceScale := width / battle.SubTileW
+	slice := img.SubImage(image.Rect(0, srcY*sourceScale, width,
+		(srcY+displayBandRows)*sourceScale)).(*ebiten.Image)
+	op := &ebiten.DrawImageOptions{}
+	ratio := float64(scale) / float64(sourceScale)
+	op.GeoM.Scale(ratio, ratio)
+	op.GeoM.Translate(0, float64(dstY*scale))
+	dst.DrawImage(slice, op)
 }
 
 // ProjectileSourceIndex 是原版 `sub_1AD2D`／`sub_1AD7F` 的 raw 圖號。
@@ -884,30 +979,109 @@ func New(opt Options) *View {
 //
 // ⚠ 回傳的是**內部重用的畫布**，不要保留它的參考跨幀使用。
 func (v *View) Render(b *tactical.Battle) *ebiten.Image {
+	return v.render(b, 1)
+}
+
+// RenderHD uses the same display list in a higher-resolution compositor.
+// A nil result means that the selection has no entries for this battle view.
+func (v *View) RenderHD(b *tactical.Battle, pack *library.HDBattle) *ebiten.Image {
+	hasTiles := pack.Available(v.set, v.sprites != nil)
+	if !hasTiles && !v.waterAvailable(pack) && !v.wallAvailable(pack) &&
+		!v.groundAvailable(pack) && !v.woodAvailable(pack) && !v.foliageAvailable(pack) && !v.slopeAvailable(pack) &&
+		!v.roofAvailable(pack) && !v.shipAvailable(pack) {
+		return nil
+	}
+	if v.hdPack != pack {
+		for _, img := range v.hdTiles {
+			if img != nil {
+				img.Dispose()
+			}
+		}
+		v.hdPack, v.hdTiles = pack, make(map[int]*ebiten.Image)
+		v.materials.reset()
+		v.loadWall(pack)
+		v.loadGround(pack)
+		v.loadWood(pack)
+		v.loadFoliage(pack)
+		v.loadSlope(pack)
+		v.loadRoof(pack)
+		v.loadShip(pack)
+		v.loadWater(pack)
+		v.compositeCache = nil
+	}
+	if v.woodAvailable(pack) && v.lib.IsSiege(v.field) {
+		v.syncBattleDrawingState(b)
+		if rev := v.tileRev + 1; v.materials.ladderRevision != rev {
+			v.materials.ladderRevision = rev
+			v.loadLadders(pack)
+		}
+	}
+	if !hasTiles && !v.materials.active() {
+		return nil
+	}
+	return v.render(b, library.HDBattleScale)
+}
+
+func (v *View) render(b *tactical.Battle, scale int) *ebiten.Image {
 	v.applyCameraOrigin()
-	if v.buf == nil {
-		v.buf = ebiten.NewImage(NativeW, NativeH)
+	if v.materials.active() && scale == library.HDBattleScale {
+		origin := image.Pt(v.camCol*isoColPx, v.camRow*isoRowPx)
+		if v.materials.origin != origin {
+			v.materials.origin = origin
+			v.compositeCache = nil
+		}
 	}
-	if b != nil && v.observed != b {
-		v.Observe(b)
+	cols, rows := v.sourceUnits()
+	width, height := cols*2*isoColPx*scale, rows*isoRowPx*scale
+	if v.buf == nil || v.buf.Bounds().Dx() != width || v.buf.Bounds().Dy() != height || v.encoded.Bounds().Dx() != battle.SubTileW*scale {
+		if v.buf != nil {
+			v.buf.Dispose()
+			v.encoded.Dispose()
+			v.unfolded.Dispose()
+		}
+		v.buf = ebiten.NewImage(width, height)
+		v.encoded = ebiten.NewImage(battle.SubTileW*scale, battle.SubTileH*scale)
+		v.unfolded = ebiten.NewImage(battle.SubTileW*2*scale, battle.SubTileH/2*scale)
+		v.compositeCache = nil
 	}
-	if v.observed == nil {
-		v.syncTiles(b)
+	gridCols, gridRows := displayGridSize(cols, rows)
+	if len(v.displayGrid) != gridRows || len(v.displayGrid[0]) != gridCols {
+		v.displayGrid = newDisplayGrid[battleDisplayCell](gridRows, gridCols)
+		v.displayInfo = newDisplayGrid[battleDisplaySlotInfo](gridRows, gridCols)
 	}
+	v.syncBattleDrawingState(b)
 	if v.compositeCache == nil || v.retained == nil || v.sprites == nil {
 		v.buf.Fill(color.RGBA{16, 18, 20, 255})
 	}
-	v.drawDisplayGrid(v.buf, v.buildDisplayList(b))
-	v.drawFallbackDots(b)
-	return v.buf
+	v.displayEntries = v.buildDisplayList(v.displayEntries[:0], b)
+	v.drawDisplayGrid(v.buf, v.displayEntries, scale)
+	v.drawFallbackDots(b, scale)
+	if v.ZoomPercent() == 100 {
+		return v.buf
+	}
+	r := v.visibleScene()
+	return v.buf.SubImage(image.Rectangle{Min: r.Min.Mul(scale), Max: r.Max.Mul(scale)}).(*ebiten.Image)
+}
+
+func (v *View) syncBattleDrawingState(b *tactical.Battle) {
+	if b == nil {
+		return
+	}
+	if v.observed != b {
+		v.Observe(b)
+	} else if b.Field.Revision() != v.tileRev {
+		// A command can damage terrain between tactical ticks.
+		v.rebuildRetained(b)
+		v.restoreDrawings(b, false)
+	}
 }
 
 // drawFallbackDots 是人物圖形載不到時的明確 fallback。
 //
 // ⚠ 正常路徑由同一份 display list 畫完，**不再依 side／陣列順序覆蓋**
 // 原版的深度關係——那樣畫出來的遮擋是錯的。
-func (v *View) drawFallbackDots(b *tactical.Battle) {
-	if v.sprites != nil {
+func (v *View) drawFallbackDots(b *tactical.Battle, scale int) {
+	if b == nil || v.sprites != nil {
 		return
 	}
 	for i := range b.Sides {
@@ -920,7 +1094,7 @@ func (v *View) drawFallbackDots(b *tactical.Battle) {
 			if !s.Alive {
 				continue
 			}
-			px, py, ok := v.ScreenPos(0, 0, s.X, s.Y, s.Z)
+			px, py, ok := v.scenePosition(s.X, s.Y, s.Z)
 			if !ok {
 				continue
 			}
@@ -936,8 +1110,8 @@ func (v *View) drawFallbackDots(b *tactical.Battle) {
 					c = color.RGBA{210, 230, 255, 255}
 				}
 			}
-			vector.DrawFilledRect(v.buf, float32(px-size/2), float32(py-size),
-				float32(size), float32(size), c, false)
+			vector.DrawFilledRect(v.buf, float32((px-size/2)*scale), float32((py-size)*scale),
+				float32(size*scale), float32(size*scale), c, false)
 		}
 	}
 }
@@ -1008,32 +1182,56 @@ func (v *View) Observe(b *tactical.Battle) {
 	v.observed = b
 	b.SetDrawingObserver(v)
 	v.rebuildRetained(b)
+	v.restoreDrawings(b, true)
+}
+
+func (v *View) restoreDrawings(b *tactical.Battle, minimap bool) {
 	if b.Frame > 0 {
 		for _, side := range []int{b.PlayerSide, 1 - b.PlayerSide} {
 			for k, s := range b.Sides[side].Soldiers {
 				if s.Alive {
-					v.DrawSoldierDrawing(b.Role(side), b.DrawnSoldier(side, k))
+					d := b.DrawnSoldier(side, k)
+					if minimap {
+						v.DrawSoldierDrawing(b.Role(side), d)
+					} else {
+						v.drawRetained(d.X, d.Y, d.Z, soldierDrawingSource(b.Role(side), d), false)
+					}
 				}
 			}
 		}
 		for _, d := range b.Deaths() {
-			v.DrawDeathDrawing(b.Role(d.Side), d)
+			if minimap {
+				v.DrawDeathDrawing(b.Role(d.Side), d)
+			} else {
+				d.Side = b.Role(d.Side)
+				v.drawRetained(d.X, d.Y, d.Z, deathDisplaySource(d), false)
+			}
 		}
 	}
 }
 func (v *View) rebuildRetained(b *tactical.Battle) {
 	v.applyCameraOrigin()
 	v.syncTiles(b)
-	entries := v.buildDisplayList(nil)
+	entries := v.buildDisplayList(v.displayEntries[:0], nil)
+	v.displayEntries = entries
 	terrain := entries[:0]
+	cols, rows := v.sourceUnits()
 	for _, e := range entries {
-		if e.kind == displayTerrain && e.cellCol >= 0 && e.cellCol < 31 {
+		if e.kind == displayTerrain && e.cellCol >= 0 && e.cellCol < 2*cols+1 {
 			terrain = append(terrain, e)
 		}
 	}
-	grid := makeDisplayGrid(terrain)
-	v.retained = &grid
-	v.retainedInfo = makeDisplayInfo(&grid)
+	gridCols, gridRows := displayGridSize(cols, rows)
+	if len(v.retained) != gridRows || len(v.retained[0]) != gridCols {
+		v.retained = newDisplayGrid[battleDisplayCell](gridRows, gridCols)
+		v.retainedInfo = newDisplayGrid[battleDisplaySlotInfo](gridRows, gridCols)
+	} else {
+		for _, row := range v.retained {
+			clear(row)
+		}
+	}
+	fillDisplayGrid(v.retained, terrain)
+	fillDisplayInfo(v.retainedInfo, v.retained)
 	v.retainedCamera = [2]int{v.camWorldX, v.camWorldY}
 }
 func (v *View) BeginDrawingFrame(b *tactical.Battle) {
@@ -1051,7 +1249,8 @@ func (v *View) drawRetained(x, y, z, raw int, erase bool) {
 	col, row := isoProjectOriginal(x, y, z)
 	col -= v.camCol
 	row -= v.camRow
-	if col < 0 || col >= 31 || row < 0 || row >= 24 {
+	cols, rows := v.sourceUnits()
+	if col < 0 || col >= 2*cols+1 || row < 0 || row >= rows+1 {
 		return
 	}
 	for upper := 0; upper < 2; upper++ {
@@ -1067,7 +1266,7 @@ func (v *View) drawRetained(x, y, z, raw int, erase bool) {
 		if !displaySlotEmpty(*slot) || 2*depth+1 < v.retainedInfo[r][col].start {
 			continue
 		}
-		*slot = battleDisplaySlot{set: true, entry: battleDisplayEntry{kind: displayRawUnit, raw: raw + 1 - upper}}
+		*slot = battleDisplaySlot{set: true, kind: displayRawUnit, raw: raw + 1 - upper}
 	}
 }
 func (v *View) EraseSoldierDrawing(x, y, z int) {
@@ -1085,7 +1284,10 @@ func (v *View) DrawSoldierDrawing(role int, d tactical.SoldierDrawing) {
 	if d.X >= 0 && d.X < battle.Width && d.Y >= 0 && d.Y < battle.Width {
 		v.miniMarks[d.Y][d.X] = uint8(role + 1)
 	}
+	v.drawRetained(d.X, d.Y, d.Z, soldierDrawingSource(role, d), false)
+}
 
+func soldierDrawingSource(role int, d tactical.SoldierDrawing) int {
 	flags := int(d.PoseStep)
 	if d.Hurt {
 		flags |= battle.PoseFlagFront
@@ -1093,8 +1295,7 @@ func (v *View) DrawSoldierDrawing(role int, d tactical.SoldierDrawing) {
 	if d.HitGeneral {
 		flags |= battle.PoseFlagHitGeneral
 	}
-	raw := battle.CombinedSourceTerrainTiles + role*battle.UnitsPerSide + battle.SpriteFor(int(d.Kind), d.Facing, flags)*2
-	v.drawRetained(d.X, d.Y, d.Z, raw, false)
+	return battle.CombinedSourceTerrainTiles + role*battle.UnitsPerSide + battle.SpriteFor(int(d.Kind), d.Facing, flags)*2
 }
 func (v *View) DrawDeathDrawing(role int, d tactical.Death) {
 	// 1B360只更新屍體，縮圖兵點到1B3B2移除時才擦掉。
@@ -1113,17 +1314,17 @@ type compositeTileCache struct {
 	valid bool
 }
 
-func displayCompositeKey(grid *battleDisplayGrid, row, anchor, z0, z1 int) compositeTileKey {
+func displayCompositeKey(grid battleDisplayGrid, row, anchor, z0, z1 int) compositeTileKey {
 	var key compositeTileKey
 	key[0], key[1] = z0, z1
 	index := 2
 	for _, at := range [5][2]int{{row, anchor - 1}, {row, anchor + 1}, {row, anchor}, {row + 1, anchor - 1}, {row + 1, anchor + 1}} {
 		for z := 0; z < battle.MaxStack; z++ {
 			for lane := 0; lane < 2; lane++ {
-				if at[0] >= 0 && at[0] < battleDisplayGridRows && at[1] >= 0 && at[1] < battleDisplayGridCols {
+				if at[0] >= 0 && at[0] < len(grid) && at[1] >= 0 && at[1] < len(grid[at[0]]) {
 					slot := grid[at[0]][at[1]][z][lane]
 					if !displaySlotEmpty(slot) {
-						key[index] = slot.entry.raw
+						key[index] = slot.raw
 					}
 				}
 				index++

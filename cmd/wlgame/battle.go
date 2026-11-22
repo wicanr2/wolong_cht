@@ -61,6 +61,7 @@ func (g *game) drawSpeedToast(dst *ebiten.Image, l dosvBattleLayout) {
 func (g *game) updateBattle(allowPointer bool) {
 	p := g.world.PendingBattle()
 	b := p.Battle
+	b.SetCommandAssist(g.tacticalAssist)
 	// 遭遇直接進戰場（docs/spec/105），開戰喊話在第一幀就要武裝好。
 	g.startBattleTalk(p)
 	l := dosvBattleLayoutFor(screenW, screenH)
@@ -168,12 +169,38 @@ func (g *game) updateBattle(allowPointer bool) {
 		inpututil.IsMouseButtonJustPressed(ebiten.MouseButtonRight) ||
 		inpututil.IsMouseButtonJustPressed(ebiten.MouseButtonMiddle))
 	if g.battleResult.ready(b, g.battleResultSeconds, time.Now(), clicked) {
-		if ev := g.world.ResolvePending(g.rng); ev != nil {
-			g.recordBattleReport(*ev)
-		}
+		g.settleTacticalBattle()
 		g.view = nil
 		g.battleResult = battleResultTimer{}
 	}
+}
+
+func (g *game) settleTacticalBattle() {
+	ev, capture := g.world.BeginPendingSettlement(g.rng)
+	if ev == nil {
+		return
+	}
+	before := len(g.messages)
+	g.reportCaptives(*ev)
+	firstCaptureFate := len(ev.Destroyed)
+	finish := func() {
+		if capture != nil {
+			capture()
+		}
+		g.reportGovernorReturn(*ev)
+		g.reportRout(*ev)
+		if len(ev.Destroyed) > firstCaptureFate {
+			captureEvent := *ev
+			captureEvent.Destroyed = ev.Destroyed[firstCaptureFate:]
+			g.reportCaptives(captureEvent)
+		}
+		g.recordBattleReport(*ev)
+	}
+	if capture != nil && len(g.messages) > before {
+		g.afterTalk(finish)
+		return
+	}
+	finish()
 }
 
 func battleCommandIndexForKey(k ebiten.Key) (int, bool) {
@@ -226,9 +253,6 @@ func (g *game) drawBattle(screen *ebiten.Image) {
 
 	screen.Fill(color.RGBA{18, 22, 18, 255})
 
-	// 鏡頭跟著玩家那一側的大將走。
-	me := b.Sides[g.battleSide()].Soldiers[0]
-
 	if g.view != nil {
 		if g.battleFastForward {
 			// `▶▶`（快轉）：原版把 loc_1A065 的 jz 改成 jmp short，跳過戰場
@@ -236,7 +260,7 @@ func (g *game) drawBattle(screen *ebiten.Image) {
 			// （docs/spec/102，實機 playtest/53）。
 			g.chrome.FillMenu(screen, l.Field.X, l.Field.Y, l.Field.W, l.Field.H)
 		} else {
-			g.drawBattleIso(screen, b, &me)
+			g.drawBattleIso(screen, b, l.Field)
 		}
 		g.drawBattleChrome(screen, b, p, l)
 		g.drawSpeedToast(screen, l)
@@ -246,6 +270,7 @@ func (g *game) drawBattle(screen *ebiten.Image) {
 
 	// 沒有原版美術時的退路：由上往下的高度圖。仍遵守同一個完整
 	// 戰術版面，避免資產缺失時又退回右側大片空黑。
+	me := b.Sides[g.battleSide()].Soldiers[0]
 	amber := color.RGBA{240, 200, 120, 255}
 	cellPx := 7
 	fieldX, fieldY := l.Field.X, l.Field.Y
@@ -1103,8 +1128,6 @@ func (g *game) installTactical(dir string) {
 		return
 	}
 	g.battle = p
-	g.battleLib = p.Library()
-	g.battleSprites = p.Sprites()
 	g.tactical = setup
 	g.world.SetTactical(setup)
 }

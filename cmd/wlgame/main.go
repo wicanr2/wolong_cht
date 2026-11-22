@@ -43,7 +43,6 @@ import (
 	"github.com/hajimehoshi/ebiten/v2/inpututil"
 	"github.com/hajimehoshi/ebiten/v2/vector"
 
-	"github.com/wicanr2/wolong_cht/internal/assets/battle"
 	"github.com/wicanr2/wolong_cht/internal/assets/cjk"
 	"github.com/wicanr2/wolong_cht/internal/assets/gfx"
 	"github.com/wicanr2/wolong_cht/internal/assets/library"
@@ -117,11 +116,15 @@ const (
 )
 
 type game struct {
+	tacticalAssist     bool
+	generalEditor      *generalEditor
 	hdDisplay          bool
 	hdPortraits        *library.HDPortraits
 	hdWorld            hdWorldState
 	hdBanner           hdBannerState
 	hdLocation         hdLocationState
+	hdBattle           *library.HDBattle
+	hdBattleDrawn      bool
 	hdFrame            *hdComposite
 	hdPortraitCache    map[int]*ebiten.Image
 	hdPortraitLRU      []int
@@ -305,13 +308,11 @@ type game struct {
 	// World.TickMap 的每時更新內，不能把兩者混成同一件事。
 	idleGate idleClockGate
 
+	// view 是戰場的等角繪圖資源。沒有原版美術時是 nil，畫面退回高度圖。
+	view *isoview.View
+
 	// list 是開著的一覽表（武將／據點…）。它是**非常駐視窗**，
 	// 所以開著的時候時間會停（15-realtime.md §2）。
-	battleLib *battle.Library
-	// view 是戰場的等角繪圖資源。沒有原版美術時是 nil，畫面退回高度圖。
-	view          *isoview.View
-	battleSprites *battle.Sprites
-
 	list     *listwin.List
 	sortMem  listwin.Memory
 	listDrag listScrollDrag
@@ -1923,6 +1924,7 @@ func main() {
 	hdWorldDir := flag.String("hd-world", "", "本機HD大地圖選稿目錄；缺圖及未提供的色盤沿用原圖")
 	hdBannerDir := flag.String("hd-banner", "", "本機HD橫幅選稿目錄；缺圖及未提供的色盤沿用原圖")
 	hdLocationDir := flag.String("hd-locations", "", "本機已同意的城池景觀選稿目錄；按原圖庫頁碼取圖，缺圖沿原圖")
+	hdBattleDir := flag.String("hd-battle", "", "本機 HD 戰場選稿目錄；地形與人物缺圖沿用原圖")
 	framesDir := flag.String("frames-dir", "", "把每一張畫出來的圖寫成 fNNNNN.png（推廣片素材，docs/spec/71）")
 	framesN := flag.Int("frames", 300, "配 -frames-dir：錄幾張就結束")
 	shotFrames := flag.Int("shot-frames", 120, "截圖前先跑幾幀（配 -shot-when 時退成下限）")
@@ -2115,6 +2117,13 @@ func main() {
 		}
 	}
 
+	if *hdBattleDir != "" {
+		if pack, err := library.LoadHDBattle(*hdBattleDir); err != nil {
+			log.Printf("HD battle unavailable; original assets retained: %v", err)
+		} else {
+			g.hdBattle = pack
+		}
+	}
 	if *hdLocationDir != "" {
 		if pack, err := library.LoadHDLocations(*hdLocationDir, originalLocationCount(g)); err != nil {
 			log.Printf("HD locations unavailable; original assets retained: %v", err)
@@ -2356,8 +2365,7 @@ func (g *game) startWorld(path string, slot int, player int, overridePlayer, new
 		w.SetRoads(g.roads)
 	}
 	g.tactical = nil
-	g.battleLib = nil
-	g.battleSprites = nil
+	g.battle = nil
 	g.view = nil
 	g.battleCommandBase = nil
 	g.battleCommandGlyphs = [6]*ebiten.Image{}

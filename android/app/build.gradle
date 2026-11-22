@@ -2,6 +2,12 @@ plugins {
     id 'com.android.application'
 }
 
+def releaseVersion = providers.environmentVariable('WOLONG_RELEASE_VERSION').orElse('dev').get()
+if (releaseVersion != 'dev' && !(releaseVersion ==~ /v\.[0-9]+\.[0-9]+\.[0-9]+-[0-9]{8}/)) {
+    throw new GradleException('WOLONG_RELEASE_VERSION must use v.major.minor.patch-YYYYMMDD')
+}
+def androidVersionCode = providers.environmentVariable('WOLONG_ANDROID_VERSION_CODE').orElse('1').get().toInteger()
+
 android {
     namespace 'com.wicanr2.wolong'
     compileSdk 35
@@ -12,8 +18,8 @@ android {
         // The first reproducible AAR is bound with -androidapi 29.
         minSdk 29
         targetSdk 35
-        versionCode 1
-        versionName '0.1.0-touch-prototype'
+        versionCode androidVersionCode
+        versionName releaseVersion == 'dev' ? '0.1.0-touch-prototype' : releaseVersion
     }
 
     compileOptions {

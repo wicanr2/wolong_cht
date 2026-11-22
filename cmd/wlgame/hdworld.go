@@ -22,7 +22,7 @@ type hdWorldState struct {
 }
 
 func (g *game) hdAssetsAvailable() bool {
-	return g.hdPortraits.Count() > 0 || g.hdWorld.pack.Count() > 0 || g.hdBanner.pack != nil || g.hdLocation.pack.Count() > 0
+	return g.hdPortraits.Count() > 0 || g.hdWorld.pack.Count() > 0 || g.hdBanner.pack != nil || g.hdLocation.pack.Count() > 0 || g.hdBattle != nil
 }
 
 func (g *game) nativeWorldLayer(index int, layer library.HDWorldLayer) *ebiten.Image {

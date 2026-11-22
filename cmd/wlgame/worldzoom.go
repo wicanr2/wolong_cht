@@ -107,12 +107,26 @@ func (g *game) zoomMapWheel(dy float64, x, y int, down [3]bool) bool {
 	if dy == 0 || down != [3]bool{} || !g.strategyZoomReady() || !g.strategyMapPointVisible(x, y) {
 		return false
 	}
-	step := 25
-	if dy < 0 {
-		step = -25
-	}
-	g.zoomMapTo(g.mapZoomPercent()+step, x, y-strategyMapY)
+	g.zoomMapTo(g.mapZoomPercent()+wheelZoomStep(dy), x, y-strategyMapY)
 	return true
+}
+
+func (g *game) desktopZoomReady() bool {
+	return g.strategyZoomReady() || g.battleZoomReady()
+}
+
+func (g *game) desktopZoomPercent() int {
+	if g.desktopBattleVisible() {
+		return g.view.ZoomPercent()
+	}
+	return g.mapZoomPercent()
+}
+
+func wheelZoomStep(dy float64) int {
+	if dy < 0 {
+		return -25
+	}
+	return 25
 }
 
 func (g *game) desktopZoomLabel(a desktopAction) string {
@@ -121,7 +135,7 @@ func (g *game) desktopZoomLabel(a desktopAction) string {
 	case desktopZoomOut:
 		return rows[0]
 	case desktopZoomReset:
-		return fmt.Sprintf(rows[1], g.mapZoomPercent())
+		return fmt.Sprintf(rows[1], g.desktopZoomPercent())
 	case desktopZoomIn:
 		return rows[2]
 	}

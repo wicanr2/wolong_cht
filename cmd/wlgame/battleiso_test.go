@@ -13,10 +13,10 @@ import (
 // 所以斷言留在看得到兩者的這一側。
 func TestBattleViewBufferMatchesDOSVVisibleViewport(t *testing.T) {
 	l := dosvBattleLayoutFor(dosvBattleScreenW, dosvBattleScreenH)
-	if got, want := isoview.NativeW*isoScale, l.Field.W; got != want {
+	if got, want := isoview.NativeW, l.Field.W; got != want {
 		t.Fatalf("戰場 buffer 寬度 = %d，DOS/V viewport = %d", got, want)
 	}
-	if got, want := isoview.NativeH*isoScale, l.Field.H; got != want {
+	if got, want := isoview.NativeH, l.Field.H; got != want {
 		t.Fatalf("戰場 buffer 高度 = %d，DOS/V viewport = %d", got, want)
 	}
 }

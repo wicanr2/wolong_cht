@@ -1574,6 +1574,14 @@ sub [bx+10h], dl / sub [bx+11h], dl / sub [bx+13h], dl
 
 ### 5.11 ⭐ 門與城壁是「和兵一樣的實體」，而且是從圖塊值長出來的
 
+2026-11-22 續證，已證實。類型 2 也是上爬時的架梯進度。松崗 DOS/V `KI.EXE` SHA-256
+`fffeba985231cda4d636e93d10f598470b1f691d00275e4aa38e285893d43868`，位址為 IDA Pro 9.4 DOS/V linear。
+`19DA9–19DCF` 設定 `F0–F7` 的類型 2 記錄與 `+18h=80`，`1B10D` 接上爬碰撞，
+`1B5F0／1B5FE` 區分零後完成與逐次扣減。`1B854` 把圖格值加 8，`1B85D` 重建堆疊。
+dosgolem 固定 seed 的椎陽 `(39,26)` 取樣驗到弓兵站在同格時扣到零，下一次接觸完成，再下一拍上升。
+`(39,11)` 的進度在接觸中斷期間保留。下列「門」是原記錄在專案的舊稱，供對照既有程式識別字。
+[位址與 bytes](../../workplace/scratch/battle-toolbar-pointer/hd-review/ladder-timing-20261122/ida-probe.json)・[dosgolem 對拍收據](../../workplace/scratch/battle-toolbar-pointer/hd-review/ladder-timing-20261122/ladder-comparison.json)
+
 `sub_19CB3` 把 `es` 設成 `word_1D30E + 0xC0`，也就是單位記錄區的 `0x0C00`，
 然後連著呼叫兩個建立常式。**兵佔 `0x0000`–`0x0BFF`（96 個 × 32 B），
 門與城壁接在 `0x0C00`–`0x0DFF`，同樣是 32 B 一筆，兩者共用 16 筆的額度**

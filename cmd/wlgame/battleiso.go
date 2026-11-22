@@ -10,14 +10,14 @@ import (
 // 戰場的等角投影畫在 `internal/ui/isoview`——**手機版用同一份**。
 // 這裡只做桌面版的版面：把那張原生畫布放到 DOS/V 版面的戰場區。
 
-// isoScale 是桌面版的放大倍率。原生畫布正好是 DOS/V 的可見 viewport，
-// 所以是 1；改這個值之前先看 `TestBattleViewBufferMatchesDOSVVisibleViewport`。
-const isoScale = 1
-
 // newBattleView 準備一張戰場的繪圖資源。缺素材就回 nil，
 // 呼叫端會退回沒有美術的畫法。
 func (g *game) newBattleView(field int, rotate bool) *isoview.View {
-	if g.battleLib == nil || g.lib == nil || g.lib.Palette == nil {
+	if g.battle == nil || g.lib == nil || g.lib.Palette == nil {
+		return nil
+	}
+	lib := g.battle.Library()
+	if lib == nil {
 		return nil
 	}
 	bank, err := g.lib.Palette.Bank(0)
@@ -25,7 +25,7 @@ func (g *game) newBattleView(field int, rotate bool) *isoview.View {
 		return nil
 	}
 	opt := isoview.Options{
-		Lib: g.battleLib, Palette: bank, Sprites: g.battleSprites,
+		Lib: lib, Palette: bank, Sprites: g.battle.Sprites(),
 		Field: field, Rotate: rotate, Rand: g.rng.Next,
 	}
 	if g.battleCamAt != nil {
@@ -35,13 +35,32 @@ func (g *game) newBattleView(field int, rotate bool) *isoview.View {
 	return isoview.New(opt)
 }
 
-func (g *game) drawBattleIso(screen *ebiten.Image, b *tactical.Battle, me *tactical.Soldier) {
-	l := dosvBattleLayoutFor(screenW, screenH)
+func (g *game) drawBattleIso(screen *ebiten.Image, b *tactical.Battle, field battleRect) {
+	if g.hdFrame != nil {
+		if native := g.view.RenderHD(b, g.hdBattle); native != nil {
+			g.hdFrame.nativeRect(screen, native, field.X, field.Y, field.W, field.H)
+			g.hdBattleDrawn = true
+			return
+		}
+	}
 	buf := g.view.Render(b)
 	op := &ebiten.DrawImageOptions{}
-	op.GeoM.Scale(isoScale, isoScale)
-	op.GeoM.Translate(float64(l.Field.X), float64(l.Field.Y))
+	op.GeoM.Scale(float64(field.W)/float64(buf.Bounds().Dx()), float64(field.H)/float64(buf.Bounds().Dy()))
+	op.GeoM.Translate(float64(field.X), float64(field.Y))
 	screen.DrawImage(buf, op)
+}
+
+func (g *game) battleZoomReady() bool {
+	return g.view != nil && g.desktopBattleVisible() && !g.battleFastForward && !g.world.PendingBattle().Battle.Done
+}
+
+func (g *game) zoomBattleWheel(dy float64, x, y int, down [3]bool) bool {
+	field := dosvBattleLayoutFor(screenW, screenH).Field
+	if dy == 0 || down != [3]bool{} || !g.battleZoomReady() || !field.containsPoint(x, y) {
+		return false
+	}
+	g.view.ZoomAt(g.view.ZoomPercent()+wheelZoomStep(dy), x-field.X, y-field.Y)
+	return true
 }
 
 // viewCursorX／viewCursorY 是小地圖十字的位置，沒有戰場畫面時回 0。

@@ -7,6 +7,9 @@ type Rand interface{ Next() int }
 
 // Side 是交戰的一方。
 type Side struct {
+	// CommanderRating is the strategic command stat at deployment.
+	CommanderRating int
+
 	// Soldiers 是場上的 48 個兵：第 k 隊佔 [k*8, k*8+8)，**每隊的第一個是隊長**
 	// （`sub_1A754` 的 1 + 7 迴圈）。
 	Soldiers [SoldiersOnFoot]Soldier
@@ -256,6 +259,10 @@ func oppositeAdvantage(a Advantage) Advantage {
 
 // Battle 是一場進行中的戰術戰鬥。
 type Battle struct {
+	commandAssist    bool
+	pathAssistCredit [2]int
+	moveAssistCredit [2][SoldiersOnFoot]int
+
 	drawingObserver DrawingObserver
 	drawingPrevious *[2][SoldiersOnFoot][3]int
 
@@ -341,6 +348,20 @@ type Battle struct {
 	// Log 記錄值得回報的事件，供呼叫端呈現。
 	Log []string
 }
+
+// SetCommandAssist affects future tactical steps and discards unused credit on disable.
+func (b *Battle) SetCommandAssist(enabled bool) {
+	if b.commandAssist && !enabled {
+		b.pathAssistCredit = [2]int{}
+		b.moveAssistCredit = [2][SoldiersOnFoot]int{}
+		for i := range b.Structures {
+			b.Structures[i].ladderCredit = 0
+		}
+	}
+	b.commandAssist = enabled
+}
+
+func (b *Battle) CommandAssistEnabled() bool { return b.commandAssist }
 
 type projectile struct {
 	// 原版玩家／腳本角色各16槽，同側單兵k%16共用。
@@ -733,8 +754,11 @@ func (b *Battle) Step() {
 				if b.Sides[i].Soldiers[k].Stamina != 0 {
 					fresh[i]++
 				}
-			} else if !b.stepDeath(i, k) {
-				b.reinforceSoldier(i, k)
+			} else {
+				b.moveAssistCredit[i][k] = 0
+				if !b.stepDeath(i, k) {
+					b.reinforceSoldier(i, k)
+				}
 			}
 		}
 	}

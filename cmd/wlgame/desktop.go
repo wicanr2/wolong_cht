@@ -45,7 +45,7 @@ func loadDesktopLabels() map[string][]string {
 		log.Panicf("讀取桌面工具列文字：%v", err)
 	}
 	for _, lang := range []string{"zh-hant", "zh-hans", "ja", "en"} {
-		if len(labels[lang]) != 7 || len(labels["hints-"+lang]) != 5 {
+		if len(labels[lang]) != 7 || len(labels["hints-"+lang]) != 5 || len(labels["tools-"+lang]) != 13 {
 			log.Panicf("桌面工具列文字不完整：%s", lang)
 		}
 	}
@@ -82,10 +82,13 @@ const (
 	desktopZoomReset
 	desktopZoomIn
 	desktopReport
+	desktopTacticalAssist
+	desktopGeneralEditor
 )
 
-var desktopActions = []desktopAction{desktopLanguage, desktopDisplay, desktopZoomOut, desktopZoomReset, desktopZoomIn, desktopSettings, desktopReport, desktopSave, desktopLoad, desktopBack, desktopConfirm, desktopQuit}
-var desktopWidths = []int{48, 72, 24, 44, 24, 48, 56, 48, 48, 48, 64, 48}
+var desktopActions = []desktopAction{desktopLanguage, desktopDisplay, desktopZoomOut, desktopZoomReset, desktopZoomIn,
+	desktopSettings, desktopReport, desktopTacticalAssist, desktopGeneralEditor, desktopSave, desktopLoad, desktopBack, desktopConfirm, desktopQuit}
+var desktopWidths = []int{48, 48, 18, 42, 18, 48, 56, 56, 40, 40, 40, 40, 40, 40}
 var desktopDisplayLabels = func() map[string][]string {
 	b, err := translations.Files.ReadFile("desktop-display.json")
 	var m map[string][]string
@@ -168,28 +171,38 @@ func (g *game) desktopHostReady() bool {
 		!g.mapClickBusy() && g.world.PendingDiplomacy() == nil && g.world.PendingFunding() == nil
 }
 
+func (g *game) desktopBattleVisible() bool {
+	return g.world != nil && g.world.Outcome() == state.InProgress &&
+		g.battleActive() && !g.messageActive() && !g.endingActive() && !g.quitting
+}
+
 func (g *game) desktopEnabled(a desktopAction) bool {
 	if g == nil {
 		return false
 	}
-	if g.choiceOwnsInput() {
+	if g.choiceOwnsInput() || g.generalEditor != nil {
 		return false
 	}
 	switch a {
 	case desktopLanguage:
 		return !g.quitting && (g.launcher != nil && g.naming == nil || g.desktopHostReady() && !g.hudOpen(hudSystem))
 	case desktopDisplay:
-		return g.hdAssetsAvailable() && !g.videoLCD && !g.quitting && (g.launcher != nil && g.naming == nil || g.desktopHostReady())
+		return g.hdAssetsAvailable() && !g.videoLCD && !g.quitting &&
+			(g.launcher != nil && g.naming == nil || g.desktopHostReady() || g.desktopBattleVisible())
 	case desktopZoomOut:
-		return g.strategyZoomReady() && g.mapZoomPercent() > 50
+		return g.desktopZoomReady() && g.desktopZoomPercent() > 50
 	case desktopZoomReset:
-		return g.strategyZoomReady() && g.mapZoomPercent() != 100
+		return g.desktopZoomReady() && g.desktopZoomPercent() != 100
 	case desktopZoomIn:
-		return g.strategyZoomReady() && g.mapZoomPercent() < 200
+		return g.desktopZoomReady() && g.desktopZoomPercent() < 200
 	case desktopSettings, desktopSave, desktopLoad:
 		return g.desktopHostReady()
 	case desktopReport:
 		return g.hasBattleReport() && g.desktopHostReady() && !g.hudOpen(hudSystem) && !g.factionPicker
+	case desktopTacticalAssist:
+		return g.desktopHostReady() || g.desktopBattleVisible()
+	case desktopGeneralEditor:
+		return g.desktopHostReady() && !g.hudOpen(hudSystem) && !g.factionPicker && len(g.world.Generals) != 0
 	case desktopBack:
 		return g.quitting || g.quitMenu.active || g.naming != nil ||
 			g.launcher != nil && g.launcher.phase != launcherTitle ||
@@ -249,6 +262,9 @@ func (s *desktopGame) Update() error {
 	pushX, pushY := g.updateDesktopPointer()
 	if g.focusManaged && !ebiten.IsFocused() {
 		s.bar = desktopGesture{}
+		if g.generalEditor != nil {
+			g.generalEditor.armed = 0
+		}
 		return nil
 	}
 	x, y := cursorPosition()
@@ -256,6 +272,12 @@ func (s *desktopGame) Update() error {
 		ebiten.IsMouseButtonPressed(ebiten.MouseButtonLeft),
 		ebiten.IsMouseButtonPressed(ebiten.MouseButtonRight),
 		ebiten.IsMouseButtonPressed(ebiten.MouseButtonMiddle),
+	}
+	if g.generalEditor != nil {
+		g.idleGate.Pause()
+		g.updateGeneralEditor(x, y, down, s.bar.previous)
+		s.bar = desktopGesture{previous: down}
+		return nil
 	}
 	if g.choiceOwnsInput() || g.listScrollOwnsInput() {
 		// 原版文字選單獨占滑鼠，不能被工具列消費或回傳排隊的手勢。
@@ -277,6 +299,10 @@ func (s *desktopGame) Update() error {
 	s.traceAction = action
 	if !blocked {
 		_, wheelY := ebiten.Wheel()
+		if g.zoomBattleWheel(wheelY, x, y, down) {
+			s.advanceBattleWithoutPointer()
+			return nil
+		}
 		if g.zoomMapWheel(wheelY, x, y, down) {
 			g.idleGate.Pause()
 			return nil
@@ -301,15 +327,22 @@ func (s *desktopGame) Update() error {
 		g.hudSet(hudSystem, !g.hudOpen(hudSystem))
 	case desktopReport:
 		g.openBattleReport()
+	case desktopTacticalAssist:
+		g.tacticalAssist = !g.tacticalAssist
+		g.saveDesktopPreferences()
+		s.advanceBattleWithoutPointer()
+	case desktopGeneralEditor:
+		g.openGeneralEditor()
 	case desktopDisplay:
 		g.hdDisplay = !g.hdDisplay
 		g.saveDesktopPreferences()
+		s.advanceBattleWithoutPointer()
 	case desktopZoomOut:
-		g.zoomMapTo(g.mapZoomPercent()-25, strategyMapW/2, strategyMapH/2)
+		s.zoomTo(g.desktopZoomPercent() - 25)
 	case desktopZoomReset:
-		g.zoomMapTo(100, strategyMapW/2, strategyMapH/2)
+		s.zoomTo(100)
 	case desktopZoomIn:
-		g.zoomMapTo(g.mapZoomPercent()+25, strategyMapW/2, strategyMapH/2)
+		s.zoomTo(g.desktopZoomPercent() + 25)
 	case desktopSave:
 		g.beginSaveUI(saveWrite)
 	case desktopLoad:
@@ -326,11 +359,20 @@ func (s *desktopGame) Update() error {
 
 // The toolbar owns this gesture, but it does not stop an active battle.
 func (s *desktopGame) advanceBattleWithoutPointer() {
-	g := s.g
-	if g.world != nil && g.world.Outcome() == state.InProgress &&
-		g.battleActive() && !g.messageActive() && !g.quitting && !g.endingActive() {
-		g.updateBattle(false)
+	if s.g.desktopBattleVisible() {
+		s.g.updateBattle(false)
 	}
+}
+
+func (s *desktopGame) zoomTo(percent int) {
+	g := s.g
+	if g.battleZoomReady() {
+		f := dosvBattleLayoutFor(screenW, screenH).Field
+		g.view.ZoomAt(percent, f.W/2, f.H/2)
+		s.advanceBattleWithoutPointer()
+		return
+	}
+	g.zoomMapTo(percent, strategyMapW/2, strategyMapH/2)
 }
 
 // 只讀取實際玩家狀態，供正常 GUI 驗收同步；不注入輸入、時間或亂數。
@@ -349,6 +391,8 @@ func (s *desktopGame) writeTrace() {
 		"barVisible": s.barVisible, "barHeight": s.barHeight(), "barFullHeight": desktopBarHeight, "barRevealHeight": desktopRevealHeight,
 		"windowSize":        [2]int{s.finalBounds.Dx(), s.finalBounds.Dy()},
 		"hdBannerAvailable": g.hdBanner.pack != nil, "hdBannerDrawn": g.hdBanner.drawn,
+		"hdBattleAvailable": g.hdBattle != nil, "hdBattleDrawn": g.hdBattleDrawn,
+		"battleZoomPercent": g.view.ZoomPercent(), "battleZoomReady": g.battleZoomReady(),
 		"hdWorldAvailable": g.hdWorld.pack.Count(), "hdWorldDrawn": g.hdWorld.drawn, "hdWorldCacheBytes": g.hdWorld.bytes,
 		"hdWorldOrigin": g.hdWorld.drawOrigin, "hdWorldZoom": g.hdWorld.drawZoom,
 		"zoomPercent": g.mapZoomPercent(), "zoomReady": g.strategyZoomReady(), "camSub": [2]int{g.camSubX, g.camSubY},
@@ -356,7 +400,8 @@ func (s *desktopGame) writeTrace() {
 		"hdDisplay": g.hdDisplay, "hdAvailable": g.hdPortraits.Count(), "hdNativeDraws": g.hdNativeDraws, "hdScale": s.hd.scale,
 		"hdDrawPhase": g.hdDrawPhase, "hudFaction": g.hudOpen(hudFaction),
 		"videoLCD": g.videoLCD, "battleNotices": g.battleNotices,
-		"factionPicker": g.factionPicker, "statusBox": g.statusBoxActive(),
+		"tacticalAssist": g.tacticalAssist,
+		"factionPicker":  g.factionPicker, "statusBox": g.statusBoxActive(),
 		"x": x, "y": y, "captured": desktopPointer.active, "phase": phase,
 		"cursorMode":   int(ebiten.CursorMode()),
 		"pointerReady": desktopPointer.active && desktopPointer.rebase == 0,
@@ -370,6 +415,10 @@ func (s *desktopGame) writeTrace() {
 		"action": int(s.traceAction), "cam": [2]int{g.camX, g.camY},
 		"buttons": [3]bool{ebiten.IsMouseButtonPressed(ebiten.MouseButtonLeft), ebiten.IsMouseButtonPressed(ebiten.MouseButtonRight), ebiten.IsMouseButtonPressed(ebiten.MouseButtonMiddle)},
 		"canBack": g.desktopEnabled(desktopBack), "hostReady": g.desktopHostReady(),
+	}
+	if e := g.generalEditor; e != nil {
+		v["generalEditor"] = map[string]any{"officer": e.selected, "draft": e.draft,
+			"saved": g.world.Generals[e.selected].Abilities(), "pageRows": e.pageIDs()}
 	}
 	if len(g.messages) > 0 {
 		d := g.messages[0]
@@ -407,7 +456,7 @@ func (s *desktopGame) writeTrace() {
 	for _, row := range []struct {
 		key    string
 		action desktopAction
-	}{{"zoomOut", desktopZoomOut}, {"zoomReset", desktopZoomReset}, {"zoomIn", desktopZoomIn}, {"display", desktopDisplay}, {"language", desktopLanguage}, {"settings", desktopSettings}, {"report", desktopReport}, {"save", desktopSave}, {"load", desktopLoad}, {"back", desktopBack}, {"confirm", desktopConfirm}, {"quit", desktopQuit}} {
+	}{{"zoomOut", desktopZoomOut}, {"zoomReset", desktopZoomReset}, {"zoomIn", desktopZoomIn}, {"display", desktopDisplay}, {"language", desktopLanguage}, {"settings", desktopSettings}, {"report", desktopReport}, {"tacticalAssist", desktopTacticalAssist}, {"generalEditor", desktopGeneralEditor}, {"save", desktopSave}, {"load", desktopLoad}, {"back", desktopBack}, {"confirm", desktopConfirm}, {"quit", desktopQuit}} {
 		r := desktopButton(row.action)
 		buttons[row.key] = [4]int{r.Min.X, r.Min.Y, r.Max.X, r.Max.Y}
 	}
@@ -464,6 +513,7 @@ func (s *desktopGame) writeTrace() {
 			}
 			v["battle"] = map[string]any{
 				"attacker": p.Attacker, "defender": p.Defender, "node": p.Node,
+				"commandAssist": b.CommandAssistEnabled(), "commanders": [2]int{b.Sides[0].CommanderRating, b.Sides[1].CommanderRating},
 				"mode": int(p.Mode), "side": side, "frame": b.Frame, "done": b.Done,
 				"opening": b.OpeningActive(), "talk": g.battleTalkSession.queue.active(),
 				"squadOrders": orders, "talkRemaining": g.battleTalkSession.queue.remaining,
@@ -532,6 +582,7 @@ func (s *desktopGame) Draw(dst *ebiten.Image) {
 	s.hdFrameDrawn = s.g.hdDisplay && !s.g.videoLCD && s.g.hdAssetsAvailable()
 	s.g.hdWorld.drawn = 0
 	s.g.hdBanner.drawn = false
+	s.g.hdBattleDrawn = false
 	s.g.hdLocation.drawn = false
 	s.g.hdLocation.page, s.g.hdLocation.city = -1, -1
 	s.g.hdNativeDraws = 0
@@ -553,6 +604,9 @@ func (s *desktopGame) Draw(dst *ebiten.Image) {
 		op := &ebiten.DrawImageOptions{}
 		op.GeoM.Scale(1/s.hd.scale, 1/s.hd.scale)
 		s.canvas.DrawImage(s.hd.surface, op)
+	}
+	if s.g.generalEditor != nil {
+		s.g.drawGeneralEditor(s.canvas)
 	}
 	op := &ebiten.DrawImageOptions{}
 	op.GeoM.Translate(0, float64(s.barHeight()))
@@ -597,6 +651,8 @@ func (s *desktopGame) Draw(dst *ebiten.Image) {
 				label = s.g.desktopZoomLabel(a)
 			} else if a == desktopReport {
 				label = battleReportText("button")
+			} else if a == desktopTacticalAssist || a == desktopGeneralEditor {
+				label = desktopToolLabel(desktopLocale(), a, s.g.tacticalAssist)
 			} else {
 				label = labels[int(a)-1]
 			}

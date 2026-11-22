@@ -100,8 +100,7 @@ func (g *game) returnToLauncher() error {
 	g.world = nil
 	g.roads = nil
 	g.tactical = nil
-	g.battleLib = nil
-	g.battleSprites = nil
+	g.battle = nil
 	g.view = nil
 	g.ending, g.endingShown, g.endingCache = nil, false, nil
 	g.hud = 0

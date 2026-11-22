@@ -13,7 +13,7 @@ func TestPendingDeathPreservesLivingPoseThenUsesOriginalDeathSource(t *testing.T
 			b.Sides[side].Soldiers[0] = tactical.Soldier{Alive: true, Kind: kind, X: 20, Y: 32,
 				Facing: tactical.East, PoseStep: 1, Hurt: true}
 			v := &View{}
-			living := v.buildDisplayList(b)
+			living := v.buildDisplayList(nil, b)
 			if len(living) != 2 {
 				t.Fatal("前提：人物應有上下兩個繪製單位")
 			}
@@ -53,7 +53,7 @@ func TestDynamicObjectsUseOriginalY(t *testing.T) {
 	v := &View{}
 	b := &tactical.Battle{}
 	b.Sides[0].Soldiers[0] = tactical.Soldier{Alive: true, X: 20, Y: 24}
-	entries := v.buildDisplayList(b)
+	entries := v.buildDisplayList(nil, b)
 	if len(entries) != 2 || entries[0].col != 44 || entries[0].row != 34 {
 		t.Fatalf("原版(20,24,0)的物件投影應為(44,34)：%+v", entries)
 	}
@@ -139,7 +139,7 @@ func TestBattleDisplayListSplitsSoldiersIntoOriginalRawUnits(t *testing.T) {
 	b.Sides[1].Soldiers[0] = tactical.Soldier{Alive: true, Kind: tactical.General,
 		X: 22, Y: 18, Z: 0}
 
-	entries := v.buildDisplayList(b)
+	entries := v.buildDisplayList(nil, b)
 	var units []battleDisplayEntry
 	for _, e := range entries {
 		if e.kind == displayRawUnit {
@@ -191,10 +191,17 @@ func TestBattleDisplayGridKeepsFirstProducerInOccupiedSlot(t *testing.T) {
 		layer: 1, lane: 1, raw: 0x123}
 	b := a
 	b.raw = 0x456
-	grid := makeDisplayGrid([]battleDisplayEntry{a, b})
+	grid := newDisplayGrid[battleDisplayCell](battleDisplayGridRows, battleDisplayGridCols)
+	fillDisplayGrid(grid, []battleDisplayEntry{a, b})
 	got := grid[3][2][1][1]
-	if !got.set || got.entry.raw != a.raw {
+	if !got.set || got.raw != a.raw || got.kind != a.kind {
 		t.Fatalf("已佔用槽被後一個 producer 覆蓋：%+v", got)
+	}
+	clear(grid[3])
+	a.raw = 0
+	fillDisplayGrid(grid, []battleDisplayEntry{a, b})
+	if got := grid[3][2][1][1]; !got.set || !displaySlotEmpty(got) {
+		t.Fatalf("零號圖塊應佔用登錄槽且不繪製：%+v", got)
 	}
 }
 
@@ -302,16 +309,16 @@ func TestDisplayBandIsEightRows(t *testing.T) {
 // 高度看**任何**非零 unit、起始只看**小 unit**（< 0x20），兩者都取最大的 z，
 // 而且單位是 2z（docs/spec/58 §2）。
 func TestDisplaySlotHeightAndStart(t *testing.T) {
-	var grid battleDisplayGrid
+	grid := newDisplayGrid[battleDisplayCell](battleDisplayGridRows, battleDisplayGridCols)
 	set := func(z, raw int) {
-		grid[3][5][z][0] = battleDisplaySlot{set: true,
-			entry: battleDisplayEntry{raw: raw}}
+		grid[3][5][z][0] = battleDisplaySlot{set: true, raw: raw}
 	}
 	set(0, 0x40) // 大
 	set(1, 0x10) // 小
 	set(2, 0)    // 空的不算
 	set(3, 0x80) // 大
-	info := makeDisplayInfo(&grid)
+	info := newDisplayGrid[battleDisplaySlotInfo](battleDisplayGridRows, battleDisplayGridCols)
+	fillDisplayInfo(info, grid)
 	if got := info[3][5].height; got != 2*3 {
 		t.Fatalf("高度 = %d，預期 %d（最高的非零 unit 在 z=3）", got, 2*3)
 	}
@@ -327,23 +334,23 @@ func TestDisplaySlotHeightAndStart(t *testing.T) {
 // TestDisplayDepthRangeFollowsNeighbours 釘住範圍算式：從自己的起始深度畫到
 // **自己與四個斜鄰格之中最高的**那一層（含頭含尾，docs/spec/58 §3）。
 func TestDisplayDepthRangeFollowsNeighbours(t *testing.T) {
-	var info [battleDisplayGridRows][battleDisplayGridCols]battleDisplaySlotInfo
+	info := newDisplayGrid[battleDisplaySlotInfo](battleDisplayGridRows, battleDisplayGridCols)
 	const row, anchor = 5, 9
 	info[row][anchor] = battleDisplaySlotInfo{height: 2 * 1, start: 2 * 1}
 	info[row][anchor+1] = battleDisplaySlotInfo{height: 2 * 4} // 最高的鄰居
 	info[row+1][anchor-1] = battleDisplaySlotInfo{height: 2 * 2}
-	z0, z1 := displayDepthRange(&info, row, anchor)
+	z0, z1 := displayDepthRange(info, row, anchor)
 	if z0 != 1 || z1 != 4 {
 		t.Fatalf("深度範圍 = %d..%d，預期 1..4", z0, z1)
 	}
 	// 自己最高時就只看自己
 	info[row][anchor].height = 2 * 6
-	if _, z1 := displayDepthRange(&info, row, anchor); z1 != 6 {
+	if _, z1 := displayDepthRange(info, row, anchor); z1 != 6 {
 		t.Fatalf("自己最高時 z1 = %d，預期 6", z1)
 	}
 	// 沒有鄰居也不會越界
 	info[row][anchor] = battleDisplaySlotInfo{}
-	if a, b := displayDepthRange(&info, 0, 1); a != 0 || b != 0 {
+	if a, b := displayDepthRange(info, 0, 1); a != 0 || b != 0 {
 		t.Fatalf("空格的範圍 = %d..%d，預期 0..0", a, b)
 	}
 }
@@ -392,8 +399,10 @@ func TestDisplayHeightIncludesObjectsSoSoldiersDrawWhole(t *testing.T) {
 	terrainAbove := terrain
 	terrainAbove.cellRow = row - 1
 
-	grid := makeDisplayGrid([]battleDisplayEntry{terrain, terrainAbove, upper, lower})
-	info := makeDisplayInfo(&grid)
+	grid := newDisplayGrid[battleDisplayCell](battleDisplayGridRows, battleDisplayGridCols)
+	fillDisplayGrid(grid, []battleDisplayEntry{terrain, terrainAbove, upper, lower})
+	info := newDisplayGrid[battleDisplaySlotInfo](battleDisplayGridRows, battleDisplayGridCols)
+	fillDisplayInfo(info, grid)
 
 	// 兵所在那一格：物件在第 0 層 → 2*0+1 = 1。
 	if got := info[row][col].height; got != 1 {
@@ -403,7 +412,7 @@ func TestDisplayHeightIncludesObjectsSoSoldiersDrawWhole(t *testing.T) {
 	if got := info[row-1][col].height; got != 3 {
 		t.Fatalf("下半那一格的高度 ＝ %d，預期 3", got)
 	}
-	z0, z1 := displayDepthRange(&info, row-1, col)
+	z0, z1 := displayDepthRange(info, row-1, col)
 	if z0 > 1 || z1 < 1 {
 		t.Errorf("深度範圍 %d–%d 沒有涵蓋兵的下半（第 1 層）", z0, z1)
 	}
@@ -428,7 +437,7 @@ func TestDisplayUsesRegisteredPoseAndPlayerRoleColor(t *testing.T) {
 		}
 		b.Step()
 		v := &View{}
-		before := v.buildDisplayList(b)
+		before := v.buildDisplayList(nil, b)
 		if len(before) != 8 {
 			t.Fatal("前提：四兵各有上下兩個繪製單位")
 		}
@@ -446,7 +455,7 @@ func TestDisplayUsesRegisteredPoseAndPlayerRoleColor(t *testing.T) {
 			s.Hurt = true
 			s.PoseStep ^= 1
 		}
-		after := v.buildDisplayList(b)
+		after := v.buildDisplayList(nil, b)
 		for i := range before {
 			if before[i] != after[i] {
 				t.Fatal("呈現層不得改讀稍後被修改的執行中欄位")

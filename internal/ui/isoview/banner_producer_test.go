@@ -14,7 +14,7 @@ func TestBannerProducerKeepsBothNativeCells(t *testing.T) {
 		banner := battle.Banner{X: 20, Y: 40, Z: tc.z, Side: tc.side, Phase: tc.phase}
 		col, row := isoProject(banner.X, banner.Y, banner.Z)
 		v := &View{banners: []battle.Banner{banner}, camCol: col - 15, camRow: row - 12}
-		entries := v.buildDisplayList(&tactical.Battle{})
+		entries := v.buildDisplayList(nil, &tactical.Battle{})
 		if len(entries) != len(tc.raw) {
 			t.Fatalf("高度%d旗應登錄%d格，得到%d", tc.z, len(tc.raw), len(entries))
 		}
@@ -35,7 +35,7 @@ func TestBannerProducerClipsBeforeRegisteringUpperCell(t *testing.T) {
 			banner := battle.Banner{X: 20, Y: 40, Z: z}
 			col, row := isoProject(banner.X, banner.Y, z)
 			v := &View{banners: []battle.Banner{banner}, camCol: col - tc.col, camRow: row - tc.row}
-			entries := v.buildDisplayList(&tactical.Battle{})
+			entries := v.buildDisplayList(nil, &tactical.Battle{})
 			count := 0
 			if tc.visible {
 				count = 1

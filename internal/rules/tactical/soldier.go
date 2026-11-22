@@ -391,17 +391,49 @@ func (b *Battle) applySquadLeaderGone() {
 // docs/re/11 §5.8k），那張清單由 `loc_1BD46` 算（§5.15）。
 func (b *Battle) moveToward(side, k int) {
 	s := &b.Sides[side].Soldiers[k]
-	s.MoveFlag = true
-	defer func() {
-		if s.Stamina > 0 {
-			s.Stamina--
+	start := [3]int{s.X, s.Y, s.Z}
+	b.moveTowardStep(side, k, false)
+	if s.Stamina > 0 {
+		s.Stamina--
+	}
+	if !b.commandAssist || k == 0 || s.Cmd == Duel || s.Cmd == Retreat ||
+		start == [3]int{s.X, s.Y, s.Z} || s.Z < start[2] && s.X == start[0] && s.Y == start[1] {
+		return
+	}
+	command := b.Sides[side].CommanderRating
+	if command <= 1 || !spendCommandCredit(&b.moveAssistCredit[side][k], command) {
+		return
+	}
+	// Refresh occupancy before checking the extra step. The normal draw still
+	// records the final position and animation once.
+	b.drawUnitCollision(side, k)
+	prev := *s
+	var pathIndex int
+	if prev.Path != nil {
+		pathIndex = prev.Path.i
+	}
+	b.moveTowardStep(side, k, true)
+	if s.X == prev.X && s.Y == prev.Y && s.Z == prev.Z {
+		*s = prev
+		if s.Path != nil {
+			s.Path.i = pathIndex
 		}
-	}()
+	}
+}
+
+func (b *Battle) moveTowardStep(side, k int, bonus bool) {
+	s := &b.Sides[side].Soldiers[k]
+	if !bonus {
+		s.MoveFlag = true
+	}
 	if s.X == s.StepX && s.Y == s.StepY && (!s.CanClimb() || s.Z == s.StepZ) {
 		if p, ok := s.Path.Current(); ok {
 			s.Path.Advance()
 			applyWaypoint(s, p)
 		} else {
+			if bonus {
+				return
+			}
 			s.MoveFlag = false
 			s.HitGeneral = false
 			if s.Target >= 0 && s.Target < len(b.Sides[1-side].Soldiers) {
@@ -423,7 +455,7 @@ func (b *Battle) moveToward(side, k int) {
 			d, face = -1, West
 		}
 		s.Facing = face
-		ok, blocked := b.tryMove(side, k, s.X+d, s.Y, s.Z)
+		ok, blocked := b.tryMoveStep(side, k, s.X+d, s.Y, s.Z, bonus)
 		if ok {
 			moved = true
 		}
@@ -435,7 +467,7 @@ func (b *Battle) moveToward(side, k int) {
 			d, face = -1, North
 		}
 		s.Facing = face
-		ok, blocked := b.tryMove(side, k, s.X, s.Y+d, s.Z)
+		ok, blocked := b.tryMoveStep(side, k, s.X, s.Y+d, s.Z, bonus)
 		if ok {
 			moved = true
 		}
@@ -451,8 +483,8 @@ func (b *Battle) moveToward(side, k int) {
 	// 這裡本來還要求 `s.X == s.StepX && s.Y == s.StepY`，於是登城的兵
 	// 站在門格上被前面的城壁擋住時**不會試著往上爬**，改成一直撞牆
 	// 把城壁磨穿——而原版是爬上去的。
-	if !moved && s.Z != s.StepZ {
-		if b.tryClimb(side, k) {
+	if !moved && s.Z != s.StepZ && (!bonus || s.Z < s.StepZ) {
+		if b.tryClimbStep(side, k, bonus) {
 			moved = true
 		}
 	}
@@ -463,6 +495,9 @@ func (b *Battle) moveToward(side, k int) {
 	// 對調（`sub_1B732`）會回報成功，於是前排卡在城牆上的兵靠著跟後排
 	// 換位就一直算「有移動」，永遠不重算路——整團會在城牆前churn 到
 	// 攻城計時器把大將耗光。
+	if bonus {
+		return
+	}
 	if !moved || walled {
 		b.requestPath(side, k)
 	}
@@ -598,6 +633,10 @@ func (b *Battle) computePath(side, k int) {
 // 第二個回傳值是「**被地形擋住**」——擋路的是牆或高低差，不是別的兵。
 // 呼叫端要靠它決定要不要重算繞路：撞到兵可以靠對調解決，撞到地形不行。
 func (b *Battle) tryMove(side, k, x, y, z int) (handled, walled bool) {
+	return b.tryMoveStep(side, k, x, y, z, false)
+}
+
+func (b *Battle) tryMoveStep(side, k, x, y, z int, bonus bool) (handled, walled bool) {
 	s := &b.Sides[side].Soldiers[k]
 	s.HitGeneral = false
 	if !inBounds(x, y) {
@@ -612,6 +651,9 @@ func (b *Battle) tryMove(side, k, x, y, z int) (handled, walled bool) {
 	// **自我修改碼**寫進去的（`byte_1B562`／`byte_1B56A`，由 `sub_19A33`
 	// 依雙方的編號範圍填）——這是本作第四處自我修改碼。
 	if side2, k2 := b.anyoneAt(x, y, s.Z); k2 >= 0 {
+		if bonus {
+			return true, false
+		}
 		return b.collideWithUnit(side, k, side2, k2), false
 	}
 	// 水平跨格照 `sub_1B1B1`（docs/re/63 §5）：讀**自己所在平面**的
@@ -621,7 +663,7 @@ func (b *Battle) tryMove(side, k, x, y, z int) (handled, walled bool) {
 	if !ok {
 		// 擋住去路的是城壁或門的話，這一撞要算耐久
 		// （原版在同一個碰撞路徑上 `dec [di+18h]`，docs/re/11 §5.9）。
-		if b.hitStructure(side, s.Facing, x, y) {
+		if !bonus && b.hitStructure(side, s.Facing, x, y) {
 			return true, true
 		}
 		return false, true
@@ -630,7 +672,7 @@ func (b *Battle) tryMove(side, k, x, y, z int) (handled, walled bool) {
 	// （`ah = es:[bx+1000h] / and ah, ah / jnz 失敗`）。城壁就是這樣擋人的
 	// ——它的地面層表是拿「打壞後的圖塊」算的，本來就有地面（docs/re/63 §2）。
 	if b.Field.Blocked(x, y, s.Z+1) {
-		if b.hitStructure(side, s.Facing, x, y) {
+		if !bonus && b.hitStructure(side, s.Facing, x, y) {
 			return true, true
 		}
 		return false, true
@@ -639,7 +681,7 @@ func (b *Battle) tryMove(side, k, x, y, z int) (handled, walled bool) {
 		// 高平面要高度完全相等，而且未破的門橫向穿不過去。
 		// 1B21D只拒絕此軸，不能冒充1B221的立即尋路請求。
 		if lv != s.Z || b.Field.GateBlocksHighPlane(x, y) {
-			if b.hitStructure(side, s.Facing, x, y) {
+			if !bonus && b.hitStructure(side, s.Facing, x, y) {
 				return true, true
 			}
 			return false, false
@@ -670,6 +712,10 @@ func (b *Battle) tryMove(side, k, x, y, z int) (handled, walled bool) {
 // 面向在碰撞前依圖塊奇偶更新；成功不改StepZ，上爬立即設高平面，下降至Z0才清。
 // 上爬查原Z+2、下降查Z−1單格，撞兵返回共用處理結果；GroundLevel閘仍有界。
 func (b *Battle) tryClimb(side, k int) bool {
+	return b.tryClimbStep(side, k, false)
+}
+
+func (b *Battle) tryClimbStep(side, k int, bonus bool) bool {
 	s := &b.Sides[side].Soldiers[k]
 	if !s.CanClimb() || !b.Field.IsGateCell(s.X, s.Y) {
 		return false
@@ -687,6 +733,9 @@ func (b *Battle) tryClimb(side, k int) bool {
 	// 1B18A先讀物理頭格，再判未破門；單兵可覆蓋結構物的登錄。
 	if up {
 		if side2, k2 := b.climbHeadOccupant(s); k2 >= 0 {
+			if bonus {
+				return false
+			}
 			// 1B113：碰撞成功可能只是換位／攻擊，不再額外Z+1。
 			return b.collideWithUnit(side, k, side2, k2)
 		}
@@ -694,13 +743,9 @@ func (b *Battle) tryClimb(side, k int) bool {
 		return b.collideWithUnit(side, k, side2, k2)
 	}
 	if b.Field.GateBlocksHighPlane(s.X, s.Y) {
-		// ⭐ **爬不上去的那一下要打門**（docs/spec/98）。原版
-		// `sub_1B186` 回報「上一層有實體」時把實體編號留在 al，
-		// `sub_1B0D3` 的 `and al, al / jnz` 就據此走 `loc_1B533`
-		// 碰撞處理——**未破的門就是這樣被打開的**（耐久只有 80）。
-		// 少了這一下，登城的兵站在門格上永遠卡住，攻方只能改去磨
-		// 城壁（耐久上千），而那會讓門強度條一路亮著——原版不會。
-		if b.breakableAt(s.X, s.Y) && b.hitStructure(side, s.Facing, s.X, s.Y) {
+		// 1B10D 走共用結構物碰撞。梯位進度歸零後才由下一次
+		// 有效接觸換圖。AI 加成只作用於上爬觸發的梯位進度。
+		if !bonus && b.hitStructureContact(side, s.Facing, s.X, s.Y, up) {
 			// 1B613排尋路，1B616以CF0結束當拍，位置可保持不變。
 			b.requestPath(side, k)
 			return true

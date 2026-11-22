@@ -19,6 +19,49 @@ func TestBattleFieldFitsTheOriginalViewport(t *testing.T) {
 		t.Fatalf("戰場區 %d×%d，塞不下原版的 %d×%d",
 			w, h, isoview.NativeW, isoview.NativeH)
 	}
+	if viewport := battleViewport(); viewport.Dy() != h || viewport.Dx() <= isoview.NativeW {
+		t.Fatalf("戰場需要使用緊湊雙排釋出的空間，畫布為 %v", viewport)
+	}
+}
+
+func TestBattlePinchZoomKeepsTheStrategicCameraAndCommandStrip(t *testing.T) {
+	s := newTestSession(t)
+	s.SetZoom(2)
+	camX, camY, zoom := s.Camera()
+	if err := s.OpenDemoBattle(82); err != nil {
+		t.Fatal(err)
+	}
+	s.Tick()
+	v := s.battle.view
+	if v == nil {
+		t.Fatal("missing battlefield viewport")
+	}
+	field := battleViewport()
+	x, y := field.Min.X+field.Dx()/2, field.Min.Y+field.Dy()/2
+	_, commandY, _, _ := BattleCommandRect(0)
+	s.PinchZoom(1, x, commandY)
+	if v.ZoomPercent() != 100 {
+		t.Fatal("pinching the command strip zoomed the battlefield")
+	}
+	s.PinchZoom(-1, x, y)
+	if v.ZoomPercent() != 75 {
+		t.Fatalf("first pinch in: got %d%%, want 75%%", v.ZoomPercent())
+	}
+	for range 8 {
+		s.PinchZoom(-1, x, y)
+	}
+	if v.ZoomPercent() != 50 {
+		t.Fatal("battle zoom failed to clamp at 50%")
+	}
+	for range 8 {
+		s.PinchZoom(1, x, y)
+	}
+	if v.ZoomPercent() != 200 {
+		t.Fatal("battle zoom failed to clamp at 200%")
+	}
+	if x, y, z := s.Camera(); x != camX || y != camY || z != zoom {
+		t.Fatal("battle pinch changed the hidden strategic camera")
+	}
 }
 
 // 上排六格是**空間排列**（左翼 左備 主將 前鋒 右備 右翼），不是記錄順序。
@@ -44,7 +87,7 @@ func TestBattleCommandRowSendsTheOriginalCode(t *testing.T) {
 	}
 }
 
-// 六格與六命令都要比 48 dp 的觸控下限大，而且不重疊、不超出畫面。
+// 兩排各自保留 48 邏輯像素的命中區。
 func TestBattleRowsAreTappable(t *testing.T) {
 	const minTouch = 48
 	for _, f := range []func(int) (int, int, int, int){SquadRect, BattleCommandRect} {
@@ -65,8 +108,29 @@ func TestBattleRowsAreTappable(t *testing.T) {
 	}
 }
 
+func TestCompactBattleButtonsRespondOutsideTheirVisibleFace(t *testing.T) {
+	s := newTestSession(t)
+	if err := s.OpenDemoBattle(82); err != nil {
+		t.Fatal(err)
+	}
+	x, y, w, h := SquadRect(0)
+	if battleButtonFace(x, y, w, h).Min.Y <= y {
+		t.Fatal("需要可見外框上方的觸控留白")
+	}
+	s.Tap(float64(x+w/2), float64(y))
+	if s.battle.squad != squadSlot(0) {
+		t.Fatal("點擊外框上方仍應選隊")
+	}
+	x, y, w, _ = BattleCommandRect(0)
+	s.Tap(float64(x+w/2), float64(y))
+	b := s.Battle()
+	if b.Sides[s.playerSide()].Soldiers[squadSlot(0)*tactical.PerSquad].Next != tactical.Charge {
+		t.Fatal("點擊外框上方仍應向已選部隊下令")
+	}
+}
+
 // 開了戰場之後：主區換成戰場、點擊不再走到大地圖，而且**時間仍在走**
-//（戰術層沒有暫停）。
+// （戰術層沒有暫停）。
 func TestBattleTakesOverTheScreen(t *testing.T) {
 	s := newTestSession(t)
 	if err := s.OpenDemoBattle(82); err != nil {

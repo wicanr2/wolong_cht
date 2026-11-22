@@ -3,6 +3,7 @@ package battlesetup
 import (
 	"bytes"
 	"os"
+	"path/filepath"
 	"reflect"
 	"testing"
 
@@ -18,6 +19,63 @@ import (
 )
 
 const original = "../../workplace/orig/dosv"
+
+func TestBattleAssetsLoadAtFirstUse(t *testing.T) {
+	if _, err := os.Stat(filepath.Join(original, "KI.EXE")); err != nil {
+		t.Skip("缺少原版素材")
+	}
+	dir := t.TempDir()
+	provide := func(name string) {
+		t.Helper()
+		b, err := os.ReadFile(filepath.Join(original, name))
+		if err != nil {
+			t.Fatal(err)
+		}
+		if err := os.WriteFile(filepath.Join(dir, name), b, 0600); err != nil {
+			t.Fatal(err)
+		}
+	}
+	provide("KI.EXE")
+	var warnings []string
+	p, setup, err := Load(Options{Dir: dir, Warn: func(w string) { warnings = append(warnings, w) }})
+	if err != nil || p == nil || setup == nil || setup.Forms == nil {
+		t.Fatalf("關卡資源尚未到位時仍應能安裝陣形：%v", err)
+	}
+	if len(warnings) != 0 || p.lib != nil || p.sp != nil {
+		t.Fatalf("開局階段不應讀戰場資源：%v", warnings)
+	}
+	for _, name := range []string{"BATTLE.MAP", "BATTLE.MDL", "BATTLE.DAT"} {
+		provide(name)
+	}
+	field := setup.Field(82, true, false)
+	lib := p.Library()
+	if lib == nil || !field.HasTiles() || len(setup.Script(82, true, 2, false)) != tactical.ScriptCodeSize {
+		t.Fatal("首次開戰應讀得到原版地形與腳本")
+	}
+	if len(warnings) != 0 || p.sp != nil {
+		t.Fatalf("規則層建場不應讀單兵圖形：%v", warnings)
+	}
+	provide("BATTLE.SCH")
+	sprites := p.Sprites()
+	if sprites == nil || sprites.SourceTile(battle.CombinedSourceTerrainTiles) == nil {
+		t.Fatal("首次建立畫面應讀得到單兵圖形")
+	}
+	for _, name := range []string{"BATTLE.MAP", "BATTLE.MDL", "BATTLE.DAT", "BATTLE.SCH"} {
+		if err := os.Remove(filepath.Join(dir, name)); err != nil {
+			t.Fatal(err)
+		}
+	}
+	if p.Library() != lib || p.Sprites() != sprites || len(warnings) != 0 {
+		t.Fatalf("同一資料來源不應重讀已載入的檔案：%v", warnings)
+	}
+	missing, missingSetup, err := Load(Options{Dir: dir, Warn: func(w string) { warnings = append(warnings, w) }})
+	if err != nil || len(warnings) != 0 {
+		t.Fatalf("缺檔到首次使用才回報：%v，%v", err, warnings)
+	}
+	if missingSetup.Field(82, true, false).HasTiles() || missing.Sprites() != nil || len(warnings) == 0 {
+		t.Fatal("首次使用缺圖素材時應啟用地形與人物替代")
+	}
+}
 
 // 原版節點21的留守讀點是圖庫值0；缺少注入會沿未知近似出擊。
 // 同時驗新遊戲共用Load及讀檔重新掛來源，不能只驗孤立setter。
@@ -93,19 +151,20 @@ func TestProviderLoadsExplicitSelectionForEveryEncounter(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if p.lib == nil {
+	lib := p.Library()
+	if lib == nil {
 		t.Fatal("missing battle library")
 	}
 	for _, tc := range []struct {
 		number int
 		rotate bool
 	}{{193, true}, {210, false}, {82, true}, {211, false}, {193, false}} {
-		tiles, gate := p.lib.MinimapRows(tc.number), p.lib.GateX(tc.number)
+		tiles, gate := lib.MinimapRows(tc.number), lib.GateX(tc.number)
 		if tc.rotate {
 			copy(tiles[1:len(tiles)-1], battle.Rotate180(tiles[1:len(tiles)-1]))
 			gate = battle.RotateGateX(gate)
 		}
-		want := tactical.NewFieldFromTileLayers(tiles, p.lib.Heights(tc.number), p.lib.TileLayers(tc.number), gate)
+		want := tactical.NewFieldFromTileLayers(tiles, lib.Heights(tc.number), lib.TileLayers(tc.number), gate)
 		got := s.Field(tc.number, tc.number < 192, tc.rotate)
 		if !reflect.DeepEqual(got, want) {
 			t.Fatalf("wrong geometry for explicit field %d rotate %v", tc.number, tc.rotate)
@@ -113,7 +172,7 @@ func TestProviderLoadsExplicitSelectionForEveryEncounter(t *testing.T) {
 		if got := s.Category(tc.number, tc.number < 192); got != battle.Category(tc.number) {
 			t.Fatalf("category %d", got)
 		}
-		if !reflect.DeepEqual(s.Script(tc.number, false, 2, false), p.lib.Script(2, battle.ScriptSlot(tc.number, false))) {
+		if !reflect.DeepEqual(s.Script(tc.number, false, 2, false), lib.Script(2, battle.ScriptSlot(tc.number, false))) {
 			t.Fatalf("script field %d", tc.number)
 		}
 	}
@@ -127,7 +186,8 @@ func TestProviderSelectsFourOriginalScriptSlots(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if p.lib == nil {
+	lib := p.Library()
+	if lib == nil {
 		t.Fatal("缺少真實戰場腳本")
 	}
 	for _, tc := range []struct {
@@ -137,7 +197,7 @@ func TestProviderSelectsFourOriginalScriptSlots(t *testing.T) {
 		{192, 2, false}, {208, 2, true}, {209, 3, false}, {213, 3, true}} {
 		for _, tactic := range []int{0, 7} {
 			got := setup.Script(tc.field, tc.field < 192, tactic, tc.defends)
-			if len(got) != tactical.ScriptCodeSize || !reflect.DeepEqual(got, p.lib.Script(tactic, tc.slot)) {
+			if len(got) != tactical.ScriptCodeSize || !reflect.DeepEqual(got, lib.Script(tactic, tc.slot)) {
 				t.Fatalf("field=%d playerDefends=%v tactic=%d：腳本應取槽%d", tc.field, tc.defends, tactic, tc.slot)
 			}
 		}

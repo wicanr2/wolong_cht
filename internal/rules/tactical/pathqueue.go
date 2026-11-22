@@ -73,11 +73,44 @@ func (b *Battle) drainPathQueue() {
 	for i := 0; i < pathQueuePerFrame; i++ {
 		r, ok := b.paths.pop()
 		if !ok {
-			return
+			break
 		}
-		s := &b.Sides[r.side].Soldiers[r.k]
-		s.PathQueued = false
-		// 1AED2仍處理排隊期間離場的記錄，這筆也占兩筆預算之一。
-		b.computePath(r.side, r.k)
+		b.resolvePath(r)
 	}
+	if !b.commandAssist || b.paths.n == 0 {
+		b.pathAssistCredit = [2]int{}
+		return
+	}
+	var extra [2]bool
+	for side := range extra {
+		extra[side] = spendCommandCredit(&b.pathAssistCredit[side], b.Sides[side].CommanderRating)
+	}
+	if !extra[0] && !extra[1] {
+		return
+	}
+	for remaining := b.paths.n; remaining > 0; remaining-- {
+		r, _ := b.paths.pop()
+		if extra[r.side] {
+			b.resolvePath(r)
+			extra[r.side] = false
+		} else {
+			b.paths.push(r)
+		}
+	}
+}
+
+func (b *Battle) resolvePath(r pathRequest) {
+	// 1AED2仍處理排隊期間離場的記錄，這筆也占預算。
+	b.Sides[r.side].Soldiers[r.k].PathQueued = false
+	b.computePath(r.side, r.k)
+}
+
+func spendCommandCredit(credit *int, command int) bool {
+	const interval = 14
+	*credit += min(max(command-1, 0), interval)
+	if *credit < interval {
+		return false
+	}
+	*credit -= interval
+	return true
 }

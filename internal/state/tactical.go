@@ -139,6 +139,7 @@ func (w *World) beginTactical(att, def, node int, m combat.Mode, garrison int, f
 
 	deploy := func(side, corps int) {
 		c := w.Corps[corps]
+		b.Sides[side].CommanderRating = w.Generals[w.Leader(corps)].Command
 		// ⚠ **原版的戰力不是士氣**：一般隊 `((統率 + 適性) × 3 + 兵種係數) ÷ 4`、
 		// 大將 `(武力 × 2 + 適性) × 2`（`sub_19B6D`／`sub_19B40`，
 		// docs/re/78、docs/spec/115）。適性欄由**戰場類別**選，
@@ -280,12 +281,23 @@ func kindOf(t army.TroopType) tactical.Kind {
 // （`afterBattle`），所以兩種戰鬥的出口一致——原版也是這樣
 // （docs/re/09 §10：戰術層回傳的 `al`／`ah` 與自動判定同格式）。
 func (w *World) ResolvePending(rng combat.Rand) *CorpsEvent {
+	ev, capture := w.BeginPendingSettlement(rng)
+	if capture != nil {
+		capture()
+	}
+	return ev
+}
+
+// BeginPendingSettlement settles troop losses and fates. The returned capture
+// completes a successful siege after the blocking fate dialogue has closed.
+// A caller receiving a capture must run it before resuming the strategic tick.
+func (w *World) BeginPendingSettlement(rng combat.Rand) (*CorpsEvent, func()) {
 	if w == nil || w.outcome != InProgress {
-		return nil
+		return nil, nil
 	}
 	p := w.pending
 	if p == nil || !p.Battle.Done {
-		return nil
+		return nil, nil
 	}
 	w.pending = nil
 	o := p.Battle.Result()
@@ -331,13 +343,23 @@ func (w *World) ResolvePending(rng combat.Rand) *CorpsEvent {
 	w.afterBattle(ev, p.Attacker, p.Node, attDead, p.Defender, rng)
 	w.afterBattle(ev, p.Defender, p.Node, defDead, p.Attacker, rng)
 	if o.AttackerWins && p.Mode == combat.Siege && !attDead {
-		w.capture(p.Attacker, p.Node, ev, rng)
+		finished := false
+		return ev, func() {
+			if finished {
+				return
+			}
+			finished = true
+			w.capture(p.Attacker, p.Node, ev, rng)
+			if w.outcome != InProgress {
+				w.tickResume = nil
+			}
+		}
 	}
 	if w.outcome != InProgress {
 		w.tickResume = nil
 	}
 
-	return ev
+	return ev, nil
 }
 
 func maxInt(a, b int) int {

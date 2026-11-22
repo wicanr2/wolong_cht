@@ -24,11 +24,12 @@ type desktopPreferences struct {
 	BattleResultSeconds int    `json:"battle_result_seconds"`
 	HDDisplay           bool   `json:"hd_display,omitempty"`
 	BattleNotices       bool   `json:"battle_notices,omitempty"`
+	TacticalAssist      bool   `json:"tactical_assist,omitempty"`
 }
 
 func (g *game) desktopPreferences() desktopPreferences {
 	return desktopPreferences{1, string(uiLang.Lang()), g.videoLCD, g.soundOption(),
-		g.speed, g.tacticalSpeed, g.lordCorps, g.damageReport, g.battleResultSeconds, g.hdDisplay, g.battleNotices}
+		g.speed, g.tacticalSpeed, g.lordCorps, g.damageReport, g.battleResultSeconds, g.hdDisplay, g.battleNotices, g.tacticalAssist}
 }
 
 func (p desktopPreferences) validate() error {
@@ -69,6 +70,7 @@ func readDesktopPreferences(path string, defaults desktopPreferences) (desktopPr
 	p.Version = 0           // 必須明示版本；缺少其他欄位沿用預設。
 	p.HDDisplay = false     // 舊偏好沒有此欄位時仍從原版開始。
 	p.BattleNotices = false // 舊偏好不得自動啟用新增的戰報提示。
+	p.TacticalAssist = false
 	if err := json.Unmarshal(raw, &p); err != nil {
 		return defaults, err
 	}
@@ -116,6 +118,7 @@ func (g *game) applyDesktopPreferences(p desktopPreferences, explicit map[string
 	}
 	g.hdDisplay = p.HDDisplay
 	g.battleNotices = p.BattleNotices
+	g.tacticalAssist = p.TacticalAssist
 	if !explicit["video-lcd"] {
 		g.videoLCD = p.VideoLCD
 	}

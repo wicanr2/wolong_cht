@@ -6,7 +6,153 @@ HD美術方向已由使用者確認。DRAFT保留給其他色盤／場景的HD�
 
 - 日期：2026-11-04
 
+## 戰場高解析素材
+
+**狀態：桌面戰場 HD 已驗收。** 合併選稿與本機預覽可用，素材覆蓋與玩家路徑的抽驗範圍見各小節。
+
+**戰場 HD 美術方向。** 使用者指定地形、城牆與單兵採手工繪製，以原版為參照。地形保留等角投影、地貌輪廓與高低關係。城牆保留城門、牆體比例與破損狀態的辨識。單兵保留兵種、陣營色、朝向與動畫姿態的辨識。手繪選稿著重清晰的線條、材質與色彩。網頁驗收以相同戰場、鏡頭與影格比對原版素材及有權使用的 HD 選稿。
+
+沿用桌面工具列的原版／HD 偏好。可在戰場切換，戰場時間照常推進，工具列點擊只由外層處理。液晶模式沿用現有相容規則。
+
+`-hd-battle <目錄>` 讀取本機 `battle-selection.json`。`tiles` 是選稿陣列，每筆為 `set`、`raw`、`file`、`sha256`。地形及城牆用 `set` 0–2 和 `raw` 1–191。人物、軍旗和投射物用 `set` -1 和 `raw` 192–551。同一組 `set` 和 `raw` 只允許一筆。每張 PNG 是原合成單位的 4 倍畫布（64×128），保留四段 64×32 的排列與透明度。輸入座標、地形更新、裁片與遮擋順序都沿用現有戰場。側欄、小地圖、文字和命令熱區繼續使用原版邏輯座標。
+
+啟動只讀索引。戰場圖塊首次繪製才讀 PNG，沿用既有路徑、雜湊與尺寸檢查。SHA-256 十六進位字母接受大小寫。只快取目前戰場已使用的選稿，缺圖或錯圖逐張沿用原圖。抽驗包含啟動時所有 PNG 尚未提供，繪製時部分 PNG 缺失、雜湊不符或尺寸錯誤，以及同包有效地形與單兵仍可解碼。合成測試驗證四段裁片、半像素細節及透明單兵覆蓋地形。受控攻城畫面以合成 PNG 驗證原版與 HD 切換。
+
+[戰場 HD 本機預覽](../../workplace/scratch/battle-toolbar-pointer/hd-review/battle-hd-review.html) 收錄攻城、守城、野戰、水戰四組原版素材與 HD 比較。合併包包括地表、坡面、木構、樹林、牆面、雲梯、屋瓦、四兵種、軍旗、投射物、陸戰與水戰水面及船板。桌面原版與 HD 均支援 50%–200% 視野。離線網頁提供局部近景及指定影格。[選稿包索引](../../workplace/scratch/battle-toolbar-pointer/hd-review/battle-hd-preview-pack/battle-selection.json)・[四組總覽來源](../../workplace/scratch/battle-toolbar-pointer/hd-review/battle-hd-overview.json)
+
+**椎陽攻城逐拍抽驗。** dosgolem 以松崗 DOS/V 版重生曹操對呂布的 27 個畫面，包含第 236–255 拍的連續取樣。重製從同一進場狀態和原版亂數擷取原版素材與 HD，對照 DOS/V IDA linear `0x1A065` 邊界的鏡頭與旗幟相位。扣除原版對白、固定介面與游標取樣區後，每拍 128,322 個像素相同。連續 19 次畫面變化的覆蓋也一致。固定輸入在第 677 拍結束，剩兵 5,750／5,960、主將體力 33／220、終點亂數一致，攻方敗退。頁面保留原版介面的可見差異。[本機逐拍播放器](../../workplace/scratch/battle-toolbar-pointer/hd-review/battle-motion-hd.html)・[驗證收據](../../workplace/scratch/battle-toolbar-pointer/hd-review/battle-hd-motion-result.json)
+
+**椎陽攻城正常玩家驗證。** 第一劇本用滑鼠完成宣戰、編成、行軍、中途存讀檔及自然接戰，戰場中開啟 HD 並縮至 75% 再回 100%。改線、登城及突擊後停手。最終桌面建置在滑鼠固定時繼續 622 拍，於第 893 拍自然敗退，椎陽由呂布守住，玩家返回戰略地圖。戰術速度檔位 1，共 81 項正常滑鼠檢查。原版逐拍對照使用受控的下令節拍。[玩家路徑收據](../../workplace/scratch/battle-toolbar-pointer/hd-review/battle-hd-assault-result.json)
+
+**攻城勝利對白與換旗（CONFORMED）。** 椎陽攻城於第 255 拍受控清空在場守軍與預備兵，松崗 DOS/V 與重製版均於第 256 拍由戰鬥規則判定攻方勝。戰後先顯示 TALK #20，椎陽仍由呂布持有。右鍵關閉後，DOS/V 進入 IDA linear `0x14CF3`，旗幟換為曹操。桌面版沿用武將下場對白，待玩家關閉後完成易主，再處理後續訊息。沒有下場對白時，同次結算即完成易主。額外戰報依工具列偏好顯示，預設關閉。桌面滑鼠流程通過 94 項檢查，並確認存讀檔後的歸屬。[原版對白](../../workplace/scratch/battle-toolbar-pointer/hd-review/battle-hd-victory-answered-captive-talk.png)・[勝利收據](../../workplace/scratch/battle-toolbar-pointer/hd-review/battle-hd-victory-result.json)
+
+**城門換圖與雲梯（CONFORMED，限三套圖庫代表場景）。** 松崗 DOS/V 的 `BATTLE.MDL` 中，城門由 `0xF0–0xF7` 換到 `0xF8–0xFF` 後，堆疊包含梯腳、梯身與梯頂。圖庫 0、1 使用 178–181，圖庫 2 使用 176–181。沿用手繪木紋，保留金棕與灰色梯身、透明孔隙、梯腳周圍地面與既有遮擋。圖庫指紋須相符，材質沿用木橋木柵共用檔，開啟 HD 且戰場出現支援圖號時才讀取未載入的木紋。地形換圖後重新檢查使用中的裁片。
+
+許昌、東莞、廣武固定第 60 拍，由滑鼠觸發受控破門並切換顯示。新增木紋覆蓋分別為 8,816、8,135、8,167 個 HD 像素。依實際繪製順序回查，遮罩外逐像素一致。許昌先開 HD 和破門後才開 HD 的結果相同。登城時機的驗證沿椎陽逐拍重播，和本次固定影格的材質取樣各有收據。[本機對照](../../workplace/scratch/battle-toolbar-pointer/hd-review/battle-wall-native.html#ladders)・[驗證](../../workplace/scratch/battle-toolbar-pointer/hd-review/ladder-runtime-result.json)
+
+**陸戰水面與岸線（CONFORMED，限三套圖庫代表場景）。** 三套松崗 DOS/V 原圖庫的水色裁片以索引指紋核對，包含主水面、橋下與岸邊色盤 3 的像素。地圖與旋轉資料掃描有 203／210 張非水戰地圖使用核對過的裁片。畫面在 HD 模式首次用到對應裁片才讀水紋，依合成後的世界位置取樣。水面與石牆各用自己的材質和區段遮罩，橋下陰影、石岸、裁片孔隙、士兵和遮擋沿原版合成。合併選稿移除早期組 0 圖號 20 的全片草地試貼，該圖號含水線與橋構。試貼檔留在原有本機比較頁。
+
+許昌、東莞及戰場 7 固定第 60 拍比較，水紋覆蓋為 425,344、157,168、195,904 個 HD 像素。單獨套用與合併包的水面一致，非水域像素一致。許昌 50% 縮放平移後，重疊的 1,116,672 個水紋像素一致。四場水戰使用船板及水紋包重跑，與既有同影格 PNG 相同。[護城河本機對照](../../workplace/scratch/battle-toolbar-pointer/hd-review/battle-water-runtime.html#land-water)・[驗證](../../workplace/scratch/battle-toolbar-pointer/hd-review/land-water-runtime-result.json)
+
+[戰場素材圖鑑與選稿檢查](../../workplace/scratch/battle-toolbar-pointer/hd-review/battle-tile-check.html) 開頁即顯示既有原版地形與城牆裁片，可切換單兵與旗幟圖鑑或許昌攻城的合成畫面。下方可離線檢查單張 64×128 PNG、透明像素與四段重排。輸入素材組與合併圖庫編號後，可下載含 SHA-256 的單張 `battle-selection.json`。瀏覽器實際匯出的索引已由遊戲素材載入器讀回。正式的相鄰圖塊與遮擋效果仍在遊戲戰場上驗收。
+
+可點選圖鑑的地形裁片或單兵上下半部，再把該組與圖號帶入選稿檢查器。所選原版裁片和手繪 PNG 以同尺寸並排。手動更改組別或圖號時，只有與所選裁片相符的欄位才顯示該參照。地形涵蓋三組 192 格，零號保留給空圖。現有單兵圖鑑收錄紅方五組各八個姿勢，其餘圖號可手動輸入。圖鑑排列已與松崗 DOS/V 資料逐像素抽查比對，建置時也核對兩張圖鑑的來源雜湊。[圖鑑排列核對](../../workplace/scratch/battle-toolbar-pointer/hd-review/atlas-layout.txt)
+
+### 許昌材質試貼
+
+將草地夯土與灰赭石牆的局部合成各縮成 64×64 材質樣片，以 128×64 顯示版型重排為正式載入器要求的 64×128 PNG。第一輪遮擋測試選用素材組 0 的四個完全不透明裁片，地面 20、城壁格內的城門構件 4／5／7。其他圖號在引擎中沿用原版圖庫。
+
+固定亂數種子 1，許昌攻城第 60 拍，鏡頭世界座標 36、14，視野 100%。用滑鼠在桌面工具列切換原版與 HD，另外用同形狀單色裁片定位可見區。原生 HD 戰場畫布為 1920×1472。草地 6,528 像素、石牆 800 像素出現預期替換。可見區以外的 2,818,912 像素與原版材質的四倍最近鄰畫面一致。該鏡頭的標記範圍沒有橫向或縱向連續跨過顯示格邊界的同材質像素對。[本機同影格對照](../../workplace/scratch/battle-toolbar-pointer/hd-review/battle-material-frame.html)・[取樣與雜湊](../../workplace/scratch/battle-toolbar-pointer/hd-review/material-frame-result.json)
+
+另用同一合成器測兩種材質各四塊相鄰裁片。每種材質的 32,768 像素都符合四段重排座標，合成透明前景後的 8,192 像素也都符合預期。草地接縫的左右／上下色差為 5.65／7.29，圖內均值為 5.92／9.59。石牆首輪為 10.67／4.23，圖內均值為 6.45／11.07。[首輪合成器收據](../../workplace/scratch/battle-toolbar-pointer/hd-review/material-frame-gpu.jsonl)
+
+石牆縮圖改用循環取樣，把第一欄的取樣範圍跨在左右交界。再以三點濾波處理兩邊各三欄，權重向內遞減。左右平均色差由 10.67 降至 5.68，低於修整後的圖內均值 6.22。接縫及相鄰四道像素界線的最大平均色差是 6.56。上下色差由 4.23 變為 4.51。以相同鏡頭與影格重拍，前後差異只落在石牆標記區內的 786 個像素，草地裁片雜湊一致。修整後石材保留在比較頁的城門遮擋測試。[修整取樣](../../workplace/scratch/battle-toolbar-pointer/hd-review/material-frame-wrap-result.json)・[修整後合成器收據](../../workplace/scratch/battle-toolbar-pointer/hd-review/material-frame-wrap-gpu.jsonl)
+
+**城內廊道相鄰草地。** 許昌第 60 拍改用 48、0 鏡頭，種子、陣容和 100% 倍率沿用。像素座標探針指出 288 個左右相鄰像素對中，有 224 個讀到不同半段，但段內列號一致。草地改取樣為 64×32，以 32 像素為縱向週期，上下交界兩側各加三列漸弱濾波。實際畫面的左右／上下平均色差由 9.58／7.36 降至 4.20／4.68，分別量到 288／576 對。修整前後只有草地區內的 63,542 像素有差異。石牆的實際可見片段未涵蓋同材質相鄰接縫。[城內廊道對照](../../workplace/scratch/battle-toolbar-pointer/hd-review/battle-material-frame.html)・[相鄰畫面收據](../../workplace/scratch/battle-toolbar-pointer/hd-review/material-frame-ground-join-adjacent-result.json)
+
+**城門構件核對。** 使用現行繪製器掃描 12 個攻城場景共 60 個鏡頭，將圖號 4／5／7 標記後量測顯示格接縫與四段重排的內部邊界，皆未出現相鄰標記。圖庫與許昌可見區證實，試貼區包含城門構件。預設比較改載入只有地面 20 的試貼包。同影格重拍核對修整前後及原版材質，草地標記外 2,762,688 像素完全相同。[鏡頭掃描](../../workplace/scratch/battle-toolbar-pointer/hd-review/material-stone-scan.log)・[本機圖鑑抽驗](../../workplace/scratch/battle-toolbar-pointer/hd-review/wall-slot-audit.html)・[草地限定收據](../../workplace/scratch/battle-toolbar-pointer/hd-review/material-frame-courtyard-after-adjacent-result.json)
+
+**主牆面取樣。** 固定許昌鏡頭 36、14，用繪製器的同一裁片順序和透明度讀出可見像素的來源。西牆抽樣全部來自素材組 0 的 28 至 31。東牆另有圖號 125。城門開口與護城河石岸各有其他圖號。28 至 31 同時含牆頂和立面，單張平面石材試貼只作接縫量測。
+
+第 60 拍以相同四圖號試貼石材舊版、修整版及覆蓋標記。402,912 個覆蓋像素外畫面逐像素一致。左右 2,348 對的色差平均由 20.03 降至 16.91，當中 2,000 對跨來源的上下半段。上下 5,316 對由 27.14 變為 27.37，其中 3,396 對取自原素材相鄰列，1,920 對跨循環邊界。量測包含材質自身的色差，正式牆面仍需保留牆頂、立面與方向光。[主牆來源抽驗](../../workplace/scratch/battle-toolbar-pointer/hd-review/material-wall-source.log)・[同影格收據](../../workplace/scratch/battle-toolbar-pointer/hd-review/material-frame-wall-after-masonry-result.json)
+
+**牆頂與立面分面試貼。** 許昌第 60 拍的東西牆頂抽樣皆來自素材組 0 的圖號 125，西牆轉角來自 28、30。離線頁在牆頂、東西立面與西牆背光轉角各取一小段，將暖赭與灰赭原稿投影到相應平面。立面取約三層石磚，區域邊緣淡入。原版、試貼與範圍標記共用同一張戰場影格。只驗證此鏡頭的材質與空間分面，正式圖塊與移動鏡頭仍待驗。[分面試貼](../../workplace/scratch/battle-toolbar-pointer/hd-review/battle-wall-frame.html)・[來源收據](../../workplace/scratch/battle-toolbar-pointer/hd-review/wall-planes-source.log)・[逐像素結果](../../workplace/scratch/battle-toolbar-pointer/hd-review/wall-planes-frame-result.json)
+
+**許昌牆面整合（初次驗收為桌面許昌第 60 拍）。** 素材包可選的 `wall` 紀錄包含 `cap` 及 `face`，各有 `file`、`sha256`，各為 256×128 不透明 PNG。圖號 28、29、30、31、125 須符合素材組 0 的指紋。首次進入相容場景的 HD 戰場時解碼兩張材質。明列的同圖號 HD 圖塊優先。牆頂與兩個立面方向按合成區段取樣，共用世界座標循環及原有遮擋順序。保留原版色盤的結構線、灰色細節與透明區。31 的第 1、3 段保留原畫。
+
+種子 1 的桌面攻城取樣以滑鼠切換 100% 原版素材與 HD，牆頂 273,152 像素、立面 292,800 像素改用材質。其餘 2,260,288 像素一致，包含城門開口抽樣框的 5,760 像素。切到 50% 後用小地圖平移，對齊後 317,280 個抽樣像素一致。這是 remake 同影格材質比較。其他城池與行動中的畫面仍待抽驗。[本機對照](../../workplace/scratch/battle-toolbar-pointer/hd-review/battle-wall-native.html)・[逐像素收據](../../workplace/scratch/battle-toolbar-pointer/hd-review/material-wall-native-result.json)
+
+**共用牆面圖庫（CONFORMED，限桌面固定影格抽驗）。** 松崗 DOS/V 全 214 張戰場的初始堆疊掃描發現，素材組 0 的 75 場均為攻城，均使用 28、29、30、31、125 的共同牆面圖形。素材組 1、2 各自的 192 張子圖塊無相同圖形。只對組 0 的攻城戰場套用，並核對五張圖的既有來源指紋。其餘素材組使用各自的原圖。保留圖號 31 的第 1、3 段及既有回退規則。[地形掃描](../../workplace/scratch/battle-toolbar-pointer/hd-review/wall-coverage.log)
+
+以種子 1、100% 縮放和滑鼠切換驗證奉高 32、弘農 67 的第 60 拍。兩場使用不同城門索引值 36、42。奉高 414,720 像素及弘農 446,144 像素由牆面材質覆蓋，標記範圍外逐像素一致，城門開口抽樣框分別一致 576、896 像素。其餘戰場為資料覆蓋，動態戰況尚待抽驗。[奉高收據](../../workplace/scratch/battle-toolbar-pointer/hd-review/material-wall-native-field32-result.json)・[弘農收據](../../workplace/scratch/battle-toolbar-pointer/hd-review/material-wall-native-field67-result.json)
+
+**其他兩套石牆（CONFORMED，限桌面固定影格抽驗）。** 東莞 33 與廣武 4 以實際合成順序回查可見像素。組 1 石面 1、2、3 配牆頂 114，組 2 石面 19、20、21、22 配牆頂 166。圖庫各有獨立指紋，以初始堆疊計算，分別出現在 30 場與 29 場攻城。東莞城門主要圖號為 22、30、31，廣武為 4、5、13，前方木柵取樣為 15、47、55。兩組共用既有手繪材質，保留七成原色及既有明暗線條。省略讀圖時未使用的圖號，當場沒有可替換牆面就不解碼材質。水戰場景沿用水紋與船緣材質。[可見來源與使用率](../../workplace/scratch/battle-toolbar-pointer/hd-review/wall-atlas-roles.log)
+
+種子 1、100% 縮放、第 60 拍用滑鼠切換顯示，東莞 612,224 像素、廣武 616,384 像素改用牆面材質。兩場覆蓋外逐像素相同，包含抽樣的城門、東莞護城河岸及廣武前方木柵。加上組 0，資料覆蓋共 134 場攻城。組 1 另有 52 場未使用本輪圖號，動態換圖及其餘材質仍待驗。[東莞收據](../../workplace/scratch/battle-toolbar-pointer/hd-review/material-wall-native-field33-result.json)・[廣武收據](../../workplace/scratch/battle-toolbar-pointer/hd-review/material-wall-native-field4-result.json)
+
+**組 1 金棕磚牆（CONFORMED，限桌面固定影格抽驗）。** 組 1 另有金棕牆面圖號 8 至 11，牆頂 116、117。代與涿的實際可見來源證實兩個牆頂圖號及平面方向。與細磚牆共用混色比例，保留原有金棕磚縫和城門用圖。松崗 DOS/V 的初始堆疊顯示金棕牆與細磚牆合計涵蓋組 1 的 82 張攻城場景。組 0 的 75 場、組 2 的 29 場均至少有一項對應牆面圖號。動態換圖與其他戰場素材仍待驗。[來源與指紋](../../workplace/scratch/battle-toolbar-pointer/hd-review/wall-atlas-gold-roles.log)
+
+代與涿以種子 1、第 60 拍、100% 縮放用滑鼠切換。代的 744,192 像素、涿的 517,696 像素改用牆面材質，兩場的覆蓋外逐像素一致，包含城門與草地抽樣。前一輪的東莞原圖與 HD 擷取雜湊重跑相同。[代收據](../../workplace/scratch/battle-toolbar-pointer/hd-review/material-wall-native-field1-result.json)・[涿收據](../../workplace/scratch/battle-toolbar-pointer/hd-review/material-wall-native-field12-result.json)
+
+**城防破壞後換圖（CONFORMED，限桌面許昌受控抽驗）。** 正式規則會立即提高地形版本。舊繪製器要等戰術下一拍才更新保留的地形層。下一次繪製直接比對版本，變更時重建保留的地形並依既有鏡頭重建路徑恢復單兵畫面。沿用既有小地圖流程，無須推進戰術拍。186 張初始地圖正反方向各掃描 1,516 格門、1,249 格牆，破壞後沒有新增此前不存在的 HD 牆面圖號，沿用已載入的材質。[圖塊換圖掃描](../../workplace/scratch/battle-toolbar-pointer/hd-review/wall-retile-coverage.log)
+
+許昌固定第 60 拍，攻方受控將一座城門耐久歸零並呼叫既有受擊路徑。守方則以左鍵按下突擊，城壁三格換圖。舊繪製器四組皆無像素差異，修正後原版素材畫布各變更 660、210 像素，HD 各變更 11,936、3,360 像素。每種模式在破壞前或破壞後首次開啟 HD 的最終畫布逐像素相同。場景以受控入口、固定種子與暫停時鐘隔離地形變更。[本機換圖對照](../../workplace/scratch/battle-toolbar-pointer/hd-review/battle-wall-native.html)・[量測收據](../../workplace/scratch/battle-toolbar-pointer/hd-review/material-wall-damage-result.json)
+
+### 步兵行走手繪預覽
+
+使用既有 HD 裁片格式。步兵行走四方向、兩拍、兩個陣營共 16 個動作圖格。每個圖格拆成兩張 64×128 RGBA PNG，對應合併圖庫 300–315、480–495。依正式繪製器的四段重排切圖，上下半以戰場投影位置為準。兩拍的腳底基準分別為原生格第 26 和第 25 列。保留原稿透明度，左上方向沿用右上圖格的鏡射。衣袖、布帶分別使用暖紅與靛藍，以便在 100% 視野辨識陣營。
+
+桌面用滑鼠切換許昌第 60 拍的原版素材與 HD，兩軍均實際顯示手繪步兵並以滾輪放大至 200%。GPU 合成檢查全部圖格在奇偶欄對齊後相同，兩拍皆可區辨。這批使用正式按需載入器，其餘兵種、步兵揮擊與受傷倒地仍使用原圖。城牆、水面、局部草地與這批步兵已合併進本機預覽包。[本機操作比較](../../workplace/scratch/battle-toolbar-pointer/hd-review/battle-infantry-hd.html)・[同影格收據](../../workplace/scratch/battle-toolbar-pointer/hd-review/infantry-runtime-result.json)・[GPU 收據](../../workplace/scratch/battle-toolbar-pointer/hd-review/infantry-atlas-anchors.log)
+
+### 步兵近戰、受擊與倒地預覽
+
+松崗 DOS/V 的正常步兵姿勢由實際選圖函式驗證。近戰用姿勢 62–69，四向各兩拍。受擊固定面向，用 70、71。兩張倒地圖用 88、89，沿既有剩餘計時切換。新增紅藍兩軍共 24 個動作圖格、48 張 64×128 裁片。落腳及倒地接地基準參照原版各圖格的底列。步兵選稿包連同行走共有 80 張。其他圖號沿原圖選擇。
+
+許昌第 60 拍設置兩軍受控姿勢，近戰使用既有姿勢旗標，受擊與倒地使用正式傷害及計時函式。以滑鼠切換顯示並放大至 200%。GPU 合成驗證共 40 個步兵姿勢的奇偶欄對齊，先前 16 個行走姿勢的雜湊一致。固定影格與逐格測試證明素材映射、合成及回退，完整對戰的連續驗收待做。[本機步兵預覽](../../workplace/scratch/battle-toolbar-pointer/hd-review/battle-infantry-hd.html)・[同影格收據](../../workplace/scratch/battle-toolbar-pointer/hd-review/infantry-combat-runtime-result.json)・[GPU 收據](../../workplace/scratch/battle-toolbar-pointer/hd-review/infantry-combat-atlas.log)
+
+### 弓兵手繪預覽
+
+弓兵行走用姿勢 36–43，張弓用 44–51，各有四個朝向、兩拍。受擊用 52–53，倒地用 86–87。兩軍共 40 個圖格、80 張 RGBA 裁片。後方左上朝向由右上鏡射，前方左下張弓由右下鏡射。裁片貼齊原版各圖格的接地列，採既有按需讀取器，箭矢保留原圖及原有獨立繪製流程。
+
+許昌第 60 拍擷取紅藍兩軍的行走及受控戰鬥，皆以滑鼠切換原圖／HD 並以滾輪放大至 200%。受控戰鬥各透過正式一般出箭函式建立 8 支箭，受擊及倒地由既有規則處理。GPU 驗證 40 個圖格的奇偶欄對齊及兩拍差異。連續射擊到結算尚待遊玩驗收。[本機弓兵對照](../../workplace/scratch/battle-toolbar-pointer/hd-review/battle-infantry-hd.html?unit=archer)・[同影格收據](../../workplace/scratch/battle-toolbar-pointer/hd-review/archer-runtime-result.json)・[GPU 收據](../../workplace/scratch/battle-toolbar-pointer/hd-review/archer-atlas.log)
+
+### 騎兵與大將手繪預覽
+
+騎兵沿用姿勢 18–35 與共用倒地圖 84–85，兩軍共 40 個圖格。大將沿用 0–17，兩軍共 36 個圖格。大將用淺色披肩、黑馬和短刀，騎兵用棕馬和短槍。收錄的朝向與兩拍落點依既有圖格，部分左上圖格取右上鏡射。大將倒地沿用既有規則。這批增加 152 張 RGBA 裁片。四個兵種現有 156 個姿勢、312 張裁片，按出現圖號讀取。
+
+許昌第 60 拍擷取騎兵四場及大將六場，涵蓋兩軍與 200% 近景。戰鬥姿勢以固定狀態抽驗，受擊及倒地沿用正式傷害與計時函式。GPU 分別驗證騎兵 40、大將 36 個姿勢的奇偶欄及兩拍變化。連續對戰、旗幟與其餘戰場地形仍待驗收。[本機兵種對照](../../workplace/scratch/battle-toolbar-pointer/hd-review/battle-infantry-hd.html)・[同影格收據](../../workplace/scratch/battle-toolbar-pointer/hd-review/mounted-runtime-result.json)・[騎兵 GPU 收據](../../workplace/scratch/battle-toolbar-pointer/hd-review/cavalry-atlas.log)・[大將 GPU 收據](../../workplace/scratch/battle-toolbar-pointer/hd-review/general-atlas.log)
+
+### 旗幟手繪預覽
+
+紅藍兩色各有長旗與短旗，依 `Banner.SourceTile` 繼續使用原版四拍與開場相位。長旗用兩張裁片，短旗用一張，原版合併圖號為 336–347、516–527，合計 24 張。以旗桿底部對齊，短旗加厚旗面並提高紅藍配色對比。松崗 DOS/V 214 張地圖中 194 張正向有旗。掃描正反向的旗色與長短型別，反轉後數量在紅、藍之間互換。[圖庫掃描](../../workplace/scratch/battle-toolbar-pointer/hd-review/banner-coverage.log)
+
+GPU 驗證兩色長短旗的四拍與循環起點，旗桿底部區域在各拍逐像素一致。許昌攻方及守方各自固定於第 60 至 63 拍，透過滑鼠切換原版素材與 HD。旗幟加入本機合併包，正常開機照原有流程。[本機八影格比較](../../workplace/scratch/battle-toolbar-pointer/hd-review/battle-banner-hd.html)・[畫面收據](../../workplace/scratch/battle-toolbar-pointer/hd-review/banner-runtime-result.json)・[GPU 收據](../../workplace/scratch/battle-toolbar-pointer/hd-review/banner-atlas.log)
+
+### 投射物手繪預覽
+
+普通箭使用合併圖號 `0x210`、`0x211`，高低差短程投射物使用 `0x214`、`0x215`。四張 64×128 裁片依既有 32×16 展開範圍定位，由正式圖號選擇與按需讀圖處理。飛行、下落、傷害和地形遮擋仍由既有流程執行。
+
+許昌第 60 拍以受控擺位呼叫既有生成函式，再單獨推進一拍投射物。出箭時兩支普通箭與兩種短程圖格均有素材差異。前進一拍後兩支普通箭各移動一格、短程投射物各下降一層，第二支普通箭的投影框在兩種顯示中一致。兩組擷取的圖格外均逐像素一致。GPU 分別驗證四種素材在較高地形後完全遮擋。範圍限受控射擊與圖格層級。[本機出箭／前進對照](../../workplace/scratch/battle-toolbar-pointer/hd-review/battle-projectile-hd.html)・[畫面收據](../../workplace/scratch/battle-toolbar-pointer/hd-review/projectile-runtime-result.json)・[遮擋收據](../../workplace/scratch/battle-toolbar-pointer/hd-review/projectile-atlas.log)
+
+### 草地與土路材質
+
+**狀態：CONFORMED，限本段素材與桌面抽驗。** 選稿包可增列 `ground`，含 `grass`、`road` 兩張 256×128 不透明 PNG 的檔名與 SHA-256。只在 HD 戰場、來源圖庫對應且有匹配圖號時讀取。素材組 0 的草地為 112、128、136、172、174、182、183，土路為 129、144。組 1 的草地為 112、137、145、156、171、174，土路為 144。組 2 的草地為 117、118、119、153、161、167，土路為 171。依三套解碼圖庫指紋驗證。草地改用色盤 4、5、14，土路改用 2、9、12。按展開後的世界位置取樣，保留透明輪廓和其餘色號。水戰 209–212 沿用既有水紋與船緣，顯式圖塊維持優先。[來源與覆蓋](../../workplace/scratch/battle-toolbar-pointer/hd-review/ground-source-coverage.log)
+
+初始堆疊掃描涵蓋 210 張非水戰地圖，草地對應 210 張、土路對應 186 張。許昌、中山、廣武第 60 拍抽驗三套圖庫，地表覆蓋框外逐像素一致。許昌縮到 50% 後以小地圖平移，比較 221,369 個草地及 55,956 個土路樣本，對齊後皆一致。合併包中 476,048 個地表像素與單獨測量相同，牆面其餘差異都位在旗幟四像素範圍內。橋板、林地與坡面仍沿各自素材。[本機地表比較](../../workplace/scratch/battle-toolbar-pointer/hd-review/battle-ground-hd.html)・[合併與位移收據](../../workplace/scratch/battle-toolbar-pointer/hd-review/ground-runtime-result.json)
+
+### 戰場視野縮放
+
+**狀態：CONFORMED（桌面受控攻城、野戰與水戰抽驗）。**
+
+原版及 HD 顯示共用工具列的減號、倍率重設、加號和戰場內滾輪。範圍 50%～200%，每步 25%。工具列以戰場中心縮放，滾輪以游標處縮放，100% 回到原版鏡頭。每場戰鬥從 100% 開始，戰略地圖保留自己的倍率。縮小時從戰場資料繪出更廣的視野，側欄、小地圖及命令區維持原位與尺寸。縮放屬桌面呈現，沿用正在進行的戰術拍數、部隊狀態和遮擋規則。
+
+座標測試確認 50% 可看到原視野外的格子，地形與單兵仍對齊，200% 可維持滾輪錨點。實際滑鼠抽驗涵蓋 50%、75%、100% 和 125%，檢查縮放後的命令、節拍、側欄滾輪及撤退。固定種子與攻城第 65 拍的 100% 原版模式和修改前的重製引擎相比，畫面差異為 0 像素。[滑鼠抽驗](../../workplace/scratch/battle-toolbar-pointer/hd-battle-probe/result.json)
+
+**縮放後的小地圖定位。** 改變鏡頭後的第一張畫面，地形和單兵會同時使用新鏡頭。畫面重建使用最後登錄的單兵姿態，維持戰術拍數、小地圖兵點及縮放倍率。100% 仍走原版熱區和鏡頭重繪時序。受控野戰與水戰各通過 16 項快照和滑鼠檢查，包含 50% HD 和 125% 原版的小地圖定位。正式美術仍待備，HD 使用合成 PNG 驗證。[野戰收據](../../workplace/scratch/battle-toolbar-pointer/zoom-minimap/land/result.json)・[水戰收據](../../workplace/scratch/battle-toolbar-pointer/zoom-minimap/water/result.json)
+
+**戰場顯示清單成本（CONFORMED，限下列測試）。** 實測許昌的舊流程每幀暫存約 3.29 MB，因為每幀為整張地形建立顯示清單。將顯示格本有的邊界檢查提早到地形登錄，並重用清單。地形堆疊順序、零號圖塊佔槽與相鄰裁片沿現有契約。
+
+50% 視野的地形清單量測，以相同原版資料及鏡頭各跑三次取中位數。配置量包含首次配置分攤至每次建立。這組測試涵蓋地形清單建立，整幀效能另受圖形合成影響。
+
+| 戰場 | 顯示資料筆數 | 每次配置量 | 每次耗時 |
+|---|---:|---:|---:|
+| 許昌 82 | 7,369 → 5,302 | 3,293,184 → 3,467 B | 594 → 174 µs |
+| 野戰 198 | 4,981 → 3,577 | 1,236,992 → 1,184 B | 240 → 92 µs |
+| 水戰 210 | 9,155 → 6,904 | 4,767,744 → 4,619 B | 991 → 162 µs |
+
+許昌、野戰與水戰各以 50%、100%、200% 和三組鏡頭測過。27 組有效地形登錄及順序相同。壽春攻城固定第 60 拍，用滑鼠切換原版及合成 HD，在三個倍率擷取前後六組畫面，差異皆為 0 像素。[原量測](../../workplace/scratch/battle-toolbar-pointer/display-cost-before.txt)・[更新後量測](../../workplace/scratch/battle-toolbar-pointer/display-cost-after.txt)・[畫面結果](../../workplace/scratch/battle-toolbar-pointer/display-cost-pixels/result.json)
+
+**戰場顯示格常駐記憶體（CONFORMED，限格陣列）。** 顯示格和保留格的每個槽位只保存圖號、物件種類及佔用狀態。既有規則允許零號圖塊佔槽，渲染時視為空圖。投射物遮擋仍使用物件種類。Linux amd64 每槽從 136 bytes 降到 16 bytes，50% 時兩張格陣列由 13,160,448 降到 1,548,288 bytes。這項數字涵蓋兩張格陣列，圖像與其他快取另計。壽春攻城第 60 拍的 50%、100%、200% 原版與合成 HD 畫面，六組前後差異均為 0 像素。[修改前量測](../../workplace/scratch/battle-toolbar-pointer/slot-size-before.txt)・[修改後量測](../../workplace/scratch/battle-toolbar-pointer/slot-size-after.txt)・[畫面收據](../../workplace/scratch/battle-toolbar-pointer/slot-size-pixels/result.json)
+
 ## 2026-11-15：HD按需讀圖（CONFORMED，限所述桌面抽驗）
+
+### 原版戰場素材按需讀取
+
+戰略開局仍裝上陣形、地形查詢與戰略 AI 資料。戰場規則首次要求地形或腳本時，讀取 `BATTLE.MAP`、`BATTLE.MDL` 與 `BATTLE.DAT`。首次建立戰場畫面才讀取 `BATTLE.SCH`。同一資料來源各讀一次，缺失沿用既有地形替代與單兵色點。桌面、手機共用，進入戰場的規則與亂數流程沿既有路徑。
+
+**驗證狀態。** 桌面以缺少四檔的素材目錄跑完正常開局、存讀檔及行軍等 45 項滑鼠檢查。供應者測試在開局後才補地形、腳本與單兵，覆核兩段首次讀取、快取與缺檔替代。固定攻城第 65 拍和修改前的畫面差 0 像素。四個檔案合計 1,195,008 bytes，延至用到才讀。桌面、手機與素材套件冷測通過。[正常開局收據](../../workplace/scratch/battle-toolbar-pointer/lazy-opening/mouse-toolbar-gui.json)
+
+最終桌面建置以暫存原版資料目錄排除上述四檔，戰場 HD 選稿只提供索引。遊戲仍進入原版顯示的啟動頁，HD 戰場選稿已辨識，畫面尚未解碼 HD 戰場圖。[冷啟動收據](../../workplace/scratch/battle-toolbar-pointer/hd-review/hd-preview-start-minimal.json)
 
 使用者要求避免一次載入HD圖形。已核對四個現行素材入口：`LoadHDPortraits`、`LoadHDWorld`、
 `LoadHDLocations`及`LoadHDBanner`，都在建立索引時完整讀取每張PNG做SHA及尺寸檢查；
@@ -393,6 +539,44 @@ CONFORMED僅限此範圍。命名、編成、軍團與戰術對話已接共用�
 以上偏移及型別沿既有已證實資料，不新增一個假的「委任能力百分比」。
 適性寫回須保留不屬於編輯範圍的原始位元；若評價等衍生值必須更新，另列依賴及驗收。
 正常存檔與原生存檔兩條路都須驗證，不能只改畫面上的數字。
+
+### 第一階段實作契約（READY）
+
+- 桌面工具列可開關戰術 AI，首次關閉，記在桌面偏好。變更自下一戰術拍生效，只套用戰術畫面。攻守各讀軍團主將的統帥，依已選曲線增加尋路出隊預算及單兵的水平移動、梯格上升機會。沿 spec120／134 的現有尋路與 spec36 的門格碰撞。額外步進不能造成額外攻擊、撞擊、疲勞或全局時間推進。單挑與撤退照原拍前進。
+- spec36 證實門格的垂直移動，說明書另記獨立架梯等待。正式引擎目前只有前者的規則入口，這階段可加快梯格上升，獨立的架梯等待保留原版證據與實作缺口。
+- 武將編輯限大地圖可操作時開啟。滑鼠可選武將及增減前表七項。視窗暫停戰略時間，切換武將或右鍵取消丟棄草稿。「套用」只更新目前戰局，循原有存讀檔保存，保留原生適性欄低半位元組。月結分數仍由既有月結更新。
+- 驗收使用固定初始狀態比較關閉、統帥1及15的尋路、水平移動與同格上升。編輯驗收確認欄位限制、取消、原生及正常存檔讀回，外加桌面滑鼠入口抽驗。
+
+### 桌面驗收
+
+- 曹操第一劇本正常接戰。滑鼠在戰場開關 AI，游標停在按鈕上時戰術拍仍會前進。[戰場驗收](../../workplace/scratch/battle-toolbar-pointer/hd-review/command-tools-battle/mouse-toolbar-gui.json)
+- 固定兵位、統帥 15 時，距已開城門四格的步兵兩拍抵達。關閉時兩拍走兩格。分別以兩側的統帥 1、8、15 驗走路與梯格上升。額外移動遇敵會停下。尋路佇列保留普通兩筆及待處理請求的先後順序。
+- 重製版原生檔與相容的 SAVE.DAT 各自讀回曹操的統帥、委任類型及三種適性。滑鼠右鍵取消未套用草稿。原版記錄的適性低半位元組有獨立往返測試。[編輯驗收](../../workplace/scratch/battle-toolbar-pointer/hd-review/command-tools-gui/mouse-toolbar-gui.json)
+- 第一劇本曹操正常編成夏侯淵軍，從武將編輯器把統帥 6 改成 15，存檔讀回並等候自然遭遇。進戰場後引擎讀到攻方 11、守方 15。滑鼠開關 AI 時，戰術拍持續推進。此路徑有 48 項驗收。[編輯、讀檔與接戰收據](../../workplace/scratch/battle-toolbar-pointer/hd-review/command-tools-joined/mouse-toolbar-gui.json)
+
+### 架梯階段的統帥加成（CONFORMED，限本片）
+
+松崗 DOS/V 的梯位使用既有類型 2 結構記錄。IDA Pro 9.4 DOS/V 線性位址
+`19DA9–19DCF` 只掃描 `F0–F7`，在記錄 `+18h` 寫入 80。`1B10D` 由上爬分支進入
+碰撞，`1B5FE` 每次有效接觸扣 1，歸零後的下一次接觸走 `1B5F6 → 1B799`。
+`1B854` 把圖格加 8，新圖格堆疊顯示梯子。`KI.EXE` 的 SHA-256 為
+`fffeba985231cda4d636e93d10f598470b1f691d00275e4aa38e285893d43868`。
+[IDA 指令與 bytes](../../workplace/scratch/battle-toolbar-pointer/hd-review/ladder-timing-20261122/ida-probe.json)
+
+同一固定種子椎陽場景的 dosgolem 移動入口取樣中，梯位 `(39,26)` 由槽 38
+弓兵接觸，第 492 拍仍為 80，第 572 拍為 0，第 573 拍才切換，第 574 拍兵的 Z 由 0 到 1。
+另一梯位 `(39,11)` 的扣減曾中斷後繼續，佐證進度跟隨梯位。上述引擎資料流
+已證實，前段所稱獨立計時器改以梯位共用的接觸進度理解。
+
+AI 開啟時，符合既有上爬條件的士兵接觸攻城梯位，以同一統帥曲線增加扣減。
+每一梯位獨立累積分數，維持首次接觸及零後再接觸的兩道閘。
+統帥 1 需要 81 次有效接觸，統帥 15 需要 41 次。
+沿用各側原有的碰撞資格及破壞、換圖流程。普通水平碰撞、城門強度條使用的類型 1、
+背對城即拆、野戰與防守側免扣規則沿原有流程。關閉 AI 時清除未用的加成分數，已取得的架梯進度仍在。
+驗收比較相同梯位、同一初始進度下的開關、統帥 1、8、15，以及能與不能開始架梯的兵種和方向。
+
+dosgolem `d1414930` 以既定 seed 1 重跑。將原版移動入口與 remake 前一拍結束配對，椎陽兩處梯位各 578 拍的進度、完工旗標及指定兵高度均一致。`(39,26)` 從首次接觸到完成，包含首尾兩拍，關閉及統帥 1 均 81 拍，統帥 8 為 55 拍，統帥 15 為 41 拍。AI 組於第一次扣減前開啟。統帥 15 完工後下一拍上升兩格，沿既有攀爬加成。
+[逐拍對拍收據](../../workplace/scratch/battle-toolbar-pointer/hd-review/ladder-timing-20261122/ladder-comparison.json)
 
 ## 決策樹與下一步
 
@@ -1812,6 +1996,18 @@ Generate one independently designed square gouache material swatch for an origin
 
 使用內建 ImageGen 以獨立四材質研究稿右下的水面為筆觸與配色參照。原稿 `battle-water-gouache-r1.png` 為 1254×1254 PNG，SHA-256 `46e40671d399261affa0e8413207340ce545f6b6a9664678eeceede55ddcacff`。原稿留在本機。
 
+水戰 209 至 212 使用素材組 2。主水面圖號 32 的 512 像素中，256 透明、256 為色盤 3。驗收原型於合成前標記圖號 32 的水面像素，合成後以 GPU 取樣獨立生成的水紋。合成遮住的水面不參與上色。水戰 210 第 60 拍、鏡頭 36、14 的 100% 畫面，659,456 個標記像素均換成水紋，標記區外 2,166,784 像素一致。其餘圖號的船緣水線沿用原版。本機原型透過驗收覆寫建置。[取樣及雜湊](../../workplace/scratch/battle-toolbar-pointer/hd-review/material-water-runtime-result.json)
+
+工具列從 100% 降至 75% 與 50%，並用小地圖將鏡頭從 36、14 移至 32、24。50% 時原型用兩倍來源倍率維持 1920×1472 畫布。依世界位置對齊後，355,460 個兩側皆可見的水紋像素差異為 0。[本機操作擷取](../../workplace/scratch/battle-toolbar-pointer/hd-review/battle-water-runtime.html)
+
+**主水面整合規格（CONFORMED，桌面水戰 210 及載入器抽驗）。** 既有 `battle-selection.json` 可指定 `water`，內含 `file` 與 `sha256`，對應 256×128 不透明水紋 PNG。只有素材組 2 的戰場 209 至 212 可使用。明列的 `set: 2, raw: 32` 裁片優先。主水面原圖須符合 256 個透明像素與 256 個色盤 3 像素的契約。首次繪製 HD 水戰時才驗證及解碼水紋。失敗時同場回退，其他選稿仍照常使用。
+
+水紋於正常的裁片合成順序繪入。以每段重排後的世界投影位置取樣，透明像素及遮擋順序由現行繪製器決定。快取以來源區段及循環相位查找。水戰 210 第 60 拍，100% 時主水面以外 2,166,784 像素逐像素一致，50% 小地圖移位後 1,421,840 個重疊水紋像素逐像素一致。無覆寫的桌面執行檔載入草地及水紋選稿包後進入正常啟動畫面。船緣水線屬其餘圖號，另行驗收。[正式路徑畫面](../../workplace/scratch/battle-toolbar-pointer/hd-review/battle-water-runtime.html)・[驗收](../../workplace/scratch/battle-toolbar-pointer/hd-review/material-water-native-result.json)・[本機選稿索引](../../workplace/scratch/battle-toolbar-pointer/hd-review/battle-hd-preview-pack/battle-selection.json)
+
+**船緣水線（CONFORMED，水戰 210 桌面抽驗）。** 素材組 2 的水戰 209 至 212 中，主水面以外共有 21 個地形圖號使用色盤 3。四場、攻守旋轉及五種鏡頭的連通掃描覆蓋全部來源像素。圖號 92 有 27 個像素未與主水面連通，圖鑑顯示它們位於船緣格狀水線。水紋套用到這批圖號的色盤 3 像素，船料色及透明度沿原繪製。圖庫的這批裁片以解碼後依序串接的索引雜湊驗證。雜湊不符時水線沿原圖。已明列的 HD 裁片維持優先。[連通掃描](../../workplace/scratch/battle-toolbar-pointer/hd-review/waterline-source.log)・[圖鑑](../../workplace/scratch/battle-toolbar-pointer/hd-review/wall-slot-audit.html?waterline)
+
+船料與水紋快取在同一個裁片內，避免分開疊畫。水戰 210 第 60 拍相同鏡頭比對，新增 182,128 個船緣水紋像素。全部水紋區以外的 1,984,656 像素逐像素一致。50% 視野小地圖移位後，1,910,112 個重疊的水紋像素一致。[同影格驗收](../../workplace/scratch/battle-toolbar-pointer/hd-review/material-waterline-result.json)・[本機比較](../../workplace/scratch/battle-toolbar-pointer/hd-review/battle-water-runtime.html)
+
 水面完整提示詞。
 
 ```text
@@ -1895,6 +2091,10 @@ ImageGen 木料材質原稿 SHA-256 為 `d4d52dbade013701f47ea5abc7b74b47311441b
 Create one original opaque square seamless wood-grain material for an isometric historical East Asian strategy game. Use the supplied independent gouache road swatch only for matte brush handling, restrained warm colors, and detail scale. Depict one continuous surface of weathered warm honey-brown and ochre wood, long subtle fine graining left to right along the X axis, soft dry-brush ridges, a few irregular fibers and small scale natural shade variations. The swatch is the surface of the wood itself, no plank outlines or joints, nails, knots, beams, bridge drawing, fencing silhouette, cracks across the whole tile, perspective, surrounding scenery, surface glare, strong shadows, text, borders or existing game assets. Fill corner to corner. Match color and stroke density at both opposite edges for repeat tiling. Keep strokes legible when downsampled, give the timber believable amber overtones, and retain an even diffuse matte finish. Supply only this one opaque material.
 ```
 
+松崗版戰場 82、5、4 的原圖與可見圖塊對照已確認來源。圖庫 0 使用圖號 95、87，圖庫 1 使用 120，圖庫 2 使用 15、47、55。首批處理這六張木料圖塊。以原圖的透明遮罩、色號與分帶遮擋保留橋板縫隙、木柵輪廓與水岸。兩組橋板各依原圖朝向取樣，共用一張木紋。首次繪製含選定圖塊的 HD 戰場時才開啟木紋檔。已有個別圖塊替換時優先使用該替換。未通過圖庫指紋或材質驗證時保留原圖。
+
+受控第 60 拍驗收通過。許昌、中山、廣武在木料遮罩外逐像素一致。許昌 50% 平移前後比對 15,188 個木紋取樣，全數相符。許昌木紋單獨載入與合併包的 60,752 個像素一致。松崗版圖庫掃描找到 69 張非水戰地圖使用這六個圖號。驗收範圍為選定木料及三場實際畫面。狀態 CONFORMED。[本機比較](../../workplace/scratch/battle-toolbar-pointer/hd-review/battle-timber-hd.html)・[收據](../../workplace/scratch/battle-toolbar-pointer/hd-review/wood-runtime-result.json)
+
 ### 戰場葉叢手繪稿
 
 ImageGen 葉叢材質原稿 SHA-256 為 `24e8c98dfc9a8acc2a2b41b586ef9657f24a246890c2c7a13e21eac17cd77d6f`。
@@ -1902,6 +2102,10 @@ ImageGen 葉叢材質原稿 SHA-256 為 `24e8c98dfc9a8acc2a2b41b586ef9657f24a246
 ```text
 Create one independently designed, opaque, square, seamless hand-painted foliage material swatch for the illuminated surfaces of small historic East Asian game trees and shrubs. Use the supplied independently painted grass material only as a reference for the matte gouache brush handling and restrained warm color. Imagine looking into densely clustered small deciduous leaves under hazy sun, from directly above. Use a rich olive, sage and yellow-green range with soft darker pine-green recesses. Small irregular layered brush marks, naturally grouped into loose clusters with softly broken highlights, visible fine leaf structure and gentle midscale color variation. Fill the square completely with foliage that tiles continuously on all four edges, with a balanced distribution of light and shade. The swatch will be blended into existing geometry, so do not paint any whole trees, silhouettes, large branches, bare ground, flower dots, rocks, hard cast shadows, borders, gradients to the edges, perspective landmarks, text, UI or commercial game art.
 ```
+
+松崗版三套圖庫各以 38、46 組成矮灌木、柱狀樹及密株樹林，已用戰場 149、37、7 的可見來源對照確認。戰場 46 與 201 的完整畫面顯示圖庫 0 的 53、69 及圖庫 1 的 53、61 也屬高樹葉面。只在選定圖號的色號 4、5、14 加入葉紋，保留原有遮罩、枝幹、下層地形與遮擋。季節色號 14 只取樣材質明暗，保留原版調色盤的色相。首次繪製有相符圖塊的 HD 戰場才讀圖。來源指紋或材質讀取驗證失敗時沿用原圖。
+
+戰場 149、37、46、7 的固定第 60 拍通過原版素材與 HD 比較。葉叢遮罩外逐像素一致。戰場 7 與完整 HD 資料包同場比對的 251,152 個葉叢像素一致。秋色與冬色保留原調色盤比例的測試通過。資料掃描確認 153 張非水戰地圖使用選定圖號。狀態 CONFORMED。[本機比較](../../workplace/scratch/battle-toolbar-pointer/hd-review/battle-foliage-hd.html)・[收據](../../workplace/scratch/battle-toolbar-pointer/hd-review/foliage-runtime-result.json)
 
 ### 戰場坡面手繪稿
 
@@ -1911,6 +2115,10 @@ ImageGen 坡面材質原稿 SHA-256 為 `f0255ac2b3999c8fe2447c9eae87378f009d58c
 Produce one independently hand-painted, opaque, square, seamlessly repeating material swatch for exposed ochre soil and weathered sandstone on small embankment faces. Use the supplied independently generated packed dirt swatch only as a style and warm color reference. Paint subtle rust-gold and tawny umber, warm orange light and darker brown creases, very small natural stone grains, and short softly broken oblique erosion strokes. Use restrained mottled contrast, soft matte gouache with fine dry-brush marks, and midsized low-contrast clusters distributed evenly to read when downsampled. The entire swatch is the surface shown straight on. Continuous values and stroke density across all four edges. No horizon, perspective, whole boulders, cobblestones, masonry, cliffs viewed as a silhouette, grass, moss, plants, faces, figures, text, frames, objects, boundary lines, or commercial game art. Opaque throughout.
 ```
 
+松崗版圖庫 1 的 27、97、98、100、105、106、108、160 分別組成坡腳、斷面與各朝向轉折。攻城 75 與野戰 193 的可見來源標記，以及八個裁片的圖塊堆疊與使用掃描，支持其土石用途。坡面 HD 僅替換上述圖號的黃褐土石色號 6、7、11，保留深影、草地、水面及原始透明遮罩。土石紋理沿用繪製器的世界座標。首次繪製需要該圖的 HD 戰場才讀素材，素材缺漏或簽章失敗時沿用原圖。
+
+37 張地圖使用選定圖號。攻城 75 與野戰 193 的第 60 拍通過同狀態原版素材與 HD 比較，遮罩外逐像素一致。攻城 75 使用單獨坡面與完整資料包的 310,944 個坡面像素相同。狀態 CONFORMED。[本機比較](../../workplace/scratch/battle-toolbar-pointer/hd-review/battle-slope-hd.html)・[驗證收據](../../workplace/scratch/battle-toolbar-pointer/hd-review/slope-runtime-result.json)
+
 ### 戰場屋瓦手繪稿
 
 ImageGen 屋瓦材質原稿 SHA-256 為 `7f8f9239d2d999cc4b9ed78b0f96b70f0f85f8c741333bc93967e2491942f8d1`。
@@ -1919,6 +2127,10 @@ ImageGen 屋瓦材質原稿 SHA-256 為 `7f8f9239d2d999cc4b9ed78b0f96b70f0f85f8c
 Create one independent hand-painted opaque square material swatch of aged charcoal-blue fired clay for the surfaces of traditional East Asian roof tiles. Use the supplied independently painted stone material only as a reference for matte gouache brushwork and subdued historical coloring. The swatch will be masked into existing tile shapes; paint only the fine texture of the fired clay, with subtle streaky glaze, tiny weathered gray slate flecks, restrained indigo and blue-black mottling, slight copper-grey warmth, and fine broken dry-brush highlights. Coherent soft lighting and evenly distributed brush detail, with moderate texture visible at small scale. The material must repeat continuously at all four edges. No separate tile outlines, repeated roof layout, curves or edges of a roof, repeating stripes, masonry bricks, buildings, sky, vegetation, perspective, letters, frames, figures, or commercial game art. Matte gouache, fully opaque throughout.
 ```
 
+松崗版三套圖庫的 41 張裁片保有瓦紋方向與不同形狀的屋頂。戰場 137、33、4 與水戰 210 的可見圖塊標記確認瓦面與門柱、簷口、城牆的邊界。水戰船艙沿用圖庫 2 的瓦片，來源圖號與水面及水線的來源分開。HD 屋瓦只在帶屋瓦的裁片中使用色號 8，保留原有瓦界、亮線、光影和簷下配色。來源圖庫簽章通過且該戰場有對應屋瓦時，首次 HD 繪製才讀取瓦紋。缺圖及驗證失敗時沿用原圖。
+
+資料掃描確認 120 張城戰地圖與水戰 209–212 使用選定裁片。三套圖庫各抽驗一場攻城，另驗水戰 210，均比對固定第 60 拍的畫面。瓦紋遮罩外逐像素一致。攻城 137 及水戰 210 各有 78,752 與 40,192 個選定瓦面像素，單獨包和完整包比對一致。狀態 CONFORMED。[本機比較](../../workplace/scratch/battle-toolbar-pointer/hd-review/battle-roof-hd.html)・[驗證收據](../../workplace/scratch/battle-toolbar-pointer/hd-review/roof-runtime-result.json)
+
 ### 水戰船板手繪稿
 
 ImageGen 船板材質原稿 SHA-256 為 `35c5321c72af775669cd07856e07cfb4766cb1e417b08ac619038d1d1f707a41`。
@@ -1926,3 +2138,7 @@ ImageGen 船板材質原稿 SHA-256 為 `35c5321c72af775669cd07856e07cfb4766cb1e
 ```text
 Create one independently hand-painted opaque, square, seamlessly repeating material swatch of old riverboat timber under hazy daylight, in matte gouache. Use the supplied independent timber study only as a reference for the brush style. The surface is a close-up of warm pale amber and golden chestnut wood finely weathered by water, with restrained amber streaks, soft occasional grey-brown flecks, tiny broken grain marks and a few diffuse patches of bleached fibers. Grain gently runs left to right, with enough variation to stay visible when downsampled and no strong repeating bands. Fill the entire surface; edges match continuously in value and stroke density. Do not paint individual board outlines, seams, lines of nails, ropes, water, oars, curved hulls, a boat scene, color gradients to the edges, text, figures, painted symbols, or commercial game art. Opaque throughout.
 ```
+
+水戰 209–212 的圖庫 2 中，55 張裁片包含甲板、船舷、槳、艙壁或桅杆的木色。19 張同時包含水線色號 3。四張地圖資料掃描、戰場 210 的合成來源和圖鑑確認各片用途，船艙屋瓦保留其獨立材質。木紋使用色號 6、7、9、11、12。透明、金屬灰、深影、甲板縫和水線維持原輪廓。木料與水線依各自的色號遮罩在同一裁片合成，各材質按需載入並可單獨回退。
+
+四張水戰地圖的第 60 拍均通過。水戰 210 的船料及水紋分別有 1,434,896 與 841,584 個替換像素。兩種材質同場時，與單獨載入逐像素一致，遮罩外的 549,760 個像素與原版素材相同。50% 平移後，554,753 個船板及 212,255 個水紋重疊取樣一致。另三張依正式選圖路徑受控抽樣，變化均落在船料與水紋色號。狀態 CONFORMED。[本機比較](../../workplace/scratch/battle-toolbar-pointer/hd-review/battle-ship-hd.html)・[驗證收據](../../workplace/scratch/battle-toolbar-pointer/hd-review/ship-runtime-result.json)

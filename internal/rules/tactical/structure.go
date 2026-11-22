@@ -119,6 +119,9 @@ type Structure struct {
 	Durability int
 	// Broken 為真表示已經打壞了（原版 `+0x00` 的 bit 0）。
 	Broken bool
+
+	// 餘下的統帥加成分數跟隨梯位，接手的士兵沿用同一進度。
+	ladderCredit int
 }
 
 // buildStructures 重現 `sub_19CE2` ＋ `sub_19DA1`。
@@ -259,6 +262,10 @@ func (b *Battle) CityDamage(cityWall int) int {
 // 玩家守城時戰場轉 180 度，攻方改從 X 58 朝西走。兩個分支合起來
 // 指的都是**背對城**，也就是攻方退卻時撞到自己背後的城壁。
 func (b *Battle) hitStructure(side, facing, x, y int) bool {
+	return b.hitStructureContact(side, facing, x, y, false)
+}
+
+func (b *Battle) hitStructureContact(side, facing, x, y int, prepareLadder bool) bool {
 	i := b.structureAt(x, y)
 	if i < 0 {
 		return false
@@ -277,6 +284,10 @@ func (b *Battle) hitStructure(side, facing, x, y int) bool {
 	}
 	if s.Durability > 0 {
 		s.Durability--
+		if s.Durability > 0 && b.commandAssist && prepareLadder && s.Kind == KindGate && b.Field.IsSiege() &&
+			spendCommandCredit(&s.ladderCredit, b.Sides[side].CommanderRating) {
+			s.Durability--
+		}
 		// 門強度條只在**攻城戰**、而且**只對城壁**顯示——呼叫端
 		// `0001B601` 兩道閘：`cmp byte_1D34B, 0` ＋ `cmp [di+1], 1`。
 		if b.Field.IsSiege() && s.Kind == KindWall {

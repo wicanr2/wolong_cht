@@ -18,25 +18,24 @@
 
 ## 現在做到哪裡
 
-核心規則與可玩垂直切片已接通。已封裝的桌面版本為
-[`dist-all/`](dist-all/README.md)（v.1.0.18-20260908），包含 AppImage、Windows 與 macOS 封包，
-完整版只限本機使用。選章、兩段確認及君主卡直接開局已由 AppImage 正常操作驗證，
-行軍中重啟及返回流程見 [驗證紀錄](docs/playtest/110-desktop-march-restart.md)；Windows／macOS 原生 GUI 仍待實機驗收。
-Android 不在這次桌面修正版範圍。
+**v.1.2.0-20261122** 提供 Linux、Windows、macOS 和 Android 引擎。以軍師身分進言、編成部隊、行軍、攻城與存讀檔的主要流程已接通。
+桌面支援全滑鼠操作、地圖與戰場縮放、原版與 HD 模式切換、可選戰術 AI，以及七欄武將編輯器。AI 預設關閉，開啟後雙方各依主將統帥加快尋路、移動和架梯。
+Android 提供雙指縮放和常駐雙排戰術控制。Linux 已原生啟動、Windows 已在 Wine 啟動、macOS 已校驗雙架構，Android 已在橫向模擬器試玩。[公開發行](https://github.com/wicanr2/wolong_cht/releases/tag/v.1.2.0-20261122)・[驗收範圍](CONTEXT.md)
 現行工作與狀態統一管理在 GitHub [Issues](https://github.com/wicanr2/wolong_cht/issues)；
 本地 [`docs/worklist.json`](docs/worklist.json) 與 `tools/worklist.py verify` 只作輔助。
 
-開發中的桌面操作採[全滑鼠工具列](docs/spec/266-mouse-only-desktop-toolbar.md)，
+桌面操作採[全滑鼠工具列](docs/spec/266-mouse-only-desktop-toolbar.md)，
 清單[按住拖曳與放開提交](docs/spec/274-original-list-scrollbar-drag.md)已完成正常流程抽驗。
 [HD與工具設計](docs/spec/275-hd-toolbar-portraits-and-tools.md)中的模式切換、頭像、戰略地圖、
-橫幅與部分據點景觀已接入桌面版；可選戰術AI加成與武將能力編輯仍在設計階段。
+橫幅、部分據點景觀、戰場 HD、可選戰術 AI 加成與武將能力編輯已接入桌面版。
 現行程式與證據以[CONTEXT](CONTEXT.md)為準。
 HD美術方向已確認，以原版造型、視角、配置與強化原色為基準，樣本見[本機原版與HD重繪對照](workplace/hd-redraw-local-20261104/faithful/index.html)，直接雙擊HTML即可離線開啟。
 另有[大地圖HD本機預覽](workplace/hd-redraw-local-20261104/faithful/world/index.html)，三十五區試繪已覆蓋原版全圖，可切換區域、縮放與平移；局部美術仍待修整，正式遊戲已接範圍見下方。
 頭像已有[原版與HD本機對照](workplace/hd-redraw-local-20261104/faithful/portraits/index.html)，可檢視146張原圖參考重繪小樣。已接入可選桌面頭像模式，首次原版、切換後記住選擇，缺圖回原圖；正常新遊戲與勢力情報窗抽驗通過，尚未逐張取得美術接受。
 從專案根目錄啟動時，可加`-hd-portraits workplace/hd-redraw-local-20261104/faithful/portraits`載入本機選稿；[頭像實際遊戲截圖](workplace/scratch/ui-windows-20261104/hd-head-game-review.html)可直接離線開啟。
-戰略地圖已支援50%～200%、每次25%，可用單排工具列或滾輪縮放，視窗與頭像維持原尺寸。加`-hd-world workplace/hd-redraw-local-20261104/faithful/world`可載入既有35區與22接縫選稿，沿同一原版／HD按鈕切換；[HD實際遊戲截圖](workplace/scratch/ui-windows-20261104/hd-world-game-review.html)含三倍率點城、模式切換與正常讀檔抽驗。其他季節／液晶模式沿原圖，局部美術、其他HD場景、AI與編輯器仍待完成。
-另保留[完整工具列操作稿](workplace/scratch/ui-windows-20261104/hd-toolbar-expanded-r1.html)，其中AI與武將編輯仍為示範。
+戰略地圖已支援50%～200%、每次25%，可用單排工具列或滾輪縮放，視窗與頭像維持原尺寸。加`-hd-world workplace/hd-redraw-local-20261104/faithful/world`可載入既有35區與22接縫選稿，沿同一原版／HD按鈕切換；[HD實際遊戲截圖](workplace/scratch/ui-windows-20261104/hd-world-game-review.html)含三倍率點城、模式切換與正常讀檔抽驗。其他季節與液晶模式沿用原圖。
+
+桌面工具列的「AI」預設關閉。開啟後，戰場兩側各依主將統帥加快尋路排程、單兵行走、架梯與攀爬。「武將」可在戰略地圖調整武術、統帥、政治、委任類型、攻城、陸戰與海戰。套用後可透過原有的「存檔」保留修改。
 
 工具列已縮為28高，靠上緣顯示、離開收起，只留6高把手。原版模式也可縮小地圖與使用小地圖。
 加`-hd-banner workplace/hd-redraw-local-20261104/faithful`可載入原圖參考HD龍紋橫幅，日期保持即時更新；
@@ -46,9 +45,12 @@ HD美術方向已確認，以原版造型、視角、配置與強化原色為基
 沿原版頁碼取圖，保留96×96位置與尺寸；未選頁、其他季節及液晶沿原圖。
 [景觀實際遊戲畫面](workplace/scratch/ui-windows-20261104/hd-location-game-review.html)包含五城、共用頁碼與原圖回退抽驗。
 
+戰場也可用工具列或滾輪在 50%～200% 縮放。側欄、小地圖與命令區維持原尺寸。
+加 `-hd-battle workplace/scratch/battle-toolbar-pointer/hd-review/battle-hd-preview-pack` 可載入本機戰場 HD 選稿，缺圖沿用原圖。選稿包含地形、城牆、雲梯、屋瓦、陸戰與水戰水紋，以及船板、四個兵種、軍旗和投射物。桌面戰場可用工具列切換原版與 HD。[戰場本機預覽](workplace/scratch/battle-toolbar-pointer/hd-review/battle-hd-review.html)・[松崗原版與 HD 逐拍對照](workplace/scratch/battle-toolbar-pointer/hd-review/battle-motion-hd.html)・[戰場素材規格](docs/spec/275-hd-toolbar-portraits-and-tools.md#戰場高解析素材)
+
 ## 原版／HD 畫面總覽
 
-人物、城池與地圖各四組，左側為松崗 DOS/V 原版素材，右側為依原圖重繪的 HD 選稿。
+人物、城池、地圖與戰場各四組，左側為松崗 DOS/V 原版素材，右側為依原圖重繪的 HD 選稿。
 這些是美術展示排版，為方便比較而放大，不是遊戲介面的實際尺寸，也不作像素對拍。
 原圖保留像素邊緣；HD 保留原版造型、視角與配置，強化線條、材質及原有色彩。
 點圖可看大圖。原始素材與可載入的 HD 圖庫仍留在本機，這裡只收展示渲染結果。
@@ -93,9 +95,13 @@ HD美術方向已確認，以原版造型、視角、配置與強化原色為基
 
 ### 戰場
 
-**戰場地形、城牆與單兵尚未 HD 重繪。** 以下四張是重製引擎沿用原版素材的現況，
-不是 HD 預覽。圖片來自受控場景重播與既有展示截圖，用來展示畫面，不代表自然遊玩或整場戰鬥驗收。
-戰術對話可使用 HD 頭像，這項能力不等於戰場圖庫已 HD 化。
+下列四組比較各取對應戰場的第 60 拍。左側為重製引擎使用原版素材，右側為合併選稿 HD。
+
+| 攻城 | 守城 | 野戰 | 水戰 |
+|---|---|---|---|
+| ![許昌城牆與護城河](docs/images/readme-hd-battle-siege.png) | ![許昌守軍突擊後](docs/images/readme-hd-battle-defense.png) | ![坡地交戰](docs/images/readme-hd-battle-land.png) | ![水戰船板與水面](docs/images/readme-hd-battle-naval.png) |
+
+下列原版素材截圖保存既有展示紀錄。[四兵種動作預覽](workplace/scratch/battle-toolbar-pointer/hd-review/battle-infantry-hd.html)
 
 | 攻城進攻方 | 攻城防守方 |
 |---|---|
@@ -105,8 +111,7 @@ HD美術方向已確認，以原版造型、視角、配置與強化原色為基
 |---|---|
 | ![攻城部隊展開的既有截圖，沿用原版戰場素材](docs/images/readme-battle-deployment.png) | ![野戰退卻現況，沿用原版戰場素材](docs/images/readme-battle-retreat.png) |
 
-每張圖的本機來源、尺寸與 SHA-256 收錄於[展示圖來源清單](tools/readme-gallery.json)，
-由[展示圖排版工具](tools/readme_gallery.py)重生。HD 範圍見[設計與接線紀錄](docs/spec/275-hd-toolbar-portraits-and-tools.md)。
+16 張展示圖與本機 HD 檔案的雜湊已收錄。既有展示圖可用排版工具重生。各批重繪的提示詞與驗收範圍見規格。[素材清冊](docs/release/assets-v.1.2.0-20261122.json)・[展示圖來源](tools/readme-gallery.json)・[排版工具](tools/readme_gallery.py)・[HD 規格與提示詞](docs/spec/275-hd-toolbar-portraits-and-tools.md)
 
 ## 還原證據摘要
 
@@ -263,20 +268,13 @@ Android 與長程全局通關不在本輪範圍。未解研究列數不作發行
 | 結局第一幕不捲動 | 原版是逐列捲上來，remake 用整張淡入（[`spec/67`](docs/spec/67-ending-playback.md) §3）|
 | 訊息模板 | 原版是「片段 ＋ 控制位元組」，remake 用具名參數；原版機制仍完整記錄在 `docs/formats/` |
 
-### 桌面交付與推廣片
+### 封包與推廣片
 
-正式下載：[v.1.0.18-20260908](https://github.com/wicanr2/wolong_cht/releases/tag/v.1.0.18-20260908)。
+GitHub Release 提供四平台公開引擎包。桌面以 `-orig` 和 `-font` 指定自備的松崗 DOS/V 資料與字型。Android 安裝後，從匯入畫面選取自備資料夾。[v.1.2.0-20261122 公開下載](https://github.com/wicanr2/wolong_cht/releases/tag/v.1.2.0-20261122)
 
-目前版本為 **v.1.0.18-20260908**，唯一交付根目錄是 [`dist-all/`](dist-all/)。
-⚠ **批次不再各佔一個子目錄**：`release_all_fs.py promote` 是整個目錄交換，
-所以 `dist-all/` 底下就是現行批次本身，沒有 `v.*` 這一層。
+原版資料、倚天字型、原版音訊、可載入的 HD 重繪圖庫與長短版影片限本機保存。公開 repo 收錄展示圖、素材清冊、提示詞與載入工具。[本機交付](dist-all/v.1.2.0-20261122/README.md)
 
-- `full/`：Linux AppImage、Windows 與 macOS 完整版，內含原版資料與所需素材，只限本機保存。
-- `release/`：不含原版資料、音樂與倚天字型的桌面引擎包；玩家需自備合法資料，安裝命令在各包 README。
-- `promo/`：本輪重新剪輯的桌面推廣片、分鏡、音訊來源與媒體驗收。歷史實錄與新版畫面分別標明；不當作完整同狀態對拍。
-- Windows／macOS 原生操作由人工檢驗；Android 不在本批。
-
-遊戲自動保存設定至使用者設定目錄的 `wolong-remake/`；可用 `-save-file` 指定可寫存檔。
+桌面遊戲自動保存設定至使用者設定目錄的 `wolong-remake/`，也可用 `-save-file` 指定存檔。
 原始劇本只讀，存檔先寫暫存檔再改名。當前發行與發布狀態見 `CONTEXT.md` §7.0。
 
 ### 已解出的格式

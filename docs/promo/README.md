@@ -1,5 +1,15 @@
 # 推廣片產出紀錄
 
+現行推廣片提供 102 秒國語配音長版及 47 秒短版。長版參考《大富翁 2》的分段旁白與說話時壓低配樂的做法，九章共有十七句本機合成旁白及對應字幕。椎陽架梯採同一梯位的受控重播。長版用 `tools/promo_extended_render.py` 剪輯，短版用 `tools/promo_story_render.py`。[影片、分鏡與來源](../../dist-all/v.1.2.0-20261122/promo/README.md)
+
+桌面戰場 HD 版使用 `tools/promo_hd_capture.py` 實錄，再以 `tools/promo_hd_render.sh` 剪輯。
+前 12 秒取松崗 DOS/V 原版片頭第 2、3、4 幕動畫與第 6 幕標題，依原色盤解碼並保邊放大為 720p。
+以 `go run tools/promo_opening_frames.go workplace/orig/dosv /out/capture/opening` 匯出後交給影片腳本。原版片頭曲來自 DOSBox 擷取。
+版本影片、分鏡、來源雜湊和音畫檢查留在本機版號目錄的 `promo/`。
+[桌面 HD 影片](../../dist-all/v.1.1.0-20261122/promo/wolong-remake-promo-v.1.1.0-20261122.mp4)
+
+以下為舊版影片紀錄。
+
 **狀態：推廣片就一支** —— [`dist-all/promo/wolong-remake-promo.mp4`](../../dist-all/promo/wolong-remake-promo.mp4)，
 176.469 秒，全片鋪原版曲子（使用者裁定 2026-08-30 合成、2026-09-11 確認只留這一支）。
 它由主預告（72 秒）、原版實機對照（72 秒）與手機片（48 秒）接成，

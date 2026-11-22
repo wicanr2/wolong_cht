@@ -36,7 +36,7 @@ type game struct {
 	// sound 是音樂與音效。載不到音檔時仍是可用的 Bank（只是沒有聲音），
 	// 所以呼叫端不必判 nil（docs/spec/92）。
 	sound *sound.Bank
-	err  string
+	err   string
 
 	// opt／fontDir 是**還沒開局**時記著的設定。手機上這兩個一開始是空的，
 	// 要等 Java 側把資料根目錄交過來（見 SetDataRoot）。
@@ -48,9 +48,18 @@ type game struct {
 	// **移動超過門檻才算拖曳**——否則每一次點擊都會順便平移一格。
 	dragging   bool
 	dragMoved  bool
+	dragBattle bool
 	dragX      int
 	dragY      int
-	pinchStart float64
+
+	touchActive   bool
+	touchID       ebiten.TouchID
+	touchX        int
+	touchY        int
+	pinching      bool
+	pinchBattle   bool
+	pinchAccepted bool
+	pinchStart    float64
 
 	frame int
 	// shotAt／shotPath 是驗收路徑：跑到第 N 幀存一張圖就離開。
@@ -296,18 +305,9 @@ func (g *game) handleInput() {
 		return
 	}
 	// 觸控與滑鼠走同一條路——桌面上才驗得動（docs/mobile/android-plan.md §4）。
-	ids := ebiten.AppendTouchIDs(nil)
-	switch {
-	case len(ids) >= 2:
-		g.handlePinch(ids)
-		return
-	case len(ids) == 1:
-		x, y := ebiten.TouchPosition(ids[0])
-		g.handlePointer(x, y, inpututil.IsTouchJustReleased(ids[0]),
-			len(inpututil.AppendJustPressedTouchIDs(nil)) > 0)
+	if g.handleTouch(ebiten.AppendTouchIDs(nil), ebiten.TouchPosition) {
 		return
 	}
-	g.pinchStart = 0
 	if ebiten.IsMouseButtonPressed(ebiten.MouseButtonLeft) ||
 		inpututil.IsMouseButtonJustReleased(ebiten.MouseButtonLeft) {
 		x, y := ebiten.CursorPosition()
@@ -334,7 +334,11 @@ func (g *game) back() bool {
 func (g *game) handlePointer(x, y int, released, pressed bool) {
 	if pressed {
 		g.dragging, g.dragMoved, g.dragX, g.dragY = true, false, x, y
+		g.dragBattle = g.sess.BattleActive()
 		return
+	}
+	if g.dragging && g.dragBattle != g.sess.BattleActive() {
+		g.dragging = false
 	}
 	if released {
 		if g.dragging && !g.dragMoved {
@@ -351,6 +355,9 @@ func (g *game) handlePointer(x, y int, released, pressed bool) {
 		return
 	}
 	g.dragMoved = true
+	if g.dragBattle {
+		return
+	}
 	// 面板開著的時候拖曳是**捲列表**，不是平移地圖——
 	// 底下的地圖看不見，平移它等於把操作丟進看不到的地方。
 	if g.sess.SheetOpen() || g.sess.AdviseStage() != 0 {
@@ -376,24 +383,63 @@ func (g *game) handlePointer(x, y int, released, pressed bool) {
 // 手指移動的距離與列表跑的距離才會一致。
 const rowScrollPx = 30
 
-func (g *game) handlePinch(ids []ebiten.TouchID) {
-	x0, y0 := ebiten.TouchPosition(ids[0])
-	x1, y1 := ebiten.TouchPosition(ids[1])
+func (g *game) handleTouch(ids []ebiten.TouchID, position func(ebiten.TouchID) (int, int)) bool {
+	switch len(ids) {
+	case 0:
+		if g.pinching {
+			g.pinching = false
+			return true
+		}
+		if g.touchActive {
+			g.touchActive = false
+			// 已放開的手指從 AppendTouchIDs 消失，用最後一個座標完成點擊。
+			g.handlePointer(g.touchX, g.touchY, true, false)
+			return true
+		}
+		return false
+	case 1:
+		if g.pinching {
+			return true
+		}
+		id := ids[0]
+		x, y := position(id)
+		newTouch := !g.touchActive || id != g.touchID
+		g.touchActive, g.touchID, g.touchX, g.touchY = true, id, x, y
+		g.handlePointer(x, y, false, newTouch)
+	default:
+		x0, y0 := position(ids[0])
+		x1, y1 := position(ids[1])
+		g.handlePinch(x0, y0, x1, y1)
+	}
+	return true
+}
+
+func (g *game) handlePinch(x0, y0, x1, y1 int) {
 	d := dist(x0, y0, x1, y1)
+	if !g.pinching {
+		g.dragging, g.touchActive, g.pinching = false, false, true
+		g.pinchBattle = g.sess.BattleActive()
+		g.pinchAccepted = !g.pinchBattle ||
+			g.sess.BattleViewportContains(x0, y0) && g.sess.BattleViewportContains(x1, y1)
+		g.pinchStart = d
+		return
+	}
+	if !g.pinchAccepted || g.pinchBattle != g.sess.BattleActive() {
+		return
+	}
 	if g.pinchStart == 0 {
 		g.pinchStart = d
 		return
 	}
-	_, _, z := g.sess.Camera()
+	x, y := (x0+x1)/2, (y0+y1)/2
 	switch {
 	case d > g.pinchStart*1.4:
-		g.sess.SetZoom(z + 1)
+		g.sess.PinchZoom(1, x, y)
 		g.pinchStart = d
 	case d < g.pinchStart/1.4:
-		g.sess.SetZoom(z - 1)
+		g.sess.PinchZoom(-1, x, y)
 		g.pinchStart = d
 	}
-	g.dragging = false
 }
 
 func (g *game) Draw(screen *ebiten.Image) {

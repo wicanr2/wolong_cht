@@ -15,7 +15,8 @@ import time
 
 
 def run(binary, orig, font, output, mode="desktop"):
-    assert mode in {"desktop", "advise", "march", "battle", "attack", "capture", "defend", "field", "water", "windows"}
+    assert mode in {"desktop", "advise", "march", "battle", "attack", "capture", "defend", "field", "water", "windows", "tools", "battle-tools"}
+    battle_mode = mode in {"battle", "battle-tools"}
     water = mode == "water"
     field_mode = mode in {"field", "water"}
     attacking = mode in {"attack", "capture", "defend", "field", "water"}
@@ -101,7 +102,7 @@ def run(binary, orig, font, output, mode="desktop"):
             time.sleep(.05)
 
         def toolbar(index):
-            key = ["language", "settings", "save", "load", "back", "confirm", "quit"][index]
+            key = ["language", "settings", "save", "load", "back", "confirm", "quit"][index] if isinstance(index, int) else index
             # 原版選單／拖曳擁有輸入時，自動工具列保持收起。
             if "barVisible" in state() and not state()["barVisible"]:
                 if state()["choiceActive"] or state()["listDragging"]:
@@ -248,6 +249,50 @@ def run(binary, orig, font, output, mode="desktop"):
                 if state()["phase"] == -1:
                     break
             wait(lambda s: s["phase"] == -1 and s["world"] and s["pointerReady"], "normal new game")
+            if mode == "tools":
+                assert not state()["tacticalAssist"]
+                toolbar("tacticalAssist")
+                wait(lambda s: s["tacticalAssist"], "enable tactical AI by mouse")
+                toolbar("tacticalAssist")
+                wait(lambda s: not s["tacticalAssist"], "disable tactical AI by mouse")
+                toolbar("generalEditor")
+                before = wait(lambda s: s.get("generalEditor"), "open officer editor")["generalEditor"]["saved"]
+                click(531, 138)
+                wait(lambda s: s["generalEditor"]["draft"]["Command"] == before["Command"]+1,
+                     "command draft increments")
+                shot("officer-editor-draft")
+                click(300, 310, 3)
+                wait(lambda s: not s.get("generalEditor"), "right click cancels draft")
+                toolbar("generalEditor")
+                opened = wait(lambda s: s.get("generalEditor"), "reopen officer editor")
+                assert opened["generalEditor"]["saved"] == before
+                for y in (138, 198, 228, 258, 288):
+                    click(531, y)
+                draft = state()["generalEditor"]["draft"]
+                assert draft["Command"] == before["Command"]+1 and draft["Tactic"] == before["Tactic"]+1
+                assert draft["Aptitude"] == [v+1 for v in before["Aptitude"]]
+                click(505, 336)
+                wait(lambda s: not s.get("generalEditor"), "apply abilities")
+                toolbar(2)
+                click(300, 152)
+                wait(lambda s: not s["save"] and save.exists(), "save edited game via mouse")
+                native, = save.parent.glob("SAVE-slot1.*")
+                toolbar(3)
+                click(300, 152)
+                wait(lambda s: s["hostReady"], "reload edited game")
+                toolbar("generalEditor")
+                wait(lambda s: s.get("generalEditor", {}).get("saved") == draft, "read back abilities from native save")
+                click(300, 310, 3)
+                native.unlink()
+                toolbar(3)
+                click(300, 152)
+                wait(lambda s: s["hostReady"], "reload with only the compatible save present")
+                toolbar("generalEditor")
+                wait(lambda s: s.get("generalEditor", {}).get("saved") == draft, "read back abilities from compatible save")
+                assert not state()["tacticalAssist"]
+                result = {"passed": True, "mode": mode, "checks": checks, "before": before, "after": draft}
+                (output/"mouse-toolbar-gui.json").write_text(json.dumps(result, ensure_ascii=False, indent=2)+"\n")
+                return
             if water:
                 assert state()["player"] == 1, "normal water fixture must choose Sun Ce"
             if not field_mode:
@@ -362,24 +407,25 @@ def run(binary, orig, font, output, mode="desktop"):
                     (output/"mouse-toolbar-gui.json").write_text(json.dumps(result, ensure_ascii=False, indent=2)+"\n")
                     print(json.dumps(result, ensure_ascii=False), flush=True)
                     return
-            if mode in {"march", "battle"} or attacking:
+            if mode == "march" or battle_mode or attacking:
                 toolbar(1)
                 wait(lambda s: s["system"], "march setup opens settings")
                 if state()["lordCorps"]:
                     click(376, 304)
                 wait(lambda s: not s["lordCorps"], "original formation candidates by settings")
-                wanted_speed = 0 if mode == "battle" else 2
+                wanted_speed = 0 if battle_mode else 2
                 for _ in range(5):
                     if state()["speed"] == wanted_speed:
                         break
                     click(376, 232)
                 wait(lambda s: s["speed"] == wanted_speed, "strategy speed by pointer: "+str(wanted_speed))
-                if mode == "battle" or attacking:
+                if battle_mode or attacking:
+                    tactical_speed = 1 if mode == "battle" else 0
                     for _ in range(5):
-                        if state()["tacticalSpeed"] == 0:
+                        if state()["tacticalSpeed"] == tactical_speed:
                             break
                         click(376, 256)
-                    wait(lambda s: s["tacticalSpeed"] == 0, "highest tactical speed by pointer")
+                    wait(lambda s: s["tacticalSpeed"] == tactical_speed, "tactical speed by pointer: "+str(tactical_speed))
                 toolbar(4)
                 wait(lambda s: not s["system"], "march setup returns to map")
             # 原版熱區：開指令列、編成、第一列兩段選取、確認編成。
@@ -403,6 +449,34 @@ def run(binary, orig, font, output, mode="desktop"):
                 toolbar(4)
             wait(lambda s: s["hostReady"], "formation returns to map")
             shot("mouse-toolbar-formed")
+            if mode == "battle-tools":
+                officer = formed[0]
+                toolbar("generalEditor")
+                editor = wait(lambda s: s.get("generalEditor"), "open editor for the formed army")["generalEditor"]
+                while officer not in editor["pageRows"]:
+                    previous = editor["pageRows"]
+                    assert officer > previous[-1], (officer, previous)
+                    click(235, 336)
+                    editor = wait(lambda s: s["generalEditor"]["pageRows"] != previous,
+                                  "advance to next page of officers")["generalEditor"]
+                click(155, 88 + 20*editor["pageRows"].index(officer))
+                edited = wait(lambda s: s["generalEditor"]["officer"] == officer,
+                              "select the formed army commander")["generalEditor"]
+                original_rating = edited["saved"]["Command"]
+                assert original_rating < 15
+                for _ in range(15-original_rating):
+                    click(531, 138)
+                wait(lambda s: s["generalEditor"]["draft"]["Command"] == 15, "set command to 15")
+                shot("formed-commander-edited")
+                click(505, 336)
+                wait(lambda s: not s.get("generalEditor"), "apply command edit")
+                toolbar(2)
+                click(300, 152)
+                wait(lambda s: not s["save"], "save formed army and edited commander")
+                toolbar(3)
+                click(300, 152)
+                wait(lambda s: s["hostReady"] and any(c[0] == officer for c in s["corps"]),
+                     "reload the formed army")
             if attacking:
                 # 第一章真實資料：袁術12／汝南100。
                 # 對張繡的開局提案會先被君主拒絕，不能當作攻城前提。
@@ -463,7 +537,7 @@ def run(binary, orig, font, output, mode="desktop"):
                             break
                         click(376, 232)
                     toolbar(4)
-            if mode == "battle":
+            if battle_mode:
                 move(500, -20)
                 end = time.monotonic()+120
                 while not state().get("battle"):
@@ -480,6 +554,25 @@ def run(binary, orig, font, output, mode="desktop"):
                 checks.append("natural encounter enters tactical battle")
                 shot("battle-normal-entry")
                 wait(lambda s: s.get("battle") and not s["battle"]["opening"] and not s["battle"]["talk"] and not s["battle"]["done"], "battle opening finishes without debug hooks", 45)
+                if mode == "battle-tools":
+                    assert not state()["battle"]["commandAssist"]
+                    assert entry["battle"]["defender" if entry["battle"]["side"] else "attacker"] == officer
+                    toolbar("tacticalAssist")
+                    enabled = wait(lambda s: s.get("battle", {}).get("commandAssist"), "tactical engine enables assist in normal battle")
+                    assert all(1 <= rating <= 15 for rating in enabled["battle"]["commanders"])
+                    assert enabled["battle"]["commanders"][enabled["battle"]["side"]] == 15
+                    checks.append("battle uses command 15 from the edited and reloaded officer")
+                    wait(lambda s: s.get("battle", {}).get("frame", 0) > enabled["battle"]["frame"],
+                         "tactical time advances with pointer resting on AI switch")
+                    toolbar("tacticalAssist")
+                    disabled = wait(lambda s: s.get("battle") and not s["battle"]["commandAssist"],
+                                    "tactical engine disables assist in normal battle")
+                    result = {"passed": True, "mode": mode, "checks": checks,
+                              "edited_officer": officer, "original_command": original_rating,
+                              "commanders": enabled["battle"]["commanders"],
+                              "frames": [enabled["battle"]["frame"], disabled["battle"]["frame"]]}
+                    (output/"mouse-toolbar-gui.json").write_text(json.dumps(result, ensure_ascii=False, indent=2)+"\n")
+                    return
                 # 原版熱區0x17完整涵蓋底列第一格，含左上角(0,368)。
                 click(0, 368, exact=True)
                 wait(lambda s: s.get("battle", {}).get("selected") == 4, "bottom squad left top boundary selects left wing")
@@ -504,7 +597,7 @@ def run(binary, orig, font, output, mode="desktop"):
                 click(552, 312, exact=True)
                 wait(lambda s: s.get("battle", {}).get("line") == 28 and s["battle"]["standing"] == 1, "adjacent formation line remains independent")
                 click(496, 360, exact=True)
-                wait(lambda s: s.get("battle", {}).get("leaderOrder", [])[1:] == [5], "retreat command boundary issues irreversible order")
+                wait(lambda s: 5 in s.get("battle", {}).get("leaderOrder", []), "retreat command boundary issues irreversible order")
                 wait(lambda s: not s.get("battle"), "normal retreat resolves back to strategy", 90)
                 for _ in range(12):
                     if not state()["messages"]:

@@ -63,6 +63,8 @@
 | 部落格：【最愛。DOS遊戲】臥龍傳–三國制霸之計 | https://www.sharpelawtravel.com/?p=9494 |
 | 中文 DOS 遊戲資料庫 | https://cdosgame.simagame.me/ |
 
+2026-11-22 另查到玩家描述往敵方擺陣時，士兵會在城牆下架梯。這是操作線索，計時依原版程式及 dosgolem 收據判定。[PTT 攻略](https://www.ptt.cc/bbs/Old-Games/M.1278839415.A.B07.html)
+
 ### ✅ 已取得的一手資料（2026-08-07，使用者提供）
 
 **日文原版說明書已經到手，這是 oracle 位階第三高的東西**（§5），

@@ -32,9 +32,13 @@
     "Save",
     "Load",
     "Back",
-    "Confirm",
+    "OK",
     "Quit"
   ],
+  "tools-zh-hant": ["AI 關", "AI 開", "武將", "武將編輯", "武術", "統帥", "政治", "委任類型", "攻城", "陸戰", "海戰", "套用", "取消"],
+  "tools-zh-hans": ["AI 关", "AI 开", "武将", "武将编辑", "武术", "统帅", "政治", "委任类型", "攻城", "陆战", "海战", "应用", "取消"],
+  "tools-ja": ["AI 切", "AI 入", "武将", "武将編集", "武術", "統率", "政治", "委任型", "攻城", "野戦", "水戦", "適用", "取消"],
+  "tools-en": ["AI off", "AI on", "Edit", "Edit officer", "Martial", "Command", "Politics", "Tactic type", "Siege", "Land", "Naval", "Apply", "Cancel"],
   "hints-zh-hant": [
     "左鍵選擇　右鍵返回",
     "左鍵繼續",
