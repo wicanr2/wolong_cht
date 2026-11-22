@@ -9,6 +9,8 @@
 
 ## 目前交付
 
+本機 HD 工作區保留目前選稿、來源與清冊。歷史比較頁和未採用圖稿已清理。現行畫面入口見 [README 原版／HD 圖集](README.md#原版hd-畫面總覽)。
+
 公開引擎與本機完整版使用同一版號 `v.1.2.0-20261122`。公開版需自備松崗 DOS/V 資料與字型。GitHub repo 收錄四類展示、HD 提示詞與素材清冊。[公開發行](https://github.com/wicanr2/wolong_cht/releases/tag/v.1.2.0-20261122)・[素材清冊](docs/release/assets-v.1.2.0-20261122.json)
 
 2026-11-22 依使用者指示完成本機結案打包。[v.1.2.0-20261122](dist-all/v.1.2.0-20261122/README.md)
@@ -58,12 +60,12 @@ HD工具列的 [本機A/B比較稿](workplace/scratch/ui-windows-20261104/hd-too
 沿用rich2的外部常駐工具列參考，保留全滑鼠與原版上下推動反白；不重開這兩項決定。
 
 最新裁定重新定義HD：使用者要求以原版為依據，先重繪城池與地圖。
-使用者已否決 [前批重繪比較](workplace/hd-redraw-local-20261104/index.html) 的A青綠彩繪與B古紙淡彩，
+使用者已否決前批重繪比較中的A青綠彩繪與B古紙淡彩，
 理由是失去原版特色；兩案不再待選，也不能作正式素材基準。
 前批只對齊座標與道路，城池與山林用通用SVG造型，沒有保留原版建築圖像。
 目前為五座城池的原圖參考HD重繪：大地圖城池與各自KYOGRF據點景觀分開處理，
 各用自己的原圖決定構圖與內容，重新描繪線條、材質及原色色彩。現行入口是
-[五座城池原版與HD重繪對照](workplace/hd-redraw-local-20261104/faithful/index.html)，原版資料與映射在
+[城池原版與 HD 圖集](README.md#城池)，原版資料與映射在
 [城池原圖來源](workplace/hd-redraw-local-20261104/faithful/originals.json)。
 使用者後續指出兩張小樣仍糊，未達HD清晰度要求；也明確要求基於原版手繪、不自創造型，
 提高解析與原版特色、強化色彩，品質參照rich2 HD。當時的離線微量修繪不能當作已接受的HD素材。
@@ -93,7 +95,7 @@ HD工具列的 [本機A/B比較稿](workplace/scratch/ui-windows-20261104/hd-too
 比較頁可切換城池、地圖／景觀，以及原版／HD／並排／拉桿，保留rich2式縮放、拖曳同步與1:1細節。
 [十一項離線抽驗](workplace/hd-redraw-local-20261104/faithful/qa/native-result.json)通過，JS錯誤0、外部請求0。
 使用者接著表示「期待大地圖hd」，目前優先推進大地圖。現行
-[大地圖HD本機預覽](workplace/hd-redraw-local-20261104/faithful/world/index.html)：
+[大地圖原版與 HD 圖集](README.md#地圖)。本機全圖選稿如下。
 全圖使用原版6144×4096重建圖，左右再增十區，三十五區已覆蓋整張原圖及全部192個原版據點。
 顯示矩形合計25,165,824個原圖像素，面積覆蓋100%；這批新增34據點，包括西涼、成都、吳、章安與溫州。
 顯示仍依不重疊的原世界矩形裁切，城名與資料座標沿原版，繪製邊線不逐像素相同。
@@ -119,9 +121,9 @@ HD工具列的 [本機A/B比較稿](workplace/scratch/ui-windows-20261104/hd-too
 並確認十張已同意城池圖、中原PNG與三十五區修正前及更早快照未變；57張選稿加原圖，共58張內嵌PNG。
 前版仍糊的小樣與重生程式另存 `faithful/index-local-retouch.html` 等歷史檔，不再混作現行HD。
 前一版超解析在 `workplace/hd-original-local-20261104/`，
-先前雲端概念在 `workplace/hd-concept-web-20261104/`，兩者只留歷史，不再作目前HD畫風的基準。
+先前雲端概念只保留版本庫與部署紀錄，本機預覽輸出已清理。
 [spec275](docs/spec/275-hd-toolbar-portraits-and-tools.md)保留各階段的規格和收據。下列是頭像接線紀錄。
-頭像新增 [原版與HD本機對照](workplace/hd-redraw-local-20261104/faithful/portraits/index.html)：
+本機頭像共有 146 張選稿。展示圖見 [人物原版與 HD 圖集](README.md#人物)。
 目前146張1254×1254原生PNG，原圖皆64×64，圖庫實際150頁，既有138張選稿未改。
 本批新增李別、刑道榮、劉賢、武安國、劉磐、楊昂、趙廣、趙統，前六張來自劇本索引0，趙廣與趙統為索引1，武將ID與圖庫頁碼逐張核對。
 沿原圖保留灰鬚、長臉、不同頭飾與藍綠紅色塊，明顯新增圖案經細修；細部材質與色塊意義仍屬重繪詮釋／未知。
@@ -288,25 +290,25 @@ GPU最多兩頁快取，其他季節、液晶、未選頁與讀圖失敗沿原�
 
 | 日期／目前程式 | 最近驗證 | 狀態 | 交付物 |
 |---|---|---|---|
-| 2026-11-22，戰場 HD 護城河與總覽 | 三套陸戰圖庫第 60 拍，許昌 50% 平移重疊 1,116,672 像素相同。四張水戰地圖重跑 | 護城河、橋底、岸線與石牆同場，沿用已核准水紋。README 增列攻城、守城、野戰、水戰四組原版素材與 HD 比較 | [護城河驗證](workplace/scratch/battle-toolbar-pointer/hd-review/land-water-runtime-result.json)、[四組本機總覽](workplace/scratch/battle-toolbar-pointer/hd-review/battle-hd-review.html#overview) |
-| 2026-11-22，三套攻城圖庫的 HD 雲梯 | 許昌、東莞、廣武第 60 拍受控破門。梯身遮罩外逐像素一致，許昌先開 HD 或破門後才開 HD 的畫面相同 | 梯腳、梯身與梯頂共 14 張裁片沿用手繪木紋，保留原色與遮擋。椎陽原版對拍重跑 27 張，終局仍為第 677 拍 | [本機對照](workplace/scratch/battle-toolbar-pointer/hd-review/battle-wall-native.html#ladders)、[驗證](workplace/scratch/battle-toolbar-pointer/hd-review/ladder-runtime-result.json) |
+| 2026-11-22，戰場 HD 護城河與總覽 | 三套陸戰圖庫第 60 拍，許昌 50% 平移重疊 1,116,672 像素相同。四張水戰地圖重跑 | 護城河、橋底、岸線與石牆同場，沿用已核准水紋。README 增列攻城、守城、野戰、水戰四組原版素材與 HD 比較 | [護城河驗證](workplace/scratch/battle-toolbar-pointer/hd-review/land-water-runtime-result.json)、[戰場圖集](README.md#戰場) |
+| 2026-11-22，三套攻城圖庫的 HD 雲梯 | 許昌、東莞、廣武第 60 拍受控破門。梯身遮罩外逐像素一致，許昌先開 HD 或破門後才開 HD 的畫面相同 | 梯腳、梯身與梯頂共 14 張裁片沿用手繪木紋，保留原色與遮擋。椎陽原版對拍重跑 27 張，終局仍為第 677 拍 | [驗證](workplace/scratch/battle-toolbar-pointer/hd-review/ladder-runtime-result.json) |
 | 2026-11-22，椎陽攻城勝利與換旗 | 第 255 拍受控清空守軍，雙側第 256 拍判定攻方勝。松崗 DOS/V 與桌面重製版都在右鍵關閉呂布下場對白後換旗 | 桌面 HD 滑鼠流程 94 項通過，返回大地圖並存讀檔後仍由曹操持有 | [勝利收據](workplace/scratch/battle-toolbar-pointer/hd-review/battle-hd-victory-result.json) |
-| 2026-11-22，椎陽攻城 HD 連續畫面 | DOS/V 同狀態 27 張畫面，20 張連續影格。遮罩外畫面和 19 次連續動作一致。最終桌面建置正常滑鼠流程走到第 893 拍自然敗退 | 固定輸入雙側第 677 拍結束，兵力及終點亂數相同。自然玩家樣本通過 81 項檢查，結算後回到大地圖 | [逐拍對照](workplace/scratch/battle-toolbar-pointer/hd-review/battle-motion-hd.html)、[玩家流程收據](workplace/scratch/battle-toolbar-pointer/hd-review/battle-hd-assault-result.json) |
-| 2026-11-22，水戰 HD 船板 | 四張水戰第 60 拍。水戰 210 的單獨材質與同場一致，50% 平移抽樣一致 | 55 張船板裁片按需讀取，19 張與水線共用裁片。保留水線及原有遮擋 | [本機對照](workplace/scratch/battle-toolbar-pointer/hd-review/battle-ship-hd.html)、[驗證](workplace/scratch/battle-toolbar-pointer/hd-review/ship-runtime-result.json) |
-| 2026-11-22，戰場 HD 屋瓦 | 三套攻城圖庫與一場水戰固定第 60 拍。遮罩外一致，城內與船艙屋瓦在完整包比對一致 | 41 張瓦面裁片共用按需讀取的青灰瓦紋。120 張城戰與 4 張水戰地圖含支援圖號 | [本機對照](workplace/scratch/battle-toolbar-pointer/hd-review/battle-roof-hd.html)、[驗證](workplace/scratch/battle-toolbar-pointer/hd-review/roof-runtime-result.json) |
+| 2026-11-22，椎陽攻城 HD 連續畫面 | DOS/V 同狀態 27 張畫面，20 張連續影格。遮罩外畫面和 19 次連續動作一致。最終桌面建置正常滑鼠流程走到第 893 拍自然敗退 | 固定輸入雙側第 677 拍結束，兵力及終點亂數相同。自然玩家樣本通過 81 項檢查，結算後回到大地圖 | [逐拍收據](workplace/scratch/battle-toolbar-pointer/hd-review/battle-hd-motion-result.json)、[玩家流程收據](workplace/scratch/battle-toolbar-pointer/hd-review/battle-hd-assault-result.json) |
+| 2026-11-22，水戰 HD 船板 | 四張水戰第 60 拍。水戰 210 的單獨材質與同場一致，50% 平移抽樣一致 | 55 張船板裁片按需讀取，19 張與水線共用裁片。保留水線及原有遮擋 | [驗證](workplace/scratch/battle-toolbar-pointer/hd-review/ship-runtime-result.json) |
+| 2026-11-22，戰場 HD 屋瓦 | 三套攻城圖庫與一場水戰固定第 60 拍。遮罩外一致，城內與船艙屋瓦在完整包比對一致 | 41 張瓦面裁片共用按需讀取的青灰瓦紋。120 張城戰與 4 張水戰地圖含支援圖號 | [驗證](workplace/scratch/battle-toolbar-pointer/hd-review/roof-runtime-result.json) |
 | 2026-11-22，戰場 HD 主動退兵 | 曹操第一劇本正常滑鼠路徑 78 項、15 圖。自然接戰後切 HD、75%／100%、改線、突擊、退兵返回 | 停手時連續戰術拍與部隊座標向前，主動退兵已驗。自然敗退及同狀態動畫見上表 | [流程收據](workplace/scratch/battle-toolbar-pointer/hd-review/battle-hd-normal-result.json)、[戰鬥影格](workplace/scratch/battle-toolbar-pointer/hd-review/battle-hd-normal-battle-animation-3.png) |
-| 2026-11-22，戰場 HD 坡面 | 攻城 75、野戰 193 固定第 60 拍。坡面遮罩外一致，攻城 75 與合併包的 310,944 個坡面像素一致 | 圖庫 1 的八種坡面裁片按需讀取手繪土石材質，支援圖號出現在 37 張地圖 | [本機對照](workplace/scratch/battle-toolbar-pointer/hd-review/battle-slope-hd.html)、[驗證](workplace/scratch/battle-toolbar-pointer/hd-review/slope-runtime-result.json) |
-| 2026-11-22，戰場 HD 樹林與灌木 | 戰場 149、37、46、7 固定第 60 拍。遮罩外一致，戰場 7 與合併包的 251,152 個葉叢像素一致 | 矮灌木、柱狀樹、高樹與密株樹林按需載入手繪葉紋。153 張非水戰地圖含已支援圖號 | [本機對照](workplace/scratch/battle-toolbar-pointer/hd-review/battle-foliage-hd.html)、[驗證](workplace/scratch/battle-toolbar-pointer/hd-review/foliage-runtime-result.json) |
-| 2026-11-22，戰場 HD 木橋與木柵 | 許昌、中山、廣武固定第 60 拍。遮罩外一致，許昌 50% 平移及合併包樣本一致 | 六張木料圖塊共用按需載入的木紋。69 張非水戰地圖含已支援圖號 | [本機對照](workplace/scratch/battle-toolbar-pointer/hd-review/battle-timber-hd.html)、[驗證](workplace/scratch/battle-toolbar-pointer/hd-review/wood-runtime-result.json) |
-| 2026-11-22，戰場 HD 草地與土路 | 許昌、中山、廣武三套圖庫，第 60 拍之外域一致。許昌 50% 平移樣本一致 | 210 張非水戰地圖使用已支援草地，186 張使用已支援土路。按需讀圖，已驗證與城牆同場 | [地表本機對照](workplace/scratch/battle-toolbar-pointer/hd-review/battle-ground-hd.html)、[驗證](workplace/scratch/battle-toolbar-pointer/hd-review/ground-runtime-result.json) |
-| 2026-11-22，戰場 HD 投射物 | 許昌第 60 拍受控出箭及推進一拍。圖格外逐像素一致，GPU 驗證四種素材遮擋 | 兩種普通箭與兩張短程投射物圖格加入本機選稿。其他地形和完整對戰待驗 | [投射物對照](workplace/scratch/battle-toolbar-pointer/hd-review/battle-projectile-hd.html)、[收據](workplace/scratch/battle-toolbar-pointer/hd-review/projectile-runtime-result.json) |
-| 2026-11-22，戰場 HD 旗幟 | 許昌兩種方向各四拍，GPU 驗證兩色長短旗四拍循環與固定旗桿 | 旗幟 24 張裁片已加入本機選稿。箭矢及其他地形的美術、完整對戰待驗 | [旗幟對照](workplace/scratch/battle-toolbar-pointer/hd-review/battle-banner-hd.html)、[收據](workplace/scratch/battle-toolbar-pointer/hd-review/banner-runtime-result.json) |
-| 2026-11-22，戰場 HD 騎兵與大將 | 許昌十個固定桌面場景。GPU 驗證騎兵 40、大將 36 個姿勢 | 四兵種 156 個姿勢已接入本機預覽包，仍待連續對戰及其餘戰場美術驗收 | [本機兵種對照](workplace/scratch/battle-toolbar-pointer/hd-review/battle-infantry-hd.html)、[驗證](workplace/scratch/battle-toolbar-pointer/hd-review/mounted-runtime-result.json) |
-| 2026-11-22，戰場 HD 弓兵 | 許昌第 60 拍正反方向的四場擷取，含原圖、HD、200%。GPU 驗證 40 個姿勢 | 紅藍兩軍行走、張弓、受擊與倒地已加入本機選稿包。箭矢沿用既有繪製。騎兵、大將及完整對戰待驗 | [本機弓兵比較](workplace/scratch/battle-toolbar-pointer/hd-review/battle-infantry-hd.html?unit=archer)、[驗證](workplace/scratch/battle-toolbar-pointer/hd-review/archer-runtime-result.json) |
-| 2026-11-22，戰場 HD 步兵 | 許昌第 60 拍紅藍兩軍、100% 切換及滾輪至 200%。GPU 驗證 40 個姿勢及奇偶欄 | 兩軍行走、近戰、受擊、倒地已進本機預覽。其他兵種與完整對戰待驗 | [本機步兵比較](workplace/scratch/battle-toolbar-pointer/hd-review/battle-infantry-hd.html)、[素材規格](docs/spec/275-hd-toolbar-portraits-and-tools.md#步兵近戰受擊與倒地預覽) |
-| 2026-11-22，城防動態換圖 | 許昌同拍的受控城門受擊與守方左鍵突擊。原版素材和 HD 都立即換圖，破壞前後首次開啟 HD 的結果一致 | 繪製器會即時同步地形版本，沿用已載入材質。其他戰鬥場況與完整耗時流程待驗 | [換圖收據](workplace/scratch/battle-toolbar-pointer/hd-review/material-wall-damage-result.json)、[本機原版／HD 對照](workplace/scratch/battle-toolbar-pointer/hd-review/battle-wall-native.html) |
-| 2026-11-22，戰場 HD 材質 | 214 張戰場資料掃描。許昌、奉高、弘農、東莞、廣武、代、涿的第 60 拍城門抽樣一致。許昌 50% 平移抽樣一致 | 水戰水面與船緣、局部草地已接入。松崗版 186 張攻城地圖均有支援的 HD 牆面。其他戰場材質、單兵與動態場景待驗 | [本機城牆對照](workplace/scratch/battle-toolbar-pointer/hd-review/battle-wall-native.html)、[素材規格](docs/spec/275-hd-toolbar-portraits-and-tools.md#戰場高解析素材) |
-| 2026-11-21，戰場風格與讀圖 | 兩張材質的離線平鋪與按需請求通過。缺四個戰場檔的桌面開局 45 項通過，固定攻城影格差 0 像素 | 筆觸及色彩定稿，草地與石牆候選待修接縫。原版四個戰場檔合計 1,195,008 bytes 改為按需讀取 | [戰場讀圖規格](docs/spec/275-hd-toolbar-portraits-and-tools.md#原版戰場素材按需讀取)、[本機材質](workplace/scratch/battle-toolbar-pointer/hd-review/battle-material-tiling.html) |
+| 2026-11-22，戰場 HD 坡面 | 攻城 75、野戰 193 固定第 60 拍。坡面遮罩外一致，攻城 75 與合併包的 310,944 個坡面像素一致 | 圖庫 1 的八種坡面裁片按需讀取手繪土石材質，支援圖號出現在 37 張地圖 | [驗證](workplace/scratch/battle-toolbar-pointer/hd-review/slope-runtime-result.json) |
+| 2026-11-22，戰場 HD 樹林與灌木 | 戰場 149、37、46、7 固定第 60 拍。遮罩外一致，戰場 7 與合併包的 251,152 個葉叢像素一致 | 矮灌木、柱狀樹、高樹與密株樹林按需載入手繪葉紋。153 張非水戰地圖含已支援圖號 | [驗證](workplace/scratch/battle-toolbar-pointer/hd-review/foliage-runtime-result.json) |
+| 2026-11-22，戰場 HD 木橋與木柵 | 許昌、中山、廣武固定第 60 拍。遮罩外一致，許昌 50% 平移及合併包樣本一致 | 六張木料圖塊共用按需載入的木紋。69 張非水戰地圖含已支援圖號 | [驗證](workplace/scratch/battle-toolbar-pointer/hd-review/wood-runtime-result.json) |
+| 2026-11-22，戰場 HD 草地與土路 | 許昌、中山、廣武三套圖庫，第 60 拍之外域一致。許昌 50% 平移樣本一致 | 210 張非水戰地圖使用已支援草地，186 張使用已支援土路。按需讀圖，已驗證與城牆同場 | 地表本機對照、[驗證](workplace/scratch/battle-toolbar-pointer/hd-review/ground-runtime-result.json) |
+| 2026-11-22，戰場 HD 投射物 | 許昌第 60 拍受控出箭及推進一拍。圖格外逐像素一致，GPU 驗證四種素材遮擋 | 兩種普通箭與兩張短程投射物圖格加入本機選稿。其他地形和完整對戰待驗 | 投射物對照、[收據](workplace/scratch/battle-toolbar-pointer/hd-review/projectile-runtime-result.json) |
+| 2026-11-22，戰場 HD 旗幟 | 許昌兩種方向各四拍，GPU 驗證兩色長短旗四拍循環與固定旗桿 | 旗幟 24 張裁片已加入本機選稿。箭矢及其他地形的美術、完整對戰待驗 | 旗幟對照、[收據](workplace/scratch/battle-toolbar-pointer/hd-review/banner-runtime-result.json) |
+| 2026-11-22，戰場 HD 騎兵與大將 | 許昌十個固定桌面場景。GPU 驗證騎兵 40、大將 36 個姿勢 | 四兵種 156 個姿勢已接入本機預覽包，仍待連續對戰及其餘戰場美術驗收 | 本機兵種對照、[驗證](workplace/scratch/battle-toolbar-pointer/hd-review/mounted-runtime-result.json) |
+| 2026-11-22，戰場 HD 弓兵 | 許昌第 60 拍正反方向的四場擷取，含原圖、HD、200%。GPU 驗證 40 個姿勢 | 紅藍兩軍行走、張弓、受擊與倒地已加入本機選稿包。箭矢沿用既有繪製。騎兵、大將及完整對戰待驗 | 本機弓兵比較、[驗證](workplace/scratch/battle-toolbar-pointer/hd-review/archer-runtime-result.json) |
+| 2026-11-22，戰場 HD 步兵 | 許昌第 60 拍紅藍兩軍、100% 切換及滾輪至 200%。GPU 驗證 40 個姿勢及奇偶欄 | 兩軍行走、近戰、受擊、倒地已進本機預覽。其他兵種與完整對戰待驗 | 本機步兵比較、[素材規格](docs/spec/275-hd-toolbar-portraits-and-tools.md#步兵近戰受擊與倒地預覽) |
+| 2026-11-22，城防動態換圖 | 許昌同拍的受控城門受擊與守方左鍵突擊。原版素材和 HD 都立即換圖，破壞前後首次開啟 HD 的結果一致 | 繪製器會即時同步地形版本，沿用已載入材質。其他戰鬥場況與完整耗時流程待驗 | [換圖收據](workplace/scratch/battle-toolbar-pointer/hd-review/material-wall-damage-result.json)、本機原版／HD 對照 |
+| 2026-11-22，戰場 HD 材質 | 214 張戰場資料掃描。許昌、奉高、弘農、東莞、廣武、代、涿的第 60 拍城門抽樣一致。許昌 50% 平移抽樣一致 | 水戰水面與船緣、局部草地已接入。松崗版 186 張攻城地圖均有支援的 HD 牆面。其他戰場材質、單兵與動態場景待驗 | 本機城牆對照、[素材規格](docs/spec/275-hd-toolbar-portraits-and-tools.md#戰場高解析素材) |
+| 2026-11-21，戰場風格與讀圖 | 兩張材質的離線平鋪與按需請求通過。缺四個戰場檔的桌面開局 45 項通過，固定攻城影格差 0 像素 | 筆觸及色彩定稿，草地與石牆候選待修接縫。原版四個戰場檔合計 1,195,008 bytes 改為按需讀取 | [戰場讀圖規格](docs/spec/275-hd-toolbar-portraits-and-tools.md#原版戰場素材按需讀取)、本機材質 |
 | 2026-11-21，戰場顯示格記憶體 | 冷測、GPU、六組固定壽春攻城畫面差 0 像素 | 50% 兩張格陣列由 13.16 MB 降到 1.55 MB。保留零號佔槽與投射物遮擋 | [量測與畫面收據](docs/spec/275-hd-toolbar-portraits-and-tools.md#戰場視野縮放) |
 | 2026-11-21，戰場清單配置成本 | 三張戰場共 27 組有效地形登錄相同。壽春固定影格在兩種顯示模式和三個倍率均差 0 像素 | 地形在建立清單時裁切並重用暫存。50% 水戰平均配置由 4.77 MB 降到 4.6 KB | [量測與畫面收據](docs/spec/275-hd-toolbar-portraits-and-tools.md#戰場視野縮放) |
 | 2026-11-21，桌面戰場 HD 與縮放 | 受控攻城 14 項，野戰及水戰各 16 項。GPU 裁片與缺圖回退通過。固定第 65 拍的 100% 畫面較改前差 0 像素 | 兩種顯示模式都可用工具列及滾輪縮放 50%～200%。縮放後點小地圖，地形和單兵同一幀換位。地形、城牆和單兵的正式選稿待備 | [戰場呈現規格](docs/spec/275-hd-toolbar-portraits-and-tools.md#戰場高解析素材) |
@@ -395,11 +397,11 @@ GPU最多兩頁快取，其他季節、液晶、未選頁與讀圖失敗沿原�
 | 2026-11-11；HD頭像首段 | 29項正常滑鼠抽驗、受影響冷測、GPU細節／遮擋及vet通過 | 已接頭像切換與偏好；當時八鈕，現況依上列 | [實際遊戲畫面](workplace/scratch/ui-windows-20261104/hd-head-game-review.html)、[接線收據](workplace/scratch/ui-windows-20261104/hd-head-integration.json) |
 | 2026-11-11；單排工具列確認稿 | 預設／重開為單排、窄視窗不換列及既有操作抽驗 | 使用者已選單排；AI與編輯器正式接線仍為DRAFT | [確認稿](workplace/scratch/ui-windows-20261104/hd-toolbar-expanded-r1.html)、[選擇紀錄](workplace/scratch/ui-windows-20261104/hd-toolbar-single-choice.json) |
 | 2026-11-06；本週原始碼checkpoint | Go冷測與vet、嚴格未解索引1144列、過期斷言及資產deny-list通過；完整check仍有既有幽靈引用與教訓索引警告 | 依使用者要求整理本週進度提交並推送main；原版素材及HD圖／HTML繼續留本機，不作發行或整款完成聲明 | [工作歷程](WORKLOG.md)、[本機檢查收據](workplace/weekly-push-20261106-checks.json)、[spec274](docs/spec/274-original-list-scrollbar-drag.md)、[spec275](docs/spec/275-hd-toolbar-portraits-and-tools.md) |
-| 2026-11-11；146張HD頭像小樣 | 七項離線抽驗、203次原生輸出、146張原圖與來源映射及重建一致通過 | 新增八張，既有138張、城池及全圖頁未變；仍為DRAFT小樣 | [對照頁](workplace/hd-redraw-local-20261104/faithful/portraits/index.html)、[本批紀錄](workplace/hd-redraw-local-20261104/faithful/portraits/batch-16.json)、[138張快照](workplace/hd-redraw-local-20261104/faithful/portraits/138-r1-snapshot.json) |
-| 2026-11-04；五座城池原圖參考HD | 十張1254×1254原生PNG；11項離線瀏覽器抽驗通過，JS錯誤0、外部請求0；五城來源／頁碼與原圖及輸出SHA核對 | 使用者已同意五城十張，原生PNG未改。素材與網頁留本機，正式接線仍在spec275 DRAFT | [現行比較頁](workplace/hd-redraw-local-20261104/faithful/index.html)、[第二批同意紀錄](workplace/hd-redraw-local-20261104/faithful/hd-generated/batch-2.json)、[抽驗](workplace/hd-redraw-local-20261104/faithful/qa/native-result.json) |
-| 2026-11-04；許昌離線微量修繪（歷史） | 9項離線瀏覽器與保護區核對曾通過，只證明操作及來源／保護像素 | 使用者指出仍糊，未達HD；已由原生重繪候選取代 | [舊小樣](workplace/hd-redraw-local-20261104/faithful/index-local-retouch.html)、[舊資料](workplace/hd-redraw-local-20261104/faithful/manifest-local-retouch.json) |
-| 2026-11-04；城池與地圖SVG重繪第一批（歷史） | 12項離線瀏覽器與幾何抽驗曾通過，只證明能操作、來源及路網一致 | 使用者已否決A、B兩案，認為失去原版特色；技術檢查不等於美術驗收 | [被否決的比較頁](workplace/hd-redraw-local-20261104/index.html)、[裁定](workplace/hd-redraw-local-20261104/decision.json) |
-| 2026-11-04；前版本機原畫HD比較第二版（歷史） | 13項離線瀏覽器抽驗通過，0個JS錯誤／外部請求；七張原圖雜湊未變，28張嵌入圖正確，指定介面區域4,947,968個輸出像素精確保留 | 已由使用者的新裁定轉向城池與地圖重繪；前版只作來源與過程追溯 | [前版本機HTML](workplace/hd-original-local-20261104/index.html)、[驗證](workplace/hd-original-local-20261104/qa/result.json) |
+| 2026-11-11；146張HD頭像小樣 | 七項離線抽驗、203次原生輸出、146張原圖與來源映射及重建一致通過 | 新增八張，既有138張、城池及全圖頁未變；仍為DRAFT小樣 | [人物圖集](README.md#人物)、[本批紀錄](workplace/hd-redraw-local-20261104/faithful/portraits/batch-16.json)、[138張快照](workplace/hd-redraw-local-20261104/faithful/portraits/138-r1-snapshot.json) |
+| 2026-11-04；五座城池原圖參考HD | 十張1254×1254原生PNG；11項離線瀏覽器抽驗通過，JS錯誤0、外部請求0；五城來源／頁碼與原圖及輸出SHA核對 | 使用者已同意五城十張，原生PNG未改。當時尚待正式接線 | [城池圖集](README.md#城池)、[第二批同意紀錄](workplace/hd-redraw-local-20261104/faithful/hd-generated/batch-2.json)、[抽驗](workplace/hd-redraw-local-20261104/faithful/qa/native-result.json) |
+| 2026-11-04；許昌離線微量修繪（歷史） | 9項離線瀏覽器與保護區核對曾通過，只證明操作及來源／保護像素 | 使用者指出仍糊，未達HD；已由原生重繪候選取代 | [舊資料](workplace/hd-redraw-local-20261104/faithful/manifest-local-retouch.json) |
+| 2026-11-04；城池與地圖SVG重繪第一批（歷史） | 12項離線瀏覽器與幾何抽驗曾通過，只證明能操作、來源及路網一致 | 使用者已否決A、B兩案，認為失去原版特色；技術檢查不等於美術驗收 | [裁定](workplace/hd-redraw-local-20261104/decision.json) |
+| 2026-11-04；前版本機原畫HD比較第二版（歷史） | 13項離線瀏覽器抽驗通過，0個JS錯誤／外部請求；七張原圖雜湊未變，28張嵌入圖正確，指定介面區域4,947,968個輸出像素精確保留 | 已由使用者的新裁定轉向城池與地圖重繪；前版只作來源與過程追溯 | [驗證](workplace/hd-original-local-20261104/qa/result.json) |
 | 2026-11-04；來源基線 `bd09fd4` 加目前工作樹，捲軸與游標修正版 | 40套件冷測、vet通過，游標補正後受影響套件再次冷測。正常新遊戲、兩種清單拖曳、跨工具列放開、編成返回與存讀檔通過；捲軸及清單中段／底端／放開後視窗像素相同，兩個錯版被拒絕 | spec274範圍已完成；起始曹操武將數原版12／Go11仍有一格差異，未宣稱全部視窗或整款完成。HD採A配置，新需求在spec275設計；戰役及水域其餘限制沿用既有Issues | [spec274](docs/spec/274-original-list-scrollbar-drag.md)、[spec275](docs/spec/275-hd-toolbar-portraits-and-tools.md)、WORKLOG；程式 `workplace/scratch/ui-windows-20261104/wlgame` |
 
 2026-11-04 捲軸與游標修正版的受測程式為 `workplace/scratch/ui-windows-20261104/wlgame`，

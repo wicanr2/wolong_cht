@@ -1,5 +1,15 @@
 # 臥龍傳 remake
 
+以曹操開局，你就是他帳下的軍師。何時向君主建議出兵、要派誰領軍、軍情有變時該攻還是該退，都得在時間繼續推進時拿主意。大地圖上的部隊依令行軍，攻城時則能跟到戰場，看士兵趕赴城門、架梯登城。
+
+我們用 Go 重寫引擎，讓這款 1995 年由松崗發行的繁中三國即時戰略遊戲能在現代平台上玩，也讓松崗版的文字和這套軍師玩法得以保存。桌面版保留滑鼠操作，可縮放大地圖與戰場。切換到 HD 時，頭像、城池、地圖與戰場沿用原版構圖和造型，重繪線條、材質與色彩。
+
+想試試不同的攻城節奏，可以開啟戰術 AI 加成。開啟後，雙方各依主將統帥加快尋路、行進與架梯。也能用武將編輯器調整七項能力，再帶同一批武將上陣。
+
+**公開引擎支援 Windows、macOS、Linux 和 Android。** 遊玩需自備松崗 DOS/V 原版資料與字型。可載入的 HD 素材留在本機，公開圖集收錄原版與 HD 對照。[下載公開引擎](https://github.com/wicanr2/wolong_cht/releases/tag/v.1.2.0-20261122)・[看原版／HD 圖集](#原版hd-畫面總覽)
+
+## 重製專案簡介
+
 把 NEO･GETEN《臥龍傳－三國制霸之計》（1994 日文 PC-98 版 ／ 1995 松崗 DOS/V 繁中版）
 完整逆向，在 Go / Ebiten 上重寫引擎，保存松崗繁中版原文並以日文原版對照校訂。
 
@@ -29,9 +39,10 @@ Android 提供雙指縮放和常駐雙排戰術控制。Linux 已原生啟動、
 [HD與工具設計](docs/spec/275-hd-toolbar-portraits-and-tools.md)中的模式切換、頭像、戰略地圖、
 橫幅、部分據點景觀、戰場 HD、可選戰術 AI 加成與武將能力編輯已接入桌面版。
 現行程式與證據以[CONTEXT](CONTEXT.md)為準。
-HD美術方向已確認，以原版造型、視角、配置與強化原色為基準，樣本見[本機原版與HD重繪對照](workplace/hd-redraw-local-20261104/faithful/index.html)，直接雙擊HTML即可離線開啟。
-另有[大地圖HD本機預覽](workplace/hd-redraw-local-20261104/faithful/world/index.html)，三十五區試繪已覆蓋原版全圖，可切換區域、縮放與平移；局部美術仍待修整，正式遊戲已接範圍見下方。
-頭像已有[原版與HD本機對照](workplace/hd-redraw-local-20261104/faithful/portraits/index.html)，可檢視146張原圖參考重繪小樣。已接入可選桌面頭像模式，首次原版、切換後記住選擇，缺圖回原圖；正常新遊戲與勢力情報窗抽驗通過，尚未逐張取得美術接受。
+HD 美術沿用原版的造型、視角與配置，並強化原色。人物、城池、地圖與戰場的原版／HD 對照見下方圖集。[原版／HD 畫面總覽](#原版hd-畫面總覽)
+
+大地圖本機選稿覆蓋原版全圖 35 區。頭像包含 146 張原圖參考重繪，已接入桌面版。首次啟動使用原版顯示，切換後記住選擇，缺圖時沿用原圖。正常新遊戲與勢力情報窗已抽驗，個別頭像仍待逐張確認。
+
 從專案根目錄啟動時，可加`-hd-portraits workplace/hd-redraw-local-20261104/faithful/portraits`載入本機選稿；[頭像實際遊戲截圖](workplace/scratch/ui-windows-20261104/hd-head-game-review.html)可直接離線開啟。
 戰略地圖已支援50%～200%、每次25%，可用單排工具列或滾輪縮放，視窗與頭像維持原尺寸。加`-hd-world workplace/hd-redraw-local-20261104/faithful/world`可載入既有35區與22接縫選稿，沿同一原版／HD按鈕切換；[HD實際遊戲截圖](workplace/scratch/ui-windows-20261104/hd-world-game-review.html)含三倍率點城、模式切換與正常讀檔抽驗。其他季節與液晶模式沿用原圖。
 
@@ -46,7 +57,7 @@ HD美術方向已確認，以原版造型、視角、配置與強化原色為基
 [景觀實際遊戲畫面](workplace/scratch/ui-windows-20261104/hd-location-game-review.html)包含五城、共用頁碼與原圖回退抽驗。
 
 戰場也可用工具列或滾輪在 50%～200% 縮放。側欄、小地圖與命令區維持原尺寸。
-加 `-hd-battle workplace/scratch/battle-toolbar-pointer/hd-review/battle-hd-preview-pack` 可載入本機戰場 HD 選稿，缺圖沿用原圖。選稿包含地形、城牆、雲梯、屋瓦、陸戰與水戰水紋，以及船板、四個兵種、軍旗和投射物。桌面戰場可用工具列切換原版與 HD。[戰場本機預覽](workplace/scratch/battle-toolbar-pointer/hd-review/battle-hd-review.html)・[松崗原版與 HD 逐拍對照](workplace/scratch/battle-toolbar-pointer/hd-review/battle-motion-hd.html)・[戰場素材規格](docs/spec/275-hd-toolbar-portraits-and-tools.md#戰場高解析素材)
+加 `-hd-battle workplace/scratch/battle-toolbar-pointer/hd-review/battle-hd-preview-pack` 可載入本機戰場 HD 選稿，缺圖沿用原圖。選稿包含地形、城牆、雲梯、屋瓦、陸戰與水戰水紋，以及船板、四個兵種、軍旗和投射物。桌面戰場可用工具列切換原版與 HD。[戰場原版／HD 對照](#戰場)・[戰場素材規格](docs/spec/275-hd-toolbar-portraits-and-tools.md#戰場高解析素材)
 
 ## 原版／HD 畫面總覽
 
@@ -101,7 +112,7 @@ HD美術方向已確認，以原版造型、視角、配置與強化原色為基
 |---|---|---|---|
 | ![許昌城牆與護城河](docs/images/readme-hd-battle-siege.png) | ![許昌守軍突擊後](docs/images/readme-hd-battle-defense.png) | ![坡地交戰](docs/images/readme-hd-battle-land.png) | ![水戰船板與水面](docs/images/readme-hd-battle-naval.png) |
 
-下列原版素材截圖保存既有展示紀錄。[四兵種動作預覽](workplace/scratch/battle-toolbar-pointer/hd-review/battle-infantry-hd.html)
+下列截圖展示重製引擎使用原版戰場素材時的畫面。
 
 | 攻城進攻方 | 攻城防守方 |
 |---|---|
